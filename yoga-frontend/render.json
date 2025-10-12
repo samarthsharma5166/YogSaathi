@@ -1,0 +1,15 @@
+{
+  "static_sites": [
+    {
+      "name": "yoga-frontend",
+      "build_command": "npm run build",
+      "static_path": "build",
+      "routes": [
+        {
+          "path": "/*",
+          "static_path": "build/index.html"
+        }
+      ]
+    }
+  ]
+}
