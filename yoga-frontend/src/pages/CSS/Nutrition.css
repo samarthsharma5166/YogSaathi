@@ -1,0 +1,124 @@
+/* Nutrition.css */
+
+.nutrition-container {
+  padding: 60px 6%;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #f7fdf8, #e8f5e9);
+  min-height: 100vh;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Heading */
+.nutrition-container h1 {
+  text-align: center;
+  font-size: 36px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-weight: 700;
+  position: relative;
+}
+
+.nutrition-container h1::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #27ae60;
+  margin: 10px auto;
+  border-radius: 6px;
+}
+
+/* Sub Text */
+.nutrition-container p {
+  text-align: center;
+  font-size: 17px;
+  color: #555;
+  max-width: 700px;
+  margin: 0 auto 50px auto;
+  line-height: 1.6;
+}
+
+/* Card Section */
+.nutrition-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+/* Cards */
+.nutrition-card {
+  background: #fff;
+  border-left: 6px solid #27ae60;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+  position: relative;
+  overflow: hidden;
+  transition: 0.4s ease;
+  cursor: pointer;
+}
+
+.nutrition-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(to right, #ffffff, #e8fce9);
+}
+
+/* Optional Light Icon watermark */
+.nutrition-card::after {
+  content: '🥗';
+  position: absolute;
+  font-size: 48px;
+  top: 15px;
+  right: 20px;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.nutrition-card h3 {
+  font-size: 20px;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.nutrition-card p {
+  font-size: 15px;
+  color: #444;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .nutrition-container {
+    padding: 30px 15px;
+  }
+
+  .nutrition-container h1 {
+    font-size: 28px;
+  }
+
+  .nutrition-card {
+    padding: 20px;
+  }
+
+  .nutrition-card h3 {
+    font-size: 18px;
+  }
+
+  .nutrition-card p {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,209 @@
+/* ✅ Global Styles */
+body {
+  margin: 0;
+  padding: 0;
+  background: #edecec;
+  font-family: Arial, sans-serif;
+  color: black;
+}
+
+/* ✅ Outer wrapper */
+.slide {
+  padding: 40px;
+  text-align: center;
+  background: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ Text block */
+.text {
+  color: #f59e0b;
+  padding: 20px;
+  max-width: 9000px;
+  margin: 0 auto;
+}
+
+/* ✅ Slider container with responsive aspect ratio */
+.slider-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  aspect-ratio: 16/9;  /* Responsive proportional height */
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  background: #000;
+  padding: 0;
+}
+
+/* ✅ Overlay heading */
+.past-events-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  padding: 20px 0;
+  color: rgb(20, 20, 20);
+  text-align: center;
+  z-index: 2;
+}
+
+.past-events-title {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.underline {
+  width: 180px;
+  height: 5px;
+  background-color: #f59e0b;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+/* ✅ Image fills container without duplication */
+.slide-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ✅ Navigation arrows */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 3;
+  transition: background-color 0.3s;
+}
+
+.arrow:hover {
+  background-color: rgba(0,0,0,0.7);
+}
+
+.arrow.left { left: 10px; }
+.arrow.right { right: 10px; }
+
+/* ✅ Gallery section with light blue background and 4 columns */
+.gallery-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: #e0f4ff;
+  box-sizing: border-box;
+}
+
+.gallery-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.gallery-title::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 5px;
+  background-color: orange;
+  margin: 8px auto 0 auto;
+  border-radius: 2px;
+}
+
+.scroll-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  height: 850px; /* adjust if needed */
+}
+
+/* ✅ Grid with 4 columns, continuous vertical scroll */
+.scroll-content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 200px;
+  gap: 8px;
+  animation: scrollUp 30s linear infinite;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ✅ Scroll animation bottom to top */
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+/* ✅ Yoga Benefits */
+/* ✅ Yoga Benefits Section */
+.yoga-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.yoga-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.yoga-title::after {
+  content: "";
+  display: block;
+  width: 200px;
+  height: 5px;
+  background-color: orange;
+  margin: 8px auto 0 auto;
+  border-radius: 2px;
+}
+
+/* ✅ Grid: 3 columns on desktop, 2 on tablet, 1 on mobile */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 180px;
+  gap: 20px;
+  justify-content: center;
+}
+
+@media (max-width: 992px) {
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ✅ Card styling */

@@ -1,0 +1,129 @@
+/* Main container padding */
+.main-contact {
+  padding: 60px 20px;
+}
+.error-message {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.success-message {
+  color: #4caf50;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+/* Section styling */
+.contact {
+  padding: 40px 20px;
+  background-color: #0e1b2c;
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+/* Title */
+.contact-title {
+  font-size: 28px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Flex container for info + form */
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+}
+
+/* Contact Info box */
+.contact-details {
+  flex: 1 1 300px;
+  min-width: 250px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Contact List */
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.contact-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.contact-icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+/* Social Links */
+.contact-social {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.contact-social a {
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.contact-social a:hover {
+  color: #00aced;
+}
+
+/* Contact Form box */
+.contact-form {
+  flex: 1 1 400px;
+  min-width: 250px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: 2px solid #00aced;
+  background-color: #fff;
+  color: #000;
+}
+.submit-btn {
+  background-color: #00aced;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+.submit-btn:hover {
+  background-color: #0084a8;
+}
+

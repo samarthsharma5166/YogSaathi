@@ -1,0 +1,163 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum DurationType {
+  MONTH
+  DAYS
+}
+
+enum PriceType {
+  US
+  INR
+}
+
+enum targetAudienceType {
+  ALL
+  ADMIN
+  SUBSCRIBERS
+  FREETRIAL
+}
+
+model User {
+  id              String      @id @default(uuid())
+  name            String
+  email           String?
+  phoneNumber     String      @unique
+  role            Role        @default(USER)
+
+  referralCode    String      @unique
+  referredById    String?
+  referredBy      User?       @relation("UserReferrals", fields: [referredById], references: [id])
+  referrals       User[]      @relation("UserReferrals")
+  referralPoints  Int         @default(0)
+
+  otp             Int?
+  otpExpire       DateTime?
+
+  subscription    Subscription[]
+  blogs           Blog[]
+  attendance     Attendance[]
+
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model FreeTrialCampaign {
+  id        String   @id @default(uuid())
+  startDate DateTime
+  endDate   DateTime
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+
+model Subscription {
+  id             String    @id @default(uuid())
+  user           User      @relation(fields: [userId], references: [id])
+  userId         String    
+
+  plan           Plan      @relation(fields: [planId], references: [id])
+  planId         String
+  invoice        String?
+
+  startDate      DateTime
+  baseDuration   Int       
+  extraDays      Int       @default(0)
+  expiresAt      DateTime
+  status         String    @default("active")
+  attendance     Attendance[]
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+
+model Plan {
+  id           String    @id @default(uuid())
+  name         String    
+  description  String
+  inrPrice     Int?
+  usdPrice     Int?
+  orignalPriceInInr Int
+  discount     String?
+  duration     Int       // in days
+  durationType DurationType 
+  isFreeTrial  Boolean   @default(false)
+ 
+
+  subscriptions Subscription[]
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Blog {
+  id              String     @id @default(uuid())
+  title           String
+  img             String
+  content         String     @db.Text
+  author          User       @relation(fields: [authorId], references: [id])
+  authorId        String
+  createdAt       DateTime   @default(now())
+}
+
+model ScheduledMessage {
+  id            Int      @id @default(autoincrement())
+  templateName  String
+  scheduledDate DateTime
+  payload       Json
+  targetAudience  targetAudienceType
+  sent          Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+
+model YogaClass {
+  id              String     @id @default(uuid())
+  date            DateTime // date of class
+  title           String
+  focusArea       String
+  videoLink       String @db.VarChar(1000)
+  attendance     Attendance[]
+  isActive        Boolean @default(true)
+  createdAt       DateTime   @default(now())
+}
+
+
+model Attendance {
+  id             String         @id @default(uuid())
+
+  user           User           @relation(fields: [userId], references: [id])
+  userId         String
+
+  subscription   Subscription   @relation(fields: [subscriptionId], references: [id])
+  subscriptionId String
+
+  yogaClass      YogaClass      @relation(fields: [yogaClassId], references: [id])
+  yogaClassId    String
+
+  attended       Boolean        @default(false)
+  attendedAt     DateTime?
+
+  createdAt      DateTime       @default(now())
+
+  @@unique([userId, yogaClassId]) // Ensure only 1 attendance per user per class
+}

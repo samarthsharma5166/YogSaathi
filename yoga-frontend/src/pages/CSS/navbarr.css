@@ -1,0 +1,93 @@
+/* Navbar Container */
+.navbar {
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  padding: 12px 24px;
+}
+
+.navbar-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+.logo {
+  height: 70px;
+  width: auto;
+}
+
+/* Right Section */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* User name */
+.user-name {
+  font-size: 16px;
+  color: #2c3e50;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.user-name:hover {
+  color: #225ea8;
+}
+
+/* Profile Circle */
+.profile-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f7c7ec;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-circle:hover {
+  transform: scale(1.05);
+}
+
+/* Menu Button (Hamburger) */
+.menu-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  padding: 4px;
+}
+
+.menu-button:hover {
+  color: #225ea8;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 12px;
+  }
+
+  .navbar-right {
+    gap: 12px;
+  }
+
+  .user-name,
+  .profile-circle {
+    display: none;
+  }
+}

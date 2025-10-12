@@ -1,0 +1,123 @@
+/* Container */
+.physical-container {
+  padding: 60px 6%;
+  background: linear-gradient(to right, #caefdf, #95dd9b);
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  animation: fadeIn 0.6s ease;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Heading */
+.physical-container h1 {
+  text-align: center;
+  font-size: 36px;
+  color: #1b5e20;
+  margin-bottom: 20px;
+  font-weight: 700;
+  position: relative;
+}
+
+
+/* Description */
+.physical-container > p {
+  text-align: center;
+  font-size: 16.5px;
+  color: #2e7d32;
+  max-width: 680px;
+  margin: 0 auto 40px auto;
+  line-height: 1.6;
+}
+
+/* Grid */
+.physical-sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+/* Card with LEFT GREEN BORDER */
+.physical-card {
+  background-color: #ffffff;
+  width: 300px;
+  height: 200px;
+  border-radius: 16px;
+  padding: 30px 24px;
+  position: relative;
+  transition: all 0.3s ease;
+
+  /* ✅ Green border on the left */
+  border-left: 8px solid #4caf50;
+
+  /* Optional lift shadow */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Hover effect */
+.physical-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Faded Emoji Icon */
+.physical-card::before {
+  content: '🧘‍♂️';
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 34px;
+  opacity: 0.08;
+  transform: rotate(-10deg);
+}
+
+/* Card Title */
+.physical-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 12px;
+}
+
+/* Card Text */
+.physical-card p {
+  font-size: 15.5px;
+  color: #4e5d52;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .physical-container {
+    padding: 30px 16px;
+  }
+
+  .physical-card {
+    width: 100%;
+    height: auto;
+    padding: 24px;
+  }
+
+  .physical-card h3 {
+    font-size: 18px;
+  }
+
+  .physical-card p {
+    font-size: 14px;
+  }
+
+  .physical-container h1 {
+    font-size: 28px;
+  }
+}

@@ -1,0 +1,22 @@
+.user-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.user-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.user-main-content {
+  flex: 1;
+  background-color: #f9fafb;
+  overflow-y: auto;
+  padding: 20px;
+  margin-top: 32px;
+  min-height: calc(100vh - 84px); /* adjust this if Navbarr height changes */
+  height: auto;
+}
+   

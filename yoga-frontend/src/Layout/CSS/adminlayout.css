@@ -1,0 +1,28 @@
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.admin-body {
+  display: flex;
+  height: calc(100vh - 94px);
+  border-top: 1px solid gray;
+  margin-top: 20px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar-fixed {
+  width: 300px;
+  border-right: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.main-content {
+  flex: 1;
+  background-color: #f9fafb;
+  overflow-y: auto;
+  padding: 20px;
+  height: calc(100vh - 84px);
+}

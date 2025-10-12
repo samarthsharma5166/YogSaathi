@@ -1,0 +1,101 @@
+.navbar {
+  height: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white; /* Make it transparent */
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  z-index: 1000;
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.151); /* Remove shadow if not needed */
+  backdrop-filter: blur(10px); /* Optional: blur background for better readability */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+}
+
+
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.logo img {
+  height: 100px;
+  width: 90px;
+  padding: 2px 0;
+}
+
+.hamburger {
+  display: none;
+  font-size: 50px;
+  cursor: pointer;
+color: #2e7d32;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #2e7d32;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100px; /* fix it to just below navbar */
+    left: 0;
+    width: 100%;
+    background-color: #e8f2dc;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: max-height 0.4s ease-in-out, padding 0.3s ease-in-out;
+  }
+
+  .nav-links.active {
+    padding: 20px;
+    max-height: 500px; /* allow enough height for all menu items */
+  }
+
+  .nav-links li {
+    margin-bottom: 15px;
+  }
+
+  .nav-links li:last-child {
+    margin-bottom: 0;}
+}
+
+.join-now{
+  border: 1px solid #2e7d32;
+  padding: 5px 10px;
+  border-radius: 8px;
+  color: #2e7d32;
+  font-weight: 600;
+}

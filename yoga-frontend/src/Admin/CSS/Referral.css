@@ -1,0 +1,113 @@
+.referral-container {
+  max-width: 850px;
+  margin: 50px auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
+  background-image: linear-gradient(145deg, #4facfe 0%, #c1d8da 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+h2 {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+.referral-box {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #f4f4f4;
+}
+
+.referral-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.referral-link input {
+  padding: 12px;
+  width: 320px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  backdrop-filter: blur(4px);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.referral-link input::placeholder {
+  color: #dddddd;
+}
+
+.referral-link button {
+  padding: 12px 18px;
+  background: #00c9a7;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.referral-link button:hover {
+  background: #00b894;
+  transform: scale(1.05);
+}
+
+.reward-info,
+.how-it-works {
+  margin-top: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  color: #f1f1f1;
+}
+
+.reward-info h3,
+.how-it-works h3 {
+  color: #ffffff;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+}
+
+.reward-info ul,
+.how-it-works ul {
+  padding-left: 25px;
+  line-height: 1.8;
+  color: #e0e0e0;
+}
+
+@media (max-width: 600px) {
+  .referral-container {
+    padding: 25px;
+  }
+
+  .referral-link {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .referral-link input {
+    width: 100%;
+  }
+
+  .referral-link button {
+    width: 100%;
+  }
+}
