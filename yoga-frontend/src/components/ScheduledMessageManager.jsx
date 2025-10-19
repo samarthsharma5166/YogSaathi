@@ -79,6 +79,14 @@ const templateName = [
     {
         name:"yogsaathi_contact_detail",
         inputs:[]
+    },
+    {
+        name:"festival_greetings",
+        inputs:[]
+    },
+    {
+        name:"yoga_offer_reminder",
+        inputs:[]
     }
 ];
 

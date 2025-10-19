@@ -136,6 +136,7 @@ model YogaClass {
   title           String
   focusArea       String
   videoLink       String @db.VarChar(1000)
+  liveChat       String @db.VarChar(1000)
   attendance     Attendance[]
   isActive        Boolean @default(true)
   createdAt       DateTime   @default(now())

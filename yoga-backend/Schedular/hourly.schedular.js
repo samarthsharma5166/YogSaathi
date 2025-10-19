@@ -1,9 +1,9 @@
 import { CronJob } from 'cron';
 import { prisma } from '../db/db.js';
-import { class_reminder, giftwellness_yogsaathi, join_session__mark_attendance, session_reminder, session_reminder__orientation_for_free_trial, share_wellness_14_days_of_free_yoga, subscription_invitation, vijayadashami_greetings, vijaydashmi_greetings_and_referrals, weekly_attendance_status__yogsaathi_sessions, yoga_subscription_offer, yoga_trial_midway_update__reminder, yogsaathi_contact_detail, your_weekly_yoga_schedule__access_details } from '../utils/messages.js';
+import { class_reminder, festival_greetings, giftwellness_yogsaathi, join_session__mark_attendance, session_reminder, session_reminder__orientation_for_free_trial, share_wellness_14_days_of_free_yoga, subscription_invitation, vijayadashami_greetings, vijaydashmi_greetings_and_referrals, weekly_attendance_status__yogsaathi_sessions, yoga_offer_reminder, yoga_subscription_offer, yoga_trial_midway_update__reminder, yogsaathi_contact_detail, your_weekly_yoga_schedule__access_details } from '../utils/messages.js';
 import { startOfWeek, addDays, format } from "date-fns";
 
-export const hourlyJob = new CronJob('*/10 * * * *', async () => {
+export const hourlyJob = new CronJob('* * * * *', async () => {
     const now = new Date();
     
     const scheduledMessages = await prisma.scheduledMessage.findMany({
@@ -167,6 +167,21 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
                 yogsaathi_contact_detail(user.phoneNumber,user.name);
             })
         }
+
+        if (message.templateName === "yoga_offer_reminder") {
+            const users = await getUsers(message);
+            users.map((user) => {
+                yoga_offer_reminder(user.phoneNumber, user.name);
+            })
+        }
+
+        if (message.templateName === "festival_greetings"){
+            const users = await getUsers(message);
+            users.map((user) => {
+                festival_greetings(user.phoneNumber, user.name);
+            })
+        }
+        
 
     });
 
