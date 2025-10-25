@@ -10,19 +10,39 @@ import { invoice_subscription_plan } from "../utils/messages.js";
 // 1. Create Razorpay Order
 export const createOrder = async (req, res) => {
   try {
-    const { planId, phoneNumber } = req.body;
+    const { planId, phoneNumber, startDate, name } = req.body;
 
     const plan = await prisma.plan.findUnique({ where: { id: planId } });
     if (!plan) return res.status(404).json({ success: false, message: "Plan not found" });
-
 
     // check user is from indian or not
     if (!phoneNumber) {
       return res.status(400).json({ success: false, message: "Phone number is required" });
     }
 
-    const user = await prisma.user.findUnique({ where: { phoneNumber: phoneNumber } });
-    if (!user) return res.status(404).json({ success: false, message: "User not found Please register first" });
+    let user = await prisma.user.findUnique({ where: { phoneNumber: phoneNumber } });
+    if (!user){
+      if (!name || !phoneNumber) {
+        return res.status(400).json({success:false, message: "Please fill in all fields" });
+      }
+
+      if (phoneNumber.length < 10) {
+        return res.status(400).json({ success: false, message: "Phone number should be 10 digits long" });
+      }
+
+      const generateReferralCode = (name) => {
+        const random = Math.random().toString(36).substring(2, 8);
+        return `${name.split(" ")[0].toLowerCase()}-${random}`;
+      };
+        user = await prisma.user.create({
+          data: {
+            name,
+            phoneNumber,
+            referralCode: generateReferralCode(name),
+          }
+        });
+
+    }
 
     // check if have alredy subscription
     const existingSubscription = await prisma.subscription.findMany({
@@ -60,6 +80,20 @@ export const createOrder = async (req, res) => {
     };
 
     const order = await razorpay.orders.create(options);
+  
+
+    const payment = await prisma.payment.create({
+      data: {
+        razorpay_order_id: order.id,
+        userId: user.id,
+        planId: planId,
+        amount: amount * 100,
+        currency,
+        status: "PENDING",
+        startDate
+      },
+    });
+
     res.json({
       success: true,
       orderId: order.id,
@@ -67,7 +101,8 @@ export const createOrder = async (req, res) => {
       currency: order.currency,
       key: process.env.KEY_ID,
       plan,
-      userId:user.id
+      userId:user.id,
+      paymentId: payment.id
     });
   } catch (error) {
     console.error(error);
@@ -156,32 +191,44 @@ export const createOrder = async (req, res) => {
 
 export const verifyPayment = async (req, res) => {
   try {
+    console.log(req.body)
     const {
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
       planId,
       phoneNumber,
+      userId,
       startDate
     } = req.body;
 
+
+    const payment = await prisma.payment.update({
+      where: { razorpay_order_id },
+      data: {
+        razorpay_payment_id,
+        razorpay_signature
+      }
+    })
     // Step 1: Verify Razorpay Signature
     const generatedSignature = crypto
       .createHmac("sha256", process.env.KEY_SECRET)
       .update(razorpay_order_id + "|" + razorpay_payment_id)
       .digest("hex");
 
-    if (generatedSignature !== razorpay_signature) {
+      console.log("here1",generatedSignature)
+    if (generatedSignature !== payment.razorpay_signature) {
       return res.status(400).json({ message: "Payment verification failed" });
     }
 
     // Step 2: Get Plan & User Details
     const plan = await prisma.plan.findUnique({ where: { id: planId } });
-    const user = await prisma.user.findUnique({ where: { phoneNumber: phoneNumber } });
+    const user = phoneNumber ? await prisma.user.findUnique({ where: { phoneNumber: phoneNumber } }) : await prisma.user.findUnique({ where: { id: userId } });
 
     if (!plan || !user) {
       return res.status(404).json({ message: "Plan or User not found" });
     }
+    console.log("here")
 
     const subsStartDate = new Date(startDate);
     const baseDuration = plan.duration;
@@ -200,7 +247,6 @@ export const verifyPayment = async (req, res) => {
     }
 
     // Step 3: Update/Create Subscription
-
        const existingSubscription = await prisma.subscription.findFirst({
         where: { userId: user.id },
         select: {
@@ -283,6 +329,15 @@ export const verifyPayment = async (req, res) => {
       },
     });
 
+    await prisma.payment.update({
+      where: { razorpay_order_id },
+      data: {
+        razorpay_payment_id,
+        razorpay_signature,
+        status: "COMPLETED",
+        verified: true,
+      },
+    });
 
     // Step 6: Return response
     return res.json({

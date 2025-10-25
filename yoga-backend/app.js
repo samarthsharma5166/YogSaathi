@@ -17,6 +17,7 @@ import yogaClassRoute from './routes/yogaClass.routes.js';
 import bodyParser from "body-parser";
 import { invoice_subscription_plan, share_wellness_14_days_of_free_yoga } from './utils/messages.js';
 import { orientationJob } from './Schedular/Admin.Schedular.js';
+import paymentRoutes  from './routes/payment.route.js'
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/api/referrals", referralRoutes);
 app.use("/api", planRoutes)
 app.use("/api/yogaClasses",yogaClassRoute);
 app.use("/api/campaigns", campignRoutes)
+app.use("/api/payment",paymentRoutes);
 
 // ✅ Health check route
 app.use("/api/user",userRoutes);
