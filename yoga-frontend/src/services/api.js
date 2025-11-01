@@ -103,6 +103,9 @@ export const fetchAdminPlans = () => API.get("/admin/plans");
 
 export const createOrder = (data) => API.post("/create-order", data);
 export const getSubscriptionforUser = (id) =>  API.get(`/user/subscription/${id}`);
+export const getPayment = (page, limit, search) => API.get(`/payment?page=${page}&limit=${limit}&search=${search}`)
+export const verifyPayment = (data) => API.post("/verify-payment",data);
+
 
 export const deleteUser = async (id) => {
     const res =  API.delete("/admin/user/" + id);

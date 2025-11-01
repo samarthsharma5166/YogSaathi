@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
 import { prisma } from '../db/db.js';
-import { class_reminder, festival_greetings, giftwellness_yogsaathi, join_session__mark_attendance, session_reminder, session_reminder__orientation_for_free_trial, share_wellness_14_days_of_free_yoga, subscription_invitation, vijayadashami_greetings, vijaydashmi_greetings_and_referrals, weekly_attendance_status__yogsaathi_sessions, yoga_offer_reminder, yoga_subscription_offer, yoga_trial_midway_update__reminder, yogsaathi_contact_detail, your_weekly_yoga_schedule__access_details } from '../utils/messages.js';
+import { class_reminder, festival_greetings, giftwellness_yogsaathi, join_session__mark_attendance, session_reminder, session_reminder__orientation_for_free_trial, share_wellness_14_days_of_free_yoga, subscription_invitation, vijayadashami_greetings, vijaydashmi_greetings_and_referrals, weekly_attendance_status__yogsaathi_sessions, yoga_offer_reminder, yoga_subscription_offer, yoga_trial_midway_update__reminder, yogsaathi_communication_channels, yogsaathi_contact_detail, your_weekly_yoga_schedule__access_details } from '../utils/messages.js';
 import { startOfWeek, addDays, format } from "date-fns";
 
 export const hourlyJob = new CronJob('* * * * *', async () => {
@@ -40,10 +40,9 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
             })
 
             const users = await getUsers(message);
-            
-                users.map((user)=>{
-                    class_reminder(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
-                })
+            users.map((user)=>{
+                class_reminder(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
+            })
             
 
             
@@ -75,7 +74,7 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
             const users = await getUsers(message);
             const { date, time, sessionLink } = message.payload;
             users.map((user)=>{
-                session_reminder__orientation_for_free_trial(user.phoneNumber, user.name, date, time, user.referralCode, user.referralPoints);
+                session_reminder__orientation_for_free_trial(user.phoneNumber, user.name, date, time, sessionLink);
             })
         }
 
@@ -83,7 +82,7 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
             const users = await getUsers(message);
             const { date, time, sessionLink } = message.payload;
             users.map((user) => {
-                session_reminder(user.phoneNumber, user.name, date, time, user.referralCode, user.referralPoints);
+                session_reminder(user.phoneNumber, user.name, date, time, sessionLink);
             })
         }
 
@@ -179,6 +178,13 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
             const users = await getUsers(message);
             users.map((user) => {
                 festival_greetings(user.phoneNumber, user.name);
+            })
+        }
+
+        if (message.templateName === "yogsaathi_communication_channels"){
+            const users = await getUsers(message);
+            users.map((user) => {
+                yogsaathi_communication_channels(user.phoneNumber, user.name);
             })
         }
         
@@ -290,22 +296,31 @@ async function getUsers(message){
         return users;
     }
 
-    if (message.targetAudience === "FREETRIAL"){
-        const users = await prisma.user.findMany({
-            where: {
-                subscription: {
-                    some: {
-                        plan: {
-                            isFreeTrial: true
+    if (message.targetAudience === "FREETRIAL") {
+        if (message.templateName === "class_reminder") {
+            // Only ACTIVE free trial users
+            return prisma.user.findMany({
+                where: {
+                    subscription: {
+                        some: {
+                            plan: { isFreeTrial: true },
+                            expiresAt: { gte: now },
                         },
-                        expiresAt: {
-                            gte: new Date()
-                        }
-                    }
-                }
-            }
-        })
-        return users;
+                    },
+                },
+            });
+        } else {
+            // Send to ALL free trial users (active or expired)
+            return prisma.user.findMany({
+                where: {
+                    subscription: {
+                        some: {
+                            plan: { isFreeTrial: true },
+                        },
+                    },
+                },
+            });
+        }
     }
 
 }

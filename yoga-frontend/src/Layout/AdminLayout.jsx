@@ -4,6 +4,7 @@ import Navbarr from "../components/Navbar";
 import Sidebar from "../Admin/Dashboardsidebar";
 import "./CSS/adminlayout.css";
 import { SlGrid, SlPeople, SlBookOpen, SlCalender, SlWallet, SlGraduation, SlMagnet, SlLink, SlClock, SlLogout } from "react-icons/sl";
+import { MdOutlinePayment } from "react-icons/md";
 
 const menuItems = [
   { name: "Dashboard", icon: <SlGrid />, path: "admin-dashboard" },
@@ -15,6 +16,8 @@ const menuItems = [
   { name: "Free Trial Campign", icon: <SlMagnet />, path: "manage-campign" },
 
   // { name: "Manage Payment", icon: <ProgressIcon />, path: "price" },
+  { name: "Manage Payment", icon: <MdOutlinePayment />, path: "managePayment" },
+
   { name: "Manage Refferal", icon: <SlLink />, path: "refferal" },
   { name: "scheduledMessage", icon: <SlClock />, path:"scheduledMessage"},
   { name: "Logout", icon: <SlLogout />, path: "logout" }

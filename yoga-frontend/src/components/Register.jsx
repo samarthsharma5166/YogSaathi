@@ -80,8 +80,10 @@ function Register() {
       setLoading(false)
       console.error("Register error:", err.response?.data || err.message);
       toast.error(err.response?.data?.error || err.response?.data?.message);
-     
-    }
+
+      if (err.response.data.message === "User already exists")
+        navigate("/price")
+      }
   };
 
   if (loading) {

@@ -11,7 +11,6 @@ import CustomPhoneInput from "../components/CustomPhoneInput";
 const CheckoutPage = () => {
     const { planId } = useParams();
     const [searchParams] = useSearchParams();
-    console.log(searchParams.get("currency"))
     const [plan, setPlan] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -70,8 +69,10 @@ const CheckoutPage = () => {
 
             const orderResponse = await createOrder({
                 planId,
+                name: formData.name,
                 phoneNumber: formData.phone,
-                planName: plan.name
+                planName: plan.name,
+                startDate: formData.startDate
             });
 
             if (orderResponse.data.success === false) {

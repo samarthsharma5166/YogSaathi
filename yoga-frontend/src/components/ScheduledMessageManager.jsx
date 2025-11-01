@@ -10,6 +10,7 @@ const templateName = [
         inputs: [
             { label: "Session date", name: "date", type: "date", required: true },
             { label: "Session time", name: "time", type: "time", required: true },
+            { label: "Session Link", name: "sessionLink", type: "text", required: true },
         ]
     },
     {
@@ -42,6 +43,7 @@ const templateName = [
         inputs: [
             { label: "Session Date", name: "date", type: "date", required: true },
             { label: "Session Time", name: "time", type: "time", required: true },
+            { label: "Session Link", name: "sessionLink", type: "text", required: true },
         ]
     },
     {
@@ -86,6 +88,10 @@ const templateName = [
     },
     {
         name:"yoga_offer_reminder",
+        inputs:[]
+    },
+    {
+        name:"yogsaathi_communication_channels",
         inputs:[]
     }
 ];

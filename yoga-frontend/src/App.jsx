@@ -54,6 +54,7 @@ import JoinClass from "./pages/JoinClass.jsx";
 import BlogAdminDashboard from "./pages/BlogAdminDashboard.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
 import CampaignPage from "./pages/CampaignPage.jsx";
+import ManagePayments from "./Admin/ManagePayments.jsx";
 
 
 function AppContent() {
@@ -100,6 +101,7 @@ function AppContent() {
             <Route path="create-blog" element={<BlogAdminDashboard />} />
             <Route path="classes" element={<YogaClassManager/>}/>
             <Route path="myPlans" element={<DemoBooking />} />
+            <Route path="managePayment" element={<ManagePayments />} />
             <Route path="refferal" element={<Refferal />} />
             <Route path="manage-user" element={<Manageuser />} />
             <Route path="manage-plans" element={<ManagePlans />} />

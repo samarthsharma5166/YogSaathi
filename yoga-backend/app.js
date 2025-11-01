@@ -18,6 +18,7 @@ import bodyParser from "body-parser";
 import { invoice_subscription_plan, share_wellness_14_days_of_free_yoga } from './utils/messages.js';
 import { orientationJob } from './Schedular/Admin.Schedular.js';
 import paymentRoutes  from './routes/payment.route.js'
+import { generateYogaInvoice } from './utils/generateInvoice.js';
 
 const app = express();
 
@@ -46,6 +47,27 @@ app.use("/api", planRoutes)
 app.use("/api/yogaClasses",yogaClassRoute);
 app.use("/api/campaigns", campignRoutes)
 app.use("/api/payment",paymentRoutes);
+
+app.post("/generateInvoice",async(req,res)=>{
+  const { invoiceNo, planName,name, email, startDate, expiresAt, referralDays, finalEndDate ,isIndian, price} = req.body;
+   const invoicePath = await generateYogaInvoice({
+        invoiceNo: invoiceNo,
+        dateOfIssue: new Date().toLocaleDateString(),
+        companyEmail: "healthy.horizons111@gmail.com",
+        website: "www.yogsaathi.com",
+        customerName: name,
+        customerEmail: email,
+     programStart: new Date(startDate).toLocaleDateString(),
+     programEnd: new Date(expiresAt).toLocaleDateString(),
+        referralDays,
+     finalEndDate: new Date(finalEndDate).toLocaleDateString(),
+        description: `${planName} – Online Yoga`,
+        amount: price ,
+        amountType: isIndian ? "INR" : "USD"
+      });
+
+  return res.download(invoicePath);
+})
 
 // ✅ Health check route
 app.use("/api/user",userRoutes);
