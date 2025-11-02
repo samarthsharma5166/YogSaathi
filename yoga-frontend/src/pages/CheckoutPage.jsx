@@ -17,6 +17,11 @@ const CheckoutPage = () => {
     const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
     const restrictedDate = "2025-10-26";
 
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const minDate = tomorrow.toISOString().split("T")[0];
+
+
     const [formData, setFormData] = useState({
         phone: "",
         name: "",
@@ -48,8 +53,8 @@ const CheckoutPage = () => {
         const selectedDate = e.target.value;
 
         // disable before today automatically using `min`
-        if (selectedDate <= restrictedDate) {
-            toast("Our first session will start from October 27, 2025", {
+        if (selectedDate <= restrictedDate || selectedDate <= today) {
+            toast("Date should be after today", {
                 icon: "🚫",
             });
             setFormData({ ...formData, startDate: "" });
@@ -214,7 +219,7 @@ const CheckoutPage = () => {
                 <input
                     type="date"
                     name="startDate"
-                    min={today}
+                    min={minDate}
                     className="w-full border rounded-md px-3 py-2 mb-4 focus:outline-none"
                     value={formData.startDate}
                     onChange={handleDateChange}

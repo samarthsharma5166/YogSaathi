@@ -73,16 +73,19 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
         if (message.templateName === "session_reminder__orientation_for_free_trial"){
             const users = await getUsers(message);
             const { date, time, sessionLink } = message.payload;
+            const convertedTime = formatTo12Hour(time);
             users.map((user)=>{
-                session_reminder__orientation_for_free_trial(user.phoneNumber, user.name, date, time, sessionLink);
+                session_reminder__orientation_for_free_trial(user.phoneNumber, user.name, convertedTime, time, sessionLink);
             })
         }
 
         if (message.templateName === "session_reminder") {
             const users = await getUsers(message);
+
             const { date, time, sessionLink } = message.payload;
+            const convertedTime = formatTo12Hour(time);
             users.map((user) => {
-                session_reminder(user.phoneNumber, user.name, date, time, sessionLink);
+                session_reminder(user.phoneNumber, user.name, date, convertedTime, sessionLink);
             })
         }
 
@@ -323,4 +326,12 @@ async function getUsers(message){
         }
     }
 
+}
+
+function formatTo12Hour(time24) {
+    if (!time24) return "";
+    const [hours, minutes] = time24.split(":").map(Number);
+    const ampm = hours >= 12 ? "PM" : "AM";
+    const hours12 = hours % 12 || 12;
+    return `${hours12}:${minutes.toString().padStart(2, "0")} ${ampm}`;
 }

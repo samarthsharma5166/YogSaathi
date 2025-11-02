@@ -20,6 +20,14 @@ export const createOrder = async (req, res) => {
       return res.status(400).json({ success: false, message: "Phone number is required" });
     }
 
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const minDate = tomorrow.toISOString().split("T")[0];
+
+    if (startDate < minDate) {
+      return res.status(400).json({ success: false, message: "Start date cannot be in the past" });
+    }
+
     let user = await prisma.user.findUnique({ where: { phoneNumber: phoneNumber } });
     if (!user){
       if (!name || !phoneNumber) {
