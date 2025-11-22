@@ -19,8 +19,8 @@ const CheckoutPage = () => {
 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    const minDate = tomorrow.toISOString().split("T")[0];
-
+    // const minDate = tomorrow.toISOString().split("T")[0];
+    const minDate = tomorrow.toLocaleDateString("en-CA");
 
     const [formData, setFormData] = useState({
         phone: "",
@@ -170,7 +170,7 @@ const CheckoutPage = () => {
 
                 <ul className="text-gray-600 list-disc ml-5 mb-4">
                     <li>Move your body, calm your mind, and uplift your soul</li>
-                    <li>Take a moment each day for yourself – your mind and body will thank you.</li>
+                    <li>Take some time each day for yourself – your mind and body will thank you.</li>
                 </ul>
 
                 <p className="text-gray-700 mb-2">

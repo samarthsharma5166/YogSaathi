@@ -73,8 +73,12 @@ export const getUserBookingHistory = (userId) =>
 export const getAdminStats = () => API.get("/admin/analytics");
 
 // ============= Get All Users =================
-export const getAllUsersFromDb = (data) => {
-  return API.get(`/admin/users/?usertype=${data}`);
+export const getAllUsersFromDb = (usertype, startDate, endDate) => {
+  let url = `/admin/users/?usertype=${usertype}`;
+  if (startDate && endDate) {
+    url += `&startDate=${startDate}&endDate=${endDate}`;
+  }
+  return API.get(url);
 }
 export const getUserDetails = (id) => API.get(`/admin/user/${id}`);
 

@@ -60,14 +60,27 @@ function Register() {
       }
       const nameRegex = /^[a-zA-Z\s]{2,50}$/;
       if (!nameRegex.test(form.name)) {
-        toast.error("Name should be between 2 and 50 characters.");
+        toast.error("Name should be between 2 and 50 characters and should not contain special characters.");
         return;
       }
 
-      if(form.phoneNumber.length < 10){
-        toast.error("Phone number should be 10 digits long.");
+      // check name should not contain any emoji or number
+      if (/[0-9]/.test(form.name)) {
+        toast.error("Name should not contain numbers.");
         return;
       }
+
+      if(form.phoneNumber.length >= 10 && form.phoneNumber.length <= 12){
+        toast.error("Phone number should be 10 to 12 digits long.");
+        return;
+      }
+
+      // check number contain any alphabets
+      if (/[a-zA-Z]/.test(form.phoneNumber)) {
+        toast.error("Phone number should not contain alphabets.");
+        return;
+      }
+
       setLoading(true);
       const res = await registerUser(form);
       const data = res.data;
@@ -98,7 +111,7 @@ function Register() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white/80 backdrop-blur-lg shadow-2xl p-8 rounded-2xl w-full max-w-md"
+        className="bg-white/80 backdrop-blur-lg shadow-2xl p-6 sm:p-8 rounded-2xl w-full max-w-md"
       >
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
           Register with <span className="font-bold text-green-500 ">yogsaathi</span>
@@ -144,14 +157,14 @@ function Register() {
             type="submit"
             className="w-full bg-green-600 text-white font-semibold py-3 rounded-md transition duration-300"
           >
-            Register
+            Register- Free Sessions
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <Link
             to="/auth/login"
-            className="text-blue-600 hover:underline font-medium"
+            className="text-blue-600 hover:underline font-medium" 
           >
             Login
           </Link>

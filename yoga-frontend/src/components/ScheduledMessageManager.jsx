@@ -93,6 +93,15 @@ const templateName = [
     {
         name:"yogsaathi_communication_channels",
         inputs:[]
+    },
+    {
+        name:"free_online_yoga_trial_reminder",
+        inputs:[]
+    },
+    {
+        name: "yoga_class_time_details_as_per_ist",
+        inputs: []
+
     }
 ];
 
@@ -543,8 +552,11 @@ export default function ScheduledMessageManager() {
                                             <option value="">Please Select Target Audience</option>
                                             <option value="ALL">All</option>
                                             <option value="ADMIN">Admin</option>
-                                            <option value="SUBSCRIBERS">Subscribers</option>
-                                            <option value="FREETRIAL">Free Trial</option>
+                                            <option value="Active-Subscribers">Active Subscribers</option>
+                                            <option value="Inactive-Subscribers">Inactive Subscribers</option>
+                                            <option value="Active-Free-Trial">Active Free Trial User</option>
+                                            <option value="Inactive-Free-Trial">Inactive Free Trial User</option>
+
                                         </select>
                                     </div>
 

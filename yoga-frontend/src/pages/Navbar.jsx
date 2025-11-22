@@ -113,7 +113,7 @@ const Navbar = () => {
                   onClick={() => setMenuOpen((prev) => !prev)}
                   className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white font-semibold border-2 border-green-700 shadow-lg hover:scale-110 transition duration-200"
                 >
-                  {user.name.charAt(0).toUpperCase()}
+                  {user?.name?.charAt(0).toUpperCase()}
                 </button>
 
                 {/* Dropdown menu */}

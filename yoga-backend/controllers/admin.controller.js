@@ -4,84 +4,83 @@ import { subMonths, startOfMonth, endOfMonth } from 'date-fns';
 // ----------Get All Users----------
 export const getAllUsersAdmin = async (req, res) => {
   try {
-    const { usertype } = req.query;
+    const { usertype, startDate, endDate } = req.query;
+    const now = new Date();
 
-    if (usertype === "Freetrial") {
-      const users = await prisma.user.findMany({
-        where: {
-          subscription: {
-            some: {
-              plan: {
-                isFreeTrial: true,
-              },
-            },
-          },
-        },
+    let users = [];
+    const whereClause = {};
+
+    if (startDate && endDate) {
+      whereClause.createdAt = {
+        gte: new Date(startDate),
+        lte: new Date(endDate),
+      };
+    }
+
+    if (usertype === "ALL") {
+      users = await prisma.user.findMany({
+        where: whereClause,
         include: {
-          referredBy: true,
           subscription: {
+            orderBy: {
+              createdAt: 'desc',
+            },
             include: {
               plan: true,
             },
           },
         },
-        orderBy:{
-          createdAt:"desc"
-        }
       });
-
-      return res.status(200).json({ success: true, users });
-    }
-
-    if (usertype === "Subscribed") {
-      const users = await prisma.user.findMany({
-        where: {
-          subscription: {
-            some: {
-              plan: {
-                isFreeTrial: false,
-              },
-            },
-          },
-        },
+    } else if (usertype === "ADMIN") {
+      whereClause.role = "ADMIN";
+      users = await prisma.user.findMany({
+        where: whereClause,
+      });
+    } else {
+      const allUsers = await prisma.user.findMany({
+        where: whereClause,
         include: {
-          referredBy: true,
           subscription: {
+            orderBy: {
+              createdAt: 'desc',
+            },
             include: {
               plan: true,
             },
           },
         },
-        orderBy: {
-          createdAt: "desc"
-        }
       });
 
-      return res.status(200).json({ success: true, users });
-    }
+      users = allUsers.filter(user => {
+        if (user.subscription.length === 0) {
+          if (usertype === "New-Users") {
+            return true;
+          }
+          return false;
+        }
+        const latestSubscription = user.subscription[0];
+        const isActive = latestSubscription.expiresAt >= now;
+        const isFreeTrial = latestSubscription.plan.isFreeTrial;
 
-    if (usertype === "All") {
-      const users = await prisma.user.findMany({
-        include: {
-          referredBy: true,
-          subscription: {
-            include: {
-              plan: true,
-            },
-          },
-        },
-        orderBy: {
-          createdAt: "desc"
+        switch (usertype) {
+          case "Active-Free-Trial":
+            return isFreeTrial && isActive;
+          case "Inactive-Free-Trial":
+            return isFreeTrial && !isActive;
+          case "Active-Subscribers":
+            return !isFreeTrial && isActive;
+          case "Inactive-Subscriber":
+            return !isFreeTrial && !isActive;
+          default:
+            return false;
         }
       });
-
-      return res.status(200).json({ success: true, users });
     }
 
-    // If no valid usertype provided
-    return res.status(400).json({ error: "Invalid usertype" });
+    return res.status(200).json({ success: true, users });
 
   } catch (err) {
+    console.log(err)
     res.status(500).json({
       error: "Failed to fetch users.",
       details: err.message,

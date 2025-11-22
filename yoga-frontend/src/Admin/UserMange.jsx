@@ -13,9 +13,12 @@ import ConfirmationPopUp from "../components/ConfirmationPopUp.jsx";
 import { Search, Users, Filter, Eye, Trash2, UserPlus } from "lucide-react";
 
 const userType = {
-  ALL: "All",
-  SUBSCRIBED: "Subscribed",
-  FREETRIAL: "Freetrial",
+  "ALL": "ALL",
+  "ADMIN": "Admin",
+  "Active-Free-Trial":"Active Free Trial",
+  "Inactive-Free-Trial":"Inactive Free Trial",
+  "Active-Subscribers":"Active Subscribers",
+  "Inactive-Subscribers":"Inactive Subscribers",
 }
 
 const ManageUsers = () => {
@@ -23,17 +26,19 @@ const ManageUsers = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState(userType.ALL);
   const [deleteModal,setDeleteModal]=useState(false);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const [selectedUser, setSelectedUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchUsers();
-  }, [filter]);
+  }, [filter, startDate, endDate]);
 
   const fetchUsers = async () => {
     try {
-      const res = await getAllUsersFromDb(filter);
+      const res = await getAllUsersFromDb(filter, startDate, endDate);
       setUsers(res.data.users || []);
     } catch (err) {
       console.error(err);
@@ -94,12 +99,48 @@ const ManageUsers = () => {
           value={filter}
           className="px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-sm font-medium min-w-[140px] cursor-pointer hover:border-green-400 transition-colors"
         >
-          <option value="All">{userType.ALL}</option>
-          <option value="Freetrial">{userType.FREETRIAL}</option>
-          <option value="Subscribed">{userType.SUBSCRIBED}</option>
+          <option value="ALL">{userType.ALL}</option>
+            <option value="ADMIN">{userType.ADMIN}</option>
+
+            <option value="Active-Free-Trial">{userType["Active-Free-Trial"]}</option>
+          {/* <option value="Subscribed">{userType.SUBSCRIBED}</option> */}
+
+            <option value="Inactive-Free-Trial">{userType["Inactive-Free-Trial"]}</option>
+            <option value="Active-Subscribers">{userType["Active-Subscribers"]}</option>
+            <option value="Inactive-Subscriber">{userType["Inactive-Subscribers"]}</option>
+
         </select>
       </div>
       </div>
+        <div className="flex justify-between gap-2 mb-2">
+          <div className="flex items-center gap-2">
+            <div>
+              <label className="text-sm font-medium text-gray-700">Start Date: </label>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-sm font-medium"
+              />
+            </div>
+            
+                    <div>
+            <label className="text-sm font-medium text-gray-700">Start Date: </label>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-sm font-medium"
+              />
+                    </div>
+          </div>
+          <button
+            onClick={fetchUsers}
+            className="px-4 py-2 bg-green-600 text-white rounded-lg shadow-sm hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          >
+            Filter
+          </button>
+        </div>
 
       {/* Search Section */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">

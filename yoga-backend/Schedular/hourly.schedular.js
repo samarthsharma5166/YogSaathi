@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
 import { prisma } from '../db/db.js';
-import { class_reminder, festival_greetings, giftwellness_yogsaathi, join_session__mark_attendance, session_reminder, session_reminder__orientation_for_free_trial, share_wellness_14_days_of_free_yoga, subscription_invitation, vijayadashami_greetings, vijaydashmi_greetings_and_referrals, weekly_attendance_status__yogsaathi_sessions, yoga_offer_reminder, yoga_subscription_offer, yoga_trial_midway_update__reminder, yogsaathi_communication_channels, yogsaathi_contact_detail, your_weekly_yoga_schedule__access_details } from '../utils/messages.js';
+import { class_reminder, festival_greetings, free_online_yoga_trial_reminder, giftwellness_yogsaathi, join_session__mark_attendance, session_reminder, session_reminder__orientation_for_free_trial, share_wellness_14_days_of_free_yoga, subscription_invitation, vijayadashami_greetings, vijaydashmi_greetings_and_referrals, weekly_attendance_status__yogsaathi_sessions, yoga_class_time_details_as_per_ist, yoga_offer_reminder, yoga_subscription_offer, yoga_trial_midway_update__reminder, yogsaathi_communication_channels, yogsaathi_contact_detail, your_weekly_yoga_schedule__access_details } from '../utils/messages.js';
 import { startOfWeek, addDays, format } from "date-fns";
 
 export const hourlyJob = new CronJob('* * * * *', async () => {
@@ -40,12 +40,11 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
             })
 
             const users = await getUsers(message);
+
             users.map((user)=>{
                 class_reminder(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
             })
-            
 
-            
             await prisma.yogaClass.update({
                 where: { id: yogaClass.id },
                 data: { isActive: false }
@@ -190,7 +189,21 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
                 yogsaathi_communication_channels(user.phoneNumber, user.name);
             })
         }
+
+        if (message.templateName === "free_online_yoga_trial_reminder"){
+            const users = await getUsers(message);
+            users.map((user) => {
+                free_online_yoga_trial_reminder(user.phoneNumber, user.name);
+            
+            })
+        }
         
+        if (message.templateName === "yoga_class_time_details_as_per_ist"){
+            const users = await getUsers(message);
+            users.map((user) => {
+                yoga_class_time_details_as_per_ist(user.phoneNumber, user.name);
+            })
+        }
 
     });
 
@@ -266,7 +279,7 @@ function formatAttendance(records) {
 }
 
 async function getUsers(message){
-
+    const now = new Date();
     if (message.targetAudience === "ALL") {
         const users = await prisma.user.findMany();
         return users;
@@ -281,51 +294,57 @@ async function getUsers(message){
         return users;
     }
 
-    if (message.targetAudience === "SUBSCRIBERS") {
-        const users = await prisma.user.findMany({
-            where: {
-                subscription: {
-                    some:{
-                        plan: {
-                            isFreeTrial: false
-                        },
-                        expiresAt: {
-                            gte: new Date()
-                        }
-                    }
-                }
+    const allUsers = await prisma.user.findMany({
+        include: {
+            subscription: {
+                orderBy: {
+                    createdAt: 'desc',
+                },
+                include: {
+                    plan: true,
+                },
+            },
+        },
+    });
+
+    const users = allUsers.filter(user => {
+        if (user.subscription.length === 0) {
+            if (message.targetAudience === "New-Users") {
+                return true;
             }
-        })
-        return users;
-    }
-
-    if (message.targetAudience === "FREETRIAL") {
-        if (message.templateName === "class_reminder") {
-            // Only ACTIVE free trial users
-            return prisma.user.findMany({
-                where: {
-                    subscription: {
-                        some: {
-                            plan: { isFreeTrial: true },
-                            expiresAt: { gte: now },
-                        },
-                    },
-                },
-            });
-        } else {
-            // Send to ALL free trial users (active or expired)
-            return prisma.user.findMany({
-                where: {
-                    subscription: {
-                        some: {
-                            plan: { isFreeTrial: true },
-                        },
-                    },
-                },
-            });
+            return false;
         }
+        const latestSubscription = user.subscription[0];
+        const isActive = latestSubscription.expiresAt >= now;
+        const isFreeTrial = latestSubscription.plan.isFreeTrial;
+
+        switch (message.targetAudience) {
+            case "Active-Free-Trial":
+                return isFreeTrial && isActive;
+            case "Inactive-Free-Trial":
+                return isFreeTrial && !isActive;
+            case "Active-Subscribers":
+                return !isFreeTrial && isActive;
+            case "Inactive-Subscribers":
+                return !isFreeTrial && !isActive;
+            default:
+                return false;
+        }
+    });
+
+    if (["Active-Subscribers", "Inactive-Subscribers", "Active-Free-Trial", "Inactive-Free-Trial"].includes(message.targetAudience)) {
+        const admins = await prisma.user.findMany({
+            where: {
+                role: "ADMIN"
+            }
+        });
+        
+        const combined = [...users, ...admins];
+        const uniqueUsers = Array.from(new Map(combined.map(user => [user.id, user])).values());
+        return uniqueUsers;
     }
 
+    return users;
 }
 
 function formatTo12Hour(time24) {

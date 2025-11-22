@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 const countries = [
-    { code: "+91", name: "India 🇮🇳" },
-    { code: "+1", name: "USA 🇺🇸" },
-    { code: "+44", name: "UK 🇬🇧" },
-    { code: "+61", name: "Australia 🇦🇺" },
-    { code: "+971", name: "UAE 🇦🇪" },
+    { code: "+91", name: "🇮🇳" },
+    { code: "+1", name: "🇺🇸" },
+    { code: "+44", name: "🇬🇧" },
+    { code: "+61", name: "🇦🇺" },
+    { code: "+971", name: "🇦🇪" },
 ];
 
 function CustomPhoneInput({ value, onChange, placeholder }) {
@@ -29,7 +29,7 @@ function CustomPhoneInput({ value, onChange, placeholder }) {
             <select
                 value={countryCode}
                 onChange={handleCountryChange}
-                className="p-3 border border-gray-300 rounded-l-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400 w-[110px]"
+                className="p-2 border border-gray-300 rounded-l-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400 w-16 sm:w-26"
             >
                 {countries.map((c) => (
                     <option key={c.code} value={c.code}>
@@ -44,7 +44,7 @@ function CustomPhoneInput({ value, onChange, placeholder }) {
                 value={number}
                 onChange={handleChange}
                 placeholder={placeholder || "Enter phone number"}
-                className="w-full p-3 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-green-400"
+                className="w-full  p-3 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-green-400"
             />
         </div>
     );
