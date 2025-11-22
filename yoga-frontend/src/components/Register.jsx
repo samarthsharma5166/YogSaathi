@@ -113,16 +113,16 @@ function Register() {
         transition={{ duration: 0.6 }}
         className="bg-white/80 backdrop-blur-lg shadow-2xl p-6 sm:p-8 rounded-2xl w-full max-w-md"
       >
-        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
-          Register with <span className="font-bold text-green-500 ">yogsaathi</span>
+        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-2">
+          Begin Your Free Trial <br/> with <span className="font-bold text-green-500 ">YogSaathi</span>
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-2">
           <input
             name="name"
             onChange={handleChange}
             placeholder="Name*"
             value={form.name}
-            className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full h-10 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             name="email"
@@ -130,13 +130,13 @@ function Register() {
             onChange={handleChange}
             placeholder="Email"
             value={form.email}
-            className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full h-10 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
 
           <CustomPhoneInput
               value={form.phoneNumber}
               onChange={(value) => setForm({ ...form, phoneNumber: value })}
-              placeholder="Enter phone number*"
+              placeholder="Enter Whatsapp number*"
             />
 
           {form.referredByCode && <input
@@ -146,7 +146,7 @@ function Register() {
             onChange={handleChange}
             value={form.referredByCode}
             // readOnly
-            className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />}
           {refferalInfo.name && form.referred_by && <div className="w-full overflow-hidden whitespace-nowrap">
             <p className="text-xs text-red-600 animate-marquee">
@@ -157,7 +157,7 @@ function Register() {
             type="submit"
             className="w-full bg-green-600 text-white font-semibold py-3 rounded-md transition duration-300"
           >
-            Register- Free Sessions
+            Submit Now
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-600">

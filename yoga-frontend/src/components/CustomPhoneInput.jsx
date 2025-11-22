@@ -29,7 +29,7 @@ function CustomPhoneInput({ value, onChange, placeholder }) {
             <select
                 value={countryCode}
                 onChange={handleCountryChange}
-                className="p-2 border border-gray-300 rounded-l-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400 w-16 sm:w-26"
+                className="p-2 h-10  border border-gray-300 rounded-l-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400 w-16 sm:w-26"
             >
                 {countries.map((c) => (
                     <option key={c.code} value={c.code}>
@@ -43,8 +43,8 @@ function CustomPhoneInput({ value, onChange, placeholder }) {
                 type="tel"
                 value={number}
                 onChange={handleChange}
-                placeholder={placeholder || "Enter phone number"}
-                className="w-full  p-3 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-green-400"
+                placeholder={placeholder || "Enter Whatsapp number"}
+                className="w-full h-10  p-3 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-green-400"
             />
         </div>
     );

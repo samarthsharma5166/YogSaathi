@@ -102,6 +102,12 @@ const templateName = [
         name: "yoga_class_time_details_as_per_ist",
         inputs: []
 
+    },
+    {
+        name:"yoga_trial_participation_reminder",
+        inputs:[
+            { label: "Link", name: "Link", type: "text", required: true },
+        ]
     }
 ];
 

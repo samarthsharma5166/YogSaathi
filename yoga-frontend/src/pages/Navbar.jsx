@@ -103,7 +103,7 @@ const Navbar = () => {
               to="/auth/register"
               onClick={closeMenu}
             >
-              Register Now
+p              Join Free Trial
             </Link>
           </li>}
           {
