@@ -16,6 +16,7 @@ import {
 import { getAdminStats } from "../services/api";
 import toast from "react-hot-toast";
 import "./CSS/admindashboard.css";
+import DownloadAttendance from "./DownloadAttendance";
 
 ChartJS.register(
   CategoryScale,
@@ -107,6 +108,9 @@ const Dashboard = () => {
 
       {/* ✅ Referral block */}
       <Referral userId={user.id} />
+
+      {/* ✅ Download Attendance block */}
+      <DownloadAttendance />
     </div>
   );
 };

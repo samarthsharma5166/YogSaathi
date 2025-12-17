@@ -72,6 +72,11 @@ const CheckoutPage = () => {
                 return;
             }
 
+            if (formData.phone.length <= 12) {
+                toast.error("Please enter a valid phone number");
+                return;
+            }
+
             const orderResponse = await createOrder({
                 planId,
                 name: formData.name,

@@ -1,5 +1,6 @@
 import { prisma } from "../db/db.js";
 import { subMonths, startOfMonth, endOfMonth } from 'date-fns';
+import { Parser } from 'json2csv';
 
 // ----------Get All Users----------
 export const getAllUsersAdmin = async (req, res) => {
@@ -257,4 +258,147 @@ export const removeUser = async(req,res) =>{
     console.error("❌ Error in getAllUsers:", error.message);
     res.status(500).json({ message: "Failed to fetch users" });
   }
+}
+
+export const downloadAttendance = async (req, res) => {
+  try {
+    const { usertype, startDate, endDate } = req.query;
+    const now = new Date();
+
+    let users = [];
+    const whereClause = {};
+
+    if (startDate && endDate) {
+      whereClause.createdAt = {
+        gte: new Date(startDate),
+        lte: new Date(endDate),
+      };
+    }
+
+    if (usertype === "ALL") {
+      users = await prisma.user.findMany({
+        include: {
+          subscription: {
+            orderBy: {
+              createdAt: 'desc',
+            },
+            include: {
+              plan: true,
+            },
+          },
+        },
+      });
+    } else if (usertype === "ADMIN") {
+
+      users = await prisma.user.findMany({
+        where: {
+          role: "ADMIN"
+        },
+      });
+    } else {
+      const allUsers = await prisma.user.findMany({
+        include: {
+          subscription: {
+            orderBy: {
+              createdAt: 'desc',
+            },
+            include: {
+              plan: true,
+            },
+          },
+        },
+      });
+
+      users = allUsers.filter(user => {
+        if (user.subscription.length === 0) {
+          if (usertype === "New-Users") {
+            return true;
+          }
+          return false;
+        }
+        const latestSubscription = user.subscription[0];
+        const isActive = latestSubscription.expiresAt >= now;
+        const isFreeTrial = latestSubscription.plan.isFreeTrial;
+
+        switch (usertype) {
+          case "Active-Free-Trial":
+            return isFreeTrial && isActive;
+          case "Inactive-Free-Trial":
+            return isFreeTrial && !isActive;
+          case "Active-Subscribers":
+            return !isFreeTrial && isActive;
+          case "Inactive-Subscriber":
+            return !isFreeTrial && !isActive;
+          default:
+            return false;
+        }
+      });
+    }
+
+    const userIDs = users.map(user => user.id);
+
+    const attendanceRecords = await prisma.attendance.findMany({
+      where: {
+        userId: { in: userIDs },
+        yogaClass: {
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate)
+          }
+        }
+      },
+      include: {
+        user: true,
+        yogaClass: true,
+      },
+    });
+
+    if (attendanceRecords.length === 0) {
+      throw new Error("No attendance records found for the selected criteria.");
+      return
+    }
+
+    
+    const attendanceData = users.map(user => {
+      const userAttendance = attendanceRecords.filter(
+        record => record.userId === user.id
+      );
+
+      const attendance = userAttendance.reduce((acc, record) => {
+        const classDate = record.yogaClass.date.toISOString().split("T")[0];
+        acc[classDate] = record.attended ? "Present" : "Absent";
+        return acc;
+      }, {});
+
+      return {
+        Name: user.name,
+        Email: user.email,
+        Phone: user.phoneNumber,
+        ...attendance,
+      };
+    });
+
+    const fields = ['Name', 'Email', 'Phone', ...getUniqueDates(attendanceRecords)];
+    const json2csvParser = new Parser({ fields });
+    const csv = json2csvParser.parse(attendanceData);
+
+    res.header('Content-Type', 'text/csv');
+    res.attachment('attendance.csv');
+    res.send(csv);
+
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({
+      error: "Failed to fetch users.",
+      details: err.message,
+    });
+  }
+};
+
+function getUniqueDates(records) {
+  const dates = new Set();
+  records.forEach(r => {
+    dates.add(r.yogaClass.date.toISOString().split("T")[0]);
+  });
+  return Array.from(dates).sort();
 }

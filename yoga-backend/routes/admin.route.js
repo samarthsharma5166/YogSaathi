@@ -1,6 +1,6 @@
 // 📁 routes/admin.route.js
 import express from "express";
-import {  getAllUsersAdmin, getAnalytics, getPaidSubscribers, getUserDetails, removeUser } from "../controllers/admin.controller.js";
+import {  downloadAttendance, getAllUsersAdmin, getAnalytics, getPaidSubscribers, getUserDetails, removeUser } from "../controllers/admin.controller.js";
 import { isAuthenticated,isAdmin } from "../middleware/auth.js";
 import { createScheduledMessage, deletecheduledMessage, editScheduledMessage, getScheduledMessages } from "../controllers/schedulers.cotroller.js";
 
@@ -11,6 +11,7 @@ router.get("/users", isAuthenticated, isAdmin, getAllUsersAdmin);
 router.get("/analytics", isAuthenticated, isAdmin, getAnalytics);
 router.get("/manageusers", isAuthenticated, isAdmin, getPaidSubscribers);
 router.get("/user/:userId", isAuthenticated, isAdmin, getUserDetails);
+router.get("/attendance", isAuthenticated, isAdmin, downloadAttendance);
 router.delete("/user/:userId",isAuthenticated, isAdmin, removeUser);
 
 // ===== Message Scheduler Routes =====

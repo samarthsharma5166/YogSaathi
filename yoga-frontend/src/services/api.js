@@ -80,6 +80,15 @@ export const getAllUsersFromDb = (usertype, startDate, endDate) => {
   }
   return API.get(url);
 }
+export const downloadAttendance = (usertype, startDate, endDate) => {
+  let url = `/admin/attendance?usertype=${usertype}`;
+  if (startDate && endDate) {
+    url += `&startDate=${startDate}&endDate=${endDate}`;
+  }
+  return API.get(url, {
+    responseType: "blob",
+  });
+};
 export const getUserDetails = (id) => API.get(`/admin/user/${id}`);
 
 
