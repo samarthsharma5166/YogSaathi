@@ -55,6 +55,8 @@ import BlogAdminDashboard from "./pages/BlogAdminDashboard.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
 import CampaignPage from "./pages/CampaignPage.jsx";
 import ManagePayments from "./Admin/ManagePayments.jsx";
+import ManageCommonLink from "./Admin/ManageCommonLink.jsx";
+import ManageOffers from "./Admin/ManageOffers.jsx";
 
 
 function AppContent() {
@@ -105,10 +107,12 @@ function AppContent() {
             <Route path="refferal" element={<Refferal />} />
             <Route path="manage-user" element={<Manageuser />} />
             <Route path="manage-plans" element={<ManagePlans />} />
+            <Route path="manage-offers" element={<ManageOffers />} />
             <Route path="user/:id" element={<UserPage />} />
             <Route path="price" element={<Pricing />} />
             <Route path="logout" element={<Logout />} />
             <Route path="scheduledMessage" element={<ScheduledMessageManager />} />
+            <Route path="manage-common-link" element={<ManageCommonLink />} />
           </Route>
 
           {/* User Routes with Layout */}

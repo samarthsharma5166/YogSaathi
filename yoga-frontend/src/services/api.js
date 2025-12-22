@@ -193,4 +193,25 @@ export const deleteCampaign = (id) => API.delete(`/campaigns/${id}`);
 export const updateStatus = (id, data) => API.put(`/campaigns/updateStatus/${id}`, data);
 
 // ✅ Export main API instance
+
+
+// ===============================
+// ✅ MANAGE COMMON LINK APIs (Admin)
+// ===============================
+export const createOrUpdateCommonLink = (data) => API.post("/common-link", data);
+export const getCommonLink = () => API.get("/common-link");
+
+
+// ===============================
+// ✅ MANAGE OFFERS  APIs (Admin)
+// ===============================
+export const getAllOffers = () => API.get("/offers/all");
+export const updateOffer = (editorId,offer) => API.put(`/offers/${editorId}`,offer);
+export const deleteOffer = (editorId) => API.delete(`/offers/${editorId}`);
+export const createOffer = (offer) => API.post("/offers",offer);
+export const getActiveOffer =() => API.get("/offers/active");
+
+
+
+
 export default API;

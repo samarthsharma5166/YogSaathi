@@ -108,6 +108,28 @@ const templateName = [
         inputs:[
             { label: "Link", name: "Link", type: "text", required: true },
         ]
+    },
+    {
+        name:"21_days_yoga_trial_intimation_hindi",
+        inputs:[]
+    },
+    {
+        name:"world_meditation_day_greetings",
+        inputs:[]
+    },
+    {
+        name:"festival_greetings_christmas_new_year",
+        inputs:[]
+    },
+    {
+        name:"online_free_yoga_trial__joining_details",
+        inputs:[]
+    },
+    {
+        name: "class_reminder_free_yoga_for_all",
+        inputs: [
+            { label: "Class Name", name: "classId", type: "select", required: true },
+        ]
     }
 ];
 
@@ -145,7 +167,7 @@ export default function ScheduledMessageManager() {
     }
 
     useEffect(() => {
-        if (formData.templateName === 'class_reminder') {
+        if (formData.templateName === 'class_reminder' || formData.templateName === 'class_reminder_free_yoga_for_all') {
             getClasses();
         }
     }, [formData.templateName]);

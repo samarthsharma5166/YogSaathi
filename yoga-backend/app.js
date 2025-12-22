@@ -18,6 +18,8 @@ import bodyParser from "body-parser";
 import { invoice_subscription_plan, share_wellness_14_days_of_free_yoga } from './utils/messages.js';
 import { orientationJob } from './Schedular/Admin.Schedular.js';
 import paymentRoutes  from './routes/payment.route.js'
+import commonLinkRoutes from './routes/commonLink.route.js';
+import offerRoutes from './routes/offer.route.js';
 import { generateYogaInvoice } from './utils/generateInvoice.js';
 
 const app = express();
@@ -47,6 +49,8 @@ app.use("/api", planRoutes)
 app.use("/api/yogaClasses",yogaClassRoute);
 app.use("/api/campaigns", campignRoutes)
 app.use("/api/payment",paymentRoutes);
+app.use("/api/common-link", commonLinkRoutes);
+app.use("/api/offers", offerRoutes);
 
 app.post("/generateInvoice",async(req,res)=>{
   const { invoiceNo, planName,name, email, startDate, expiresAt, referralDays, finalEndDate ,isIndian, price} = req.body;

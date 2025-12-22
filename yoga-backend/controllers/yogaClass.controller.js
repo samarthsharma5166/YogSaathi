@@ -223,8 +223,16 @@ export const getClassLink = async (req, res) => {
             },
         });
 
-        if (!user) {
-            return res.status(404).json({ success: false, message: "User not found" });
+        const commonLink = await prisma.commonLink.findFirst({
+            where: { 
+                ref: code,
+                expiryDate: { gte: yesterdayUTC },
+                startDate: { lte: tomorrowUTC },
+             },
+        });
+
+        if (!user && !commonLink) {
+            return res.status(404).json({ success: false, message: "User not found or Link expired" });
         }
 
         // 🔹 Find active yoga class
@@ -245,12 +253,16 @@ export const getClassLink = async (req, res) => {
             });
         }
 
-        // 🔹 Admins bypass subscription logic
-        if (user.role === "ADMIN") {
+        if (commonLink) {
             return res.status(200).json({ success: true, link: yogaClass.videoLink });
         }
 
-        if (user.subscription.length === 0) {
+        // 🔹 Admins bypass subscription logic
+        if (user && user.role === "ADMIN") {
+            return res.status(200).json({ success: true, link: yogaClass.videoLink });
+        }
+
+        if (user && user.subscription.length === 0) {
             return res.status(403).json({
                 success: false,
                 message: "Subscription expired or inactive",

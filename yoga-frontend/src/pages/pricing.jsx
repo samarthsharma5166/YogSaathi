@@ -1,31 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
-import { fetchPlans } from "../services/api";
+import { fetchPlans, getActiveOffer } from "../services/api";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 const Pricing = () => {
   const [plans, setPlans] = useState([]);
+  const [offer, setOffer] = useState(null);
   const navigate = useNavigate();
   async function getPlans(){
     const res = await fetchPlans();
     setPlans(res.data.plans);
   }
 
+  const fetchActiveOffer = async () => {
+    try {
+      const response = await getActiveOffer();
+        // const response = await axios.get('http://localhost:8000/api/offers/active');
+        setOffer(response.data.offer);
+    } catch (error) {
+        console.error('Error fetching active offer:', error);
+    }
+  };
+
   useEffect(()=>{
    getPlans();
+   fetchActiveOffer();
   },[]);
 
   function handleClick(id,currency){
-    // const token = localStorage.getItem("token");
-    // const user = localStorage.getItem("user")
-    // if (token && user && id){
-    //   navigate(`/checkout/${id}`);
-    // }else{
-    //   navigate("/auth/login");
-    // }
     navigate(`/checkout/${id}?currency=${currency}`);
-
   }
 
   return (
@@ -33,7 +38,7 @@ const Pricing = () => {
       <h2 className="text-2xl font-bold text-center text-green-600 mb-1 mt-3">
         Yog Saathi Packages
       </h2>
-      {/* <p className="text-red-600 animate-bounce text-center mb-10">Special Diwali Offer - One Month Extra In Each Subscription Plan (valid till 23-Oct-25).</p> */}
+      {offer && <p className="text-red-600 animate-pulse font-semibold text-center mb-4">{offer.text}</p>}
 
       {/* INR Section */}
       <h4 className="text-lg text-gray-600 text-center font-semibold mb-4">INR Pricing</h4>
