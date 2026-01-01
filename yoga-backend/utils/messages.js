@@ -232,7 +232,7 @@ export const session_reminder__orientation_for_free_trial = (number, name, date,
     });
 }
 
-export const class_reminder = (number, name, focusArea, refferalCode, referralPoints ) =>{
+export const class_reminder = (number, name, link, focusArea) =>{
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "class_reminder",
         language: "en",
@@ -263,7 +263,7 @@ export const class_reminder = (number, name, focusArea, refferalCode, referralPo
                     },
                     {
                         "type": "text",
-                        "text": `${process.env.CLASS_BASE_URL}/class/join?ref=${refferalCode}_${referralPoints}`
+                        "text": link
                     }
                 ]
             }
@@ -1368,8 +1368,8 @@ export const online_free_yoga_trial__joining_details = (number,name,link) =>{
 
 }
 
-
-export const class_reminder_free_yoga_for_all = (number,name,link,focusArea)=>{
+// number, name, link, focusArea
+export const class_reminder_free_yoga_for_all = (number, name, focusArea, refferalCode, referralPoints)=>{
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "class_reminder_free_yoga_for_all",
         language: "en",
@@ -1396,11 +1396,51 @@ export const class_reminder_free_yoga_for_all = (number,name,link,focusArea)=>{
                     },
                     {
                         "type": "text",
-                        "text": link
+                        "text": `${process.env.CLASS_BASE_URL}/class/join?ref=${refferalCode}_${referralPoints}`
                     },
                     {
                         "type": "text",
                         "text": focusArea
+                    }
+                ]
+            }
+        ]
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
+        }
+    }).then(response => {
+        console.log(response.data);
+    }).catch(error => {
+        console.error("Error:", error);
+    });
+}
+
+export const subscription_plan_new_year_offer = (number,name)=>{
+    axios.post("https://backend.chatmitra.com/api/client/send_template", {
+        templateName: "subscription_plan_new_year_offer",
+        language: "en",
+        phoneNumber: number,
+        customer_name: name,
+        components: [
+            {
+                "type": "header",
+                "parameters": [
+                    {
+                        "type": "image",
+                        "image": {
+                            "link": "https://chatmitra.s3.ap-south-1.amazonaws.com/images/1755668233917_logomain.png"
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "body",
+                "parameters": [
+                    {
+                        "type": "text",
+                        "text": name
                     }
                 ]
             }

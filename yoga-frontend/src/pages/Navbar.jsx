@@ -39,7 +39,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="logo" onClick={closeMenu}>
-          <img src={logo} alt="Logo" />
+          <img className="logo-img" style={{width:"80px",height:"91px"}} src={logo} alt="Logo" />
         </Link>
 
         {/* Toggle Icon (☰ or ✖) */}

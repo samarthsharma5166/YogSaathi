@@ -130,6 +130,10 @@ const templateName = [
         inputs: [
             { label: "Class Name", name: "classId", type: "select", required: true },
         ]
+    },
+    {
+        name:"subscription_plan_new_year_offer",
+        inputs:[]
     }
 ];
 

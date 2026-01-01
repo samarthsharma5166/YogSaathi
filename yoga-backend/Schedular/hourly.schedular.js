@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
 import { prisma } from '../db/db.js';
-import { class_reminder, class_reminder_free_yoga_for_all, days_yoga_trial_intimation_hindi, festival_greetings, festival_greetings_christmas_new_year, free_online_yoga_trial_reminder, giftwellness_yogsaathi, join_session__mark_attendance, online_free_yoga_trial__joining_details, session_reminder, session_reminder__orientation_for_free_trial, share_wellness_14_days_of_free_yoga, subscription_invitation, vijayadashami_greetings, vijaydashmi_greetings_and_referrals, weekly_attendance_status__yogsaathi_sessions, world_meditation_day_greetings, yoga_class_time_details_as_per_ist, yoga_offer_reminder, yoga_subscription_offer, yoga_trial_midway_update__reminder, yoga_trial_participation_reminder, yogsaathi_communication_channels, yogsaathi_contact_detail, your_weekly_yoga_schedule__access_details } from '../utils/messages.js';
+import { class_reminder, class_reminder_free_yoga_for_all, days_yoga_trial_intimation_hindi, festival_greetings, festival_greetings_christmas_new_year, free_online_yoga_trial_reminder, giftwellness_yogsaathi, join_session__mark_attendance, online_free_yoga_trial__joining_details, session_reminder, session_reminder__orientation_for_free_trial, share_wellness_14_days_of_free_yoga, subscription_invitation, subscription_plan_new_year_offer, vijayadashami_greetings, vijaydashmi_greetings_and_referrals, weekly_attendance_status__yogsaathi_sessions, world_meditation_day_greetings, yoga_class_time_details_as_per_ist, yoga_offer_reminder, yoga_subscription_offer, yoga_trial_midway_update__reminder, yoga_trial_participation_reminder, yogsaathi_communication_channels, yogsaathi_contact_detail, your_weekly_yoga_schedule__access_details } from '../utils/messages.js';
 import { startOfWeek, addDays, format } from "date-fns";
 
 export const hourlyJob = new CronJob('* * * * *', async () => {
@@ -40,9 +40,10 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
             })
 
             const users = await getUsers(message);
-
+            const link = await prisma.commonLink.findFirst();
             users.map((user)=>{
-                class_reminder(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
+                class_reminder_free_yoga_for_all(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
+                // class_reminder(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
             })
 
             await prisma.yogaClass.update({
@@ -252,11 +253,20 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
             })
             const users = await getUsers(message);
             const link = await prisma.commonLink.findFirst();
+            // number, name, link, focusArea
             users.map((user) => {
-                class_reminder_free_yoga_for_all(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
+                class_reminder(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
+                // class_reminder_free_yoga_for_all(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
             })
         }
 
+        if (message.templateName === "subscription_plan_new_year_offer"){
+            const users = await getUsers(message);
+            users.map((user) => {
+                subscription_plan_new_year_offer(user.phoneNumber, user.name);
+            })
+        }
+    
     });
 
     scheduledMessages.forEach(async (message) => {

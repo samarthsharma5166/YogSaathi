@@ -34,6 +34,7 @@ import teacher1 from '../assets/teacher1.jpeg'
 
 import { registerUser } from "../services/api";
 import { MdOutlineFreeBreakfast } from "react-icons/md";
+import Testimonials from "../components/Testimonials";
 
 const teamMembers = [
   {
@@ -282,7 +283,85 @@ const HomePage = () => {
 
   return (
     <div className="home-wrapper mt-24">
+      {/* offer */}
+      {/* <div className="!bg-white h-18 z-9999 relative mt-4">
+        <p className="text-red-600 animate-pulse font-semibold text-center mb-2">
+          Registration for 21 Days Free Online Yoga Sessions Open 
+        </p>
+        <p className="text-red-600 animate-pulse font-semibold text-center mb-4">
+          🔴 Speial New Year Offer On Subscription Plans (Valid Till 10 Jan, 2026): 12+6 Months FREE | 6+3 Months FREE | 3+1 Month FREE
+        </p>
+      </div> */}
+      {/* <div className="offer-banner">
+        <div className="offer-left">
+          <span className="offer-badge">NEW YEAR OFFER 🎉</span>
+          <h3>
+            21 Days <span>FREE</span> Online Yoga Sessions
+          </h3>
+          <p>
+            Limited-time subscription bonus valid till
+            <strong> 10 Jan 2026</strong>
+          </p>
+        </div>
+
+        <div className="offer-right">
+          <ul>
+            <li>12 + 6 Months FREE</li>
+            <li>6 + 3 Months FREE</li>
+            <li>3 + 1 Month FREE</li>
+          </ul>
+          <button onClick={() => navigate("/auth/register")}>
+            Claim Offer →
+          </button>
+        </div>
+      </div> */} 
+      <div className="offer-banner">
+        {/* LEFT: Offer Content */}
+        <div className="offer-left">
+          <span className="offer-badge">NEW YEAR OFFER 🎉</span>
+
+          <h3>
+            21 Days <span>FREE</span> Online Yoga Sessions
+          </h3>
+
+          <p className="offer-sub">
+            Start risk-free. No payment required.
+          </p>
+
+
+          {/* Primary CTA */}
+          <button
+            className="offer-btn primary"
+            onClick={() => navigate("/auth/register")}
+          >
+            Start Free Trial →
+          </button>
+        </div>
+
+        {/* RIGHT: Subscription Deals */}
+        <div className="offer-right">
+          <p className="offer-valid">
+            New Year Special Subscription Bonus <strong>(Valid till 10 Jan 2026)</strong>
+          </p>
+
+          <ul>
+            <li>12 + 6 Months FREE</li>
+            <li>6 + 3 Months FREE</li>
+            <li>3 + 1 Month FREE</li>
+          </ul>
+
+          {/* Secondary CTA */}
+          <button
+            className="offer-btn secondary"
+            onClick={() => navigate("/price")}
+          >
+            View Subscription Plans →
+          </button>
+        </div>
+      </div>
+
       <Mainslider />
+
       {/* <section className="trusted-section"> */}
       {/* <h4 className="subheading">Welcome to Yoga Website</h4>
         <h2 className="main-heading">Trusted by Members Worldwide</h2>
@@ -600,6 +679,7 @@ const HomePage = () => {
         </div>
       )}
 
+
       <section className="founders-faqs">
         <h2 className="section-title">Meet Our Founder</h2>
 
@@ -619,6 +699,7 @@ const HomePage = () => {
         <br />
         <br />
 
+          <Testimonials/>
         <h1
           style={{ paddingBottom: "20px", fontSize: "40px" }}
           className="faq-heading"
