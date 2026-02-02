@@ -315,31 +315,31 @@ const HomePage = () => {
           </button>
         </div>
       </div> */} 
-      <div className="offer-banner">
+      {/* <div className="offer-banner"> */}
         {/* LEFT: Offer Content */}
-        <div className="offer-left">
-          <span className="offer-badge">NEW YEAR OFFER 🎉</span>
+        {/* <div className="offer-left"> */}
+          {/* <span className="offer-badge">NEW YEAR OFFER 🎉</span> */}
 
-          <h3>
+          {/* <h3>
             21 Days <span>FREE</span> Online Yoga Sessions
           </h3>
 
           <p className="offer-sub">
             Start risk-free. No payment required.
-          </p>
+          </p> */}
 
 
           {/* Primary CTA */}
-          <button
+          {/* <button
             className="offer-btn primary"
             onClick={() => navigate("/auth/register")}
           >
             Start Free Trial →
           </button>
-        </div>
+        </div> */}
 
         {/* RIGHT: Subscription Deals */}
-        <div className="offer-right">
+        {/* <div className="offer-right">
           <p className="offer-valid">
             New Year Special Subscription Bonus <strong>(Valid till 10 Jan 2026)</strong>
           </p>
@@ -351,14 +351,14 @@ const HomePage = () => {
           </ul>
 
           {/* Secondary CTA */}
-          <button
+          {/* <button
             className="offer-btn secondary"
             onClick={() => navigate("/price")}
           >
             View Subscription Plans →
-          </button>
-        </div>
-      </div>
+          </button> */}
+        {/* </div> */}
+      {/* </div> */} 
 
       <Mainslider />
 

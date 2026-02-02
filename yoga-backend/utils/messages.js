@@ -232,7 +232,9 @@ export const session_reminder__orientation_for_free_trial = (number, name, date,
     });
 }
 
-export const class_reminder = (number, name, link, focusArea) =>{
+// export const class_reminder = (number, name, link, focusArea) =>{
+export const class_reminder = (number, name, focusArea, refferalCode, referralPoints) => {
+
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "class_reminder",
         language: "en",
@@ -263,7 +265,7 @@ export const class_reminder = (number, name, link, focusArea) =>{
                     },
                     {
                         "type": "text",
-                        "text": link
+                        "text": `${process.env.CLASS_BASE_URL}/class/join?ref=${refferalCode}_${referralPoints}`
                     }
                 ]
             }
@@ -1369,7 +1371,7 @@ export const online_free_yoga_trial__joining_details = (number,name,link) =>{
 }
 
 // number, name, link, focusArea
-export const class_reminder_free_yoga_for_all = (number, name, focusArea, refferalCode, referralPoints)=>{
+export const class_reminder_free_yoga_for_all = (number, name, link, focusArea)=>{
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "class_reminder_free_yoga_for_all",
         language: "en",
@@ -1396,7 +1398,7 @@ export const class_reminder_free_yoga_for_all = (number, name, focusArea, reffer
                     },
                     {
                         "type": "text",
-                        "text": `${process.env.CLASS_BASE_URL}/class/join?ref=${refferalCode}_${referralPoints}`
+                        "text": link
                     },
                     {
                         "type": "text",

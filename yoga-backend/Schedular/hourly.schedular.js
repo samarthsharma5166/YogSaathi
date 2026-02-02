@@ -40,10 +40,10 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
             })
 
             const users = await getUsers(message);
-            const link = await prisma.commonLink.findFirst();
+            // const link = await prisma.commonLink.findFirst();
             users.map((user)=>{
-                class_reminder_free_yoga_for_all(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
-                // class_reminder(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
+                // class_reminder_free_yoga_for_all(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
+                class_reminder(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
             })
 
             await prisma.yogaClass.update({
@@ -255,8 +255,8 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
             const link = await prisma.commonLink.findFirst();
             // number, name, link, focusArea
             users.map((user) => {
-                class_reminder(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
-                // class_reminder_free_yoga_for_all(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
+                // class_reminder(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
+                class_reminder_free_yoga_for_all(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
             })
         }
 
