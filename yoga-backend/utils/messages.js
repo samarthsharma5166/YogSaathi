@@ -1371,7 +1371,7 @@ export const online_free_yoga_trial__joining_details = (number,name,link) =>{
 }
 
 // number, name, link, focusArea
-export const class_reminder_free_yoga_for_all = (number, name, link, focusArea)=>{
+export const class_reminder_free_yoga_for_all = (number, name, focusArea, refferalCode, referralPoints)=>{
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "class_reminder_free_yoga_for_all",
         language: "en",
@@ -1398,7 +1398,7 @@ export const class_reminder_free_yoga_for_all = (number, name, link, focusArea)=
                     },
                     {
                         "type": "text",
-                        "text": link
+                        "text": `${process.env.CLASS_BASE_URL}/class/join?ref=${refferalCode}_${referralPoints}`
                     },
                     {
                         "type": "text",

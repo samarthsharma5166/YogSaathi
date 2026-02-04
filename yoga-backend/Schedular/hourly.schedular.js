@@ -256,7 +256,8 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
             // number, name, link, focusArea
             users.map((user) => {
                 // class_reminder(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
-                class_reminder_free_yoga_for_all(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
+                class_reminder_free_yoga_for_all(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
+                // class_reminder_free_yoga_for_all(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
             })
         }
 
