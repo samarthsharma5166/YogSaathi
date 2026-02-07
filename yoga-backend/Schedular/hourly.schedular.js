@@ -267,6 +267,7 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
                 subscription_plan_new_year_offer(user.phoneNumber, user.name);
             })
         }
+
     
     });
 

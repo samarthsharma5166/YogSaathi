@@ -217,3 +217,46 @@ model Offer {
   updatedAt DateTime @updatedAt
 }
 
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum TShirtSize {
+  S
+  M
+  L
+  XL
+  XXL
+}
+
+enum RetreatPlan {
+  TWIN_SHARING_SUPERIOR
+  SINGLE_OCCUPANCY_SUPERIOR
+  TWIN_SHARING_JACUZZI
+  SINGLE_OCCUPANCY_JACUZZI
+}
+
+enum EventPaymentStatus {
+  PENDING
+  PAID
+}
+
+model EventRegistration {
+  id           String      @id @default(uuid())
+  fullName     String
+  gender       Gender
+  age          Int
+  mobileNumber String
+  email        String
+  city         String
+  tShirtSize   TShirtSize
+  plan         RetreatPlan
+  orderId      String?
+  paymentId    String?
+  status       EventPaymentStatus @default(PENDING)
+  invoice      String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+

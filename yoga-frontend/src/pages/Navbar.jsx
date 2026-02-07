@@ -69,6 +69,11 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
+            <Link to="/retreat" onClick={closeMenu}>
+              Rishikesh Retreat
+            </Link>
+          </li>
+          <li>
             <Link to="/about" onClick={closeMenu}>
               About Us
             </Link>

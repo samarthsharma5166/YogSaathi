@@ -53,6 +53,7 @@ import YogaClassManager from "./pages/YogaClassManager.jsx";
 import JoinClass from "./pages/JoinClass.jsx";
 import BlogAdminDashboard from "./pages/BlogAdminDashboard.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
+import RetreatPage from "./pages/RetreatPage.jsx";
 import CampaignPage from "./pages/CampaignPage.jsx";
 import ManagePayments from "./Admin/ManagePayments.jsx";
 import ManageCommonLink from "./Admin/ManageCommonLink.jsx";
@@ -95,6 +96,7 @@ function AppContent() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/termsofuse" element={<TermsOfUse />} />
           <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/retreat" element={<RetreatPage />} />
 
           {/* Admin Routes with Layout */}
           <Route path="/admin" element={<AdminLayout />}>

@@ -2,6 +2,104 @@ import PDFDocument from "pdfkit";
 import fs from "fs";
 import path from "path";
 
+
+export async function generateInvoice(eventRegistration) {
+  const invoiceDir = path.join(process.cwd(), "invoices");
+  fs.mkdirSync(invoiceDir, { recursive: true });
+
+  const safeInvoiceNo = eventRegistration.id.replace(/[\\/]/g, "-");
+  const fileName = `invoice-YS-EVENT-${safeInvoiceNo}.pdf`;
+  const invoicePath = path.join(invoiceDir, fileName);
+
+  const doc = new PDFDocument({ margin: 50 });
+  const stream = fs.createWriteStream(invoicePath);
+  doc.pipe(stream);
+
+  // ================= HEADER =================
+  doc.fontSize(18).text("Healthy Horizons Pvt Ltd", { align: "center" });
+  doc.moveDown(0.5);
+  doc.fontSize(10).text(
+    "Email: healthy.horizons111@gmail.com | Website: www.yogsaathi.com",
+    { align: "center" }
+  );
+
+  doc.moveDown();
+  doc.fontSize(16).text("Invoice", { align: "center" });
+  doc.moveDown();
+
+  // ================= INVOICE META =================
+  doc.fontSize(11).text(`Invoice No: YS/2026/01`);
+  doc.text(`Date of Issue: ${new Date().toLocaleDateString()}`);
+  doc.moveDown();
+
+  // ================= CUSTOMER DETAILS =================
+  doc.font("Helvetica-Bold").text("Customer Detail");
+  doc.font("Helvetica");
+  doc.text(`Name: ${eventRegistration.fullName}`);
+  doc.text(`Email: ${eventRegistration.email}`);
+  doc.moveDown();
+
+  // ================= RETREAT DETAILS =================
+  doc.font("Helvetica-Bold").text("Yoga Retreat Details:");
+  doc.font("Helvetica");
+  doc.text("Start Date: 12.03.26, 1 PM");
+  doc.text("End Date: 15.03.26, 11.30 AM");
+  doc.text("Venue: Panambi Resort, Rishikesh");
+  doc.moveDown();
+
+  // ================= TABLE HEADER =================
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown(0.5);
+
+  doc.font("Helvetica-Bold");
+  doc.text("Description", 50, doc.y, { continued: true });
+  doc.text("Amount", { align: "right" });
+  doc.moveDown(0.5);
+
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown(0.5);
+
+  // ================= TABLE ROW =================
+  doc.font("Helvetica");
+  doc.text(
+    "Yoga Retreat (26.02.26 to 01.03.26, Panambi Resort)\nSingle Sharing / Twin Sharing",
+    50,
+    doc.y,
+    { continued: true }
+  );
+  doc.text("16,000 INR", { align: "right" });
+  doc.moveDown();
+
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown(0.5);
+
+  // ================= TOTALS =================
+  doc.font("Helvetica-Bold");
+  doc.text("Net Payable", 50, doc.y, { continued: true });
+  doc.text("16,000 INR", { align: "right" });
+  doc.moveDown();
+
+  doc.text("Total Amount Paid", 50, doc.y, { continued: true });
+  doc.text("16,000 INR", { align: "right" });
+
+  doc.moveDown(2);
+
+  // ================= FOOTER =================
+  doc.fontSize(12)
+    .text(
+      "Thank you for opting YogSaathi + Panambi Resort Yoga Retreat",
+      { align: "center" }
+    );
+
+  doc.end();
+
+  return new Promise((resolve, reject) => {
+    stream.on("finish", () => resolve(fileName));
+    stream.on("error", reject);
+  });
+}
+
+
 // export function generateYogaInvoice({
 //   invoiceNo,
 //   dateOfIssue,
