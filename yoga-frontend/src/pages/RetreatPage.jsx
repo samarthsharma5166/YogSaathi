@@ -5,6 +5,7 @@ import { useRef } from "react";
 
 const RetreatPage = () => {
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     gender: "MALE",
@@ -15,15 +16,45 @@ const RetreatPage = () => {
     tShirtSize: "M",
     plan: "TWIN_SHARING_SUPERIOR",
   });
+  const [errors, setErrors] = useState({});
   const eventRegistrationId = useRef(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: "" });
   };
 
   const handleNextStep = () => {
-    setStep(2);
+    const newErrors = {};
+    if (!formData.fullName) newErrors.fullName = "Full name is required";
+    if (!formData.age) {
+      newErrors.age = "Age is required";
+    } else if (formData.age <= 10) {
+      newErrors.age = "Age must be greater than 10";
+    }
+    if (!formData.mobileNumber) {
+      newErrors.mobileNumber = "Mobile number is required";
+    }
+    else if(formData.mobileNumber.length<10){
+      newErrors.mobileNumber = "Mobile number must be of 10 digits";
+    }
+    else if (!/^\d+$/.test(formData.mobileNumber)) {
+      newErrors.mobileNumber = "Mobile number must be a number";
+    }
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+    if (!formData.city) newErrors.city = "City is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      setErrors({});
+      setStep(2);
+    }
   };
 
   const handleBackStep = () => {
@@ -32,6 +63,7 @@ const RetreatPage = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const { data } = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/event/register`,
@@ -48,16 +80,29 @@ const RetreatPage = () => {
         name: "YogSaathi Rishikesh Retreat",
         description: "Payment for the retreat",
         order_id: order.id,
+        modal: {
+          ondismiss: () => {
+            setLoading(false);
+          },
+        },
         handler: async (response) => {
-          const { data } = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/event/verify`,
-            {
-              ...response,
-              eventRegistrationId:eventRegistrationId.current,
-            }
-          );
-          alert(data.message);
-          window.open(`${import.meta.env.VITE_BACKEND_URL}/invoices/${data.invoicePath}`);
+          try {
+            const { data } = await axios.post(
+              `${import.meta.env.VITE_BACKEND_URL}/event/verify`,
+              {
+                ...response,
+                eventRegistrationId:eventRegistrationId.current,
+              }
+            );
+            window.location.href = `${import.meta.env.VITE_BACKEND_URL}/invoices/${data.invoicePath}`;
+
+
+          } catch (error) {
+            console.error(error);
+            alert("Something went wrong during verification");
+          } finally {
+            setLoading(false);
+          }
         },
         prefill: {
           name: formData.fullName,
@@ -79,12 +124,14 @@ const RetreatPage = () => {
         alert(response.error.reason);
         alert(response.error.metadata.order_id);
         alert(response.error.metadata.payment_id);
+        setLoading(false)
       });
 
       rzp1.open();
     } catch (error) {
       console.error(error);
       alert("Something went wrong");
+      setLoading(false);
     }
   };
 
@@ -204,7 +251,8 @@ const RetreatPage = () => {
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 pb-16">
-        {step === 1 && (
+        {step === 1 &&
+         (
           <div className="bg-white rounded-lg shadow-xl overflow-hidden">
             <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-6">
               <h2 className="text-3xl mb-2">Step 1: Your Details</h2>
@@ -228,9 +276,9 @@ const RetreatPage = () => {
                       placeholder="Enter your full name"
                       value={formData.fullName}
                       onChange={handleInputChange}
-                      required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                     />
+                    {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName}</p>}
                   </div>
 
                   {/* Gender */}
@@ -262,9 +310,9 @@ const RetreatPage = () => {
                       placeholder="Enter your age"
                       value={formData.age}
                       onChange={handleInputChange}
-                      required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                     />
+                    {errors.age && <p className="text-red-500 text-sm">{errors.age}</p>}
                   </div>
 
                   {/* Mobile Number */}
@@ -280,9 +328,9 @@ const RetreatPage = () => {
                       placeholder="Enter your mobile number"
                       value={formData.mobileNumber}
                       onChange={handleInputChange}
-                      required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                     />
+                    {errors.mobileNumber && <p className="text-red-500 text-sm">{errors.mobileNumber}</p>}
                   </div>
 
                   {/* Email */}
@@ -298,9 +346,9 @@ const RetreatPage = () => {
                       placeholder="Enter your email address"
                       value={formData.email}
                       onChange={handleInputChange}
-                      required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                     />
+                    {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                   </div>
 
                   {/* City */}
@@ -316,9 +364,9 @@ const RetreatPage = () => {
                       placeholder="Enter your city"
                       value={formData.city}
                       onChange={handleInputChange}
-                      required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                     />
+                    {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
                   </div>
 
                   {/* T-Shirt Size */}
@@ -446,16 +494,28 @@ const RetreatPage = () => {
                 </button>
                 <button
                   type="submit"
-                  className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
+                  disabled={loading}
+                  className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all flex items-center gap-2 disabled:opacity-50"
                 >
-                  Proceed to Payment
-                  <ChevronRight className="w-5 h-5" />
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      <span className="ml-2">Processing...</span>
+                    </div>
+                  ) : (
+                    <>
+                      Pay Now
+                      <ChevronRight className="w-5 h-5" />
+                    </>
+                  )}
                 </button>
               </div>
             </form>
           </div>
         )}
       </div>
+      <h1 className="w-5xl mx-auto text-red-500 font-bold text-lg">Declaration</h1>
+        <p className="w-5xl mx-auto text-sm mb-10 text-green-500">Declaration I hereby declare that the information provided above is true and correct to the best of my knowledge. I confirm that I am participating in the YogSaathi × Panambi Yoga Retreat voluntarily and understand that yoga involves physical activity. I take full responsibility for my health and well-being during the retreat and shall not hold the organizers, instructors, or the resort responsible for any injury, loss, or discomfort arising during the program.ˀ</p>
     </div>
   );
 };

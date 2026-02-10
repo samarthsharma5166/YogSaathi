@@ -4,6 +4,8 @@ import crypto from "crypto";
 import { generateInvoice } from "../utils/generateInvoice.js";
 import { prisma } from "../db/db.js";
 import {instance as razorpay} from '../index.js'
+import { payment_confirmation } from "../utils/messages.js";
+import { Parser } from "json2csv";
 
 // const razorpay = new Razorpay({
 //   key_id: process.env.RAZORPAY_KEY_ID,
@@ -100,6 +102,7 @@ export const verifyEventPayment = async (req, res) => {
       // Generate Invoice
       const invoicePath = await generateInvoice(eventRegistration);
 
+      await payment_confirmation(eventRegistration.mobileNumber,eventRegistration.fullName,planCosts[eventRegistration.plan])
 
       await prisma.eventRegistration.update({
         where: { id: eventRegistrationId },
@@ -120,3 +123,49 @@ export const verifyEventPayment = async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 };
+
+export const getRetreatUsers = async (req, res) => {
+  try {
+    const users = await prisma.eventRegistration.findMany({
+      where: {
+        status: "PAID",
+      },
+    });
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+export const downloadRetreatUsers = async (req, res) => {
+  try {
+    const users = await prisma.eventRegistration.findMany({
+      where: {
+        status: "PAID",
+      },
+    });
+
+    const fields = [
+      "fullName",
+      "gender",
+      "age",
+      "mobileNumber",
+      "email",
+      "city",
+      "tShirtSize",
+      "plan",
+      "status",
+    ];
+    const json2csvParser = new Parser({ fields });
+    const csv = json2csvParser.parse(users);
+
+    res.header("Content-Type", "text/csv");
+    res.attachment("retreat-users.csv");
+    res.send(csv);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+

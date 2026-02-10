@@ -212,6 +212,12 @@ export const createOffer = (offer) => API.post("/offers",offer);
 export const getActiveOffer =() => API.get("/offers/active");
 
 
+export const getRetreatUsers = () => API.get("/event/retreat-users");
+
+export const downloadRetreatUsers = () =>
+  API.get("/event/retreat-users/download", {
+    responseType: "blob",
+  });
 
 
 export default API;

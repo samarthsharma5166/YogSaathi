@@ -2,7 +2,7 @@ import React from "react";
 
 const testimonials = [
     {
-        name: "Sanjeev Kumar Paul",
+        name: "Sanjeeb Kumar Paul",
         time: "62 Years",
         location: "Kolkata",
         image: "/user1.jpeg",

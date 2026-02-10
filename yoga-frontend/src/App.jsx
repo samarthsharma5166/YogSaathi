@@ -58,6 +58,8 @@ import CampaignPage from "./pages/CampaignPage.jsx";
 import ManagePayments from "./Admin/ManagePayments.jsx";
 import ManageCommonLink from "./Admin/ManageCommonLink.jsx";
 import ManageOffers from "./Admin/ManageOffers.jsx";
+import RetreatEvent from "./pages/RetreatEvent.jsx";
+import RetreatUsers from "./Admin/RetreatUsers.jsx";
 
 
 function AppContent() {
@@ -96,8 +98,8 @@ function AppContent() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/termsofuse" element={<TermsOfUse />} />
           <Route path="/blog/:id" element={<BlogPost />} />
-          <Route path="/retreat" element={<RetreatPage />} />
-
+          <Route path="/retreat" element={<RetreatEvent />} />
+          <Route path="/retreat/registration" element={<RetreatPage/>}/>
           {/* Admin Routes with Layout */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="manage-campign" element={<CampaignPage/>}/>
@@ -115,6 +117,7 @@ function AppContent() {
             <Route path="logout" element={<Logout />} />
             <Route path="scheduledMessage" element={<ScheduledMessageManager />} />
             <Route path="manage-common-link" element={<ManageCommonLink />} />
+            <Route path="retreat-users" element={<RetreatUsers />} />
           </Route>
 
           {/* User Routes with Layout */}

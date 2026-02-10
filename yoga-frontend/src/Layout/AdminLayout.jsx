@@ -23,6 +23,7 @@ const menuItems = [
   { name: "Manage Refferal", icon: <SlLink />, path: "refferal" },
   { name: "scheduledMessage", icon: <SlClock />, path:"scheduledMessage"},
   { name: "Manage Common Link", icon: <SlLink />, path: "manage-common-link" },
+  { name: "Retreat Users", icon: <SlPeople />, path: "retreat-users" },
   { name: "Logout", icon: <SlLogout />, path: "logout" }
 ];
 const Adminlayout = () => {

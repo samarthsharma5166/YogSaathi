@@ -134,6 +134,25 @@ const templateName = [
     {
         name:"subscription_plan_new_year_offer",
         inputs:[]
+    },
+    {
+        name:"yoga_training_1ram",
+        inputs:[]
+    },
+    {
+        name:"yoga_training_2",
+        inputs:[]
+    },
+    {
+        name:"yoga_trail_intimation_",
+        inputs:[]
+    },
+    {
+        name:"yogsaathi_payment_link_share",
+        inputs:[]
+    },{
+        name:"yogsaathi_training_brochure_share",
+        inputs:[]
     }
 ];
 
