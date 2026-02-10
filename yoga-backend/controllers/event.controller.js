@@ -6,6 +6,7 @@ import { prisma } from "../db/db.js";
 import {instance as razorpay} from '../index.js'
 import { payment_confirmation } from "../utils/messages.js";
 import { Parser } from "json2csv";
+import sendEmail from "../utils/sendMail.js";
 
 // const razorpay = new Razorpay({
 //   key_id: process.env.RAZORPAY_KEY_ID,
@@ -102,8 +103,29 @@ export const verifyEventPayment = async (req, res) => {
       // Generate Invoice
       const invoicePath = await generateInvoice(eventRegistration);
 
-      await payment_confirmation(eventRegistration.mobileNumber,eventRegistration.fullName,planCosts[eventRegistration.plan])
+      const subject = 'Confirmation – YogSaathi × Panambi Yoga Retreat, Rishikesh';
+      const message = `
+        <p>Dear ${eventRegistration.fullName},</p>
+        <p>Greetings from YogSaathi.</p>
+        <p>Thank you for registering for the YogSaathi × Panambi Yoga Retreat at Rishikesh and for making the payment of ₹${planCosts[eventRegistration.plan]}. We are pleased to confirm your participation in the retreat.</p>
+        <p><b>Booking Details</b></p>
+        <p>Room Category: ${eventRegistration.plan}</p>
+        <p>Retreat Dates: 12.03.26 to 15.03.26</p>
+        <p><b>Check-in & Departure</b></p>
+        <p>Check-in: 12.03.26, 1 PM</p>
+        <p>Departure: 15.03.26, 11.30 AM</p>
+        <p><b>Venue Address</b></p>
+        <p>Panambi Resort & Spa<br>Cheela, Rishikesh, Uttarakhand<br>(A unit of Panambi Vacations Private Limited)</p>
+        <p><b>Important Note</b></p>
+        <p>Please carry loose pyjama/pants (preferably black or blue) for yoga practice.<br>A Yoga Mat and a Retreat T-Shirt will be provided by us.</p>
+        <p>For any assistance related to travel or location, please feel free to contact:<br>
+        Mr. Neeraj – 98916 98547<br>Mr. Sanjay- 99717 14091</p>
+        <p>You may also write to us at yogsaathi.26@gmail.com</p>
+      `;
 
+
+      await payment_confirmation(eventRegistration.mobileNumber,eventRegistration.fullName,planCosts[eventRegistration.plan])
+      await sendEmail("healthy.horizons111@gmail.com",subject,message)
       await prisma.eventRegistration.update({
         where: { id: eventRegistrationId },
         data: {

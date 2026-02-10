@@ -70,6 +70,6 @@ export const orientationJob = new CronJob('0 0 * * *', async () => {
       </div>
     `;
 
-    sendEmail("samarths716@gmail.com","New users joined today",message);
+  sendEmail("healthy.horizons111@gmail.com","New users joined today",message);
     // await sendToAdmin(message);
 });
