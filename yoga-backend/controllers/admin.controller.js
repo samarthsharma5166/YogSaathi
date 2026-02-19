@@ -52,16 +52,47 @@ export const getAllUsersAdmin = async (req, res) => {
         },
       });
 
+      // users = allUsers.filter(user => {
+      //   if (user.subscription.length === 0) {
+      //     if (usertype === "New-Users") {
+      //       return true;
+      //     }
+      //     return false;
+      //   }
+      //   const latestSubscription = user.subscription[0];
+      //   const isActive = latestSubscription.expiresAt >= now;
+      //   const isFreeTrial = latestSubscription.plan.isFreeTrial;
+
+      //   switch (usertype) {
+      //     case "Active-Free-Trial":
+      //       return isFreeTrial && isActive;
+      //     case "Inactive-Free-Trial":
+      //       return isFreeTrial && !isActive;
+      //     case "Active-Subscribers":
+      //       return !isFreeTrial && isActive;
+      //     case "Inactive-Subscriber":
+      //       return !isFreeTrial && !isActive;
+      //     default:
+      //       return false;
+      //   }
+      // });
+
       users = allUsers.filter(user => {
         if (user.subscription.length === 0) {
-          if (usertype === "New-Users") {
-            return true;
-          }
-          return false;
+          return usertype === "New-Users";
         }
-        const latestSubscription = user.subscription[0];
-        const isActive = latestSubscription.expiresAt >= now;
-        const isFreeTrial = latestSubscription.plan.isFreeTrial;
+
+        // ✅ FIX: Find if the user has ANY active subscription
+        const activeSub = user.subscription.find(sub => new Date(sub.expiresAt) >= now);
+
+        // If no active sub found, we look at the most recently created one for "Inactive" status
+        const latestSub = user.subscription[0];
+        const isActive = !!activeSub;
+
+        // Determine if we should treat this user as a "Free Trial" or "Subscriber"
+        // Priority: If they have an active paid sub, they are a Subscriber.
+        const targetSub = activeSub || latestSub;
+        const isFreeTrial = targetSub.plan.isFreeTrial;
 
         switch (usertype) {
           case "Active-Free-Trial":

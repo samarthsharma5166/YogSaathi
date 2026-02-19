@@ -376,73 +376,57 @@ function formatAttendance(records) {
     return attendanceMap;
 }
 
-async function getUsers(message){
+async function getUsers(message) {
     const now = new Date();
-    if (message.targetAudience === "ALL") {
-        const users = await prisma.user.findMany();
-        return users;
-    }
+    const audience = message.targetAudience;
 
-    if(message.targetAudience === "ADMIN"){
-        const users =  await prisma.user.findMany({
-            where: {
-                role: "ADMIN"
-            }
-        })
-        return users;
-    }
+    // 1. Handle Simple Cases
+    if (audience === "ALL") return await prisma.user.findMany();
+    if (audience === "ADMIN") return await prisma.user.findMany({ where: { role: "ADMIN" } });
 
+    // 2. Fetch with Subscriptions for Filtering
     const allUsers = await prisma.user.findMany({
         include: {
             subscription: {
-                orderBy: {
-                    createdAt: 'desc',
-                },
-                include: {
-                    plan: true,
-                },
+                orderBy: { expiresAt: 'desc' }, // Sort by expiration so the best record is on top
+                include: { plan: true },
             },
         },
     });
 
-    const users = allUsers.filter(user => {
-        if (user.subscription.length === 0) {
-            if (message.targetAudience === "New-Users") {
-                return true;
-            }
-            return false;
-        }
-        const latestSubscription = user.subscription[0];
-        const isActive = latestSubscription.expiresAt >= now;
-        const isFreeTrial = latestSubscription.plan.isFreeTrial;
+    const filteredUsers = allUsers.filter(user => {
+        // Always include Admins if that's your intended behavior
+        if (user.role === "ADMIN") return true;
 
-        switch (message.targetAudience) {
+        if (user.subscription.length === 0) {
+            return audience === "New-Users";
+        }
+
+        // ✅ BETTER LOGIC: Check for the most relevant subscription
+        // We look for an active paid subscription first.
+        const activePaidSub = user.subscription.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now);
+        const activeTrialSub = user.subscription.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now);
+
+        // Default to the literal latest record if nothing is active
+        const latestSub = user.subscription[0];
+
+        switch (audience) {
             case "Active-Free-Trial":
-                return isFreeTrial && isActive;
+                return !!activeTrialSub;
             case "Inactive-Free-Trial":
-                return isFreeTrial && !isActive;
+                // They have trials, but none are active, and they don't have a paid sub
+                return user.subscription.some(s => s.plan.isFreeTrial) && !activeTrialSub && !activePaidSub;
             case "Active-Subscribers":
-                return !isFreeTrial && isActive;
+                return !!activePaidSub;
             case "Inactive-Subscribers":
-                return !isFreeTrial && !isActive;
+                // They have paid plans, but none are active
+                return user.subscription.some(s => !s.plan.isFreeTrial) && !activePaidSub;
             default:
                 return false;
         }
     });
 
-    if (["Active-Subscribers", "Inactive-Subscribers", "Active-Free-Trial", "Inactive-Free-Trial"].includes(message.targetAudience)) {
-        const admins = await prisma.user.findMany({
-            where: {
-                role: "ADMIN"
-            }
-        });
-        
-        const combined = [...users, ...admins];
-        const uniqueUsers = Array.from(new Map(combined.map(user => [user.id, user])).values());
-        return uniqueUsers;
-    }
-
-    return users;
+    return filteredUsers;
 }
 
 function formatTo12Hour(time24) {
