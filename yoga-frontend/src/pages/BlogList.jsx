@@ -76,7 +76,8 @@ export default function PublicBlogList() {
                 {/* Blog Image */}
                 <div className="relative h-48 overflow-hidden">
                     <img
-                      src={`${import.meta.env.VITE_BASE_URL}/${blog.img}`}
+                      // src={`${import.meta.env.VITE_BASE_URL}/${blog.img}`}
+                      src={`${import.meta.env.VITE_BASE_URL}/api/uploads/${blog.img}`}
                       alt={blog.title}
                       className="w-full h-full object-cover relative group-hover:scale-105 transition-transform duration-300"
               

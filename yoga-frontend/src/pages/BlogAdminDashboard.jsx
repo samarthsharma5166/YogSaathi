@@ -213,7 +213,7 @@ const BlogAdminDashboard = () => {
                                 >
                                     <div className="relative h-48">
                                         <img
-                                            src={`${import.meta.env.VITE_BASE_URL}/${blog.img}`}
+                                            src={`${import.meta.env.VITE_BASE_URL}/api/uploads/${blog.img}`}
                                             alt={blog.title}
                                             className="w-full h-full object-cover"
                                         />
