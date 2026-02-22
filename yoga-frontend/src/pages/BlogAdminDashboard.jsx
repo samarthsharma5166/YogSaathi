@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {  AnimatePresence } from 'framer-motion';
 import { Plus, Edit2, Trash2, Eye, Search, Calendar, User, X, Save, Image } from 'lucide-react';
 import { createBlog, deleteBlog, getAllBlogs, updateBlog } from '../services/api';
 import { useNavigate } from 'react-router-dom';
