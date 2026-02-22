@@ -45,7 +45,8 @@ const BlogPost = () => {
                 }
                 {/* Blog Image */}
                 <motion.img 
-                    src={`${import.meta.env.VITE_BASE_URL}/${blog.img}`} // adjust backend URL if needed
+                    // src={`${import.meta.env.VITE_BASE_URL}/${blog.img}`} // adjust backend URL if needed
+                    src={`${import.meta.env.VITE_BASE_URL}/api/${blog.img}`}
                     alt={blog.title}
                     className="w-full h-90 object-contain"
                     initial={{ scale: 1.05 }}

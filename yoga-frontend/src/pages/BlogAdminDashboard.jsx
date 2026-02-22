@@ -126,6 +126,7 @@ const BlogAdminDashboard = () => {
             day: 'numeric'
         });
     };
+    console.log(blogs);
 
     return (
         <div className="!min-h-screen bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
@@ -203,6 +204,7 @@ const BlogAdminDashboard = () => {
                             className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
                         >
                             {filteredBlogs?.map((blog, index) => (
+                                
                                 <motion.div
                                     key={blog.id}
                                     initial={{ opacity: 0, y: 20 }}
@@ -213,7 +215,7 @@ const BlogAdminDashboard = () => {
                                 >
                                     <div className="relative h-48">
                                         <img
-                                            src={`${import.meta.env.VITE_BASE_URL}/api/uploads/${blog.img}`}
+                                            src={`${import.meta.env.VITE_BASE_URL}/api/${blog.img}`}
                                             alt={blog.title}
                                             className="w-full h-full object-cover"
                                         />
