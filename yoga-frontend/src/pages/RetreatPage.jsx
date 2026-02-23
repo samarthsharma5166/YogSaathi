@@ -13,7 +13,7 @@ const RetreatPage = () => {
     mobileNumber: "",
     email: "",
     city: "",
-    tShirtSize: "M",
+    tShirtSize: "",
     plan: "TWIN_SHARING_SUPERIOR",
   });
   const [errors, setErrors] = useState({});
@@ -48,6 +48,8 @@ const RetreatPage = () => {
       newErrors.email = "Email is invalid";
     }
     if (!formData.city) newErrors.city = "City is required";
+    if (!formData.tShirtSize) newErrors.tShirtSize = "T-Shirt size is required";
+
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -382,12 +384,14 @@ const RetreatPage = () => {
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all bg-white"
                     >
+                      <option value="">Select Size</option>
                       <option value="S">S</option>
                       <option value="M">M</option>
                       <option value="L">L</option>
                       <option value="XL">XL</option>
                       <option value="XXL">XXL</option>
                     </select>
+                    {errors.tShirtSize && <p className="text-red-500 text-sm">{errors.tShirtSize}</p>}
                   </div>
                 </div>
 

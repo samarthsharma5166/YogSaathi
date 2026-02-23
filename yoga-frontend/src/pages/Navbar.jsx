@@ -68,11 +68,7 @@ const Navbar = () => {
               Live Events
             </Link>
           </li>
-          <li>
-            <Link to="/retreat" onClick={closeMenu}>
-              Rishikesh Retreat
-            </Link>
-          </li>
+          
           <li>
             <Link to="/about" onClick={closeMenu}>
               About Us
@@ -81,6 +77,11 @@ const Navbar = () => {
           <li>
             <Link to="/contact" onClick={closeMenu}>
               Contact Us
+            </Link>
+          </li>
+          <li className="border-none p-2 rounded-lg  bg-green-600 ">
+            <Link to="/retreat" className="text-white! text-md" onClick={closeMenu}>
+              Rishikesh Retreat
             </Link>
           </li>
           { user && <li className="block sm:hidden">
@@ -102,9 +103,9 @@ const Navbar = () => {
               Login
             </Link>
           </li> */}
-          {!user && <li className="join-now">
+          {!user && <li className="border-none p-2 rounded-lg  bg-blue-600 ">
             <Link
-              className="border-green-500"
+              className="text-white!"
               to="/auth/register"
               onClick={closeMenu}
             >

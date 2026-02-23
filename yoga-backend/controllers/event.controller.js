@@ -99,9 +99,9 @@ export const verifyEventPayment = async (req, res) => {
           status: "PAID",
         },
       });
-
+      const amount = planCosts[eventRegistration.plan];
       // Generate Invoice
-      const invoicePath = await generateInvoice(eventRegistration);
+      const invoicePath = await generateInvoice(eventRegistration,amount);
 
       const subject = 'Confirmation – YogSaathi × Panambi Yoga Retreat, Rishikesh';
       const message = `
@@ -121,11 +121,13 @@ export const verifyEventPayment = async (req, res) => {
         <p>For any assistance related to travel or location, please feel free to contact:<br>
         Mr. Neeraj – 98916 98547<br>Mr. Sanjay- 99717 14091</p>
         <p>You may also write to us at yogsaathi.26@gmail.com</p>
+        <p>Warm Regards</p>
+        <p>Team YogSaathi</p>
       `;
 
 
       await payment_confirmation(eventRegistration.mobileNumber,eventRegistration.fullName,planCosts[eventRegistration.plan])
-      await sendEmail("healthy.horizons111@gmail.com",subject,message)
+      await sendEmail(eventRegistration.email,subject,message)
       await prisma.eventRegistration.update({
         where: { id: eventRegistrationId },
         data: {

@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 
-export async function generateInvoice(eventRegistration) {
+export async function generateInvoice(eventRegistration,amount) {
   const invoiceDir = path.join(process.cwd(), "invoices");
   fs.mkdirSync(invoiceDir, { recursive: true });
 
@@ -11,6 +11,9 @@ export async function generateInvoice(eventRegistration) {
   const fileName = `invoice-YS-EVENT-${safeInvoiceNo}.pdf`;
   const invoicePath = path.join(invoiceDir, fileName);
 
+  const shortId = eventRegistration.id.slice(-6).toUpperCase();
+  const invoiceNumber = `YS/2026/${shortId}`;
+  // const invoiceNumber = `YS/2026/${safeInvoiceNo}`;
   const doc = new PDFDocument({ margin: 50 });
   const stream = fs.createWriteStream(invoicePath);
   doc.pipe(stream);
@@ -28,7 +31,8 @@ export async function generateInvoice(eventRegistration) {
   doc.moveDown();
 
   // ================= INVOICE META =================
-  doc.fontSize(11).text(`Invoice No: YS/2026/01`);
+  // doc.fontSize(11).text(`Invoice No: YS/2026/01`);
+  doc.text(`Invoice No: ${invoiceNumber}`);
   doc.text(`Date of Issue: ${new Date().toLocaleDateString()}`);
   doc.moveDown();
 
@@ -62,12 +66,12 @@ export async function generateInvoice(eventRegistration) {
   // ================= TABLE ROW =================
   doc.font("Helvetica");
   doc.text(
-    "Yoga Retreat (26.02.26 to 01.03.26, Panambi Resort)\nSingle Sharing / Twin Sharing",
+    `Yoga Retreat (12.03.26 to 15.03.26, Panambi Resort)\n${eventRegistration.plan}`,
     50,
     doc.y,
     { continued: true }
   );
-  doc.text("16,000 INR", { align: "right" });
+  doc.text(`${amount} INR`, { align: "right" });
   doc.moveDown();
 
   doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
@@ -76,11 +80,11 @@ export async function generateInvoice(eventRegistration) {
   // ================= TOTALS =================
   doc.font("Helvetica-Bold");
   doc.text("Net Payable", 50, doc.y, { continued: true });
-  doc.text("16,000 INR", { align: "right" });
+  doc.text(`${amount} INR`, { align: "right" });
   doc.moveDown();
 
   doc.text("Total Amount Paid", 50, doc.y, { continued: true });
-  doc.text("16,000 INR", { align: "right" });
+  doc.text(`${amount} INR`, { align: "right" });
 
   doc.moveDown(2);
 
