@@ -1,10 +1,18 @@
 import jwt from "jsonwebtoken";
 
-// Verify JWT from headers
+// Verify JWT from headers or generic API Key for server-to-server comms
 export const isAuthenticated = (req, res, next) => {
   const authHeader = req.headers.authorization;
+  const apiKeyHeader = req.headers["x-api-key"];
 
-  // Check if token is missing
+  // 1. Check for API Key first (bypasses JWT)
+  if (apiKeyHeader && apiKeyHeader === process.env.SERVER_API_KEY) {
+    // Attach a mock admin user to allow `isAdmin` to pass
+    req.user = { id: "server-bot", role: "ADMIN" };
+    return next();
+  }
+
+  // 2. Check if token is missing
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ error: "Access denied. No token provided." });
   }

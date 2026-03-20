@@ -1,0 +1,44 @@
+name: Deploy yoga-backend to VPS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "yoga-backend/**"   # only trigger when backend files change
+  workflow_dispatch:         # manual one-click trigger from GitHub UI
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          PRODUCTION_ENV: ${{ secrets.PRODUCTION_ENV }}
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          envs: PRODUCTION_ENV
+          script: |
+            set -e
+            cd /root/YogSaathi/yoga-backend
+
+            git pull origin main
+
+            # Write production secrets to .env
+            echo "$PRODUCTION_ENV" > .env
+
+            # Rebuild only the backend container and restart
+            docker compose up -d --build
+
+            # Clean up unused images to free disk space
+            docker image prune -f
+
+            echo "✅ yoga-backend deployed successfully"
