@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  yoga-backend:
+    build: .
+    container_name: yogsaathi-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./invoices:/app/invoices
