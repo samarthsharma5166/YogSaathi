@@ -30,7 +30,8 @@ jobs:
             set -e
             cd /root/YogSaathi/yoga-backend
 
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main
 
             # Write production secrets to .env
             echo "$PRODUCTION_ENV" > .env
