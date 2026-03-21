@@ -153,6 +153,18 @@ const templateName = [
     },{
         name:"yogsaathi_training_brochure_share",
         inputs:[]
+    },
+    {
+        name:"yoga_trial_enrolment",
+        inputs:[]
+    },
+    {
+        name:"opi", 
+        inputs:[]
+    },
+    {
+        name:"yogsaathi_group_access_update",
+        inputs:[]
     }
 ];
 
