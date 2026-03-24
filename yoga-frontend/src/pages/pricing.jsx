@@ -49,7 +49,7 @@ const Pricing = () => {
             className="bg-white rounded-2xl border border-green-500 shadow-lg hover:scale-105 transition transform p-3 w-65 h-47"
           >
             <h4 className="text-lg font-bold text-green-600">{plan.name}</h4>
-            <p className="text-sm text-gray-500">{`${plan.duration} Months`}</p>
+            <p className="text-sm text-gray-500">{`${plan.duration} ${plan.duration === 1 ? 'Month' : 'Months'}`}</p>
             <div className="text-lg font-extrabold text-gray-800">
               ₹{plan.inrPrice}
             </div>
