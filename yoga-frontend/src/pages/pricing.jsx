@@ -10,35 +10,35 @@ const planFeatures = [
     duration: 12,
     badge: "Most Value",
     features: [
-      { main: "Daily Sessions (45 min)", sub: "6 sessions per day" },
-      { main: "3 Live Yoga Consultations", sub: "Posture correction & queries" },
-      { main: "2 Dietician Consultations", sub: "Certified dietician" },
+      { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
+      { main: "3 Live Yoga Online Consultations", sub: "Posture correction & queries" },
+      { main: "2 Dietician Online Consultations", sub: "Certified dietician" },
     ],
   },
   {
     duration: 6,
     badge: null,
     features: [
-      { main: "Daily Sessions (45 min)", sub: "6 sessions per day" },
-      { main: "2 Live Yoga Consultations", sub: "Posture correction & queries" },
-      { main: "1 Dietician Consultation", sub: "Certified dietician" },
+      { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
+      { main: "2 Live Yoga Online Consultations", sub: "Posture correction & queries" },
+      { main: "1 Dietician Online Consultation", sub: "Certified dietician" },
     ],
   },
   {
     duration: 3,
     badge: null,
     features: [
-      { main: "Daily Sessions (45 min)", sub: "6 sessions per day" },
-      { main: "1 Live Yoga Consultation", sub: "Posture correction & queries" },
-      { main: "1 Dietician Consultation", sub: "Certified dietician" },
+      { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
+      { main: "1 Live Yoga Online Consultation", sub: "Posture correction & queries" },
+      { main: "1 Dietician Online Consultation", sub: "Certified dietician" },
     ],
   },
   {
     duration: 1,
     badge: null,
     features: [
-      { main: "Daily Sessions (45 min)", sub: "6 sessions per day" },
-      { main: "1 Dietician Consultation", sub: "Certified dietician" },
+      { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
+      { main: "1 Dietician Online Consultation", sub: "Certified dietician" },
     ],
   },
 ];
