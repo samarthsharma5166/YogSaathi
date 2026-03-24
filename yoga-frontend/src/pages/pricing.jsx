@@ -46,7 +46,7 @@ const Pricing = () => {
         {plans && plans.length > 0 && plans.map((plan) => (
           !plan.isFreeTrial && <div
             key={plan.name}
-            className="bg-white rounded-2xl border border-green-500 shadow-lg hover:scale-105 transition transform p-3 w-80 h-47"
+            className="bg-white rounded-2xl border border-green-500 shadow-lg hover:scale-105 transition transform p-3 w-65 h-47"
           >
             <h4 className="text-lg font-bold text-green-600">{plan.name}</h4>
             <p className="text-sm text-gray-500">{`${plan.duration} Months`}</p>
@@ -77,7 +77,7 @@ const Pricing = () => {
         {plans && plans.length > 0 && plans.map((plan) => (
           <div
             key={plan.name}
-            className="bg-white rounded-2xl border border-green-500 shadow-lg hover:scale-105 transition transform p-3 w-80 h-35"
+            className="bg-white rounded-2xl border border-green-500 shadow-lg hover:scale-105 transition transform p-3 w-65 h-35"
           >
             <h4 className="text-lg font-bold text-green-600">{plan.name}</h4>
             <p className="text-sm text-gray-500">{`${plan.duration} Months`}</p>
