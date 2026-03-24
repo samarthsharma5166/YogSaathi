@@ -57,31 +57,48 @@ const CircleCheckIcon = () => (
 );
 
 const PlanFeatureTrays = () => (
-  <div style={{ maxWidth: 960, margin: "32px auto 0", padding: "0 12px 40px" }}>
-    <h4 style={{ textAlign: "center", color: "#3b6d11", fontWeight: 700, fontSize: 18, marginBottom: 24 }}>
+  <div
+    style={{
+      maxWidth: 1100, // FIXED (was too restrictive)
+      margin: "32px auto 0",
+      padding: "0 12px 40px",
+    }}
+  >
+    <h4
+      style={{
+        textAlign: "center",
+        color: "#3b6d11",
+        fontWeight: 700,
+        fontSize: 18,
+        marginBottom: 24,
+      }}
+    >
       What's Included
     </h4>
+
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", // FIXED
         gap: 16,
       }}
     >
       {planFeatures.map((plan) => {
-        const label = `${plan.duration} ${plan.duration === 1 ? "Month" : "Months"}`;
+        const label = `${plan.duration} ${plan.duration === 1 ? "Month" : "Months"
+          }`;
+
         return (
           <div
             key={plan.duration}
             style={{
               position: "relative",
               borderRadius: 24,
-              background: "linear-gradient(160deg, #eaf3de 0%, #d4edbc 100%)",
+              background:
+                "linear-gradient(160deg, #eaf3de 0%, #d4edbc 100%)",
               border: "1px solid #a3c97a",
               padding: "18px 14px 44px",
               display: "flex",
               flexDirection: "column",
-              gap: 0,
             }}
           >
             {plan.badge && (
@@ -105,6 +122,7 @@ const PlanFeatureTrays = () => (
               </div>
             )}
 
+            {/* Plan Title */}
             <div
               style={{
                 fontSize: 14,
@@ -117,25 +135,79 @@ const PlanFeatureTrays = () => (
               {label} Plan
             </div>
 
+            {/* Features */}
             {plan.features.map((feat, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 7, marginBottom: 8 }}>
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: 7,
+                  marginBottom: 8,
+                }}
+              >
                 <CircleCheckIcon />
                 <div>
-                  <div style={{ fontSize: 11.5, color: "#3b6d11", lineHeight: 1.45 }}>{feat.main}</div>
-                  <div style={{ fontSize: 10.5, color: "#639922", marginTop: 1 }}>{feat.sub}</div>
+                  <div
+                    style={{
+                      fontSize: 12,
+                      color: "#3b6d11",
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {feat.main}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 10.5,
+                      color: "#639922",
+                      marginTop: 2,
+                    }}
+                  >
+                    {feat.sub}
+                  </div>
                 </div>
               </div>
             ))}
 
-            <hr style={{ border: "none", borderTop: "1px dashed #97c459", margin: "10px 0" }} />
+            {/* Divider */}
+            <hr
+              style={{
+                border: "none",
+                borderTop: "1px dashed #97c459",
+                margin: "12px 0",
+              }}
+            />
 
-            {["Diet Suggestions", "Support for Queries", "Exclusive WhatsApp Group"].map((item) => (
-              <div key={item} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
+            {/* Static Features */}
+            {[
+              "Diet Suggestions",
+              "Support for Queries",
+              "Exclusive WhatsApp Group",
+            ].map((item) => (
+              <div
+                key={item}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  marginBottom: 6,
+                }}
+              >
                 <CheckIcon />
-                <span style={{ fontSize: 11, color: "#3b6d11", fontWeight: 500 }}>{item}</span>
+                <span
+                  style={{
+                    fontSize: 11,
+                    color: "#3b6d11",
+                    fontWeight: 500,
+                  }}
+                >
+                  {item}
+                </span>
               </div>
             ))}
 
+            {/* Bottom Label */}
             <div
               style={{
                 position: "absolute",
