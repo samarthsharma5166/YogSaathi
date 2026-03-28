@@ -165,6 +165,10 @@ const templateName = [
     {
         name:"yogsaathi_group_access_update",
         inputs:[]
+    },
+    {
+        name:"inputs",
+        inputs:[]
     }
 ];
 

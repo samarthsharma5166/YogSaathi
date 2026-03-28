@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
 import { prisma } from '../db/db.js';
-import { class_reminder, class_reminder_free_yoga_for_all, days_yoga_trial_intimation_hindi, festival_greetings, festival_greetings_christmas_new_year, free_online_yoga_trial_reminder, giftwellness_yogsaathi, join_session__mark_attendance, online_free_yoga_trial__joining_details, opi, session_reminder, session_reminder__orientation_for_free_trial, share_wellness_14_days_of_free_yoga, subscription_invitation, subscription_plan_new_year_offer, vijayadashami_greetings, vijaydashmi_greetings_and_referrals, weekly_attendance_status__yogsaathi_sessions, world_meditation_day_greetings, yoga_class_time_details_as_per_ist, yoga_offer_reminder, yoga_subscription_offer, yoga_trail_intimation_, yoga_training_1ram, yoga_training_2, yoga_trial_enrolment, yoga_trial_midway_update__reminder, yoga_trial_participation_reminder, yogsaathi_communication_channels, yogsaathi_contact_detail, yogsaathi_group_access_update, yogsaathi_payment_link_share, yogsaathi_training_brochure_share, your_weekly_yoga_schedule__access_details } from '../utils/messages.js';
+import { class_reminder, class_reminder_free_yoga_for_all, days_yoga_trial_intimation_hindi, festival_greetings, festival_greetings_christmas_new_year, free_online_yoga_trial_reminder, giftwellness_yogsaathi, inputs, join_session__mark_attendance, online_free_yoga_trial__joining_details, opi, session_reminder, session_reminder__orientation_for_free_trial, share_wellness_14_days_of_free_yoga, subscription_invitation, subscription_plan_new_year_offer, vijayadashami_greetings, vijaydashmi_greetings_and_referrals, weekly_attendance_status__yogsaathi_sessions, world_meditation_day_greetings, yoga_class_time_details_as_per_ist, yoga_offer_reminder, yoga_subscription_offer, yoga_trail_intimation_, yoga_training_1ram, yoga_training_2, yoga_trial_enrolment, yoga_trial_midway_update__reminder, yoga_trial_participation_reminder, yogsaathi_communication_channels, yogsaathi_contact_detail, yogsaathi_group_access_update, yogsaathi_payment_link_share, yogsaathi_training_brochure_share, your_weekly_yoga_schedule__access_details } from '../utils/messages.js';
 import { startOfWeek, addDays, format } from "date-fns";
 
 export const hourlyJob = new CronJob('*/10 * * * *', async () => {
@@ -321,6 +321,13 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             const users = await getUsers(message);
             users.map((user) => {
                 yogsaathi_group_access_update(user.phoneNumber, user.name);
+            })
+        }
+
+        if (message.templateName === "inputs"){
+            const users = await getUsers(message);
+            users.map((user) => {
+                inputs(user.phoneNumber, user.name);
             })
         }
     
