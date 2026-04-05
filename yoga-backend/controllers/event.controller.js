@@ -24,7 +24,7 @@ const earlyBirdDiscounts = {
 };
 
 /* ─── Early bird deadline: 15 April 2026 23:59:59 IST ────────── */
-const EARLY_BIRD_DEADLINE = new Date("2026-04-15T18:29:59Z");
+const EARLY_BIRD_DEADLINE = new Date("2026-04-20T18:29:59Z");
 const isEarlyBirdActive = () => new Date() <= EARLY_BIRD_DEADLINE;
 
 /* ──────────────────────────────────────────────────────────────

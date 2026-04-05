@@ -547,7 +547,7 @@ const RetreatPage = () => {
               </p>
               {earlyBird && (
                 <p className="text-red-600 animate-pulse mt-2 text-base sm:text-xl font-medium">
-                  🎉 Early Bird Offer Available till 15th April 2026 – Reserve
+                  🎉 Early Bird Offer Available till 20th April 2026 – Reserve
                   Your Spot Now!
                 </p>
               )}

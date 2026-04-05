@@ -32,7 +32,7 @@ export default function RetreatEvent() {
                             <p className="text-base text-gray-700">A 3 Nights / 4 Days Premium Residential Yoga Retreat</p>
                             <p className="text-sm text-gray-600">Rishikesh, Uttarakhand</p>
                             <p className="text-xs text-gray-500">Curated by YogSaathi | Hosted at Panambi Resort & Spa</p>
-                            <p className="text-lg text-emerald-700 font-medium">📅 May 2026</p>
+                            <p className="text-lg text-emerald-700 font-medium">📅 21-May-2026 to 24-May-2026</p>
                         </div>
 
                         {/* What to Expect */}
