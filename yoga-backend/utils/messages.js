@@ -1634,8 +1634,8 @@ export const yogsaathi_training_brochure_share = (number,name) =>{
                             {
                                 "type": "document",
                                 "document": {
-                                    "link": "https://chatmitra.s3.ap-south-1.amazonaws.com/documents/retreat_1771428761427.pdf",
-                                    "filename": "retreat_1771428761427.pdf"
+                                    "link": "https://chatmitra.s3.ap-south-1.amazonaws.com/documents/RetreatLatest_1775901524538.pdf",
+                                    "filename": "RetreatLatest_1775901524538.pdf"
                                 }
                             }
                         ]
@@ -1756,7 +1756,6 @@ export const yogsaathi_group_access_update = (number,name) =>{
         }
     })
 }
-
 
 export const inputs = (number,name) =>{
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
