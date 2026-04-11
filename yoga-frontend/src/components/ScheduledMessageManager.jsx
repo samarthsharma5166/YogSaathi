@@ -169,6 +169,10 @@ const templateName = [
     {
         name:"inputs",
         inputs:[]
+    },
+    {
+        name:"retreat_info_brochure",
+        inputs:[]
     }
 ];
 
