@@ -269,7 +269,7 @@
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-500 mb-1">Base Duration</label>
-                   <p className="text-gray-900">{subscription.baseDuration} {subscription.plan?.durationType}</p>
+                   <p className="text-gray-900">{subscription.baseDuration} Days</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-500 mb-1">Extra Days</label>

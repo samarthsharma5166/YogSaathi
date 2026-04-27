@@ -1,13 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/yogalogonew.png";
-import "./CSS/Navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
 
   // Close dropdown if clicked outside
@@ -22,143 +31,142 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    // Add your logout logic here
     localStorage.clear();
-    navigate("/"); // or redirect to login
-  };
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    navigate("/");
   };
 
   const closeMenu = () => {
     setMenuOpen(false);
   };
 
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blogs" },
+    { name: "Live Events", path: "/livestream" },
+    { name: "About Us", path: "/about" },
+    { name: "Contact Us", path: "/contact" },
+  ];
+
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/" className="logo" onClick={closeMenu}>
-          <img className="logo-img" style={{width:"80px",height:"91px"}} src={logo} alt="Logo" />
-        </Link>
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-200/50 py-2"
+          : "bg-transparent py-4"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <Link to="/" onClick={closeMenu} className="flex-shrink-0 flex items-center gap-2 group">
+            <img
+              className="w-16 h-auto transition-transform duration-300 group-hover:scale-105"
+              src={logo}
+              alt="YogSaathi Logo"
+            />
+            {/* <span className={`font-semibold text-xl tracking-tight transition-colors duration-300 ${scrolled ? 'text-gray-900' : 'text-gray-800'}`}>YogSaathi</span> */}
+          </Link>
 
-        {/* Toggle Icon (☰ or ✖) */}
-        <div className="hamburger" onClick={toggleMenu}>
-          {menuOpen ? "✖" : "☰"}
-        </div>
+          {/* Desktop Menu */}
+          <div className="hidden lg:flex lg:items-center lg:gap-8">
+            <div className="flex items-center gap-6">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`text-sm font-medium transition-colors duration-200 hover:text-green-600 ${
+                    location.pathname === link.path ? "text-green-600" : "text-gray-700"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
 
-        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-          <li>
-            <Link to="/" onClick={closeMenu}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/price"  onClick={closeMenu}>
-              Subscriptions
-            </Link>
-          </li>
-          <li>
-            <Link to="/blogs" onClick={closeMenu}>
-              Blog
-            </Link>
-          </li>
-          <li>
-            <Link to="/livestream" onClick={closeMenu}>
-              Live Events
-            </Link>
-          </li>
-          
-          <li>
-            <Link to="/about" onClick={closeMenu}>
-              About Us
-            </Link>
-          </li>
-          <li>
-            <Link to="/contact" onClick={closeMenu}>
-              Contact Us
-            </Link>
-          </li>
-          <li className="border-none p-2 rounded-lg  bg-green-600 ">
-            <Link to="/retreat" className="text-white! text-md" onClick={closeMenu}>
-              Rishikesh Retreat
-            </Link>
-          </li>
-          { user && <li className="block sm:hidden">
-            {
-              user.role === "ADMIN" ? (
-                <Link to="/admin/admin-dashboard" onClick={closeMenu}>
-                  Admin Dashboard
+            <div className="flex items-center gap-1 border-l border-gray-300 pl-4">
+              <Link
+                to="/price"
+                className="ml-4 inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+               >
+                Subscriptions
+              </Link>
+              <Link
+                to="/retreat"
+                className="ml-4 inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-full hover:bg-green-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                >
+                Rishikesh Retreat
+              </Link>
+              {/* <Link
+                to="/session"
+                className="ml-4 inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                >
+                Sleep Sessions
+              </Link> */}
+
+              {!user ? (
+                <Link
+                  to="/auth/register"
+                  className="ml-4 inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-full hover:bg-green-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  Join Free Trial
                 </Link>
               ) : (
-                <Link to="/user/dashboard" onClick={closeMenu}>
-                  User Dashboard
-                </Link>
-              )
-            }
-          </li>}
-          
-          {/* <li>
-            <Link to="/auth/login" onClick={closeMenu}>
-              Login
-            </Link>
-          </li> */}
-          {!user && <li className="border-none p-2 rounded-lg  bg-blue-600 ">
-            <Link
-              className="text-white!"
-              to="/auth/register"
-              onClick={closeMenu}
-            >
-              Join Free Trial
-            </Link>
-          </li>}
-          {
-            user && (
-              <li className="relative hidden sm:block" ref={dropdownRef}>
-                <button
-                  onClick={() => setMenuOpen((prev) => !prev)}
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white font-semibold border-2 border-green-700 shadow-lg hover:scale-110 transition duration-200"
-                >
-                  {user?.name?.charAt(0).toUpperCase()}
-                </button>
+                <div className="relative ml-2" ref={dropdownRef}>
+                  <button
+                    onClick={() => setMenuOpen((prev) => !prev)}
+                    className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-green-500 to-emerald-400 text-white font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                  >
+                    {user?.name?.charAt(0).toUpperCase() || 'U'}
+                  </button>
 
-                {/* Dropdown menu */}
-                {menuOpen && (
-                  <div className="absolute  right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50">
-                    <div className="py-2 text-sm text-gray-800">
-                      {
-                        user.role === "ADMIN" ? (
-                          <Link
-                            to="/admin/admin-dashboard"
-                            className="block px-4 py-2 hover:bg-green-100 transition"
-                          >
-                            Admin Dashboard
-                          </Link>
-                        ) : (
-                          <Link
-                            to="/user/dashboard"
-                            className="block px-4 py-2 hover:bg-green-100 transition"
-                          >
-                            User Dashboard
-                          </Link>
-                        )
-                      }
+                  {/* Dropdown menu */}
+                  {menuOpen && (
+                    <div className="absolute right-0 mt-3 w-56 rounded-2xl bg-white shadow-xl border border-gray-100 py-2 origin-top-right animate-in fade-in slide-in-from-top-2">
+                      <div className="px-4 py-3 border-b border-gray-50 mb-1">
+                        <p className="text-sm text-gray-500">Signed in as</p>
+                        <p className="text-sm font-medium text-gray-900 truncate">{user.name}</p>
+                      </div>
+                      <Link
+                        to={user.role === "ADMIN" ? "/admin/admin-dashboard" : "/user/dashboard"}
+                        onClick={closeMenu}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors"
+                      >
+                        Dashboard
+                      </Link>
                       <button
                         onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 hover:bg-green-100 transition"
+                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors mt-1"
                       >
                         Logout
                       </button>
                     </div>
-                  </div>
-                )}
-              </li>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
 
-            )
-          }
-
-        </ul>
+          {/* Mobile menu button */}
+          <div className="lg:hidden flex items-center">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-green-600 hover:bg-green-50 focus:outline-none transition-colors duration-200"
+            >
+              <span className="sr-only">Open main menu</span>
+              {!menuOpen ? (
+                <svg className="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              ) : (
+                <svg className="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
       </div>
+
     </nav>
   );
 };
