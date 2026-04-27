@@ -2,32 +2,32 @@ import React, { useState, useEffect } from "react";
 import "./CSS/livestream.css";
 
 // ✅ Local Past Event Images (b1 to b3)
-import b1 from "../assets/b1.jpg";
-import b2 from "../assets/b2.jpg";
-import b3 from "../assets/b3.jpg";
-import b4 from "../assets/b4.jpg";
-import b5 from "../assets/b5.jpg";
-import b6 from "../assets/b6.jpg";
+import b1 from "../assets/b1.jpeg";
+import b2 from "../assets/b2.jpeg";
+import b3 from "../assets/b3.jpeg";
+import b4 from "../assets/b4.jpeg";
+import b5 from "../assets/b5.jpeg";
+import b6 from "../assets/b6.jpeg";
 
 // ✅ Local Gallery Images (s1 to s5)
 import s1 from "../assets/s1.jpg";
 import s2 from "../assets/s2.jpg";
 import s3 from "../assets/s3.jpg";
-import s4 from "../assets/s4.jpg";
+import s4 from "../assets/s2.jpeg";
 import s5 from "../assets/s5.jpg";
 import s6 from "../assets/s1.jpg";
 import s7 from "../assets/s2.jpg";
 import s8 from "../assets/s3.jpg";
-import s9 from "../assets/s4.jpg";
+import s9 from "../assets/s4.jpeg";
 import s10 from "../assets/s5.jpg";
 import b11 from "../assets/b1.jpg";
 import b22 from "../assets/b2.jpg";
 import b33 from "../assets/b3.jpg";
 import b44 from "../assets/b4.jpg";
 import b55 from "../assets/b5.jpg";
-import b66 from "../assets/b6.jpg";
+import b66 from "../assets/s7.jpeg";
 
-const images = [b1, b2, b3, b4, b5, b6]; // Past Events Slider Images
+const images = [b3, b2, b1, b4, b5, b6, s4,s9,b66]; // Past Events Slider Images
 const galleryImages = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, b11, b22, b33, b44, b55, b66]; // Gallery Images
 
 const benefits = [
@@ -59,10 +59,10 @@ function Liveevent() {
       {/* 🔵 Intro Text */}
       <div className="text">
   <h2 style={{ color: "black" }}>
-    Stay tuned for upcoming events that will ignite your curiosity.
+    Stay tuned for  events that ignite your curiosity.
   </h2>
   <h2 style={{ color: "black" }}>
-    Enrich your experience — Coming soon!
+    Enrich your experience!
   </h2>
 </div>
 
@@ -99,7 +99,7 @@ function Liveevent() {
       </div>
 
       {/* 🔵 Gallery Section */}
-      <h2 className="gallery-title" style={{ color: "black" }}>Gallery</h2>
+      {/* <h2 className="gallery-title" style={{ color: "black" }}>Gallery</h2>
       <div className="gallery-section">
         <div className="scroll-container">
           <div className="scroll-content">
@@ -110,7 +110,7 @@ function Liveevent() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* 🔵 Yoga Benefits Section */}
     

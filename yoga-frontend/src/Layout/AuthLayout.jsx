@@ -3,42 +3,24 @@ import { motion } from "framer-motion";
 
 const AuthLayout = () => {
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
-      {/* Left Side Image */}
-      <div className="w-full md:w-1/2 h-64 md:h-auto hidden md:block">
+    <div className="flex min-h-screen bg-green-50/30">
+      {/* Left Side Image - Stretches automatically to match form height */}
+      <div className="hidden md:block md:w-1/2 relative">
         <motion.img
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
-          src="/register.jpg"
+          src="/register2.jpeg"
           alt="Yoga background"
-          className="w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
+        {/* Subtle overlay to make the image look richer */}
+        <div className="absolute inset-0 bg-green-900/10 mix-blend-multiply"></div>
       </div>
 
-      {/* Right Side Message */}
-      <div className="w-full md:w-1/2 flex flex-col items-center justify-center px-6 py-10 text-center">
-        {/* <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#2e7d32] mb-4"
-        >
-          🚧 We're Working on Something Exciting!
-        </motion.h1> */}
-        {/* <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2 }}
-          className="text-sm sm:text-base md:text-lg text-gray-600 max-w-xl"
-        >
-          Our registration page is under development and will be launching soon.
-          Stay tuned for updates and be the first to join our wellness journey.{" "}
-          <br />
-          🔔 Follow us or check back shortly!
-        </motion.p> */}
-
-        {/* Uncomment below when ready to render registration form */}
+      {/* Right Side Form (Outlet) */}
+      <div className="w-full md:w-1/2 flex flex-col justify-center bg-gray-50 relative shadow-[-10px_0_30px_-15px_rgba(0,0,0,0.1)]">
+        {/* The Outlet renders your Register/Login components */}
         <Outlet />
       </div>
     </div>

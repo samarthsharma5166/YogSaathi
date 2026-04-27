@@ -9,7 +9,7 @@ export default function RetreatEvent() {
                 {/* Left side - Image */}
                 <div className="hidden lg:block lg:w-[40%] relative">
                     <ImageWithFallback
-                        src="/event.jpeg"
+                        src="/events.jpeg"
                         alt="Yoga in Rishikesh"
                         className="w-full h-full"
                     />
