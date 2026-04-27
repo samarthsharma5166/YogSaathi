@@ -173,6 +173,19 @@ const templateName = [
     {
         name:"retreat_info_brochure",
         inputs:[]
+    },
+    {
+        name:"trial_expiry_notification",
+        inputs:[]
+    },
+    {
+        name:"session_schedule_notification",
+        inputs:[
+            { label: "Title", name: "title", type: "text", required: true },
+            { label: "Speaker", name: "speaker", type: "text", required: true },
+            { label: "Date & Time", name: "date", type: "text", required: true },
+            { label: "Link", name: "link", type: "text", required: true },
+        ]
     }
 ];
 

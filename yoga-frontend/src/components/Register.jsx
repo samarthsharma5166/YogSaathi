@@ -3,16 +3,16 @@ import { registerUser } from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import PhoneInput from "react-phone-input-2";
-import  "react-phone-input-2/lib/style.css";
+import "react-phone-input-2/lib/style.css";
 import "./input.css"
 import CustomPhoneInput from "./CustomPhoneInput";
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 import { FaSpinner } from "react-icons/fa";
 
 
 function Register() {
   const navigate = useNavigate();
-  const [loading,setLoading] = useState();
+  const [loading, setLoading] = useState();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -22,8 +22,8 @@ function Register() {
   });
 
   const [refferalInfo, setRefferalInfo] = useState({
-    name:"",
-    refferal_count:0
+    name: "",
+    refferal_count: 0
   });
 
   useEffect(() => {
@@ -34,8 +34,8 @@ function Register() {
     if (ref) {
       setForm((prev) => ({ ...prev, referredByCode: ref }));
       setRefferalInfo({
-        name:name,
-        refferal_count:referral_count
+        name: name,
+        refferal_count: referral_count
       })
     }
   }, []);
@@ -44,7 +44,7 @@ function Register() {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
-    if (e.target.name === "referred_by"){
+    if (e.target.name === "referred_by") {
       const params = new URLSearchParams(window.location.search);
       params.set("ref", e.target.value);
       window.history.replaceState(null, "", `?${params.toString()}`);
@@ -54,7 +54,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!form.name  || !form.phoneNumber ) {
+      if (!form.name || !form.phoneNumber) {
         toast.error("Please fill in all fields.");
         return;
       }
@@ -70,7 +70,7 @@ function Register() {
         return;
       }
 
-      if(form.phoneNumber.length >= 10 && form.phoneNumber.length <= 12){
+      if (form.phoneNumber.length >= 10 && form.phoneNumber.length <= 12) {
         toast.error("Phone number should be 10 to 12 digits long.");
         return;
       }
@@ -84,7 +84,7 @@ function Register() {
       setLoading(true);
       const res = await registerUser(form);
       const data = res.data;
-      if(data.success){
+      if (data.success) {
         toast.success("Registered successfully");
         setLoading(false);
         navigate("/auth/greet");
@@ -96,12 +96,12 @@ function Register() {
 
       if (err.response.data.message === "User already exists")
         navigate("/price")
-      }
+    }
   };
 
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen min-w-screen">
-      <FaSpinner className="animate-spin"/>
+      <FaSpinner className="animate-spin" />
     </div>;
   }
 
@@ -114,7 +114,7 @@ function Register() {
         className="bg-white/80 backdrop-blur-lg shadow-2xl p-6 sm:p-8 rounded-2xl w-full max-w-md"
       >
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-2">
-          Begin Your Free Trial <br/> with <span className="font-bold text-green-500 ">YogSaathi</span>
+          Begin Your Free Trial <br /> with <span className="font-bold text-green-500 ">YogSaathi</span>
         </h2>
         <form onSubmit={handleSubmit} className="space-y-2">
           <input
@@ -134,10 +134,10 @@ function Register() {
           />
 
           <CustomPhoneInput
-              value={form.phoneNumber}
-              onChange={(value) => setForm({ ...form, phoneNumber: value })}
-              placeholder="Enter Whatsapp number*"
-            />
+            value={form.phoneNumber}
+            onChange={(value) => setForm({ ...form, phoneNumber: value })}
+            placeholder="Enter Whatsapp number*"
+          />
 
           {form.referredByCode && <input
             name="referredByCode"
@@ -164,7 +164,7 @@ function Register() {
           Already have an account?{" "}
           <Link
             to="/auth/login"
-            className="text-blue-600 hover:underline font-medium" 
+            className="text-blue-600 hover:underline font-medium"
           >
             Login
           </Link>
