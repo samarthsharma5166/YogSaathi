@@ -54,8 +54,8 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/price" onClick={closeMenu}>
-              Pricing
+            <Link to="/price"  onClick={closeMenu}>
+              Subscriptions
             </Link>
           </li>
           <li>
