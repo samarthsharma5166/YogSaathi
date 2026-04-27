@@ -13,6 +13,8 @@ import userRoutes from './routes/user.route.js';
 import blogRoutes from './routes/blog.route.js';
 import campignRoutes from './routes/freeTrialCampaignRoutes.js';
 import { hourlyJob } from './Schedular/hourly.schedular.js';
+import { dailyJob } from './Schedular/daily.schedular.js';
+import { weeklyAttendanceJob } from './Schedular/weekly.schedular.js';
 import yogaClassRoute from './routes/yogaClass.routes.js';
 import bodyParser from "body-parser";
 import { invoice_subscription_plan, share_wellness_14_days_of_free_yoga } from './utils/messages.js';
@@ -83,6 +85,8 @@ app.get('/', (req, res) => {
 
 orientationJob.start();
 hourlyJob.start();
+dailyJob.start();
+weeklyAttendanceJob.start();
 
 // ✅ Start server
 
