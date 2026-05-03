@@ -1620,6 +1620,46 @@ export const yogsaathi_payment_link_share = (number,name) =>{
 }
 
 export const yogsaathi_training_brochure_share = (number,name) =>{
+    // axios.post("https://backend.chatmitra.com/developer/api/send_message", {
+    //     recipient_mobile_number: number,
+    //     messages: [{
+    //         kind: "template",
+    //         template: {
+    //             name: "yogsaathi_training_brochure_share",
+    //             language: "en",
+    //             components: [
+    //                 {
+    //                     "type": "header",
+    //                     "parameters": [
+    //                         {
+    //                             "type": "document",
+    //                             "document": {
+    //                                 "link": "https://chatmitra.s3.ap-south-1.amazonaws.com/documents/RetreatLatest_1775901524538.pdf",
+    //                                 "filename": "RetreatLatest_1775901524538.pdf"
+    //                             }
+    //                         }
+    //                     ]
+    //                 },
+    //                 {
+    //                     "type": "body",
+    //                     "parameters": [
+    //                         {
+    //                             "type": "text",
+    //                             "text": name
+    //                         }
+    //                     ]
+    //                 }
+    //             ]
+    //         }
+    //     }],
+    //     customer_name: name
+    // }, {
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
+    //     }
+    // })
+
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1634,8 +1674,8 @@ export const yogsaathi_training_brochure_share = (number,name) =>{
                             {
                                 "type": "document",
                                 "document": {
-                                    "link": "https://chatmitra.s3.ap-south-1.amazonaws.com/documents/RetreatLatest_1775901524538.pdf",
-                                    "filename": "RetreatLatest_1775901524538.pdf"
+                                    "link": "https://chatmitra.s3.ap-south-1.amazonaws.com/documents/fff_1777774153981.pdf",
+                                    "filename": "fff_1777774153981.pdf"
                                 }
                             }
                         ]
