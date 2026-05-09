@@ -33,7 +33,7 @@ const isEarlyBirdActive = () => new Date() <= EARLY_BIRD_DEADLINE;
    ─────────────────────────────────────────────────────────────── */
 export const createEventRegistration = async (req, res) => {
   try {
-    const { participants, plan } = req.body;
+    const { participants, plan, promoApplied, promoCode } = req.body;
 
     // ── Validate plan ──
     const baseCost = planCosts[plan];
@@ -45,11 +45,31 @@ export const createEventRegistration = async (req, res) => {
     if (!Array.isArray(participants) || participants.length === 0) {
       return res.status(400).json({ error: "At least one participant is required" });
     }
+    if (participants.length > 2) {
+      return res.status(400).json({ error: "Maximum 2 participants allowed" });
+    }
+
+    // ── Validate promo code ──
+    const validPromoCodes = ["PSU", "AAMANTRAN", "DISC"];
+    const isPromoApplied = promoApplied && promoCode && validPromoCodes.includes(promoCode.trim().toUpperCase());
 
     // ── Calculate per-person amount (with early bird if applicable) ──
     const earlyBirdApplied = isEarlyBirdActive();
     const discount = earlyBirdApplied ? (earlyBirdDiscounts[plan] ?? 0) : 0;
-    const perPersonAmount = baseCost - discount;          // INR
+    let perPersonAmount = baseCost - discount;          // INR
+
+    if (isPromoApplied) {
+      if (plan === "SINGLE_OCCUPANCY_SUPERIOR") {
+        perPersonAmount -= baseCost * 0.10;
+      } else if (plan === "TWIN_SHARING_SUPERIOR") {
+        if (participants.length === 1) {
+          perPersonAmount -= 1600;
+        } else if (participants.length === 2) {
+          perPersonAmount -= 2400;
+        }
+      }
+    }
+
     const totalAmount = perPersonAmount * participants.length; // INR
 
     // ── Create a single Razorpay order for the total ──
@@ -147,8 +167,13 @@ export const verifyEventPayment = async (req, res) => {
     // ── Use discounted amount stored in DB ──
     const amount = eventRegistration.amountPaid ?? planCosts[eventRegistration.plan];
 
+    // ── Count total participants for this order ──
+    const participantCount = await prisma.eventRegistration.count({
+      where: { orderId: razorpay_order_id },
+    });
+
     // ── Generate invoice for the primary participant ──
-    const invoicePath = await generateInvoice(eventRegistration, amount);
+    const invoicePath = await generateInvoice(eventRegistration, amount, participantCount);
 
     // ── Persist invoice path ──
     await prisma.eventRegistration.update({
@@ -168,7 +193,7 @@ export const verifyEventPayment = async (req, res) => {
     const message = `
       <p>Dear ${eventRegistration.fullName},</p>
       <p>Greetings from YogSaathi.</p>
-      <p>Thank you for registering for the YogSaathi × Panambi Yoga Retreat at Rishikesh and for making the payment of ₹${amount} per person. We are pleased to confirm your participation in the retreat.</p>
+      <p>Thank you for registering for the YogSaathi × Panambi Yoga Retreat at Rishikesh for ${participantCount} participant(s) and for making the total payment of ₹${amount * participantCount}. We are pleased to confirm your participation in the retreat.</p>
       ${earlyBirdNote}
       <p><b>Booking Details</b></p>
       <p>Room Category: ${eventRegistration.plan}</p>

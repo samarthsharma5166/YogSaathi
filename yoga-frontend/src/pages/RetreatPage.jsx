@@ -107,6 +107,33 @@ const RetreatPage = () => {
   const [participants, setParticipants] = useState([emptyParticipant()]);
   const [errors, setErrors] = useState([{}]);
 
+  const [promoCode, setPromoCode] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState(false);
+  const [promoError, setPromoError] = useState("");
+
+  const validPromoCodes = ["PSU", "AAMANTRAN", "DISC"];
+
+  const handleApplyPromo = () => {
+    if (!validPromoCodes.includes(promoCode.trim().toUpperCase())) {
+      setAppliedPromo(false);
+      setPromoError("Invalid Promo Code");
+      return;
+    }
+    if (selectedPlan !== "TWIN_SHARING_SUPERIOR" && selectedPlan !== "SINGLE_OCCUPANCY_SUPERIOR") {
+      setAppliedPromo(false);
+      setPromoError("Promo code is only applicable for Superior/Premiere Rooms");
+      return;
+    }
+    setAppliedPromo(true);
+    setPromoError("");
+  };
+
+  const removePromo = () => {
+    setPromoCode("");
+    setAppliedPromo(false);
+    setPromoError("");
+  };
+
   // Selected plan (single plan for all participants)
   const [selectedPlan, setSelectedPlan] = useState("TWIN_SHARING_SUPERIOR");
 
@@ -184,8 +211,21 @@ const RetreatPage = () => {
   /* ── Price helpers ── */
   const getPlanById = (id) => plans.find((p) => p.id === id);
 
-  const getEffectivePrice = (plan) =>
-    earlyBird ? plan.price - plan.EarlyBird : plan.price;
+  const getPromoDiscountPerPerson = (plan) => {
+    if (!appliedPromo) return 0;
+    if (plan.id === "SINGLE_OCCUPANCY_SUPERIOR") {
+      return plan.price * 0.10;
+    } else if (plan.id === "TWIN_SHARING_SUPERIOR") {
+      return participants.length === 1 ? 1600 : 2400;
+    }
+    return 0;
+  };
+
+  const getEffectivePrice = (plan) => {
+    let p = earlyBird ? plan.price - plan.EarlyBird : plan.price;
+    p -= getPromoDiscountPerPerson(plan);
+    return p;
+  };
 
   const getTotalAmount = () => {
     const plan = getPlanById(selectedPlan);
@@ -203,6 +243,8 @@ const RetreatPage = () => {
         participants,
         plan: selectedPlan,
         earlyBirdApplied: earlyBird,
+        promoCode: appliedPromo ? promoCode.toUpperCase() : "",
+        promoApplied: appliedPromo,
         totalAmount: getTotalAmount(),
       };
 
@@ -511,14 +553,16 @@ const RetreatPage = () => {
                 ))}
 
                 {/* Add Participant button */}
-                <button
-                  type="button"
-                  onClick={handleAddParticipant}
-                  className="flex items-center gap-2 text-emerald-700 border-2 border-dashed border-emerald-400 hover:border-emerald-600 hover:bg-emerald-50 px-5 py-3 rounded-xl w-full justify-center transition-all text-sm font-medium"
-                >
-                  <Plus className="w-4 h-4" />
-                  Add Another Participant
-                </button>
+                {participants.length < 2 && (
+                  <button
+                    type="button"
+                    onClick={handleAddParticipant}
+                    className="flex items-center gap-2 text-emerald-700 border-2 border-dashed border-emerald-400 hover:border-emerald-600 hover:bg-emerald-50 px-5 py-3 rounded-xl w-full justify-center transition-all text-sm font-medium"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Add Another Participant
+                  </button>
+                )}
 
                 <div className="flex justify-end pt-2">
                   <button
@@ -833,48 +877,94 @@ const RetreatPage = () => {
                 const effectivePrice = plan ? getEffectivePrice(plan) : 0;
                 const total = getTotalAmount();
                 return (
-                  <div className="bg-white border border-emerald-200 rounded-xl p-4 sm:p-6 mb-6 max-w-md ml-auto shadow-sm">
-                    <h3 className="font-semibold text-gray-800 mb-3 text-base">
-                      Order Summary
-                    </h3>
-                    <div className="space-y-1 text-sm text-gray-600">
-                      <div className="flex justify-between">
-                        <span>Plan</span>
-                        <span className="font-medium text-gray-800 text-right max-w-[60%]">
-                          {plan?.title}
-                        </span>
+                  <div className="flex flex-col items-end mb-6">
+                    <div className="bg-white border border-emerald-200 rounded-xl p-4 sm:p-6 mb-4 max-w-md w-full shadow-sm">
+                      <h3 className="font-semibold text-gray-800 mb-2 text-base">
+                        Promo Code
+                      </h3>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={promoCode}
+                          onChange={(e) => {
+                            setPromoCode(e.target.value);
+                            setPromoError("");
+                          }}
+                          disabled={appliedPromo}
+                          placeholder="Enter promo code"
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm uppercase"
+                        />
+                        {!appliedPromo ? (
+                          <button
+                            type="button"
+                            onClick={handleApplyPromo}
+                            className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm transition-all"
+                          >
+                            Apply
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={removePromo}
+                            className="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-lg text-sm transition-all"
+                          >
+                            Remove
+                          </button>
+                        )}
                       </div>
-                      <div className="flex justify-between">
-                        <span>Participants</span>
-                        <span className="font-medium text-gray-800">
-                          × {participants.length}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Price per person</span>
-                        <span className="font-medium text-gray-800">
-                          {earlyBird ? (
-                            <>
-                              <span className="line-through text-gray-400 mr-1">
-                                {fmt(plan?.price)}
-                              </span>
-                              {fmt(effectivePrice)}
-                            </>
-                          ) : (
-                            fmt(plan?.price)
-                          )}
-                        </span>
-                      </div>
-                      {earlyBird && (
-                        <div className="flex justify-between text-emerald-600">
-                          <span>Early Bird Discount</span>
-                          <span>− {fmt(plan?.EarlyBird)} × {participants.length}</span>
-                        </div>
-                      )}
+                      {promoError && <p className="text-red-500 text-xs mt-1">{promoError}</p>}
+                      {appliedPromo && <p className="text-emerald-600 text-xs mt-1">Promo code applied successfully!</p>}
                     </div>
-                    <div className="border-t border-gray-200 mt-3 pt-3 flex justify-between font-bold text-base text-gray-900">
-                      <span>Total Amount</span>
-                      <span className="text-emerald-700">{fmt(total)}</span>
+
+                    <div className="bg-white border border-emerald-200 rounded-xl p-4 sm:p-6 max-w-md w-full shadow-sm">
+                      <h3 className="font-semibold text-gray-800 mb-3 text-base">
+                        Order Summary
+                      </h3>
+                      <div className="space-y-1 text-sm text-gray-600">
+                        <div className="flex justify-between">
+                          <span>Plan</span>
+                          <span className="font-medium text-gray-800 text-right max-w-[60%]">
+                            {plan?.title}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Participants</span>
+                          <span className="font-medium text-gray-800">
+                            × {participants.length}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Price per person</span>
+                          <span className="font-medium text-gray-800">
+                            {earlyBird || appliedPromo ? (
+                              <>
+                                <span className="line-through text-gray-400 mr-1">
+                                  {fmt(plan?.price)}
+                                </span>
+                                {fmt(effectivePrice)}
+                              </>
+                            ) : (
+                              fmt(plan?.price)
+                            )}
+                          </span>
+                        </div>
+                        {earlyBird && (
+                          <div className="flex justify-between text-emerald-600">
+                            <span>Early Bird Discount</span>
+                            <span>− {fmt(plan?.EarlyBird)} × {participants.length}</span>
+                          </div>
+                        )}
+                        {appliedPromo && (plan?.id === "TWIN_SHARING_SUPERIOR" || plan?.id === "SINGLE_OCCUPANCY_SUPERIOR") && (
+                          <div className="flex justify-between text-emerald-600">
+                            <span>Promo Discount</span>
+                            <span>− {fmt(getPromoDiscountPerPerson(plan) * participants.length)}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="border-t border-gray-200 mt-3 pt-3 flex justify-between font-bold text-base text-gray-900">
+                        <span>Total Amount</span>
+                        <span className="text-emerald-700">{fmt(total)}</span>
+                      </div>
                     </div>
                   </div>
                 );

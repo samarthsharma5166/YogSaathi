@@ -3,7 +3,8 @@ import fs from "fs";
 import path from "path";
 
 
-export async function generateInvoice(eventRegistration,amount) {
+export async function generateInvoice(eventRegistration, amount, participantCount = 1) {
+  const totalAmount = amount * participantCount;
   const invoiceDir = path.join(process.cwd(), "invoices");
   fs.mkdirSync(invoiceDir, { recursive: true });
 
@@ -46,8 +47,8 @@ export async function generateInvoice(eventRegistration,amount) {
   // ================= RETREAT DETAILS =================
   doc.font("Helvetica-Bold").text("Yoga Retreat Details:");
   doc.font("Helvetica");
-  doc.text("Start Date: 12.03.26, 1 PM");
-  doc.text("End Date: 15.03.26, 11.30 AM");
+  doc.text("Start Date: 21.05.26, 1 PM");
+  doc.text("End Date: 24.05.26, 11.30 AM");
   doc.text("Venue: Panambi Resort, Rishikesh");
   doc.moveDown();
 
@@ -66,12 +67,12 @@ export async function generateInvoice(eventRegistration,amount) {
   // ================= TABLE ROW =================
   doc.font("Helvetica");
   doc.text(
-    `Yoga Retreat (12.03.26 to 15.03.26, Panambi Resort)\n${eventRegistration.plan}`,
+    `Yoga Retreat (12.03.26 to 15.03.26, Panambi Resort)\n${eventRegistration.plan}\nParticipants: ${participantCount} @ ${amount} INR/person`,
     50,
     doc.y,
     { continued: true }
   );
-  doc.text(`${amount} INR`, { align: "right" });
+  doc.text(`${totalAmount} INR`, { align: "right" });
   doc.moveDown();
 
   doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
@@ -80,11 +81,11 @@ export async function generateInvoice(eventRegistration,amount) {
   // ================= TOTALS =================
   doc.font("Helvetica-Bold");
   doc.text("Net Payable", 50, doc.y, { continued: true });
-  doc.text(`${amount} INR`, { align: "right" });
+  doc.text(`${totalAmount} INR`, { align: "right" });
   doc.moveDown();
 
   doc.text("Total Amount Paid", 50, doc.y, { continued: true });
-  doc.text(`${amount} INR`, { align: "right" });
+  doc.text(`${totalAmount} INR`, { align: "right" });
 
   doc.moveDown(2);
 
