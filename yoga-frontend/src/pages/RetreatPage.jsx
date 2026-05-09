@@ -882,7 +882,7 @@ const RetreatPage = () => {
                       <h3 className="font-semibold text-gray-800 mb-2 text-base">
                         Promo Code
                       </h3>
-                      <div className="flex gap-2">
+                      <div className="flex flex-col sm:flex-row gap-2">
                         <input
                           type="text"
                           value={promoCode}
@@ -898,7 +898,7 @@ const RetreatPage = () => {
                           <button
                             type="button"
                             onClick={handleApplyPromo}
-                            className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm transition-all"
+                            className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm transition-all"
                           >
                             Apply
                           </button>
@@ -906,7 +906,7 @@ const RetreatPage = () => {
                           <button
                             type="button"
                             onClick={removePromo}
-                            className="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-lg text-sm transition-all"
+                            className="w-full sm:w-auto bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-lg text-sm transition-all"
                           >
                             Remove
                           </button>
