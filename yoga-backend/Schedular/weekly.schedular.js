@@ -36,10 +36,7 @@ export const weeklyAttendanceJob = new CronJob('0 21 * * 0', async () => {
             weekAttendance.Sun
         );
     }
-}, {
-    scheduled: true,
-    timezone: "Asia/Kolkata"
-});
+}, null, true, "Asia/Kolkata");
 
 function getWeekRange() {
     const today = new Date();
