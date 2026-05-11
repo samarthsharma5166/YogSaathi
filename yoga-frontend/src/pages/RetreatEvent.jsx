@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
 import { ImageWithFallback } from "../components/ ImageWithFallback";
-
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function RetreatEvent() {
+    const handleClick = () => {
+        const phoneNumber = "919971714091"; // country code + number
+        const message = "Hi, I want to know more about your retreat event.";
+        const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(url, "_blank");
+    };
     return (
         <div className="h-[100dvh] w-full overflow-hidden bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 flex items-center justify-center p-3 sm:p-4 md:p-6">
             <div className="w-full max-w-7xl h-full max-h-[95vh] md:max-h-[90vh] lg:max-h-[85vh] bg-white/95 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
@@ -111,12 +117,19 @@ export default function RetreatEvent() {
                             >
                                 Register Now / Make Payment
                             </Link>
-                            <button
+                            {/* <button
                                 type="button"
                                 onClick={() => window.open('/retreat.pdf', '_blank')}
                                 className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl transition-colors duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base md:text-lg font-medium flex items-center justify-center"
                             >
                                 Retreat Brochure
+                            </button> */}
+                            <button
+                                type="button"
+                                onClick={handleClick}
+                                className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl transition-colors duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base md:text-lg font-medium flex items-center justify-center gap-2"
+                            >
+                                <FaWhatsapp className="size-5 sm:size-6"/> WhatsApp
                             </button>
                         </div>
                     </div>
