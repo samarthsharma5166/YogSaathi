@@ -86,10 +86,29 @@ const JoinClass = () => {
                     <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
                         <FiAlertTriangle className="text-7xl text-yellow-500 mx-auto" />
                         <h1 className="text-4xl font-bold text-gray-800 mt-6">{status === 'no_ref' ? 'Invalid Link' : 'Class Not Open'}</h1>
-                        <p className="text-lg text-gray-500 max-w-md mx-auto">{errorMessage}</p>
+                        
+                        <div className="mt-6 p-6 bg-white rounded-xl shadow-md border border-gray-100 max-w-md mx-auto text-center">
+                            <h2 className="text-xl font-bold text-[#607957] mb-4">Welcome to YogSaathi online Classes</h2>
+                            
+                            <div className="space-y-2 mb-4">
+                                <p className="text-md text-gray-700 font-medium">Link will work at class timings</p>
+                                <p className="text-md text-gray-700 font-medium">लिंक क्लास के समय कार्य करेगा</p>
+                            </div>
+                            
+                            <div className="bg-green-50 py-3 px-4 rounded-lg">
+                                <p className="text-md font-bold text-green-800">
+                                    (6 AM, 7 AM, 8.30 AM, 5.30 PM, 6.30 PM & 7.30PM)
+                                </p>
+                            </div>
+                        </div>
+
+                        {errorMessage && (
+                            <p className="text-sm text-gray-500 mt-6 max-w-md mx-auto">{errorMessage}</p>
+                        )}
+                        
                         <Link
                             to="/"
-                            className="mt-8 inline-block bg-[#607957] hover:bg-green-800 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
+                            className="mt-6 inline-block bg-[#607957] hover:bg-green-800 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
                         >
                             Return to Homepage
                         </Link>
