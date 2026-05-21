@@ -98,8 +98,8 @@ function AppContent() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/termsofuse" element={<TermsOfUse />} />
           <Route path="/blog/:id" element={<BlogPost />} />
-          <Route path="/retreat" element={<RetreatEvent />} />
-          <Route path="/retreat/registration" element={<RetreatPage/>}/>
+          {/* <Route path="/retreat" element={<RetreatEvent />} />
+          <Route path="/retreat/registration" element={<RetreatPage/>}/> */}
           {/* Admin Routes with Layout */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="manage-campign" element={<CampaignPage/>}/>
