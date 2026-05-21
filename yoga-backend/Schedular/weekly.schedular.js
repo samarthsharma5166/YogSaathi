@@ -5,13 +5,15 @@ import { startOfWeek, addDays, format } from "date-fns";
 
 export const weeklyAttendanceJob = new CronJob('0 21 * * 0', async () => {
     const now = new Date();
+    const threeDaysAgo = addDays(now, -3);
 
     const allUsers = await prisma.user.findMany({
         include: {
             subscription: {
                 where: {
                     expiresAt: { gte: now },
-                    status: "active"
+                    status: "active",
+                    startDate: { lte: threeDaysAgo }
                 },
                 include: { plan: true },
             },
