@@ -640,7 +640,7 @@ export default function ScheduledMessageManager() {
                                             <option value="Inactive-Subscribers">Inactive Subscribers</option>
                                             <option value="Active-Free-Trial">Active Free Trial User</option>
                                             <option value="Inactive-Free-Trial">Inactive Free Trial User</option>
-
+                                            <option value="Leads">Leads</option>
                                         </select>
                                     </div>
 

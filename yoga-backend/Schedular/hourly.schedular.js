@@ -424,6 +424,7 @@ async function getUsers(message) {
     const audience = message.targetAudience;
 
     // 1. Handle Simple Cases
+    if (audience === "Leads") return await prisma.lead.findMany();
     if (audience === "ALL") return await prisma.user.findMany();
     if (audience === "ADMIN") return await prisma.user.findMany({ where: { role: "ADMIN" } });
 
