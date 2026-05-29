@@ -262,3 +262,24 @@ model EventRegistration {
   updatedAt         DateTime           @updatedAt
 }
 
+
+model Lead {
+  id          String   @id @default(uuid())
+  srNo        Int?
+  refCode     String?  @unique  // e.g. "YS/1"
+  name        String?
+  phoneNumber String   @unique
+  remarks     String?
+  status      LeadStatus @default(NEW)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  INTERESTED
+  CONVERTED
+  NOT_INTERESTED
+}
