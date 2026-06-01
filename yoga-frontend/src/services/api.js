@@ -115,19 +115,19 @@ export const fetchAdminPlans = () => API.get("/admin/plans");
 // order
 
 export const createOrder = (data) => API.post("/create-order", data);
-export const getSubscriptionforUser = (id) =>  API.get(`/user/subscription/${id}`);
+export const getSubscriptionforUser = (id) => API.get(`/user/subscription/${id}`);
 export const getPayment = (page, limit, search) => API.get(`/payment?page=${page}&limit=${limit}&search=${search}`)
-export const verifyPayment = (data) => API.post("/verify-payment",data);
+export const verifyPayment = (data) => API.post("/verify-payment", data);
 
 
 export const deleteUser = async (id) => {
-    const res =  API.delete("/admin/user/" + id);
-    toast.promise(res, {
-      loading: "Deleting user...",
-      success: "User deleted successfully!",
-      error: "Delete failed!",
-    });
-    return (await res).data;
+  const res = API.delete("/admin/user/" + id);
+  toast.promise(res, {
+    loading: "Deleting user...",
+    success: "User deleted successfully!",
+    error: "Delete failed!",
+  });
+  return (await res).data;
 }
 
 export const handleDownloadInvoice = async (fileName) => {
@@ -149,20 +149,20 @@ export const handleDownloadInvoice = async (fileName) => {
 // schedule
 export const getAllScheduledMessages = async () => {
   const res = await API.get("/admin/scheduled/Message");
-    return res.data;
+  return res.data;
 }
 
 export const createScheduledMessage = async (data) => {
   const res = await API.post("/admin/scheduled/Message", data);
-    return res.data;
+  return res.data;
 }
 
-export const editScheduledMessage = async(id,data)=>{
+export const editScheduledMessage = async (id, data) => {
   const res = await API.put(`/admin/scheduled/Message/${id}`, data);
   return res.data;
 }
 
-export const deleteScheduledMessage = async(id)=>{
+export const deleteScheduledMessage = async (id) => {
   const res = await API.delete(`/admin/scheduled/Message/${id}`);
   return res.data;
 }
@@ -206,10 +206,10 @@ export const getCommonLink = () => API.get("/common-link");
 // ✅ MANAGE OFFERS  APIs (Admin)
 // ===============================
 export const getAllOffers = () => API.get("/offers/all");
-export const updateOffer = (editorId,offer) => API.put(`/offers/${editorId}`,offer);
+export const updateOffer = (editorId, offer) => API.put(`/offers/${editorId}`, offer);
 export const deleteOffer = (editorId) => API.delete(`/offers/${editorId}`);
-export const createOffer = (offer) => API.post("/offers",offer);
-export const getActiveOffer =() => API.get("/offers/active");
+export const createOffer = (offer) => API.post("/offers", offer);
+export const getActiveOffer = () => API.get("/offers/active");
 
 
 export const getRetreatUsers = () => API.get("/event/retreat-users");
@@ -219,5 +219,10 @@ export const downloadRetreatUsers = () =>
     responseType: "blob",
   });
 
+// ===============================
+// ✅ OVERSEAS INQUIRIES APIs
+// ===============================
+export const createOverseasInquiry = (data) => API.post("/overseas/inquiry", data);
+export const getOverseasInquiries = () => API.get("/overseas/inquiries");
 
 export default API;

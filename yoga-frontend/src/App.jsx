@@ -65,6 +65,7 @@ import ManageCommonLink from "./Admin/ManageCommonLink.jsx";
 import ManageOffers from "./Admin/ManageOffers.jsx";
 import RetreatEvent from "./pages/RetreatEvent.jsx";
 import RetreatUsers from "./Admin/RetreatUsers.jsx";
+import AdminOverseasInquiries from "./Admin/AdminOverseasInquiries.jsx";
 
 
 function AppContent() {
@@ -126,6 +127,7 @@ function AppContent() {
             <Route path="scheduledMessage" element={<ScheduledMessageManager />} />
             <Route path="manage-common-link" element={<ManageCommonLink />} />
             <Route path="retreat-users" element={<RetreatUsers />} />
+            <Route path="overseas-inquiries" element={<AdminOverseasInquiries />} />
           </Route>
 
           {/* User Routes with Layout */}

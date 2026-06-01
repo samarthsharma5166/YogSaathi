@@ -6,6 +6,7 @@ import "./CSS/adminlayout.css";
 import { SlGrid, SlPeople, SlBookOpen, SlCalender, SlWallet, SlGraduation, SlMagnet, SlLink, SlClock, SlLogout } from "react-icons/sl";
 import { MdOutlinePayment } from "react-icons/md";
 import { MdOutlineLocalOffer } from "react-icons/md";
+import AdminOverseasInquiries from "../Admin/AdminOverseasInquiries";
 
 const menuItems = [
   { name: "Dashboard", icon: <SlGrid />, path: "admin-dashboard" },
@@ -24,6 +25,7 @@ const menuItems = [
   { name: "scheduledMessage", icon: <SlClock />, path:"scheduledMessage"},
   { name: "Manage Common Link", icon: <SlLink />, path: "manage-common-link" },
   { name: "Retreat Users", icon: <SlPeople />, path: "retreat-users" },
+  { name: "Overseas Users", icon: <SlPeople />, path: "overseas-inquiries" },
   { name: "Logout", icon: <SlLogout />, path: "logout" }
 ];
 const Adminlayout = () => {
