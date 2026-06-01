@@ -6,8 +6,11 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [programsMenuOpen, setProgramsMenuOpen] = useState(false);
+  const [mobileProgramsOpen, setMobileProgramsOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const dropdownRef = useRef(null);
+  const programsDropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,6 +29,9 @@ const Navbar = () => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setUserMenuOpen(false);
       }
+      if (programsDropdownRef.current && !programsDropdownRef.current.contains(event.target)) {
+        setProgramsMenuOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -39,7 +45,20 @@ const Navbar = () => {
   const closeMenu = () => {
     setMobileMenuOpen(false);
     setUserMenuOpen(false);
+    setMobileProgramsOpen(false);
+    setProgramsMenuOpen(false);
   };
+
+  const programs = [
+    { name: "Kids Yoga", path: "/kidsPrograms" },
+    { name: "Women Yoga", path: "/womenPrograms" },
+    { name: "Corporate Wellness Retreats", path: "/corporateRetreats" },
+    { name: "Yoga for Overseas Participants", path: "/overseasPrograms" },
+    { name: "Subscription Plans", path: "/price"},
+    { name: "Join Free Trial Class", path: "/auth/register "}
+  ];
+
+  const isProgramActive = location.pathname === "/contact" && location.search.includes("program");
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -72,17 +91,69 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="hidden lg:flex lg:items-center lg:gap-8">
             <div className="flex items-center gap-6">
-              {navLinks.map((link) => (
+              {/* Home Link */}
+              <Link
+                to="/"
+                className={`text-sm font-medium transition-colors duration-200 hover:text-green-600 ${
+                  location.pathname === "/" && !location.search.includes("program") ? "text-green-600" : "text-gray-700"
+                }`}
+              >
+                Home
+              </Link>
+
+             
+
+              {/* Rest of Nav Links */}
+              {navLinks.slice(1).map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
                   className={`text-sm font-medium transition-colors duration-200 hover:text-green-600 ${
-                    location.pathname === link.path ? "text-green-600" : "text-gray-700"
+                    location.pathname === link.path && !isProgramActive ? "text-green-600" : "text-gray-700"
                   }`}
                 >
                   {link.name}
                 </Link>
               ))}
+            </div>
+
+            {/* Yoga Programs Dropdown */}
+            <div
+              className="relative"
+              ref={programsDropdownRef}
+              onMouseEnter={() => setProgramsMenuOpen(true)}
+              onMouseLeave={() => setProgramsMenuOpen(false)}
+            >
+              <button
+                onClick={() => setProgramsMenuOpen((prev) => !prev)}
+                className={`flex text-sm! items-center gap-1  font-medium transition-colors duration-200 hover:text-green-600 focus:outline-none py-2 ${programsMenuOpen || isProgramActive ? "text-green-600" : "text-gray-700"
+                  }`}
+              >
+                Yoga Programs
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${programsMenuOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {programsMenuOpen && (
+                <div className="absolute text-sm left-0 mt-1 w-64 rounded-2xl bg-white shadow-xl border border-gray-100/80 py-2.5 origin-top-left animate-in fade-in slide-in-from-top-2 z-50">
+                  {programs.map((prog) => (
+                    <Link
+                      key={prog.name}
+                      to={prog.path}
+                      onClick={() => setProgramsMenuOpen(false)}
+                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-150 font-medium"
+                    >
+                      {prog.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="flex items-center gap-1 border-l border-gray-300 pl-4">
@@ -176,13 +247,69 @@ const Navbar = () => {
         }`}
       >
         <div className="px-4 pt-2 pb-6 space-y-2 bg-white shadow-lg rounded-b-2xl border-t border-gray-100">
-          {navLinks.map((link) => (
+          {/* Home Link */}
+          <Link
+            to="/"
+            onClick={closeMenu}
+            className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${
+              location.pathname === "/" && !location.search.includes("program")
+                ? "text-green-600 bg-green-50"
+                : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
+            }`}
+          >
+            Home
+          </Link>
+
+          {/* Yoga Programs Accordion */}
+          <div className="block">
+            <button
+              onClick={() => setMobileProgramsOpen((prev) => !prev)}
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${
+                mobileProgramsOpen || isProgramActive
+                  ? "text-green-600 bg-green-50/30"
+                  : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
+              }`}
+            >
+              <span>Yoga Programs</span>
+              <svg
+                className={`w-5 h-5 transition-transform duration-200 ${mobileProgramsOpen ? "rotate-180" : ""}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div
+              className={`pl-4 space-y-1 transition-all duration-200 overflow-hidden ${
+                mobileProgramsOpen ? "max-h-60 opacity-100 mt-1" : "max-h-0 opacity-0"
+              }`}
+            >
+              {programs.map((prog) => (
+                <Link
+                  key={prog.name}
+                  to={prog.path}
+                  onClick={closeMenu}
+                  className={`block px-4 py-2 text-sm rounded-lg transition-colors duration-150 ${
+                    location.pathname + location.search === prog.path
+                      ? "text-green-600 bg-green-50/50 font-medium"
+                      : "text-gray-600 hover:text-green-600 hover:bg-green-50/50"
+                  }`}
+                >
+                  {prog.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Rest of Nav Links */}
+          {navLinks.slice(1).map((link) => (
             <Link
               key={link.name}
               to={link.path}
               onClick={closeMenu}
               className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${
-                location.pathname === link.path
+                location.pathname === link.path && !isProgramActive
                   ? "text-green-600 bg-green-50"
                   : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
               }`}

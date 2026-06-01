@@ -27,6 +27,11 @@ import Greet from "./pages/Greet.jsx"
 import AuthLayout from "./Layout/AuthLayout.jsx";
 import Register from "./components/Register";
 import Login from "./components/login";
+import KidsPrograms from "./pages/KidsPrograms";
+import WomensProgram from "./pages/WomensProgram";
+import CorporateRetreats from './pages/CorporateRetreats.jsx'
+import OverseasPrograms from './pages/OverseasPrograms.jsx'
+
 // Admin Pages
 import AdminDashboard from "./Admin/AdminDashboard";
 import Manageuser from "./Admin/UserMange";
@@ -77,7 +82,10 @@ function AppContent() {
           <Route path="/" element={<HomePage />} />
           <Route path="/checkout/:planId" element={<CheckoutPage />} />
           <Route path="/class/join/" element={<JoinClass/>}/>
-
+          <Route path="/kidsPrograms" element={<KidsPrograms/>}/>
+          <Route path="/womenPrograms" element={<WomensProgram/>}/>
+          <Route path="/corporateRetreats" element={<CorporateRetreats/>}/>
+          <Route path="/overseasPrograms" element={<OverseasPrograms/>}/>
           <Route path="/auth" element={<AuthLayout />}>
             <Route path="register" element={<Register />} />
             <Route path="greet" element={<Greet />} />

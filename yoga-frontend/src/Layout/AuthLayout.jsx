@@ -10,9 +10,9 @@ const AuthLayout = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
-          src="/register2.jpeg"
+          src="/auth2.jpeg"
           alt="Yoga background"
-          className="absolute inset-0 w-full h-full object-cover"
+          className=" inset-0 w-full h-full object-cover"
         />
         {/* Subtle overlay to make the image look richer */}
         <div className="absolute inset-0 bg-green-900/10 mix-blend-multiply"></div>
