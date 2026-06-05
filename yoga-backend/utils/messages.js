@@ -1441,7 +1441,11 @@ export const payment_confirmation = (number,name,amount) =>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("payment_confirmation success:", response.data);
+    }).catch(error => {
+        console.error("payment_confirmation error:", error.response?.data || error.message);
+    });
 }
 
 
@@ -1472,7 +1476,11 @@ export const yoga_training_1ram = (number,name) =>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("yoga_training_1ram success:", response.data);
+    }).catch(error => {
+        console.error("yoga_training_1ram error:", error.response?.data || error.message);
+    });
 }
 
 export const yoga_training_2 = (number,name) =>{
@@ -1542,7 +1550,11 @@ export const yoga_training_2 = (number,name) =>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("yoga_training_2 success:", response.data);
+    }).catch(error => {
+        console.error("yoga_training_2 error:", error.response?.data || error.message);
+    });
 }
 
 
@@ -1575,7 +1587,11 @@ export const yoga_trail_intimation_=(number,name)=>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("yoga_trail_intimation_ success:", response.data);
+    }).catch(error => {
+        console.error("yoga_trail_intimation_ error:", error.response?.data || error.message);
+    });
 }
 
 export const yogsaathi_payment_link_share = (number,name) =>{
@@ -1616,7 +1632,11 @@ export const yogsaathi_payment_link_share = (number,name) =>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("yogsaathi_payment_link_share success:", response.data);
+    }).catch(error => {
+        console.error("yogsaathi_payment_link_share error:", error.response?.data || error.message);
+    });
 }
 
 export const yogsaathi_training_brochure_share = (number,name) =>{
@@ -1698,7 +1718,11 @@ export const yogsaathi_training_brochure_share = (number,name) =>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("yogsaathi_training_brochure_share success:", response.data);
+    }).catch(error => {
+        console.error("yogsaathi_training_brochure_share error:", error.response?.data || error.message);
+    });
 }
 
 export const yoga_trial_enrolment = (number,name) =>{
@@ -1730,7 +1754,11 @@ export const yoga_trial_enrolment = (number,name) =>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("yoga_trial_enrolment success:", response.data);
+    }).catch(error => {
+        console.error("yoga_trial_enrolment error:", error.response?.data || error.message);
+    });
 }
 
 export const opi =(number,name)=>{
@@ -1762,7 +1790,11 @@ export const opi =(number,name)=>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("opi success:", response.data);
+    }).catch(error => {
+        console.error("opi error:", error.response?.data || error.message);
+    });
 }
 
 export const yogsaathi_group_access_update = (number,name) =>{
@@ -1794,7 +1826,11 @@ export const yogsaathi_group_access_update = (number,name) =>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("yogsaathi_group_access_update success:", response.data);
+    }).catch(error => {
+        console.error("yogsaathi_group_access_update error:", error.response?.data || error.message);
+    });
 }
 
 export const inputs = (number,name) =>{
@@ -1826,7 +1862,11 @@ export const inputs = (number,name) =>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("inputs success:", response.data);
+    }).catch(error => {
+        console.error("inputs error:", error.response?.data || error.message);
+    });
 }
 
 export const retreat_info_brochure = (number,name) =>{
@@ -1846,7 +1886,11 @@ export const retreat_info_brochure = (number,name) =>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("retreat_info_brochure success:", response.data);
+    }).catch(error => {
+        console.error("retreat_info_brochure error:", error.response?.data || error.message);
+    });
 }
 
 export const trial_expiry_notification = (number,name)=>{
@@ -1891,10 +1935,15 @@ export const trial_expiry_notification = (number,name)=>{
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("trial_expiry_notification success:", response.data);
+    }).catch(error => {
+        console.error("trial_expiry_notification error:", error.response?.data || error.message);
+    });
 }
 
 export const session_schedule_notification = (number,name,title,speaker,date,link) =>{
+    const safeLink = link ? link.replace(/_/g, '%5F') : '';
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1935,7 +1984,7 @@ export const session_schedule_notification = (number,name,title,speaker,date,lin
                             },
                             {
                                 "type": "text",
-                                "text": link
+                                "text": safeLink
                             }
                         ]
                     }
@@ -1948,11 +1997,16 @@ export const session_schedule_notification = (number,name,title,speaker,date,lin
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("session_schedule_notification success:", response.data);
+    }).catch(error => {
+        console.error("session_schedule_notification error:", error.response?.data || error.message);
+    });
 }
 
 
-export const orientation_program__new = (number, name, date, time, refferalCode, referralPoints) =>{
+export const orientation_program__new = (number, name, date, time,link) => {
+    const safeLink = link ? link.replace(/_/g, '%5F') : '';
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1978,7 +2032,7 @@ export const orientation_program__new = (number, name, date, time, refferalCode,
                             },
                             {
                                 "type": "text",
-                                "text": `${process.env.CLASS_BASE_URL}/class/join?ref=${refferalCode}_${referralPoints}`
+                                "text": safeLink
                             }
                         ]
                     }
@@ -1991,5 +2045,9 @@ export const orientation_program__new = (number, name, date, time, refferalCode,
             "Content-Type": "application/json",
             "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-    })
+    }).then(response => {
+        console.log("orientation_program__new success:", response.data);
+    }).catch(error => {
+        console.error("orientation_program__new error:", error.response?.data || error.message);
+    });
 }

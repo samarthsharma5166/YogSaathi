@@ -349,7 +349,9 @@ export const hourlyJob = new CronJob('* * * * *', async () => {
         if (message.templateName === "orientation_program__new"){
             const users = await getUsers(message)
             users.map((user)=>{
-                orientation_program__new(user.phoneNumber,user.name,message.payload.date,message.payload.time,user.referralCode,user.referralPoints)
+                const classLink = `${process.env.CLASS_BASE_URL}/class/join?ref=${user.referralCode}_${user.referralPoints}`
+                // const classLink = `https://www.youtube.com/`
+                orientation_program__new(user.phoneNumber, user.name, message.payload.date, message.payload.time, classLink)
             })
         }
     });
