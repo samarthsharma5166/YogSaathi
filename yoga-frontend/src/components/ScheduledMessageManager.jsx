@@ -43,7 +43,7 @@ const templateName = [
         inputs: [
             { label: "Session Date", name: "date", type: "date", required: true },
             { label: "Session Time", name: "time", type: "time", required: true },
-            { label: "Session Link", name: "sessionLink", type: "text", required: true },
+            // { label: "Session Link", name: "sessionLink", type: "text", required: true },
         ]
     },
     {
