@@ -1952,7 +1952,7 @@ export const session_schedule_notification = (number,name,title,speaker,date,lin
 }
 
 
-export const orientation_program__new = (number,name,date,time,link) =>{
+export const orientation_program__new = (number, name, date, time, refferalCode, referralPoints) =>{
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1978,7 +1978,7 @@ export const orientation_program__new = (number,name,date,time,link) =>{
                             },
                             {
                                 "type": "text",
-                                "text": link
+                                "text": `${process.env.CLASS_BASE_URL}/class/join?ref=${refferalCode}_${referralPoints}`
                             }
                         ]
                     }
