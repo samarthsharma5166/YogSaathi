@@ -194,6 +194,10 @@ const templateName = [
             {label:"Time", name:"time", type:"text", required: true},
             // {label:"Link", name:"link", type:"text", required: true},
         ]
+    },
+    {
+        name:"regularity_key_hindi",
+        inputs:[]
     }
 ];
 
