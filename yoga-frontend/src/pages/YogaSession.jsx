@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { ArrowRight, Sparkles, User, Phone, Mail, Clock, Calendar, CheckCircle2, ShieldCheck, Heart, Flame } from "lucide-react";
 
-export default function DieticianSession() {
+export default function YogaSession() {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -55,7 +55,7 @@ export default function DieticianSession() {
       const waNumber = "919971714091";
       const challengeStr = selectedChallenge ? `\n• Primary Challenge: ${selectedChallenge}` : "";
       const promoStr = formData.promocode ? `\n• Promo Code: ${formData.promocode.toUpperCase()}` : "";
-      const message = `Hi YogSaathi! I want to register for the Weight Loss & Sustainable Fat Reduction Masterclass on 12-Jul-2026.\n\nMy Details:\n• Name: ${formData.name}\n• Phone: ${formData.phone}\n• Email: ${formData.email}${challengeStr}${promoStr}\n\nPlease secure my early bird slot at ₹149!`;
+      const message = `Hi YogSaathi! I want to register for the Weight Loss & Sustainable Fat Burning Yoga Session on 12-Jul-2026.\n\nMy Details:\n• Name: ${formData.name}\n• Phone: ${formData.phone}\n• Email: ${formData.email}${challengeStr}${promoStr}\n\nPlease secure my early bird slot at ₹99!`;
       const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
     }, 1500);
@@ -89,7 +89,7 @@ export default function DieticianSession() {
         <div className="animate-marquee">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="inline-block px-8">
-              🔥   Weight Loss & Sustainable Fat Reduction Masterclass (12-Jul-2026) • Early Bird Offer ₹149 Active for First 10 Candidates • Only {slotsLeft} Slots Left! 🔥
+              🔥 Lifestyle Disorders (Diabetes, BP & Heart Health) Session • Early Bird Offer ₹99 Active for First 10 Candidates • Only {slotsLeft} Slots Left! 🔥
             </span>
           ))}
         </div>
@@ -99,17 +99,16 @@ export default function DieticianSession() {
         
         {/* 🌟 Giant Elegant Serif Header */}
         <div className="mb-8 text-center max-w-4xl mx-auto">
-          <div className="inline-flex  items-center gap-2 bg-[#EAF3DE] text-[#3B6D11] px-4 py-1.5 rounded-full text-xl font-bold uppercase tracking-wider mb-3">
-            {/* <Sparkles className="w-3.5 h-3.5" /> */}
-            Special Interactive Dietician Session
+          <div className="inline-flex items-center gap-2 bg-[#EAF3DE] text-[#3B6D11] px-4 py-1.5 rounded-full text-xl font-bold uppercase tracking-wider mb-3">
+            Special Interactive Yoga Session
           </div>
           
-          <h1 className="font-display text-3xl sm:text-4xl md:text-[36px] mt-2 font-medium tracking-tight text-[#12211d] leading-none mb-3">
-             <span className="italic text-[#3B6D11]">Weight Loss</span> & Sustainable Fat Reduction
+          <h1 className="font-display text-3xl sm:text-4xl md:text-[36px] mt-2 font-bold tracking-tight text-[#12211d] leading-none mb-3">
+            Lifestyle Disorders <span className="font-display font-medium italic text-[#3B6D11]">{"(Diabetes, BP & Heart Health)"}</span>
           </h1>
           
           <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            Stop crash dieting and counting crumbs. Join YogSaathi’s clinical dietician for a premium 60 to 70 minute masterclass to unlock the science of permanent fat loss, metabolic resets, and healthy weight management.
+            Reclaim your health and vitality. Join YogSaathi’s master yoga therapist for a premium 60 to 70 minute live session to discover therapeutic yoga sequences, breath regulation, and stress-reduction secrets scientifically structured to manage Diabetes, stabilize blood pressure, and boost cardiovascular wellness.
           </p>
         </div>
 
@@ -125,20 +124,20 @@ export default function DieticianSession() {
               
               <div className="flex items-baseline gap-6 flex-wrap">
                 <div className="text-[70px] md:text-[90px] font-semibold leading-none text-[#12211d] tracking-tighter flex items-start">
-                  <span className="text-3xl font-normal mt-2 mr-1">₹</span>149
+                  <span className="text-3xl font-normal mt-2 mr-1">₹</span>99
                 </div>
                 <div className="mb-2">
                   <div className="text-gray-500 font-medium text-base line-through">
-                    Regular: ₹299
+                    Regular: ₹149
                   </div>
                   <div className="text-[#3B6D11] font-bold text-xs tracking-wide mt-0.5">
-                    Save ₹150 (50% OFF)
+                    Save ₹50 (33% OFF)
                   </div>
                 </div>
               </div>
 
               <p className="text-gray-600 text-xs sm:text-sm mt-4 max-w-md leading-relaxed">
-                Take advantage of our introductory rate for this weight-loss masterclass. Early bird registration is capped at 10 candidates to ensure our dietician can answer personalized nutrition queries.
+                Invest in your health with this live session. This yoga online class is designed to lock in introductory pricing and help you start a structured journey towards controlling Diabetes, stabilizing blood pressure, and improving heart health.
               </p>
             </div>
 
@@ -150,7 +149,7 @@ export default function DieticianSession() {
                 </span>
               </div>
               <p className="text-gray-500 text-[11px] mt-2">
-                *The price will increase to ₹299/- once the early bird capacity of 10 is reached.
+                *The price will increase to ₹149/- once the early bird capacity of 10 is reached.
               </p>
             </div>
           </div>
@@ -160,6 +159,7 @@ export default function DieticianSession() {
             <h3 className="text-xl font-bold tracking-tight text-[#12211d] mb-1">
               Secure Your Seat
             </h3>
+
             <form onSubmit={handleRegister} className="space-y-1">
               <div>
                 <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-0.5">Full Name</label>
@@ -271,40 +271,7 @@ export default function DieticianSession() {
           </div>
         </div>
 
-        {/* 📚 Masterclass Curriculums Section */}
-        {/* <div className="mb-20">
-          <h2 className="font-display text-4xl text-center text-[#12211d] mb-12">
-            Masterclass Syllabus
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white border border-gray-100 p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="font-display text-5xl font-light text-[#a3c97a] border-b border-gray-100 pb-3 mb-5">01</div>
-              <h4 className="text-lg font-bold text-[#12211d] mb-2">Hormonal Fat Storage</h4>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                Discover how insulin spikes, cortisol (stress), and thyroid health govern where your body stores fat. Learn to structure meals to balance these key hormones naturally.
-              </p>
-            </div>
-
-            <div className="bg-white border border-gray-100 p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="font-display text-5xl font-light text-[#a3c97a] border-b border-gray-100 pb-3 mb-5">02</div>
-              <h4 className="text-lg font-bold text-[#12211d] mb-2">Sustainable Deficits</h4>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                Design a realistic, nourishing caloric deficit using Indian whole foods. Keep your energy levels high, protect muscle tone, and stop late-night cravings permanently.
-              </p>
-            </div>
-
-            <div className="bg-white border border-gray-100 p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="font-display text-5xl font-light text-[#a3c97a] border-b border-gray-100 pb-3 mb-5">03</div>
-              <h4 className="text-lg font-bold text-[#12211d] mb-2">Metabolism Resets</h4>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                Break through fat-loss plateaus. Understand the concept of reverse dieting and learn how to maintain your target weight long-term without rebound weight gain.
-              </p>
-            </div>
-          </div>
-        </div> */}
-
-        {/* 👩‍⚕️ Clinical Dietician Panel */}
+        {/* 👩‍⚕️ Clinical Yoga Panel */}
         <div className="bg-[#EAF3DE]/40 border border-[#d4edbc] p-8 md:p-10 rounded-3xl flex flex-col md:flex-row items-center gap-8 md:gap-10">
           <div className="w-28 h-28 rounded-2xl overflow-hidden shrink-0 bg-[#EAF3DE] flex items-center justify-center font-display font-semibold text-3xl text-[#3B6D11] border border-[#d4edbc]">
             YS
@@ -313,9 +280,9 @@ export default function DieticianSession() {
             <span className="inline-block bg-[#3B6D11] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded mb-3">
               Session Facilitators by yogsaathi
             </span>
-            <h3 className="font-display text-2xl font-semibold text-[#12211d]">YogSaathi Clinical Experts</h3>
+            <h3 className="font-display text-2xl font-semibold text-[#12211d]">YogSaathi Yoga Experts</h3>
             <p className="text-gray-600 text-sm mt-3 leading-relaxed">
-              Our clinical nutritionists and weight management dieticians work alongside yoga therapists to bring you the best synergy of sustainable fat loss, metabolism activation, and daily wellness. With years of experience guiding 1000+ candidates globally to shed weight permanently without restrictive diets, we make fat reduction simple, healthy, and lasting.
+              Our master yoga therapists work alongside clinical experts to bring you the best synergy of restorative yoga postures (asanas), targeted breathwork (pranayama), and stress-management techniques. With years of experience guiding 1000+ candidates globally to regulate blood sugar, stabilize blood pressure, and restore cardiovascular vitality, we make holistic wellness simple, healthy, and lasting.
             </p>
           </div>
         </div>
