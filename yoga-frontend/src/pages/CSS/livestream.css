@@ -47,6 +47,14 @@
   padding: 0 10px;
 }
 
+@media (max-width: 640px) {
+  .livestream-header-h1 {
+    font-size: 36px !important;
+    line-height: normal;
+  }
+
+}
+
 .livestream-header .badge {
   display: inline-block;
   background-color: var(--color-sage-light);
@@ -265,6 +273,11 @@
   align-items: flex-start;
   gap: 20px;
 }
+@media(max-width: 640px) {
+  .stream-info-footer{
+    flex-direction: column;
+  }
+}
 
 .stream-info-text h3 {
   font-family: var(--font-display);
@@ -272,6 +285,15 @@
   margin: 0 0 6px 0;
   color: var(--color-primary-green);
 }
+
+            
+@media (max-width: 640px) {
+.stream-info-text h3{
+  font-size: 10px;
+  font-size: 1.4rem;
+  line-height: normal;
+}
+} 
 
 .stream-info-text p {
   color: var(--color-text-muted);
@@ -309,6 +331,9 @@
   color: var(--color-primary-green);
   font-weight: 600;
 }
+
+            
+
 
 .instructor-details span {
   font-size: 0.8rem;
@@ -746,7 +771,7 @@
 .past-slide-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   opacity: 0.8;
   transition: transform 0.5s ease;
 }
@@ -1011,16 +1036,18 @@
   padding: 0 10px;
 }
 
-.highlights-dashboard {
+.highlights-main-row {
   display: grid;
-  grid-template-columns: 2.2fr 1fr;
+  grid-template-columns: 1.5fr 1fr;
   gap: 30px;
   margin-top: 30px;
+  align-items: stretch;
 }
 
 @media (max-width: 1024px) {
-  .highlights-dashboard {
+  .highlights-main-row {
     grid-template-columns: 1fr;
+    align-items: flex-start;
   }
 }
 
@@ -1099,50 +1126,83 @@
   box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
 }
 
-.video-meta-overlay h3 {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  margin: 0 0 6px 0;
-}
-
-.video-meta-overlay p {
-  font-size: 0.95rem;
-  color: #e2e8f0;
-  margin: 0;
-  opacity: 0.9;
-}
-
-/* Right Panel: Gallery and text card */
-.highlight-photos-panel {
+/* Description Brief Card */
+.highlight-brief-card {
+  background-color: var(--color-bg-secondary);
+  border-radius: 16px;
+  padding: 30px;
+  border: 1px solid rgba(30, 53, 47, 0.04);
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  height: 100%;
+  justify-content: center;
 }
 
-.highlight-photos-grid {
+@media (max-width: 1024px) {
+  .highlight-brief-card {
+    padding: 24px;
+  }
+}
+
+.highlight-brief-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--color-primary-green);
+  margin: 0 0 16px 0;
+}
+
+.highlight-brief-card p {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0 0 14px 0;
+}
+
+.highlight-brief-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* Bottom part: Horizontal Photo Row */
+.highlight-photos-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-top: 30px;
 }
 
-.highlight-photo-item {
+@media (max-width: 900px) {
+  .highlight-photos-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .highlight-photos-row {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.highlight-photo-item-horizontal {
   aspect-ratio: 4/3;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(30, 53, 47, 0.04);
+  border: 1px solid rgba(30, 53, 47, 0.05);
 }
 
-.highlight-photo-item img {
+.highlight-photo-item-horizontal img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: var(--transition-smooth);
 }
 
-.photo-hover-overlay {
+.highlight-photo-item-horizontal:hover img {
+  transform: scale(1.06);
+}
+
+.highlight-photo-item-horizontal .photo-hover-overlay {
   position: absolute;
   inset: 0;
   background-color: rgba(30, 53, 47, 0.5);
@@ -1154,35 +1214,6 @@
   transition: var(--transition-smooth);
 }
 
-.highlight-photo-item:hover img {
-  transform: scale(1.05);
-}
-
-.highlight-photo-item:hover .photo-hover-overlay {
+.highlight-photo-item-horizontal:hover .photo-hover-overlay {
   opacity: 1;
-}
-
-.highlight-brief-card {
-  background-color: var(--color-bg-secondary);
-  border-radius: 16px;
-  padding: 24px;
-  border: 1px solid rgba(30, 53, 47, 0.04);
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.highlight-brief-card h4 {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  color: var(--color-primary-green);
-  margin: 0 0 8px 0;
-}
-
-.highlight-brief-card p {
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-  line-height: 1.5;
-  margin: 0;
 }

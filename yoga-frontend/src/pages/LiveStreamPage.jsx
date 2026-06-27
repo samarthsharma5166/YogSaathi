@@ -26,6 +26,8 @@ import b4 from "../assets/b4.jpeg";
 import b5 from "../assets/b5.jpeg";
 import b6 from "../assets/b6.jpeg";
 
+import logo from '/logomain.png'
+
 // ✅ International Yoga Day 2026 Images
 import yogaDay1 from "../assets/yoga_day_1.jpg";
 import yogaDay2 from "../assets/yoga_day_2.jpg";
@@ -43,45 +45,51 @@ import s2 from "../assets/s2.jpg";
 import s3 from "../assets/s3.jpg";
 import s4 from "../assets/s2.jpeg";
 import s5 from "../assets/s5.jpg";
-import s6 from "../assets/s1.jpg";
-import s7 from "../assets/s2.jpg";
 import s8 from "../assets/s3.jpg";
 import s9 from "../assets/s4.jpeg";
-import s10 from "../assets/s5.jpg";
-import b11 from "../assets/b1.jpg";
-import b22 from "../assets/b2.jpg";
-import b33 from "../assets/b3.jpg";
-import b44 from "../assets/b4.jpg";
-import b55 from "../assets/b5.jpg";
 import b66 from "../assets/s7.jpeg";
+import t1 from '../assets/t1.jpeg'
+import t2 from '../assets/t2.jpeg'
+import t3 from '../assets/t3.jpeg'
+import t4 from '../assets/t4.jpeg'
+import t5 from '../assets/t5.jpeg'
+
+
 
 const images = [b3, b2, b1, b4, b5, b6, s4, s9, b66]; // Past Events Slider Images
 const galleryImages = [
-  { src: s1, size: "normal" },
-  { src: s2, size: "wide" },
-  { src: s3, size: "normal" },
-  { src: s4, size: "tall" },
-  { src: s5, size: "normal" },
-  { src: s6, size: "normal" },
-  { src: s7, size: "wide" },
-  { src: s8, size: "normal" },
-  { src: s9, size: "tall" },
-  { src: s10, size: "normal" },
-  { src: b11, size: "normal" },
-  { src: b22, size: "wide" },
-  { src: b33, size: "normal" },
-  { src: b44, size: "tall" },
-  { src: b55, size: "normal" },
-  { src: b66, size: "normal" }
+  // { src: s1, size: "normal" },
+  // { src: s2, size: "wide" },
+  // { src: s3, size: "normal" },
+  { src: s4, size: "normal" },
+  // { src: s5, size: "normal" },
+  // { src: s6, size: "normal" },
+  // { src: s7, size: "wide" },
+  // { src: s8, size: "normal" },
+  { src: s9, size: "normal" },
+  // { src: s10, size: "normal" },
+  // { src: b11, size: "normal" },
+  // { src: b22, size: "wide" },
+  // { src: b33, size: "normal" },
+  // { src: b44, size: "tall" },
+  // { src: b55, size: "normal" },
+  { src: b66, size: "normal" },
+  { src: t3, size: "normal" },
+  { src: t1, size: "normal" },
+  { src: t2, size: "normal" },
+  { src: t4, size: "normal" },
+  { src: t5, size: "normal" },
+
+
 ];
 
 const initialChatMessages = [
-  { id: 1, sender: "Elena Rostova", text: "Namaste! Excited for today's Vinyasa class.", isMod: false, isIncoming: true },
-  { id: 2, sender: "Yogi_Dave", text: "Great flow so far, feeling the stretch!", isMod: false, isIncoming: true },
-  { id: 3, sender: "Anya (Instructor)", text: "Welcome everyone! Focus on your breath and go at your own pace.", isMod: true, isIncoming: true },
-  { id: 4, sender: "Marcus K.", text: "This ambient background music is perfect.", isMod: false, isIncoming: true },
-  { id: 5, sender: "Sarah Chen", text: "Will this live session be recorded? Need to share with my mom.", isMod: false, isIncoming: true },
-  { id: 6, sender: "Anya (Instructor)", text: "Yes Sarah, all live streams are saved to the Past Events library below!", isMod: true, isIncoming: true }
+  { id: 1, sender: "Rohan Gupta", text: "Namaste! Excited for today's Yoga class.", isMod: false, isIncoming: true },
+  { id: 2, sender: "Dev Singh", text: "Thankyou so much i got relief in my back pain.", isMod: false, isIncoming: true },
+  { id: 3, sender: "Upma (Instructor)", text: "Thankyou so much Rohan and Dev. I am glad that you are enjoying the class.", isMod: true, isIncoming: true },
+  { id: 4, sender: "Kian Sharma", text: "I feel energetic through out the day after attending the session.", isMod: false, isIncoming: true },
+  { id: 5, sender: "Meera Srivastav", text: "Namaste! when will you take surya namaskar aasan?", isMod: false, isIncoming: true },
+  { id: 6, sender: "Monika (Instructor)", text: "Meera take surya Namaskar on every Sunday.", isMod: true, isIncoming: true }
 ];
 
 const mockPastEvents = [
@@ -298,12 +306,12 @@ function Liveevent() {
       {/* 🌟 Recent Highlights Section */}
       <section className="recent-highlights-container-box">
         <div className="section-title-wrapper">
-          <h2>Recent Highlights</h2>
-          <p className="subtitle">International Yoga Day Celebration 2026</p>
+          <h2 className="text-6xl!">Recent Highlights</h2>
+          <p className="subtitle text-2xl!">International Yoga Day Celebration 2026</p>
           <div className="section-title-divider"></div>
         </div>
 
-        <div className="highlights-dashboard">
+        <div className="highlights-main-row">
           {/* Main Video Highlight Card */}
           <div className="highlight-video-card">
             <div className="highlight-video-wrapper">
@@ -334,38 +342,48 @@ function Liveevent() {
             </div>
           </div>
 
-          {/* Photo Gallery Grid */}
-          <div className="highlight-photos-panel">
-            <div className="highlight-photos-grid">
-              {[yogaDay2, yogaDay3, yogaDay4, yogaDay5].map((imgSrc, idx) => (
-                <div 
-                  key={idx} 
-                  className="highlight-photo-item"
-                  onClick={() => setSelectedLightboxImage(imgSrc)}
-                >
-                  <img src={imgSrc} alt={`Yoga Day Moment ${idx + 2}`} />
-                  <div className="photo-hover-overlay">
-                    <Maximize2 size={18} />
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="highlight-brief-card">
-              <h4>Sanctuary Celebration</h4>
-              <p>YogSaathi celebrated International Yoga Day 2026 with great enthusiasm, bringing together more than 150 participants to experience the transformative power of yoga.
-
-                The session included physical warm-up exercises, yoga asanas, breathing practices, and collective Om chanting, creating an atmosphere of harmony, positivity, and inner peace. Participants from different age groups joined the celebration and experienced the benefits of yoga for physical health, mental well-being, and emotional balance.
-
-                The participants highly appreciated the activities conducted during the event and expressed keen interest in YogSaathi's various offerings, including online yoga programs, free trial classes, and residential yoga retreats.</p>
-            </div>
+          {/* Description Card */}
+          <div className="highlight-brief-card">
+            <h4>Yoga Day Celebration</h4>
+            <p>
+              YogSaathi celebrated International Yoga Day 2026 with great enthusiasm, 
+              bringing together more than 150 participants to experience the transformative power of yoga.
+            </p>
+            <p>
+              The session included physical warm-up exercises, yoga asanas, breathing practices, 
+              and collective Om chanting, creating an atmosphere of harmony, positivity, and inner peace. 
+              Participants from different age groups joined the celebration and experienced the benefits of 
+              yoga for physical health, mental well-being, and emotional balance.
+            </p>
+            <p>
+              The participants highly appreciated the activities conducted during the event and expressed 
+              keen interest in YogSaathi's various offerings, including online yoga programs, 
+              free trial classes, and residential yoga retreats.
+            </p>
           </div>
+        </div>
+
+        {/* Bottom part: Horizontal Photo Row */}
+        <div className="highlight-photos-row">
+          {[yogaDay1, yogaDay2, yogaDay3, yogaDay4, yogaDay5].map((imgSrc, idx) => (
+            <div 
+              key={idx} 
+              className="highlight-photo-item-horizontal"
+              onClick={() => setSelectedLightboxImage(imgSrc)}
+            >
+              <img src={imgSrc} alt={`Yoga Day Moment ${idx + 1}`} />
+              <div className="photo-hover-overlay">
+                <Maximize2 size={18} />
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* 🌿 Header Section */}
       <header className="livestream-header">
         <span className="badge">YogSaathi Sanctuary</span>
-        <h1>Live Classes & <span>Interactive Events</span></h1>
+        <h1 className="livestream-header-h1">Live Classes & <span>Interactive Events</span></h1>
         <p>
           Connect, flow, and align your energy in real-time with our master instructors.
           Stream live classes or catch up on past sanctuary events from anywhere.
@@ -426,21 +444,23 @@ function Liveevent() {
             </div>
           </div>
 
+
           {/* Stream Information Footer */}
           <div className="stream-info-footer">
             <div className="stream-info-text">
-              <h3>Vinyasa Flow: Gentle Morning Alignments</h3>
-              <p>
+              <h3>Flexible Timings : Six Times avaliable a Day </h3>
+              <p>[6:00 AM,7:00 AM, 8:30 AM,5:30 PM, 6:30 PM, 7:30 PM]</p>
+              {/* <p>
                 <Clock size={14} /> Next Session Starts in: <strong>{formatCountdown(timeLeft)}</strong>
-              </p>
+              </p> */}
             </div>
             <div className="instructor-brief">
               <div className="instructor-avatar-ring">
-                <img src={s1} alt="Anya Sharma" />
+                <img src={logo} alt="Anya Sharma" />
               </div>
               <div className="instructor-details">
-                <h5>Anya Sharma</h5>
-                <span>Lead Yoga Therapist</span>
+                <h5>YogSaathi</h5>
+                <span>Togeather in every asana</span>
               </div>
             </div>
           </div>
@@ -489,7 +509,7 @@ function Liveevent() {
       </section>
 
       {/* 📅 Filterable Scheduled Events */}
-      <section className="schedule-section">
+      {/* <section className="schedule-section">
         <div className="section-title-wrapper">
           <h2>Upcoming Live Schedule</h2>
           <div className="section-title-divider"></div>
@@ -509,7 +529,7 @@ function Liveevent() {
         </div>
 
         {/* Grid cards */}
-        <div className="schedule-grid">
+        {/* <div className="schedule-grid">
           {filteredEvents.map((event) => (
             <article key={event.id} className="schedule-card">
               <div className="card-image-box">
@@ -550,7 +570,7 @@ function Liveevent() {
             </article>
           ))}
         </div>
-      </section>
+      </section> */} 
 
       {/* 🎥 Past Sanctuary Highlights */}
       <section className="past-highlights-section">
@@ -566,17 +586,17 @@ function Liveevent() {
               src={activePast.image}
               alt={activePast.title}
             />
-            <div className="past-slider-overlay">
+            {/* <div className="past-slider-overlay">
               <span className="tag">{activePast.tag}</span>
-              <h3>{activePast.title}</h3>
+              <h3>{activePast.title}</h3> 
               <p>{activePast.desc}</p>
-              <button
+               <button
                 className="watch-btn"
                 onClick={() => handlePlayReplay(activePast.title)}
               >
                 <Play size={16} fill="currentColor" /> Watch Replay
               </button>
-            </div>
+            </div> */}
 
             {/* Slider buttons */}
             <button
