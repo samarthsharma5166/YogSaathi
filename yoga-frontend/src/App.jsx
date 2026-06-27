@@ -31,6 +31,7 @@ import KidsPrograms from "./pages/KidsPrograms";
 import WomensProgram from "./pages/WomensProgram";
 import CorporateRetreats from './pages/CorporateRetreats.jsx'
 import OverseasPrograms from './pages/OverseasPrograms.jsx'
+import DieticianSession from "./pages/DieticianSession.jsx";
 
 // Admin Pages
 import AdminDashboard from "./Admin/AdminDashboard";
@@ -98,6 +99,7 @@ function AppContent() {
           <Route path="price" element={<Pricing />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
+          <Route path="/session" element={<DieticianSession />} />
           <Route path="/mainslider" element={<Mainslider />} />
           <Route path="/returnrefund" element={<RefundPolicy />} />
           <Route path="/mentalhealth" element={<MentalWellness />} />
