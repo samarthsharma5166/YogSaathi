@@ -26,6 +26,17 @@ import b4 from "../assets/b4.jpeg";
 import b5 from "../assets/b5.jpeg";
 import b6 from "../assets/b6.jpeg";
 
+// ✅ International Yoga Day 2026 Images
+import yogaDay1 from "../assets/yoga_day_1.jpg";
+import yogaDay2 from "../assets/yoga_day_2.jpg";
+import yogaDay3 from "../assets/yoga_day_3.jpg";
+import yogaDay4 from "../assets/yoga_day_4.jpg";
+import yogaDay5 from "../assets/yoga_day_5.jpg";
+
+// ✅ International Yoga Day 2026 Videos
+import yogaDayVideo1 from "../assets/yoga_day_video_1.mp4";
+import yogaDayVideo2 from "../assets/yoga_day_video_2.mp4";
+
 // ✅ Local Gallery Images (s1 to s10, b11 to b66)
 import s1 from "../assets/s1.jpg";
 import s2 from "../assets/s2.jpg";
@@ -200,6 +211,7 @@ function Liveevent() {
   const [currentPastIndex, setCurrentPastIndex] = useState(0);
   const [selectedLightboxImage, setSelectedLightboxImage] = useState(null);
   const [timeLeft, setTimeLeft] = useState(4500); // 1 hour 15 mins in seconds
+  const [activeYogaDayVideo, setActiveYogaDayVideo] = useState(yogaDayVideo1);
 
   const chatContainerRef = useRef(null);
 
@@ -281,12 +293,81 @@ function Liveevent() {
     <div className="livestream-page-container">
       <Toaster position="top-right" reverseOrder={false} />
 
+      
+
+      {/* 🌟 Recent Highlights Section */}
+      <section className="recent-highlights-container-box">
+        <div className="section-title-wrapper">
+          <h2>Recent Highlights</h2>
+          <p className="subtitle">International Yoga Day Celebration 2026</p>
+          <div className="section-title-divider"></div>
+        </div>
+
+        <div className="highlights-dashboard">
+          {/* Main Video Highlight Card */}
+          <div className="highlight-video-card">
+            <div className="highlight-video-wrapper">
+              <video
+                key={activeYogaDayVideo}
+                src={activeYogaDayVideo}
+                controls
+                className="highlight-video-player"
+                poster={activeYogaDayVideo === yogaDayVideo1 ? yogaDay1 : yogaDay3}
+                playsInline
+              />
+            </div>
+            <div className="video-playlist-tabs">
+              <button
+                type="button"
+                className={`playlist-tab ${activeYogaDayVideo === yogaDayVideo1 ? "active" : ""}`}
+                onClick={() => setActiveYogaDayVideo(yogaDayVideo1)}
+              >
+                <Play size={12} fill="currentColor" style={{ marginRight: 6 }} /> Clip 1: Asana Flow
+              </button>
+              <button
+                type="button"
+                className={`playlist-tab ${activeYogaDayVideo === yogaDayVideo2 ? "active" : ""}`}
+                onClick={() => setActiveYogaDayVideo(yogaDayVideo2)}
+              >
+                <Play size={12} fill="currentColor" style={{ marginRight: 6 }} /> Clip 2: Group Movement
+              </button>
+            </div>
+          </div>
+
+          {/* Photo Gallery Grid */}
+          <div className="highlight-photos-panel">
+            <div className="highlight-photos-grid">
+              {[yogaDay2, yogaDay3, yogaDay4, yogaDay5].map((imgSrc, idx) => (
+                <div 
+                  key={idx} 
+                  className="highlight-photo-item"
+                  onClick={() => setSelectedLightboxImage(imgSrc)}
+                >
+                  <img src={imgSrc} alt={`Yoga Day Moment ${idx + 2}`} />
+                  <div className="photo-hover-overlay">
+                    <Maximize2 size={18} />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="highlight-brief-card">
+              <h4>Sanctuary Celebration</h4>
+              <p>YogSaathi celebrated International Yoga Day 2026 with great enthusiasm, bringing together more than 150 participants to experience the transformative power of yoga.
+
+                The session included physical warm-up exercises, yoga asanas, breathing practices, and collective Om chanting, creating an atmosphere of harmony, positivity, and inner peace. Participants from different age groups joined the celebration and experienced the benefits of yoga for physical health, mental well-being, and emotional balance.
+
+                The participants highly appreciated the activities conducted during the event and expressed keen interest in YogSaathi's various offerings, including online yoga programs, free trial classes, and residential yoga retreats.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 🌿 Header Section */}
       <header className="livestream-header">
         <span className="badge">YogSaathi Sanctuary</span>
-        <h1>Live Stream & <span>Interactive Events</span></h1>
+        <h1>Live Classes & <span>Interactive Events</span></h1>
         <p>
-          Connect, flow, and align your energy in real-time with our master instructors. 
+          Connect, flow, and align your energy in real-time with our master instructors.
           Stream live classes or catch up on past sanctuary events from anywhere.
         </p>
       </header>
