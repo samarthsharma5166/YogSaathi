@@ -182,3 +182,37 @@ export const getRegistrations = async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 };
+
+// ── GET /api/dietician/registrations/download (Admin) ──
+import { Parser } from "json2csv";
+
+export const downloadRegistrations = async (req, res) => {
+  try {
+    const registrations = await prisma.dieticianSessionRegistration.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+
+    const fields = [
+      "name",
+      "phone",
+      "email",
+      "promocode",
+      "challenge",
+      "amount",
+      "orderId",
+      "paymentId",
+      "status",
+      "createdAt",
+    ];
+
+    const json2csvParser = new Parser({ fields });
+    const csv = json2csvParser.parse(registrations);
+
+    res.header("Content-Type", "text/csv");
+    res.attachment("dietician-session-registrations.csv");
+    res.send(csv);
+  } catch (error) {
+    console.error("Error downloading registrations:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};

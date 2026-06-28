@@ -233,5 +233,9 @@ export const updateDieticianConfig = (data) => API.post("/dietician/config", dat
 export const createDieticianRegistration = (data) => API.post("/dietician/register", data);
 export const verifyDieticianPayment = (data) => API.post("/dietician/verify", data);
 export const getDieticianRegistrations = () => API.get("/dietician/registrations");
+export const downloadDieticianRegistrations = () =>
+  API.get("/dietician/registrations/download", {
+    responseType: "blob",
+  });
 
 export default API;

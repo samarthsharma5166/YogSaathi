@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { getDieticianConfig, updateDieticianConfig, getDieticianRegistrations } from "../services/api";
-import { Calendar, Clock, DollarSign, Users, Award, ShieldAlert, Sparkles, Filter } from "lucide-react";
+import { getDieticianConfig, updateDieticianConfig, getDieticianRegistrations, downloadDieticianRegistrations } from "../services/api";
+import { Calendar, Clock, DollarSign, Users, Award, ShieldAlert, Sparkles, Filter, Download } from "lucide-react";
 
 export default function ManageDieticianSession() {
   const [config, setConfig] = useState({
@@ -45,6 +45,24 @@ export default function ManageDieticianSession() {
       toast.error("Failed to load registrations");
     } finally {
       setLoadingRegs(false);
+    }
+  };
+
+  const handleDownloadExcel = async () => {
+    try {
+      const response = await downloadDieticianRegistrations();
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "dietician-session-registrations.csv");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      toast.success("Download started!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to download registrations");
     }
   };
 
@@ -202,18 +220,26 @@ export default function ManageDieticianSession() {
               Registrations List ({filteredRegistrations.length})
             </h3>
             
-            {/* Filters */}
-            <div className="flex items-center gap-2">
-              <Filter className="w-4 h-4 text-gray-400" />
-              <select
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-gray-600 focus:outline-none bg-white"
+            {/* Filters and Download */}
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-gray-400" />
+                <select
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-gray-600 focus:outline-none bg-white"
+                >
+                  <option value="ALL">All Payments</option>
+                  <option value="PAID">Paid Only</option>
+                  <option value="PENDING">Pending Only</option>
+                </select>
+              </div>
+              <button
+                onClick={handleDownloadExcel}
+                className="bg-green-600 hover:bg-green-700 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs tracking-wider transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
               >
-                <option value="ALL">All Payments</option>
-                <option value="PAID">Paid Only</option>
-                <option value="PENDING">Pending Only</option>
-              </select>
+                <Download className="w-3.5 h-3.5" /> Download CSV
+              </button>
             </div>
           </div>
 
