@@ -24,12 +24,12 @@ function CustomPhoneInput({ value, onChange, placeholder }) {
     };
 
     return (
-        <div className="flex w-full">
+        <div className="flex w-full items-center border border-gray-300 rounded-lg bg-white focus-within:border-[#3B6D11] focus-within:ring-2 focus-within:ring-[#3B6D11]/15 transition-all duration-200 overflow-hidden shadow-sm">
             {/* Country Code Dropdown */}
             <select
                 value={countryCode}
                 onChange={handleCountryChange}
-                className="p-2 h-10  border border-gray-300 rounded-l-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400 w-16 sm:w-26"
+                className="p-2 h-10 bg-white text-gray-700 focus:outline-none w-20 sm:w-24 text-xs font-semibold border-r border-gray-200 cursor-pointer"
             >
                 {countries.map((c) => (
                     <option key={c.code} value={c.code}>
@@ -44,7 +44,7 @@ function CustomPhoneInput({ value, onChange, placeholder }) {
                 value={number}
                 onChange={handleChange}
                 placeholder={placeholder || "Enter Whatsapp number"}
-                className="w-full h-10  p-3 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-green-400"
+                className="w-full h-10 px-3 bg-transparent focus:outline-none text-gray-800 text-xs placeholder:text-gray-400"
             />
         </div>
     );
