@@ -6,6 +6,7 @@ import {
   verifyPayment,
   getRegistrations,
   downloadRegistrations,
+  validatePromoCode,
 } from "../controllers/dietician.controller.js";
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.post("/register", createRegistration);
 router.post("/verify", verifyPayment);
 router.get("/registrations", getRegistrations);
 router.get("/registrations/download", downloadRegistrations);
+router.post("/validate-promo", validatePromoCode);
 
 export default router;

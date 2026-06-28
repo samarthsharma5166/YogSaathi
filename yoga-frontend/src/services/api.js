@@ -237,5 +237,6 @@ export const downloadDieticianRegistrations = () =>
   API.get("/dietician/registrations/download", {
     responseType: "blob",
   });
+export const validateDieticianPromo = (data) => API.post("/dietician/validate-promo", data);
 
 export default API;

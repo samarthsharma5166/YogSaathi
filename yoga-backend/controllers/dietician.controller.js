@@ -65,7 +65,12 @@ export const createRegistration = async (req, res) => {
     }
 
     const config = await getOrCreateConfig();
-    const price = config.price;
+    let price = config.price;
+
+    // Apply promo code YSDISC if provided
+    if (promocode && promocode.trim().toUpperCase() === "YSDISC") {
+      price = 99;
+    }
 
     // Create a Razorpay order
     const order = await razorpay.orders.create({
@@ -213,6 +218,23 @@ export const downloadRegistrations = async (req, res) => {
     res.send(csv);
   } catch (error) {
     console.error("Error downloading registrations:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+// ── POST /api/dietician/validate-promo ──
+export const validatePromoCode = async (req, res) => {
+  try {
+    const { promocode } = req.body;
+    const config = await getOrCreateConfig();
+
+    if (promocode && promocode.trim().toUpperCase() === "YSDISC") {
+      return res.status(200).json({ isValid: true, price: 99 });
+    }
+
+    return res.status(200).json({ isValid: false, price: config.price });
+  } catch (error) {
+    console.error("Error validating promo code:", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { ArrowRight, Sparkles, User, Phone, Mail, Clock, Calendar, CheckCircle2, ShieldCheck, Heart, Flame } from "lucide-react";
-import { getDieticianConfig, createDieticianRegistration, verifyDieticianPayment } from "../services/api";
+import { getDieticianConfig, createDieticianRegistration, verifyDieticianPayment, validateDieticianPromo } from "../services/api";
 
 export default function DieticianSession() {
   const [formData, setFormData] = useState({
@@ -13,6 +13,8 @@ export default function DieticianSession() {
   
   const [selectedChallenge, setSelectedChallenge] = useState("");
   const [config, setConfig] = useState({ price: 149, slotsLeft: 10 });
+  const [displayPrice, setDisplayPrice] = useState(149);
+  const [isPromoApplied, setIsPromoApplied] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -20,12 +22,36 @@ export default function DieticianSession() {
       try {
         const res = await getDieticianConfig();
         setConfig(res.data);
+        setDisplayPrice(res.data.price);
       } catch (err) {
         console.error("Error loading config:", err);
       }
     }
     loadConfig();
   }, []);
+
+  useEffect(() => {
+    const validatePromo = async () => {
+      if (!formData.promocode) {
+        setDisplayPrice(config.price);
+        setIsPromoApplied(false);
+        return;
+      }
+      try {
+        const res = await validateDieticianPromo({ promocode: formData.promocode });
+        setDisplayPrice(res.data.price);
+        setIsPromoApplied(res.data.isValid);
+      } catch (err) {
+        console.error("Error validating promo:", err);
+      }
+    };
+
+    const timer = setTimeout(() => {
+      validatePromo();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [formData.promocode, config.price]);
 
   const challenges = [
     { id: "cravings", label: "Stubborn Cravings", icon: "🍽️" },
@@ -147,7 +173,7 @@ export default function DieticianSession() {
         <div className="animate-marquee">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="inline-block px-8">
-              🔥   Weight Loss & Sustainable Fat Reduction Masterclass (12-Jul-2026) • Early Bird Offer ₹{config.price} Active • Only {config.slotsLeft} Slots Left! 🔥
+              🔥   Weight Loss & Sustainable Fat Reduction Masterclass (12-Jul-2026) • Early Bird Offer ₹{displayPrice} Active • Only {config.slotsLeft} Slots Left! 🔥
             </span>
           ))}
         </div>
@@ -183,14 +209,14 @@ export default function DieticianSession() {
               
               <div className="flex items-baseline gap-6 flex-wrap">
                 <div className="text-[70px] md:text-[90px] font-semibold leading-none text-[#12211d] tracking-tighter flex items-start">
-                  <span className="text-3xl font-normal mt-2 mr-1">₹</span>{config.price}
+                  <span className="text-3xl font-normal mt-2 mr-1">₹</span>{displayPrice}
                 </div>
                 <div className="mb-2">
                   <div className="text-gray-500 font-medium text-base line-through">
                     Regular: ₹299
                   </div>
-                  <div className="text-[#3B6D11] font-bold text-xs tracking-wide mt-0.5">
-                    Save ₹{299 - config.price} ({Math.round(((299 - config.price) / 299) * 100)}% OFF)
+                  <div className="text-[#3B6D11] font-bold text-xs tracking-wide mt-0.5 animate-pulse">
+                    {isPromoApplied ? "Promo Applied! Save ₹200 (67% OFF)" : `Save ₹${299 - displayPrice} (${Math.round(((299 - displayPrice) / 299) * 100)}% OFF)`}
                   </div>
                 </div>
               </div>
