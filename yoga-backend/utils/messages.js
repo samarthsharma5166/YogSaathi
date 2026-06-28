@@ -2072,3 +2072,317 @@ export const regularity_key_hindi = (number,name)=>{
         }
     })
 }
+
+
+export const session_particulars = (number, name, date, time, link, topic, durationstart,durationend) =>{
+    const safeLink = link ? link.replace(/_/g, '%5F') : '';
+    axios.post("https://backend.chatmitra.com/developer/api/send_message", {
+        recipient_mobile_number: number,
+        messages: [{
+            kind: "template",
+            template: {
+                name: "session_particulars",
+                language: "en",
+                components: [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "image",
+                                "image": {
+                                    "link": "https://chatmitra.s3.ap-south-1.amazonaws.com/images/1755668233917_logomain.png"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": [
+                            {
+                                "type": "text",
+                                "text": name
+                            },
+                            {
+                                "type": "text",
+                                "text": date
+                            },
+                            {
+                                "type": "text",
+                                "text": time
+                            },
+                            {
+                                "type": "text",
+                                "text": safeLink
+                            },
+                            {
+                                "type": "text",
+                                "text": durationstart
+                            },
+                            {
+                                "type": "text",
+                                "text": durationend
+                            },
+                            {
+                                "type": "text",
+                                "text": topic
+                            }
+                        ]
+                    }
+                ]
+            }
+        }],
+        customer_name: name
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
+        }
+    }).then(response => {
+        console.log("session_particulars success:", response.data);
+    }).catch(error => {
+        console.error("session_particulars error:", error.response?.data || error.message);
+    });
+}
+
+export const subscription_offer_ = (number, name)=>{
+    axios.post("https://backend.chatmitra.com/developer/api/send_message", {
+        recipient_mobile_number: number,
+        messages: [{
+            kind: "template",
+            template: {
+                name: "subscription_offer_",
+                language: "en",
+                components: [
+                    {
+                        "type": "body",
+                        "parameters": [
+                            {
+                                "type": "text",
+                                "text": name
+                            }
+                        ]
+                    }
+                ]
+            }
+        }],
+        customer_name:name
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
+        }
+    }).then(response => {
+        console.log("subscription_offer_ success:", response.data);
+    }).catch(error => {
+        console.error("subscription_offer_ error:", error.response?.data || error.message);
+    });
+}
+
+export const template_session_20260627022218  = (number, name,topic,date,time,duration,instructor,link)=>{
+    const safeLink = link ? link.replace(/_/g, '%5F') : '';
+    axios.post("https://backend.chatmitra.com/developer/api/send_message", {
+        recipient_mobile_number: number,
+        messages: [{
+            kind: "template",
+            template: {
+                name: "template_session_20260627022218",
+                language: "en_US",
+                components: [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "image",
+                                "image": {
+                                    "link": "https://chatmitra.s3.ap-south-1.amazonaws.com/images/1755668233917_logomain.png"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": [
+                            {
+                                "type": "text",
+                                "text": name
+                            },
+                            {
+                                "type": "text",
+                                "text": topic
+                            },
+                            {
+                                "type": "text",
+                                "text": date
+                            },
+                            {
+                                "type": "text",
+                                "text": time
+                            },
+                            {
+                                "type": "text",
+                                "text": duration
+                            },
+                            {
+                                "type": "text",
+                                "text": instructor
+                            },
+                            {
+                                "type": "text",
+                                "text": safeLink
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "url",
+                        "index": "1",
+                        "parameters": [
+                            {
+                                "type": "text",
+                                "text": safeLink
+                            }
+                        ]
+                    }
+                ]
+            }
+        }],
+        customer_name: name
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
+        }
+    }).then(response => {
+        console.log("template_session_20260627022218 success:", response.data);
+    }).catch(error => {
+        console.error("template_session_20260627022218 error:", error.response?.data || error.message);
+    });
+}
+
+export const session_info =(number,name,topic,date,time,duration,instructor,link)=>{
+    const safeLink = link ? link.replace(/_/g, '%5F') : '';
+    axios.post("https://backend.chatmitra.com/developer/api/send_message", {
+        recipient_mobile_number: number,
+        messages: [{
+            kind: "template",
+            template: {
+                name: "session_info",
+                language: "en",
+                components: [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "image",
+                                "image": {
+                                    "link": "https://chatmitra.s3.ap-south-1.amazonaws.com/images/1755668233917_logomain.png"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": [
+                            {
+                                "type": "text",
+                                "text": name
+                            },
+                            {
+                                "type": "text",
+                                "text": topic
+                            },
+                            {
+                                "type": "text",
+                                "text": date
+                            },
+                            {
+                                "type": "text",
+                                "text": time
+                            },
+                            {
+                                "type": "text",
+                                "text": duration
+                            },
+                            {
+                                "type": "text",
+                                "text": instructor
+                            },
+                            {
+                                "type": "text",
+                                "text": safeLink
+                            }
+                        ]
+                    }
+                ]
+            }
+        }],
+        customer_name: name
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
+        }
+    }).then(response => {
+        console.log("session_info success:", response.data);
+    }).catch(error => {
+        console.error("session_info error:", error.response?.data || error.message);
+    });
+}
+
+export const confirmation_regn =(number,name,date,time,link)=>{
+    const safeLink = link ? link.replace(/_/g, '%5F') : '';
+    axios.post("https://backend.chatmitra.com/developer/api/send_message", {
+        recipient_mobile_number: number,
+        messages: [{
+            kind: "template",
+            template: {
+                name: "confirmation_regn",
+                language: "en",
+                components: [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "image",
+                                "image": {
+                                    "link": "https://chatmitra.s3.ap-south-1.amazonaws.com/images/1755668233917_logomain.png"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": [
+                            {
+                                "type": "text",
+                                "text": name
+                            },
+                            {
+                                "type": "text",
+                                "text": date
+                            },
+                            {
+                                "type": "text",
+                                "text": time
+                            },
+                            {
+                                "type": "text",
+                                "text": safeLink
+                            }
+                        ]
+                    }
+                ]
+            }
+        }],
+        customer_name: name
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
+        }
+    }).then(response => {
+        console.log("confirmation_regn success:", response.data);
+    }).catch(error => {
+        console.error("confirmation_regn error:", error.response?.data || error.message);
+    });
+}

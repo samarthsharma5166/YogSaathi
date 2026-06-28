@@ -198,6 +198,51 @@ const templateName = [
     {
         name:"regularity_key_hindi",
         inputs:[]
+    },
+    {
+        name:"session_particulars",
+        inputs:[
+            {label:"Date", name:"date", type:"date", required: true},
+            {label:"Time", name:"time", type:"text", required: true},
+            {label:"Link", name:"link", type:"text", required: true},
+            {label:"Topic", name:"topic", type:"text", required: true},
+            {label:"Duration Start", name:"durationstart", type:"text", required: true},
+            {label:"Duration End", name:"durationend", type:"text", required: true},
+        ]
+    },
+    {
+        name:"subscription_offer_",
+        inputs:[]
+    },
+    {
+        name:"template_session_20260627022218",
+        inputs:[
+            {label:"Topic", name:"topic", type:"text", required: true},
+            {label:"Date", name:"date", type:"date", required: true},
+            {label:"Time", name:"time", type:"text", required: true},
+            {label:"Duration Start", name:"duration", type:"text", required: true},
+            {label:"Instructor", name:"instructor", type:"text", required: true},
+            {label:"Link", name:"link", type:"text", required: true},
+        ]
+    },
+    {
+        name:"session_info",
+        inputs:[
+            {label:"Topic", name:"topic", type:"text", required: true},
+            {label:"Date", name:"date", type:"date", required: true},
+            {label:"Time", name:"time", type:"text", required: true},
+            {label:"Duration Start", name:"duration", type:"text", required: true},
+            {label:"Instructor", name:"instructor", type:"text", required: true},
+            {label:"Link", name:"link", type:"text", required: true},
+        ]
+    },
+    {
+        name:"confirmation_regn",
+        inputs:[
+            {label:"Date", name:"date", type:"date", required: true},
+            {label:"Time", name:"time", type:"text", required: true},
+            {label:"Link", name:"link", type:"text", required: true},
+        ]
     }
 ];
 
