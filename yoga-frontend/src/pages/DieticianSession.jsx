@@ -390,7 +390,7 @@ export default function DieticianSession() {
         </div> */}
 
         {/* 👩‍⚕️ Clinical Dietician Panel */}
-        <div className="bg-[#EAF3DE]/40 border border-[#d4edbc] p-8 md:p-10 rounded-3xl flex flex-col md:flex-row items-center gap-8 md:gap-10">
+        {/* <div className="bg-[#EAF3DE]/40 border border-[#d4edbc] p-8 md:p-10 rounded-3xl flex flex-col md:flex-row items-center gap-8 md:gap-10">
           <div className="w-28 h-28 rounded-2xl overflow-hidden shrink-0 bg-[#EAF3DE] flex items-center justify-center font-display font-semibold text-3xl text-[#3B6D11] border border-[#d4edbc]">
             YS
           </div>
@@ -403,7 +403,7 @@ export default function DieticianSession() {
               Our clinical nutritionists and weight management dieticians work alongside yoga therapists to bring you the best synergy of sustainable fat loss, metabolism activation, and daily wellness. With years of experience guiding 1000+ candidates globally to shed weight permanently without restrictive diets, we make fat reduction simple, healthy, and lasting.
             </p>
           </div>
-        </div>
+        </div> */}
 
       </div>
     </div>
