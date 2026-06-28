@@ -175,13 +175,13 @@ const Navbar = () => {
                 >
                 Dietician Session
               </Link>
-
+{/* 
               <Link
                 to="/yoga-session"
                 className="ml-4 text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
               >
                 Yoga Session
-              </Link>
+              </Link> */}
 
               {!user ? (
                 <Link

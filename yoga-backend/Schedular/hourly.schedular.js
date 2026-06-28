@@ -3,7 +3,7 @@ import { prisma } from '../db/db.js';
 import { class_reminder, class_reminder_free_yoga_for_all, confirmation_regn, days_yoga_trial_intimation_hindi, festival_greetings, festival_greetings_christmas_new_year, free_online_yoga_trial_reminder, giftwellness_yogsaathi, inputs, join_session__mark_attendance, online_free_yoga_trial__joining_details, opi, orientation_program__new, regularity_key_hindi, retreat_info_brochure, session_info, session_particulars, session_reminder, session_reminder__orientation_for_free_trial, session_schedule_notification, share_wellness_14_days_of_free_yoga, subscription_invitation, subscription_offer_, subscription_plan_new_year_offer, template_session_20260627022218, trial_expiry_notification, vijayadashami_greetings, vijaydashmi_greetings_and_referrals, weekly_attendance_status__yogsaathi_sessions, world_meditation_day_greetings, yoga_class_time_details_as_per_ist, yoga_offer_reminder, yoga_subscription_offer, yoga_trail_intimation_, yoga_training_1ram, yoga_training_2, yoga_trial_enrolment, yoga_trial_midway_update__reminder, yoga_trial_participation_reminder, yogsaathi_communication_channels, yogsaathi_contact_detail, yogsaathi_group_access_update, yogsaathi_payment_link_share, yogsaathi_training_brochure_share, your_weekly_yoga_schedule__access_details } from '../utils/messages.js';
 import { startOfWeek, addDays, format } from "date-fns";
 
-export const hourlyJob = new CronJob('* * * * *', async () => {
+export const hourlyJob = new CronJob('*/10 * * * *', async () => {
     const now = new Date();
     
     const scheduledMessages = await prisma.scheduledMessage.findMany({
@@ -467,6 +467,51 @@ async function getUsers(message) {
     if (audience === "Leads") return await prisma.lead.findMany();
     if (audience === "ALL") return await prisma.user.findMany();
     if (audience === "ADMIN") return await prisma.user.findMany({ where: { role: "ADMIN" } });
+    if (audience === "Dietician-Registrants") {
+        const registrations = await prisma.dieticianSessionRegistration.findMany({
+            where: { status: "PAID" }
+        });
+        return registrations.map(reg => ({
+            id: reg.id,
+            name: reg.name,
+            phoneNumber: reg.phone,
+            email: reg.email
+        }));
+    }
+    if (audience === "Free-Trial-And-Dietician-Registrants") {
+        const paidRegistrations = await prisma.dieticianSessionRegistration.findMany({
+            where: { status: "PAID" },
+            select: { phone: true, email: true }
+        });
+        const phones = paidRegistrations.map(r => r.phone);
+        const cleanPhones = phones.map(p => p.replace(/^\+91/, ""));
+        const emails = paidRegistrations.map(r => r.email);
+
+        const matchUsers = await prisma.user.findMany({
+            where: {
+                OR: [
+                    { phoneNumber: { in: phones } },
+                    { phoneNumber: { in: cleanPhones } },
+                    { email: { in: emails } }
+                ]
+            },
+            include: {
+                subscription: {
+                    orderBy: { expiresAt: 'desc' },
+                    include: { plan: true }
+                }
+            }
+        });
+
+        return matchUsers.filter(user => 
+            user.subscription.some(s => s.plan.isFreeTrial)
+        ).map(user => ({
+            id: user.id,
+            name: user.name,
+            phoneNumber: user.phoneNumber,
+            email: user.email
+        }));
+    }
 
     // 2. Fetch with Subscriptions for Filtering
     const allUsers = await prisma.user.findMany({
@@ -505,6 +550,8 @@ async function getUsers(message) {
             case "Inactive-Subscribers":
                 // They have paid plans, but none are active
                 return user.subscription.some(s => !s.plan.isFreeTrial) && !activePaidSub;
+            case "Active-Trial-And-Subscribers":
+                return !!activeTrialSub || !!activePaidSub;
             default:
                 return false;
         }

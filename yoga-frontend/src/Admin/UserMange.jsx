@@ -19,6 +19,9 @@ const userType = {
   "Inactive-Free-Trial":"Inactive Free Trial",
   "Active-Subscribers":"Active Subscribers",
   "Inactive-Subscribers":"Inactive Subscribers",
+  "Active-Trial-And-Subscribers": "Active Free Trial & Active Subscribers",
+  "Dietician-Registrants": "Dietician Session Registrants",
+  "Free-Trial-And-Dietician-Registrants": "Free Trial & Dietician Session Registrants",
 }
 
 const ManageUsers = () => {
@@ -108,6 +111,9 @@ const ManageUsers = () => {
             <option value="Inactive-Free-Trial">{userType["Inactive-Free-Trial"]}</option>
             <option value="Active-Subscribers">{userType["Active-Subscribers"]}</option>
             <option value="Inactive-Subscriber">{userType["Inactive-Subscribers"]}</option>
+            <option value="Active-Trial-And-Subscribers">{userType["Active-Trial-And-Subscribers"]}</option>
+            <option value="Dietician-Registrants">{userType["Dietician-Registrants"]}</option>
+            <option value="Free-Trial-And-Dietician-Registrants">{userType["Free-Trial-And-Dietician-Registrants"]}</option>
 
         </select>
       </div>

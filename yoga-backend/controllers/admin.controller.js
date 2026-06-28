@@ -37,6 +37,60 @@ export const getAllUsersAdmin = async (req, res) => {
       users = await prisma.user.findMany({
         where: whereClause,
       });
+    } else if (usertype === "Dietician-Registrants") {
+      const paidRegistrations = await prisma.dieticianSessionRegistration.findMany({
+        where: { status: "PAID" },
+        select: { phone: true, email: true },
+      });
+      const phones = paidRegistrations.map(r => r.phone);
+      const cleanPhones = phones.map(p => p.replace(/^\+91/, ""));
+      const emails = paidRegistrations.map(r => r.email);
+
+      users = await prisma.user.findMany({
+        where: {
+          OR: [
+            { phoneNumber: { in: phones } },
+            { phoneNumber: { in: cleanPhones } },
+            { email: { in: emails } }
+          ],
+          ...whereClause
+        },
+        include: {
+          subscription: {
+            orderBy: { createdAt: 'desc' },
+            include: { plan: true }
+          }
+        }
+      });
+    } else if (usertype === "Free-Trial-And-Dietician-Registrants") {
+      const paidRegistrations = await prisma.dieticianSessionRegistration.findMany({
+        where: { status: "PAID" },
+        select: { phone: true, email: true },
+      });
+      const phones = paidRegistrations.map(r => r.phone);
+      const cleanPhones = phones.map(p => p.replace(/^\+91/, ""));
+      const emails = paidRegistrations.map(r => r.email);
+
+      const matchUsers = await prisma.user.findMany({
+        where: {
+          OR: [
+            { phoneNumber: { in: phones } },
+            { phoneNumber: { in: cleanPhones } },
+            { email: { in: emails } }
+          ],
+          ...whereClause
+        },
+        include: {
+          subscription: {
+            orderBy: { createdAt: 'desc' },
+            include: { plan: true }
+          }
+        }
+      });
+
+      users = matchUsers.filter(user => 
+        user.subscription.some(s => s.plan.isFreeTrial)
+      );
     } else {
       const allUsers = await prisma.user.findMany({
         where: whereClause,
@@ -52,57 +106,30 @@ export const getAllUsersAdmin = async (req, res) => {
         },
       });
 
-      // users = allUsers.filter(user => {
-      //   if (user.subscription.length === 0) {
-      //     if (usertype === "New-Users") {
-      //       return true;
-      //     }
-      //     return false;
-      //   }
-      //   const latestSubscription = user.subscription[0];
-      //   const isActive = latestSubscription.expiresAt >= now;
-      //   const isFreeTrial = latestSubscription.plan.isFreeTrial;
-
-      //   switch (usertype) {
-      //     case "Active-Free-Trial":
-      //       return isFreeTrial && isActive;
-      //     case "Inactive-Free-Trial":
-      //       return isFreeTrial && !isActive;
-      //     case "Active-Subscribers":
-      //       return !isFreeTrial && isActive;
-      //     case "Inactive-Subscriber":
-      //       return !isFreeTrial && !isActive;
-      //     default:
-      //       return false;
-      //   }
-      // });
-
       users = allUsers.filter(user => {
         if (user.subscription.length === 0) {
           return usertype === "New-Users";
         }
 
-        // ✅ FIX: Find if the user has ANY active subscription
-        const activeSub = user.subscription.find(sub => new Date(sub.expiresAt) >= now);
+        const activePaidSub = user.subscription.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now);
+        const activeTrialSub = user.subscription.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now);
 
-        // If no active sub found, we look at the most recently created one for "Inactive" status
-        const latestSub = user.subscription[0];
-        const isActive = !!activeSub;
-
-        // Determine if we should treat this user as a "Free Trial" or "Subscriber"
-        // Priority: If they have an active paid sub, they are a Subscriber.
-        const targetSub = activeSub || latestSub;
-        const isFreeTrial = targetSub.plan.isFreeTrial;
+        const hasTrial = user.subscription.some(s => s.plan.isFreeTrial);
+        const hasPaid = user.subscription.some(s => !s.plan.isFreeTrial);
 
         switch (usertype) {
           case "Active-Free-Trial":
-            return isFreeTrial && isActive;
+            return !!activeTrialSub;
           case "Inactive-Free-Trial":
-            return isFreeTrial && !isActive;
+            // They have trials, but none are active, and they don't have an active paid sub
+            return hasTrial && !activeTrialSub && !activePaidSub;
           case "Active-Subscribers":
-            return !isFreeTrial && isActive;
+            return !!activePaidSub;
           case "Inactive-Subscriber":
-            return !isFreeTrial && !isActive;
+            // They have paid plans, but none are active
+            return hasPaid && !activePaidSub;
+          case "Active-Trial-And-Subscribers":
+            return !!activeTrialSub || !!activePaidSub;
           default:
             return false;
         }

@@ -697,6 +697,9 @@ export default function ScheduledMessageManager() {
                                             <option value="Inactive-Subscribers">Inactive Subscribers</option>
                                             <option value="Active-Free-Trial">Active Free Trial User</option>
                                             <option value="Inactive-Free-Trial">Inactive Free Trial User</option>
+                                            <option value="Active-Trial-And-Subscribers">Active Free Trial & Active Subscribers</option>
+                                            <option value="Dietician-Registrants">Dietician Session Registrants</option>
+                                            <option value="Free-Trial-And-Dietician-Registrants">Free Trial & Dietician Session Registrants</option>
                                             <option value="Leads">Leads</option>
                                         </select>
                                     </div>

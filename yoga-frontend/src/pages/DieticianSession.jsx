@@ -341,7 +341,7 @@ export default function DieticianSession() {
             </div>
             <div>
               <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Timing</div>
-              <div className="font-extrabold text-[#12211d] text-base">11:00 AM - 12:30 PM IST</div>
+              <div className="font-extrabold text-[#12211d] text-base">11:30 AM - 12:30 PM IST</div>
             </div>
           </div>
 
