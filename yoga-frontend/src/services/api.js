@@ -225,4 +225,13 @@ export const downloadRetreatUsers = () =>
 export const createOverseasInquiry = (data) => API.post("/overseas/inquiry", data);
 export const getOverseasInquiries = () => API.get("/overseas/inquiries");
 
+// ===============================
+// ✅ DIETICIAN SESSION APIs
+// ===============================
+export const getDieticianConfig = () => API.get("/dietician/config");
+export const updateDieticianConfig = (data) => API.post("/dietician/config", data);
+export const createDieticianRegistration = (data) => API.post("/dietician/register", data);
+export const verifyDieticianPayment = (data) => API.post("/dietician/verify", data);
+export const getDieticianRegistrations = () => API.get("/dietician/registrations");
+
 export default API;

@@ -66,8 +66,8 @@ import ManagePayments from "./Admin/ManagePayments.jsx";
 import ManageCommonLink from "./Admin/ManageCommonLink.jsx";
 import ManageOffers from "./Admin/ManageOffers.jsx";
 import RetreatEvent from "./pages/RetreatEvent.jsx";
-import RetreatUsers from "./Admin/RetreatUsers.jsx";
 import AdminOverseasInquiries from "./Admin/AdminOverseasInquiries.jsx";
+import ManageDieticianSession from "./Admin/ManageDieticianSession.jsx";
 
 
 function AppContent() {
@@ -130,8 +130,9 @@ function AppContent() {
             <Route path="logout" element={<Logout />} />
             <Route path="scheduledMessage" element={<ScheduledMessageManager />} />
             <Route path="manage-common-link" element={<ManageCommonLink />} />
-            <Route path="retreat-users" element={<RetreatUsers />} />
+            {/* <Route path="retreat-users" element={<RetreatUsers />} /> */}
             <Route path="overseas-inquiries" element={<AdminOverseasInquiries />} />
+            <Route path="dietician-session" element={<ManageDieticianSession />} />
           </Route>
 
           {/* User Routes with Layout */}

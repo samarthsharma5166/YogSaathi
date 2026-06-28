@@ -26,6 +26,7 @@ const menuItems = [
   { name: "Manage Common Link", icon: <SlLink />, path: "manage-common-link" },
   { name: "Retreat Users", icon: <SlPeople />, path: "retreat-users" },
   { name: "Overseas Users", icon: <SlPeople />, path: "overseas-inquiries" },
+  { name: "Dietician Session", icon: <SlCalender />, path: "dietician-session" },
   { name: "Logout", icon: <SlLogout />, path: "logout" }
 ];
 const Adminlayout = () => {

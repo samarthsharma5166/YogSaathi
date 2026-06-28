@@ -296,3 +296,26 @@ model OverseasInquiry {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model DieticianSessionRegistration {
+  id              String   @id @default(uuid())
+  name            String
+  phone           String
+  email           String
+  promocode       String?
+  challenge       String?
+  amount          Int
+  orderId         String?  @unique
+  paymentId       String?  @unique
+  signature       String?
+  status          String   @default("PENDING") // PENDING, PAID, FAILED
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model DieticianSessionConfig {
+  id        String   @id @default("dietician-config")
+  price     Int      @default(149)
+  slotsLeft Int      @default(10)
+  updatedAt DateTime @updatedAt
+}

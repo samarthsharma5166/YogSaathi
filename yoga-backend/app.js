@@ -24,6 +24,7 @@ import commonLinkRoutes from './routes/commonLink.route.js';
 import offerRoutes from './routes/offer.route.js';
 import eventRoutes from './routes/event.route.js';
 import overseasRoutes from './routes/overseas.route.js';
+import dieticianRoutes from './routes/dietician.route.js';
 import { generateYogaInvoice } from './utils/generateInvoice.js';
 
 const app = express();
@@ -57,6 +58,7 @@ app.use("/api/common-link", commonLinkRoutes);
 app.use("/api/offers", offerRoutes);
 app.use("/api/event", eventRoutes);
 app.use("/api/overseas", overseasRoutes);
+app.use("/api/dietician", dieticianRoutes);
 
 app.post("/generateInvoice",async(req,res)=>{
   const { invoiceNo, planName,name, email, startDate, expiresAt, referralDays, finalEndDate ,isIndian, price} = req.body;

@@ -1,0 +1,184 @@
+import crypto from "crypto";
+import { prisma } from "../db/db.js";
+import { instance as razorpay } from "../index.js";
+import { confirmation_regn } from "../utils/messages.js";
+
+// Helper to get or create dietician config
+const getOrCreateConfig = async () => {
+  let config = await prisma.dieticianSessionConfig.findUnique({
+    where: { id: "dietician-config" },
+  });
+
+  if (!config) {
+    config = await prisma.dieticianSessionConfig.create({
+      data: {
+        id: "dietician-config",
+        price: 149,
+        slotsLeft: 10,
+      },
+    });
+  }
+  return config;
+};
+
+// ── GET /api/dietician/config ──
+export const getDieticianConfig = async (req, res) => {
+  try {
+    const config = await getOrCreateConfig();
+    res.status(200).json(config);
+  } catch (error) {
+    console.error("Error getting dietician config:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+// ── POST /api/dietician/config ──
+export const updateDieticianConfig = async (req, res) => {
+  try {
+    const { price, slotsLeft } = req.body;
+    
+    // Ensure config exists
+    await getOrCreateConfig();
+
+    const config = await prisma.dieticianSessionConfig.update({
+      where: { id: "dietician-config" },
+      data: {
+        price: price !== undefined ? Number(price) : undefined,
+        slotsLeft: slotsLeft !== undefined ? Number(slotsLeft) : undefined,
+      },
+    });
+
+    res.status(200).json(config);
+  } catch (error) {
+    console.error("Error updating dietician config:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+// ── POST /api/dietician/register ──
+export const createRegistration = async (req, res) => {
+  try {
+    const { name, phone, email, promocode, challenge } = req.body;
+
+    if (!name || !phone || !email) {
+      return res.status(400).json({ error: "Name, phone, and email are required" });
+    }
+
+    const config = await getOrCreateConfig();
+    const price = config.price;
+
+    // Create a Razorpay order
+    const order = await razorpay.orders.create({
+      amount: price * 100, // paise
+      currency: "INR",
+      receipt: `receipt_dietician_${Date.now()}`,
+    });
+
+    // Create a pending registration record
+    const registration = await prisma.dieticianSessionRegistration.create({
+      data: {
+        name,
+        phone,
+        email,
+        promocode,
+        challenge,
+        amount: price,
+        orderId: order.id,
+        status: "PENDING",
+      },
+    });
+
+    res.status(201).json({
+      order,
+      registrationId: registration.id,
+      keyId: process.env.KEY_ID,
+    });
+  } catch (error) {
+    console.error("Error creating registration order:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+// ── POST /api/dietician/verify ──
+export const verifyPayment = async (req, res) => {
+  try {
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      registrationId,
+    } = req.body;
+
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !registrationId) {
+      return res.status(400).json({ error: "Missing required payment fields" });
+    }
+
+    // Verify Razorpay signature
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSignature = crypto
+      .createHmac("sha256", process.env.KEY_SECRET)
+      .update(body.toString())
+      .digest("hex");
+
+    const isAuthentic = expectedSignature === razorpay_signature;
+    if (!isAuthentic) {
+      return res.status(400).json({ error: "Invalid signature" });
+    }
+
+    // Mark registration as PAID
+    const registration = await prisma.dieticianSessionRegistration.update({
+      where: { id: registrationId },
+      data: {
+        paymentId: razorpay_payment_id,
+        signature: razorpay_signature,
+        status: "PAID",
+      },
+    });
+
+    // Decrement slots left if greater than 0
+    const config = await getOrCreateConfig();
+    if (config.slotsLeft > 0) {
+      await prisma.dieticianSessionConfig.update({
+        where: { id: "dietician-config" },
+        data: {
+          slotsLeft: {
+            decrement: 1,
+          },
+        },
+      });
+    }
+
+    // Send confirmation message via WhatsApp using confirmation_regn template
+    // Date: 12.07.2026
+    // Time: 11.30 AM
+    // Link: https://yogsaathi.com/class/join (escapes and uses safeLink automatically in confirmation_regn)
+    await confirmation_regn(
+      registration.phone,
+      registration.name,
+      "Weight Loss & Sustainable Fat Reduction",
+      "12.07.2026",
+      "11:30 AM",
+    );
+
+    res.status(200).json({
+      message: "Payment verified and confirmation sent successfully",
+      registration,
+    });
+  } catch (error) {
+    console.error("Error verifying payment:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+// ── GET /api/dietician/registrations (Admin) ──
+export const getRegistrations = async (req, res) => {
+  try {
+    const registrations = await prisma.dieticianSessionRegistration.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    res.status(200).json(registrations);
+  } catch (error) {
+    console.error("Error fetching registrations:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
