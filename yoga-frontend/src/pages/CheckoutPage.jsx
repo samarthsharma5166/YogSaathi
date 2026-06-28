@@ -216,16 +216,16 @@ const CheckoutPage = () => {
             case 6:
                 return [
                     { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
-                    { main: "2 Live Yoga Consultations", sub: "Posture correction" },
-                    { main: "1 Dietician Consultation", sub: "Certified dietician" },
+                    { main: "2 Online Yoga Consultations", sub: "Posture correction" },
+                    { main: "1 Online Dietician Consultation", sub: "Certified dietician" },
                     { main: "Diet Suggestions & Support", sub: "Personalized advice" },
                     { main: "Exclusive WhatsApp Group", sub: "Daily access links" }
                 ];
             case 3:
                 return [
                     { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
-                    { main: "1 Live Yoga Consultation", sub: "Posture correction" },
-                    { main: "1 Dietician Consultation", sub: "Certified dietician" },
+                    { main: "1 Online Yoga Consultation", sub: "Posture correction" },
+                    { main: "1 Online Dietician Consultation", sub: "Certified dietician" },
                     { main: "Diet Suggestions & Support", sub: "Personalized advice" },
                     { main: "Exclusive WhatsApp Group", sub: "Daily access links" }
                 ];
@@ -233,7 +233,7 @@ const CheckoutPage = () => {
             default:
                 return [
                     { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
-                    { main: "1 Dietician Consultation", sub: "Certified dietician" },
+                    { main: "1 Online Dietician Consultation", sub: "Certified dietician" },
                     { main: "Diet Suggestions & Support", sub: "Personalized advice" },
                     { main: "Exclusive WhatsApp Group", sub: "Daily access links" }
                 ];
