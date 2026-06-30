@@ -154,14 +154,14 @@ export const verifyPayment = async (req, res) => {
     }
 
     // Send confirmation message via WhatsApp using confirmation_regn template
-    // Date: 12.07.2026
+    // Date: 19.07.2026
     // Time: 11.30 AM
     // Link: https://yogsaathi.com/class/join (escapes and uses safeLink automatically in confirmation_regn)
     await confirmation_regn(
       registration.phone,
       registration.name,
       "Weight Loss & Sustainable Fat Reduction",
-      "12.07.2026",
+      "19.07.2026",
       "11:30 AM",
     );
 

@@ -331,7 +331,7 @@ export default function DieticianSession() {
             </div>
             <div>
               <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Date</div>
-              <div className="font-extrabold text-[#12211d] text-base">Sunday, 12 July 2026</div>
+              <div className="font-extrabold text-[#12211d] text-base">Sunday, 19 July 2026</div>
             </div>
           </div>
 
