@@ -239,4 +239,16 @@ export const downloadDieticianRegistrations = () =>
   });
 export const validateDieticianPromo = (data) => API.post("/dietician/validate-promo", data);
 
+// Dietician Leads APIs
+export const getDieticianLeads = (page = 1, limit = 50, search = "") =>
+  API.get(`/dietician/leads?page=${page}&limit=${limit}&search=${search}`);
+export const uploadDieticianLeads = (formData) =>
+  API.post("/dietician/leads/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+export const deleteDieticianLead = (id) => API.delete(`/dietician/leads/${id}`);
+export const clearDieticianLeads = () => API.delete("/dietician/leads/clear");
+
 export default API;

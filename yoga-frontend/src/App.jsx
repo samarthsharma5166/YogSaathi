@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 
 // Public Pages
-
 import HomePage from "./pages/Home";
 import BlogList from "./pages/BlogList";
 import Contact from "./pages/Contact";
@@ -68,7 +67,7 @@ import ManageOffers from "./Admin/ManageOffers.jsx";
 import RetreatEvent from "./pages/RetreatEvent.jsx";
 import AdminOverseasInquiries from "./Admin/AdminOverseasInquiries.jsx";
 import ManageDieticianSession from "./Admin/ManageDieticianSession.jsx";
-
+import DieticianLeads from "./Admin/DieticianLeads.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -133,6 +132,7 @@ function AppContent() {
             {/* <Route path="retreat-users" element={<RetreatUsers />} /> */}
             <Route path="overseas-inquiries" element={<AdminOverseasInquiries />} />
             <Route path="dietician-session" element={<ManageDieticianSession />} />
+            <Route path="dietician-leads" element={<DieticianLeads />} />
           </Route>
 
           {/* User Routes with Layout */}
@@ -153,7 +153,6 @@ function AppContent() {
 }
 
 function App() {
-  
   return (
     <Router>
       <AppContent />

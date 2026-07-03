@@ -6,7 +6,6 @@ import "./CSS/adminlayout.css";
 import { SlGrid, SlPeople, SlBookOpen, SlCalender, SlWallet, SlGraduation, SlMagnet, SlLink, SlClock, SlLogout } from "react-icons/sl";
 import { MdOutlinePayment } from "react-icons/md";
 import { MdOutlineLocalOffer } from "react-icons/md";
-import AdminOverseasInquiries from "../Admin/AdminOverseasInquiries";
 
 const menuItems = [
   { name: "Dashboard", icon: <SlGrid />, path: "admin-dashboard" },
@@ -17,18 +16,17 @@ const menuItems = [
   { name: "My Plans", icon: <SlWallet />, path: "myPlans" },
   { name: "Manage classes", icon: <SlGraduation /> , path: "classes" },
   { name: "Free Trial Campign", icon: <SlMagnet />, path: "manage-campign" },
-
-  // { name: "Manage Payment", icon: <ProgressIcon />, path: "price" },
   { name: "Manage Payment", icon: <MdOutlinePayment />, path: "managePayment" },
-
   { name: "Manage Refferal", icon: <SlLink />, path: "refferal" },
-  { name: "scheduledMessage", icon: <SlClock />, path:"scheduledMessage"},
+  { name: "scheduledMessage", icon: <SlClock />, path: "scheduledMessage" },
   { name: "Manage Common Link", icon: <SlLink />, path: "manage-common-link" },
   { name: "Retreat Users", icon: <SlPeople />, path: "retreat-users" },
   { name: "Overseas Users", icon: <SlPeople />, path: "overseas-inquiries" },
   { name: "Dietician Session", icon: <SlCalender />, path: "dietician-session" },
+  { name: "Dietician Leads", icon: <SlPeople />, path: "dietician-leads" },
   { name: "Logout", icon: <SlLogout />, path: "logout" }
 ];
+
 const Adminlayout = () => {
   const [open, setOpen] = useState(false);
   const token = localStorage.getItem("token");
@@ -38,7 +36,7 @@ const Adminlayout = () => {
     if (!token) {
       navigate("/auth/register");
     }
-  });
+  }, [token, navigate]);
 
   return (
     <div className="admin-container mt-20">
@@ -54,4 +52,5 @@ const Adminlayout = () => {
     </div>
   );
 };
+
 export default Adminlayout;
