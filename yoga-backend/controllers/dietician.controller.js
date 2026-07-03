@@ -104,6 +104,63 @@ export const createRegistration = async (req, res) => {
   }
 };
 
+export const fulfillDieticianPayment = async (razorpay_order_id, razorpay_payment_id, razorpay_signature) => {
+  // 1. Fetch the registration by orderId
+  const registration = await prisma.dieticianSessionRegistration.findUnique({
+    where: { orderId: razorpay_order_id }
+  });
+
+  if (!registration) {
+    throw new Error("Dietician session registration not found");
+  }
+
+  // 2. Check if already paid (idempotency check)
+  if (registration.status === "PAID") {
+    console.log(`Dietician payment for order ${razorpay_order_id} is already completed.`);
+    return {
+      registration,
+      alreadyCompleted: true
+    };
+  }
+
+  // 3. Mark registration as PAID
+  const updatedRegistration = await prisma.dieticianSessionRegistration.update({
+    where: { id: registration.id },
+    data: {
+      paymentId: razorpay_payment_id,
+      signature: razorpay_signature,
+      status: "PAID",
+    },
+  });
+
+  // 4. Decrement slots left if greater than 0
+  const config = await getOrCreateConfig();
+  if (config.slotsLeft > 0) {
+    await prisma.dieticianSessionConfig.update({
+      where: { id: "dietician-config" },
+      data: {
+        slotsLeft: {
+          decrement: 1,
+        },
+      },
+    });
+  }
+
+  // 5. Send confirmation message via WhatsApp
+  await confirmation_regn(
+    updatedRegistration.phone,
+    updatedRegistration.name,
+    "Weight Loss & Sustainable Fat Reduction",
+    "19.07.2026",
+    "11:30 AM",
+  );
+
+  return {
+    registration: updatedRegistration,
+    alreadyCompleted: false
+  };
+};
+
 // ── POST /api/dietician/verify ──
 export const verifyPayment = async (req, res) => {
   try {
@@ -111,11 +168,22 @@ export const verifyPayment = async (req, res) => {
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
-      registrationId,
     } = req.body;
 
-    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !registrationId) {
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
       return res.status(400).json({ error: "Missing required payment fields" });
+    }
+
+    // Check if already paid
+    const registration = await prisma.dieticianSessionRegistration.findUnique({
+      where: { orderId: razorpay_order_id }
+    });
+
+    if (registration && registration.status === "PAID") {
+      return res.status(200).json({
+        message: "Payment verified and confirmation sent successfully",
+        registration,
+      });
     }
 
     // Verify Razorpay signature
@@ -130,44 +198,12 @@ export const verifyPayment = async (req, res) => {
       return res.status(400).json({ error: "Invalid signature" });
     }
 
-    // Mark registration as PAID
-    const registration = await prisma.dieticianSessionRegistration.update({
-      where: { id: registrationId },
-      data: {
-        paymentId: razorpay_payment_id,
-        signature: razorpay_signature,
-        status: "PAID",
-      },
-    });
-
-    // Decrement slots left if greater than 0
-    const config = await getOrCreateConfig();
-    if (config.slotsLeft > 0) {
-      await prisma.dieticianSessionConfig.update({
-        where: { id: "dietician-config" },
-        data: {
-          slotsLeft: {
-            decrement: 1,
-          },
-        },
-      });
-    }
-
-    // Send confirmation message via WhatsApp using confirmation_regn template
-    // Date: 19.07.2026
-    // Time: 11.30 AM
-    // Link: https://yogsaathi.com/class/join (escapes and uses safeLink automatically in confirmation_regn)
-    await confirmation_regn(
-      registration.phone,
-      registration.name,
-      "Weight Loss & Sustainable Fat Reduction",
-      "19.07.2026",
-      "11:30 AM",
-    );
+    // Call fulfill helper
+    const result = await fulfillDieticianPayment(razorpay_order_id, razorpay_payment_id, razorpay_signature);
 
     res.status(200).json({
       message: "Payment verified and confirmation sent successfully",
-      registration,
+      registration: result.registration,
     });
   } catch (error) {
     console.error("Error verifying payment:", error);

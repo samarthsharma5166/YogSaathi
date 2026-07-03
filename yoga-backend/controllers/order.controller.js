@@ -197,6 +197,158 @@ export const createOrder = async (req, res) => {
 // };
 
 
+export const fulfillSubscription = async (razorpay_order_id, razorpay_payment_id, razorpay_signature) => {
+  // 1. Check if the payment is already completed
+  const existingPayment = await prisma.payment.findUnique({
+    where: { razorpay_order_id },
+    include: {
+      subscription: true,
+    }
+  });
+
+  if (!existingPayment) {
+    throw new Error("Payment record not found");
+  }
+
+  if (existingPayment.status === "COMPLETED") {
+    console.log(`Payment for order ${razorpay_order_id} is already completed.`);
+    return {
+      subscription: existingPayment.subscription,
+      alreadyCompleted: true
+    };
+  }
+
+  // 2. Extract needed parameters from the existing payment record
+  const { planId, userId, startDate } = existingPayment;
+
+  // 3. Get Plan & User Details
+  const plan = await prisma.plan.findUnique({ where: { id: planId } });
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+
+  if (!plan || !user) {
+    throw new Error("Plan or User not found");
+  }
+
+  const subsStartDate = new Date(startDate);
+  const baseDuration = plan.duration;
+  let expiresAt;
+
+  const refferalDays = (user.referralPoints * 10) * 24 * 60 * 60 * 1000;
+
+  if (plan.durationType === "MONTH") {
+    expiresAt = new Date(subsStartDate);
+    expiresAt.setMonth(expiresAt.getMonth() + baseDuration); // add months correctly
+    expiresAt = new Date(expiresAt.getTime() + refferalDays); // add referral bonus
+  } else {
+    expiresAt = new Date(
+      subsStartDate.getTime() + baseDuration * 24 * 60 * 60 * 1000 + refferalDays
+    );
+  }
+
+  // 4. Update/Create Subscription
+  const existingSubscription = await prisma.subscription.findFirst({
+    where: { userId: user.id },
+    select: {
+      id: true,
+      plan: {
+        select: {
+          isFreeTrial: true
+        }
+      }
+    }
+  });
+
+  let subscription;
+
+  if (existingSubscription && existingSubscription.plan.isFreeTrial === true) {
+    subscription = await prisma.subscription.update({
+      where: { id: existingSubscription.id },
+      data: {
+        planId,
+        startDate: subsStartDate,
+        baseDuration,
+        extraDays: (user.referralPoints * 10),
+        expiresAt,
+        status: "active",
+      },
+    });
+  } else {
+    subscription = await prisma.subscription.create({
+      data: {
+        userId: user.id,
+        planId,
+        startDate: subsStartDate,
+        baseDuration,
+        extraDays: (user.referralPoints * 10),
+        expiresAt,
+      },
+    });
+  }
+
+  // 5. Calculate Referral End Date
+  const referralDays = user.referralPoints * 10;
+  const finalEndDate = new Date(expiresAt.getTime());
+
+  const isIndian = isIndianNumber(user.phoneNumber);
+
+  const shortId = subscription.id.split("-")[0]; // take first segment of UUID
+  const year = new Date().getFullYear().toString().slice(-2); // "25"
+  const invoiceNo = `YS${year}${shortId.toUpperCase()}`;
+
+  // 6. Generate Invoice
+  const invoicePath = await generateYogaInvoice({
+    invoiceNo: invoiceNo,
+    dateOfIssue: new Date().toLocaleDateString(),
+    companyEmail: "healthy.horizons111@gmail.com",
+    website: "www.yogsaathi.com",
+    customerName: user.name,
+    customerEmail: user.email,
+    programStart: subsStartDate.toLocaleDateString(),
+    programEnd: expiresAt.toLocaleDateString(),
+    referralDays,
+    finalEndDate: finalEndDate.toLocaleDateString(),
+    description: `${plan.name} – Online Yoga`,
+    amount: isIndian ? plan.inrPrice : plan.usdPrice,
+    amountType: isIndian ? "INR" : "USD"
+  });
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      referralPoints: 0
+    },
+  });
+
+  invoice_subscription_plan(user.phoneNumber, user.name, invoicePath.fileName);
+
+  const updatedSubscription = await prisma.subscription.update({
+    where: { id: subscription.id },
+    data: {
+      invoice: invoicePath.fileName,
+      paymentId: existingPayment.id
+    },
+  });
+
+  // Update Payment record
+  await prisma.payment.update({
+    where: { razorpay_order_id },
+    data: {
+      razorpay_payment_id,
+      razorpay_signature,
+      subscriptionId: updatedSubscription.id,
+      status: "COMPLETED",
+      verified: true,
+    },
+  });
+
+  return {
+    subscription: updatedSubscription,
+    invoicePath,
+    alreadyCompleted: false
+  };
+};
+
+
 export const verifyPayment = async (req, res) => {
   try {
     console.log(req.body)
@@ -204,154 +356,49 @@ export const verifyPayment = async (req, res) => {
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
-      planId,
-      phoneNumber,
-      userId,
-      startDate
     } = req.body;
 
+    // Check if already completed
+    const existingPayment = await prisma.payment.findUnique({
+      where: { razorpay_order_id },
+      include: { subscription: true }
+    });
 
-    const payment = await prisma.payment.update({
+    if (existingPayment && existingPayment.status === "COMPLETED") {
+      return res.json({
+        success: true,
+        subscription: existingPayment.subscription,
+        message: "Payment already verified"
+      });
+    }
+
+    // Update signature and payment ID first to match original flow
+    await prisma.payment.update({
       where: { razorpay_order_id },
       data: {
         razorpay_payment_id,
         razorpay_signature
       }
-    })
+    });
+
     // Step 1: Verify Razorpay Signature
     const generatedSignature = crypto
       .createHmac("sha256", process.env.KEY_SECRET)
       .update(razorpay_order_id + "|" + razorpay_payment_id)
       .digest("hex");
 
-      console.log("here1",generatedSignature)
-    if (generatedSignature !== payment.razorpay_signature) {
+    console.log("here1", generatedSignature)
+    if (generatedSignature !== razorpay_signature) {
       return res.status(400).json({ message: "Payment verification failed" });
     }
 
-    // Step 2: Get Plan & User Details
-    const plan = await prisma.plan.findUnique({ where: { id: planId } });
-    const user = phoneNumber ? await prisma.user.findUnique({ where: { phoneNumber: phoneNumber } }) : await prisma.user.findUnique({ where: { id: userId } });
+    // Call fulfill helper
+    const result = await fulfillSubscription(razorpay_order_id, razorpay_payment_id, razorpay_signature);
 
-    if (!plan || !user) {
-      return res.status(404).json({ message: "Plan or User not found" });
-    }
-    console.log("here")
-
-    const subsStartDate = new Date(startDate);
-    const baseDuration = plan.duration;
-    let expiresAt;
-
-    const refferalDays = (user.referralPoints * 10) * 24 * 60 * 60 * 1000;
-
-    if (plan.durationType === "MONTH") {
-      expiresAt = new Date(subsStartDate);
-      expiresAt.setMonth(expiresAt.getMonth() + baseDuration); // add months correctly
-      expiresAt = new Date(expiresAt.getTime() + refferalDays); // add referral bonus
-    } else {
-      expiresAt = new Date(
-        subsStartDate.getTime() + baseDuration * 24 * 60 * 60 * 1000 + refferalDays
-      );
-    }
-
-    // Step 3: Update/Create Subscription
-       const existingSubscription = await prisma.subscription.findFirst({
-        where: { userId: user.id },
-        select: {
-          id: true,
-          plan: {
-            select: {
-              isFreeTrial: true
-            }
-          }
-        }
-      });
-
-    let subscription;
-
-    if (existingSubscription && existingSubscription.plan.isFreeTrial === true) {
-      subscription = await prisma.subscription.update({
-        where: { id: existingSubscription.id },
-        data: {
-          planId,
-          startDate: subsStartDate,
-          baseDuration,
-          extraDays: (user.referralPoints * 10),
-          expiresAt,
-          status: "active",
-        },
-      });
-    } else {
-      subscription = await prisma.subscription.create({
-        data: {
-          userId:user.id,
-          planId,
-          startDate: subsStartDate,
-          baseDuration,
-          extraDays: (user.referralPoints * 10),
-          expiresAt,
-        },
-      });
-    }
-
-    // Step 4: Calculate Referral End Date
-    const referralDays = user.referralPoints * 10; // static, can be dynamic
-    const finalEndDate = new Date(expiresAt.getTime());
-
-
-    const isIndian = isIndianNumber(user.phoneNumber);
-
-    const shortId = subscription.id.split("-")[0]; // take first segment of UUID
-    const year = new Date().getFullYear().toString().slice(-2); // "25"
-    const invoiceNo = `YS${year}${shortId.toUpperCase()}`
-    // Step 5: Generate Invoice
-    const invoicePath = await generateYogaInvoice({
-      invoiceNo: invoiceNo,
-      dateOfIssue: new Date().toLocaleDateString(),
-      companyEmail: "healthy.horizons111@gmail.com",
-      website: "www.yogsaathi.com",
-      customerName: user.name,
-      customerEmail: user.email,
-      programStart: subsStartDate.toLocaleDateString(),
-      programEnd: expiresAt.toLocaleDateString(),
-      referralDays,
-      finalEndDate: finalEndDate.toLocaleDateString(),
-      description: `${plan.name} – Online Yoga`,
-      amount: isIndian ? plan.inrPrice : plan.usdPrice,
-      amountType: isIndian ? "INR" : "USD"
-    });
-
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        referralPoints: 0
-      },
-    })
-
-    invoice_subscription_plan(user.phoneNumber,user.name,invoicePath.fileName);
-
-    const updatedSubscription = await prisma.subscription.update({
-      where: { id: subscription.id },
-      data: {
-        invoice: invoicePath.fileName,
-      },
-    });
-
-    await prisma.payment.update({
-      where: { razorpay_order_id },
-      data: {
-        razorpay_payment_id,
-        razorpay_signature,
-        status: "COMPLETED",
-        verified: true,
-      },
-    });
-
-    // Step 6: Return response
     return res.json({
       success: true,
-      subscription: updatedSubscription,
-      invoicePath
+      subscription: result.subscription,
+      invoicePath: result.invoicePath
     });
 
   } catch (error) {

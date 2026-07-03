@@ -118,14 +118,119 @@ export const createEventRegistration = async (req, res) => {
 /* ──────────────────────────────────────────────────────────────
    POST /event/verify
    ─────────────────────────────────────────────────────────────── */
+export const fulfillEventPayment = async (razorpay_order_id, razorpay_payment_id) => {
+  // 1. Fetch all registrations sharing the orderId
+  const registrations = await prisma.eventRegistration.findMany({
+    where: { orderId: razorpay_order_id },
+    orderBy: { createdAt: "asc" }
+  });
+
+  if (registrations.length === 0) {
+    throw new Error("No registrations found for this order ID");
+  }
+
+  // 2. Check if the payment has already been processed (idempotency check)
+  const isAlreadyPaid = registrations.every(reg => reg.status === "PAID");
+  if (isAlreadyPaid) {
+    console.log(`Event payment for order ${razorpay_order_id} is already completed.`);
+    const primaryReg = registrations.find(r => r.invoice) || registrations[0];
+    return {
+      invoicePath: primaryReg.invoice,
+      alreadyCompleted: true
+    };
+  }
+
+  // 3. Mark ALL participants sharing the same orderId as PAID
+  await prisma.eventRegistration.updateMany({
+    where: { orderId: razorpay_order_id },
+    data: {
+      paymentId: razorpay_payment_id,
+      status: "PAID",
+    },
+  });
+
+  // Re-fetch primary registration (which is the first one in the array)
+  const primaryReg = registrations[0];
+
+  // ── Use discounted amount stored in DB ──
+  const amount = primaryReg.amountPaid ?? planCosts[primaryReg.plan];
+
+  // ── Count total participants for this order ──
+  const participantCount = registrations.length;
+
+  // ── Generate invoice for the primary participant ──
+  const invoicePath = await generateInvoice(primaryReg, amount, participantCount);
+
+  // ── Persist invoice path on the primary participant's registration ──
+  await prisma.eventRegistration.update({
+    where: { id: primaryReg.id },
+    data: { invoice: invoicePath },
+  });
+
+  // ── Confirmation email & WhatsApp for the primary participant ──
+  const earlyBirdNote = primaryReg.earlyBirdApplied
+    ? `<p><b>Early Bird Discount Applied:</b> ₹${
+        (planCosts[primaryReg.plan] ?? 0) - amount
+      } off per person.</p>`
+    : "";
+
+  const subject =
+    "Confirmation – YogSaathi × Panambi Yoga Retreat, Rishikesh";
+  const message = `
+    <p>Dear ${primaryReg.fullName},</p>
+    <p>Greetings from YogSaathi.</p>
+    <p>Thank you for registering for the YogSaathi × Panambi Yoga Retreat at Rishikesh for ${participantCount} participant(s) and for making the total payment of ₹${amount * participantCount}. We are pleased to confirm your participation in the retreat.</p>
+    ${earlyBirdNote}
+    <p><b>Booking Details</b></p>
+    <p>Room Category: ${primaryReg.plan}</p>
+    <p>Retreat Dates: 12.03.26 to 15.03.26</p>
+    <p><b>Check-in &amp; Departure</b></p>
+    <p>Check-in: 12.03.26, 1 PM</p>
+    <p>Departure: 15.03.26, 11.30 AM</p>
+    <p><b>Venue Address</b></p>
+    <p>Panambi Resort &amp; Spa<br>Cheela, Rishikesh, Uttarakhand<br>(A unit of Panambi Vacations Private Limited)</p>
+    <p><b>Important Note</b></p>
+    <p>Please carry loose pyjama/pants (preferably black or blue) for yoga practice.<br>A Yoga Mat and a Retreat T-Shirt will be provided by us.</p>
+    <p>For any assistance related to travel or location, please feel free to contact:<br>
+    Mr. Neeraj – 98916 98547<br>Mr. Sanjay – 99717 14091</p>
+    <p>You may also write to us at yogsaathi.26@gmail.com</p>
+    <p>Warm Regards</p>
+    <p>Team YogSaathi</p>
+  `;
+
+  await payment_confirmation(
+    primaryReg.mobileNumber,
+    primaryReg.fullName,
+    amount
+  );
+  await sendEmail(primaryReg.email, subject, message);
+
+  return {
+    invoicePath,
+    alreadyCompleted: false
+  };
+};
+
 export const verifyEventPayment = async (req, res) => {
   try {
     const {
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
-      eventRegistrationId,
     } = req.body;
+
+    // Check if already paid
+    const registrations = await prisma.eventRegistration.findMany({
+      where: { orderId: razorpay_order_id }
+    });
+    const isAlreadyPaid = registrations.length > 0 && registrations.every(reg => reg.status === "PAID");
+    if (isAlreadyPaid) {
+      const primaryReg = registrations.find(r => r.invoice) || registrations[0];
+      return res.status(200).json({
+        message: "Payment verified successfully",
+        invoicePath: primaryReg.invoice,
+      });
+    }
 
     // ── Verify Razorpay signature ──
     const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -141,87 +246,12 @@ export const verifyEventPayment = async (req, res) => {
       return res.status(400).json({ error: "Invalid signature" });
     }
 
-    // ── Find the primary registration ──
-    const primaryReg = await prisma.eventRegistration.findUnique({
-      where: { id: eventRegistrationId },
-    });
-
-    if (!primaryReg) {
-      return res.status(404).json({ error: "Registration not found" });
-    }
-
-    // ── Mark ALL participants sharing the same orderId as PAID ──
-    await prisma.eventRegistration.updateMany({
-      where: { orderId: razorpay_order_id },
-      data: {
-        paymentId: razorpay_payment_id,
-        status: "PAID",
-      },
-    });
-
-    // ── Re-fetch the primary to get updated data ──
-    const eventRegistration = await prisma.eventRegistration.findUnique({
-      where: { id: eventRegistrationId },
-    });
-
-    // ── Use discounted amount stored in DB ──
-    const amount = eventRegistration.amountPaid ?? planCosts[eventRegistration.plan];
-
-    // ── Count total participants for this order ──
-    const participantCount = await prisma.eventRegistration.count({
-      where: { orderId: razorpay_order_id },
-    });
-
-    // ── Generate invoice for the primary participant ──
-    const invoicePath = await generateInvoice(eventRegistration, amount, participantCount);
-
-    // ── Persist invoice path ──
-    await prisma.eventRegistration.update({
-      where: { id: eventRegistrationId },
-      data: { invoice: invoicePath },
-    });
-
-    // ── Confirmation email & WhatsApp for the primary participant ──
-    const earlyBirdNote = eventRegistration.earlyBirdApplied
-      ? `<p><b>Early Bird Discount Applied:</b> ₹${
-          (planCosts[eventRegistration.plan] ?? 0) - amount
-        } off per person.</p>`
-      : "";
-
-    const subject =
-      "Confirmation – YogSaathi × Panambi Yoga Retreat, Rishikesh";
-    const message = `
-      <p>Dear ${eventRegistration.fullName},</p>
-      <p>Greetings from YogSaathi.</p>
-      <p>Thank you for registering for the YogSaathi × Panambi Yoga Retreat at Rishikesh for ${participantCount} participant(s) and for making the total payment of ₹${amount * participantCount}. We are pleased to confirm your participation in the retreat.</p>
-      ${earlyBirdNote}
-      <p><b>Booking Details</b></p>
-      <p>Room Category: ${eventRegistration.plan}</p>
-      <p>Retreat Dates: 12.03.26 to 15.03.26</p>
-      <p><b>Check-in &amp; Departure</b></p>
-      <p>Check-in: 12.03.26, 1 PM</p>
-      <p>Departure: 15.03.26, 11.30 AM</p>
-      <p><b>Venue Address</b></p>
-      <p>Panambi Resort &amp; Spa<br>Cheela, Rishikesh, Uttarakhand<br>(A unit of Panambi Vacations Private Limited)</p>
-      <p><b>Important Note</b></p>
-      <p>Please carry loose pyjama/pants (preferably black or blue) for yoga practice.<br>A Yoga Mat and a Retreat T-Shirt will be provided by us.</p>
-      <p>For any assistance related to travel or location, please feel free to contact:<br>
-      Mr. Neeraj – 98916 98547<br>Mr. Sanjay – 99717 14091</p>
-      <p>You may also write to us at yogsaathi.26@gmail.com</p>
-      <p>Warm Regards</p>
-      <p>Team YogSaathi</p>
-    `;
-
-    await payment_confirmation(
-      eventRegistration.mobileNumber,
-      eventRegistration.fullName,
-      amount
-    );
-    await sendEmail(eventRegistration.email, subject, message);
+    // Call fulfill helper
+    const result = await fulfillEventPayment(razorpay_order_id, razorpay_payment_id);
 
     res.status(200).json({
       message: "Payment verified successfully",
-      invoicePath,
+      invoicePath: result.invoicePath,
     });
   } catch (error) {
     console.error(error);
