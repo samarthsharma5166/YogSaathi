@@ -197,6 +197,96 @@ export default function DieticianSession() {
           </p>
         </div>
 
+        {/* 📷 Dietician Showcase Section */}
+        <div className="mb-12 max-w-5xl mx-auto bg-white border border-gray-100 p-6 md:p-8 rounded-3xl shadow-lg shadow-[#12211d]/5">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* LEFT COLUMN: Image & Names */}
+            <div className="lg:col-span-5 flex flex-col items-center">
+              <div className="overflow-hidden rounded-2xl shadow-md border border-gray-100/50 w-full">
+                <img 
+                  src="/dieticians_couch.jpg" 
+                  alt="Dt. Prerana Solanki and Dt. Sonal Sureka" 
+                  className="w-full h-64 sm:h-72 md:h-80 object-cover object-center"
+                  loading="lazy"
+                />
+              </div>
+              <p className="text-center text-lg sm:text-base font-bold text-[#12211d] mt-4 tracking-wide font-display">
+                Facilitated by: <br />
+                <span className="text-[#3B6D11]">Dt. Prerana Solanki</span> & <span className="text-[#3B6D11]">Dt. Sonal Sureka</span> 
+              </p>
+              <p className="text-gray-400 text-xs mt-1 uppercase font-bold tracking-widest">
+                Founders of Nutridiction
+              </p>
+            </div>
+
+            {/* RIGHT COLUMN: Qualifications & Experience */}
+            <div className="lg:col-span-7 space-y-6">
+              
+              {/* Section 1: Qualifications */}
+              <div>
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-[#12211d] flex items-center gap-2 border-b border-gray-100 pb-2 mb-3">
+                  <ShieldCheck className="w-5 h-5 text-[#3B6D11]" /> Professional Qualifications
+                </h3>
+                <ul className="space-y-2.5">
+                  <li className="flex items-start gap-2 text-sm text-gray-600">
+                    <CheckCircle2 className="w-4 h-4 text-[#3B6D11] shrink-0 mt-0.5" />
+                    <span><strong>Master's Degree</strong> in Clinical Nutrition & Dietetics</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-gray-600">
+                    <CheckCircle2 className="w-4 h-4 text-[#3B6D11] shrink-0 mt-0.5" />
+                    <span>Registered / Certified by the <strong>Indian Dietetic Association (IDA)</strong></span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-gray-600">
+                    <CheckCircle2 className="w-4 h-4 text-[#3B6D11] shrink-0 mt-0.5" />
+                    <span>Certified <strong>Diabetes Educators</strong></span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-gray-600">
+                    <CheckCircle2 className="w-4 h-4 text-[#3B6D11] shrink-0 mt-0.5" />
+                    <span>Certified <strong>Gut Health Consultants</strong></span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-gray-600">
+                    <CheckCircle2 className="w-4 h-4 text-[#3B6D11] shrink-0 mt-0.5" />
+                    <span>Certified <strong>Functional Nutrition Practitioners</strong></span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Section 2: Clinical Experience */}
+              <div>
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-[#12211d] flex items-center gap-2 border-b border-gray-100 pb-2 mb-3">
+                  <Clock className="w-5 h-5 text-[#3B6D11]" /> Clinical & Corporate Experience
+                </h3>
+                <ul className="space-y-2.5">
+                  <li className="flex items-start gap-2 text-sm text-gray-600">
+                    <CheckCircle2 className="w-4 h-4 text-[#3B6D11] shrink-0 mt-0.5" />
+                    <span>Coaching and consultations <strong>since 2017</strong> (9+ years experience)</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-gray-600">
+                    <CheckCircle2 className="w-4 h-4 text-[#3B6D11] shrink-0 mt-0.5" />
+                    <span>Guided <strong>1000+ clients globally</strong> to manage weight and lifestyle disorders</span>
+                  </li>
+                  {/* <li className="flex items-start gap-2 text-sm text-gray-600">
+                    <CheckCircle2 className="w-4 h-4 text-[#3B6D11] shrink-0 mt-0.5" />
+                    <div>
+                      <span>Regular health workshops for organizations, including:</span>
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {["PwC", "Bosch", "Saregama", "LIC", "Marmeto", "Gainwell", "Rotary Club"].map((corp, index) => (
+                          <span key={index} className="bg-[#EAF3DE] text-[#3B6D11] font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md">
+                            {corp}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </li> */}
+                </ul>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
         {/* ⚡ Split Hero Booking Section */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-8">
           
@@ -223,6 +313,10 @@ export default function DieticianSession() {
 
               <p className="text-gray-600 text-xs sm:text-sm mt-4 max-w-md leading-relaxed">
                 Take advantage of our introductory rate for this weight-loss masterclass. Early bird registration is capped at 10 candidates to ensure our dietician can answer personalized nutrition queries.
+              </p>
+              <p className="text-gray-600 text-xs sm:text-sm mt-1 max-w-md leading-relaxed">
+                The founders of Nutridiction, Dt. Prerana Solanki and Dt. Sonal Sureka, shall conduct an
+                interactive online webinar on &quot;Weight Loss &amp; Sustainable Fat Reduction&quot;
               </p>
             </div>
 
