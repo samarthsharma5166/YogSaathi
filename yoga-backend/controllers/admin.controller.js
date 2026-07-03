@@ -37,6 +37,23 @@ export const getAllUsersAdmin = async (req, res) => {
       users = await prisma.user.findMany({
         where: whereClause,
       });
+    } else if (usertype === "Dietician-Leads") {
+      const leads = await prisma.dieticianLead.findMany({
+        where: startDate && endDate ? {
+          createdAt: {
+            gte: new Date(startDate),
+            lte: new Date(endDate)
+          }
+        } : {}
+      });
+      users = leads.map(lead => ({
+        id: lead.id,
+        name: lead.name,
+        phoneNumber: lead.mobile,
+        email: null,
+        role: "USER",
+        subscription: []
+      }));
     } else if (usertype === "Dietician-Registrants") {
       const paidRegistrations = await prisma.dieticianSessionRegistration.findMany({
         where: { status: "PAID" },

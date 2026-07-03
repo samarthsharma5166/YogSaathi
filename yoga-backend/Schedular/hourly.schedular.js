@@ -465,6 +465,15 @@ async function getUsers(message) {
 
     // 1. Handle Simple Cases
     if (audience === "Leads") return await prisma.lead.findMany();
+    if (audience === "Dietician-Leads") {
+        const leads = await prisma.dieticianLead.findMany();
+        return leads.map(lead => ({
+            id: lead.id,
+            name: lead.name,
+            phoneNumber: lead.mobile,
+            email: null
+        }));
+    }
     if (audience === "ALL") return await prisma.user.findMany();
     if (audience === "ADMIN") return await prisma.user.findMany({ where: { role: "ADMIN" } });
     if (audience === "Dietician-Registrants") {
