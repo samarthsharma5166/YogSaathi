@@ -18,7 +18,7 @@ import { weeklyAttendanceJob } from './Schedular/weekly.schedular.js';
 import yogaClassRoute from './routes/yogaClass.routes.js';
 import bodyParser from "body-parser";
 import { invoice_subscription_plan, share_wellness_14_days_of_free_yoga } from './utils/messages.js';
-import { orientationJob } from './Schedular/Admin.Schedular.js';
+import { orientationJob, dieticianSessionJob } from './Schedular/Admin.Schedular.js';
 import paymentRoutes  from './routes/payment.route.js'
 import commonLinkRoutes from './routes/commonLink.route.js';
 import offerRoutes from './routes/offer.route.js';
@@ -96,6 +96,7 @@ app.get('/', (req, res) => {
 });
 
 orientationJob.start();
+dieticianSessionJob.start();
 hourlyJob.start();
 dailyJob.start();
 weeklyAttendanceJob.start();
