@@ -10,7 +10,7 @@ export default function DieticianSession() {
     email: "",
     promocode: ""
   });
-  
+
   const [selectedChallenge, setSelectedChallenge] = useState("");
   const [config, setConfig] = useState({ price: 149, slotsLeft: 10 });
   const [displayPrice, setDisplayPrice] = useState(149);
@@ -148,7 +148,7 @@ export default function DieticianSession() {
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-[#12211d] font-sans overflow-x-hidden relative pb-24 !pt-5">
       <Toaster position="top-center" reverseOrder={false} />
-      
+
       {/* 🚀 Fonts & Marquee Animation */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -173,7 +173,7 @@ export default function DieticianSession() {
         <div className="animate-marquee">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="inline-block px-8">
-              🔥   Weight Loss & Sustainable Fat Reduction Masterclass (19-Jul-2026) 
+              🔥   Weight Loss & Sustainable Fat Reduction Masterclass (19-Jul-2026)
             </span>
           ))}
         </div>
@@ -181,18 +181,18 @@ export default function DieticianSession() {
 
 
       <div className="max-w-6xl mx-auto px-4 md:px-8 mt-6">
-        
+
         {/* 🌟 Giant Elegant Serif Header */}
         <div className="mb-8 text-center max-w-4xl mx-auto">
           <div className="inline-flex  items-center gap-2 bg-[#EAF3DE] text-[#3B6D11] px-4 py-1.5 rounded-full text-xl font-bold uppercase tracking-wider mb-3">
             {/* <Sparkles className="w-3.5 h-3.5" /> */}
             Special Interactive Dietician Session
           </div>
-          
+
           <h1 className="font-display text-3xl sm:text-4xl md:text-[36px] mt-2 font-medium tracking-tight text-[#12211d] leading-none mb-3">
-             <span className="italic text-[#3B6D11]">Weight Loss</span> & Sustainable Fat Reduction
+            <span className="italic text-[#3B6D11]">Weight Loss</span> & Sustainable Fat Reduction
           </h1>
-          
+
           <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
             Stop crash dieting and counting crumbs. Join YogSaathi’s clinical dietician for a premium 60 to 70 minute masterclass to unlock the science of permanent fat loss, metabolic resets, and healthy weight management.
           </p>
@@ -201,20 +201,20 @@ export default function DieticianSession() {
         {/* 📷 Dietician Showcase Section */}
         <div className="mb-12 max-w-5xl mx-auto bg-white border border-gray-100 p-6 md:p-8 rounded-3xl shadow-lg shadow-[#12211d]/5">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
+
             {/* LEFT COLUMN: Image & Names */}
             <div className="lg:col-span-5 flex flex-col items-center">
               <div className="overflow-hidden rounded-2xl shadow-md border border-gray-100/50 w-full">
-                <img 
-                  src="/dieticians_couch.jpg" 
-                  alt="Dt. Prerana Solanki and Dt. Sonal Sureka" 
+                <img
+                  src="/dieticians_couch.jpg"
+                  alt="Dt. Prerana Solanki and Dt. Sonal Sureka"
                   className="w-full h-64 sm:h-72 md:h-80 object-cover object-center"
                   loading="lazy"
                 />
               </div>
               <p className="text-center text-lg sm:text-base font-bold text-[#12211d] mt-4 tracking-wide font-display">
                 Facilitated by: <br />
-                <span className="text-[#3B6D11]">Dt. Prerana Solanki</span> & <span className="text-[#3B6D11]">Dt. Sonal Sureka</span> 
+                <span className="text-[#3B6D11]">Dt. Prerana Solanki</span> & <span className="text-[#3B6D11]">Dt. Sonal Sureka</span>
               </p>
               <p className="text-gray-400 text-xs mt-1 uppercase font-bold tracking-widest">
                 Founders of Nutridiction
@@ -223,7 +223,7 @@ export default function DieticianSession() {
 
             {/* RIGHT COLUMN: Qualifications & Experience */}
             <div className="lg:col-span-7 space-y-6">
-              
+
               {/* Section 1: Qualifications */}
               <div>
                 <h3 className="font-display text-xl sm:text-2xl font-bold text-[#12211d] flex items-center gap-2 border-b border-gray-100 pb-2 mb-3">
@@ -290,14 +290,14 @@ export default function DieticianSession() {
 
         {/* ⚡ Split Hero Booking Section */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-8">
-          
+
           {/* LEFT COLUMN: Large Pricing Stack (Soft Green Card) */}
           <div className="lg:col-span-7 bg-[#EAF3DE]/60 border border-[#d4edbc] p-6 rounded-3xl flex flex-col justify-between shadow-sm">
             <div>
               <div className="flex items-center gap-1.5 text-[#3B6D11] text-xs font-bold uppercase tracking-wider mb-3">
                 {/* <Flame className="w-4 h-4 fill-currentColor" /> Early Bird Offer */}
               </div>
-              
+
               <div className="flex items-baseline gap-6 flex-wrap">
                 <div className="text-[70px] md:text-[90px] font-semibold leading-none text-[#12211d] tracking-tighter flex items-start">
                   <span className="text-3xl font-normal mt-2 mr-1">₹</span>{displayPrice}
@@ -313,7 +313,7 @@ export default function DieticianSession() {
               </div>
 
               <p className="text-gray-600 text-xs sm:text-sm mt-4 max-w-md leading-relaxed">
-                Take advantage of our introductory rate for this weight-loss masterclass. Early bird registration is capped at 10 candidates to ensure our dietician can answer personalized nutrition queries.
+                Take advantage of our introductory rate for this weight-loss masterclass. Join our interactive webinar to get your personalized nutrition queries answered by our expert dieticians.
               </p>
               <p className="text-gray-600 text-xs sm:text-sm mt-1 max-w-md leading-relaxed">
                 The founders of Nutridiction, Dt. Prerana Solanki and Dt. Sonal Sureka, shall conduct an
