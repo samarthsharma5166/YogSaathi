@@ -69,7 +69,7 @@ export const createRegistration = async (req, res) => {
 
     // Apply promo code YSDISC if provided
     if (promocode && promocode.trim().toUpperCase() === "YSDISC") {
-      price = 99;
+      price = 49;
     }
 
     // Create a Razorpay order
@@ -265,7 +265,7 @@ export const validatePromoCode = async (req, res) => {
     const config = await getOrCreateConfig();
 
     if (promocode && promocode.trim().toUpperCase() === "YSDISC") {
-      return res.status(200).json({ isValid: true, price: 99 });
+      return res.status(200).json({ isValid: true, price: 49 });
     }
 
     return res.status(200).json({ isValid: false, price: config.price });

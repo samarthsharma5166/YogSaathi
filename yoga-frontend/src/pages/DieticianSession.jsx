@@ -173,11 +173,12 @@ export default function DieticianSession() {
         <div className="animate-marquee">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="inline-block px-8">
-              🔥   Weight Loss & Sustainable Fat Reduction Masterclass (12-Jul-2026) • Early Bird Offer ₹{displayPrice} Active • Only {config.slotsLeft} Slots Left! 🔥
+              🔥   Weight Loss & Sustainable Fat Reduction Masterclass (19-Jul-2026) 
             </span>
           ))}
         </div>
       </div>
+
 
       <div className="max-w-6xl mx-auto px-4 md:px-8 mt-6">
         
@@ -294,7 +295,7 @@ export default function DieticianSession() {
           <div className="lg:col-span-7 bg-[#EAF3DE]/60 border border-[#d4edbc] p-6 rounded-3xl flex flex-col justify-between shadow-sm">
             <div>
               <div className="flex items-center gap-1.5 text-[#3B6D11] text-xs font-bold uppercase tracking-wider mb-3">
-                <Flame className="w-4 h-4 fill-currentColor" /> Early Bird Offer
+                {/* <Flame className="w-4 h-4 fill-currentColor" /> Early Bird Offer */}
               </div>
               
               <div className="flex items-baseline gap-6 flex-wrap">
@@ -306,7 +307,7 @@ export default function DieticianSession() {
                     Regular: ₹299
                   </div>
                   <div className="text-[#3B6D11] font-bold text-xs tracking-wide mt-0.5 animate-pulse">
-                    {isPromoApplied ? "Promo Applied! Save ₹200 (67% OFF)" : `Save ₹${299 - displayPrice} (${Math.round(((299 - displayPrice) / 299) * 100)}% OFF)`}
+                    {isPromoApplied ? `Promo Applied! Save ₹${299 - displayPrice} (${Math.round(((299 - displayPrice) / 299) * 100)}% OFF)` : `Save ₹${299 - displayPrice} (${Math.round(((299 - displayPrice) / 299) * 100)}% OFF)`}
                   </div>
                 </div>
               </div>
@@ -320,7 +321,7 @@ export default function DieticianSession() {
               </p>
             </div>
 
-            <div className="border-t border-[#d4edbc] pt-4 mt-6">
+            {/* <div className="border-t border-[#d4edbc] pt-4 mt-6">
               <div className="flex items-center gap-2.5 bg-white border border-[#d4edbc] px-4 py-2 rounded-full w-fit shadow-sm">
                 <span className="w-2.5 h-2.5 bg-red-500 rounded-full animate-ping" />
                 <span className="font-bold text-[#12211d] text-xs uppercase tracking-wider">
@@ -330,7 +331,7 @@ export default function DieticianSession() {
               <p className="text-gray-500 text-[11px] mt-2">
                 *The price will increase to ₹299/- once the early bird capacity of 10 is reached.
               </p>
-            </div>
+            </div> */}
           </div>
 
           {/* RIGHT COLUMN: Booking Form (White Card) */}
