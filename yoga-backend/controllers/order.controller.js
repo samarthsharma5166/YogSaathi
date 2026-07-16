@@ -57,7 +57,7 @@ export const createOrder = async (req, res) => {
       where: {
         userId:user.id,
         expiresAt:{
-          gte:new Date()
+          gte: new Date(startDate)
         },
         plan: {
           isFreeTrial: false,
