@@ -311,6 +311,10 @@ export default function DieticianSession() {
                   </div>
                 </div>
               </div>
+              
+              <div className="mt-3 text-[#d35400] font-bold text-sm tracking-wide flex items-center gap-1.5">
+                ⏳ Limited Time Offer
+              </div>
 
               <p className="text-gray-600 text-xs sm:text-sm mt-4 max-w-md leading-relaxed">
                 Take advantage of our introductory rate for this weight-loss masterclass. Join our interactive webinar to get your personalized nutrition queries answered by our expert dieticians.

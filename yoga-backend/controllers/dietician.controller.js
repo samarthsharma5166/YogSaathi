@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { prisma } from "../db/db.js";
 import { instance as razorpay } from "../index.js";
-import { confirmation_regn } from "../utils/messages.js";
+import { confirmation_regn, session_particulars } from "../utils/messages.js";
 
 // Helper to get or create dietician config
 const getOrCreateConfig = async () => {
@@ -147,12 +147,18 @@ export const fulfillDieticianPayment = async (razorpay_order_id, razorpay_paymen
   }
 
   // 5. Send confirmation message via WhatsApp
-  await confirmation_regn(
+  // await confirmation_regn(
+  //   updatedRegistration.phone,
+  //   updatedRegistration.name,
+  //   "Weight Loss & Sustainable Fat Reduction",
+  //   "19.07.2026",
+  //   "11:30 AM",
+  // );
+  const link = "https://meet.google.com/wdi-jmez-nan"
+  await session_particulars(
     updatedRegistration.phone,
     updatedRegistration.name,
-    "Weight Loss & Sustainable Fat Reduction",
-    "19.07.2026",
-    "11:30 AM",
+    "19.07.2026", "11:30 AM", link, "Weight Loss & Sustainable Fat Reduction", "60", "65"
   );
 
   return {
