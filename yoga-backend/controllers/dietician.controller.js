@@ -271,7 +271,7 @@ export const validatePromoCode = async (req, res) => {
     const config = await getOrCreateConfig();
 
     if (promocode && promocode.trim().toUpperCase() === "YSDISC") {
-      return res.status(200).json({ isValid: true, price: 49 });
+      return res.status(200).json({ isValid: true, price: 100 });
     }
 
     return res.status(200).json({ isValid: false, price: config.price });
