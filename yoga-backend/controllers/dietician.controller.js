@@ -69,7 +69,7 @@ export const createRegistration = async (req, res) => {
 
     // Apply promo code YSDISC if provided
     if (promocode && promocode.trim().toUpperCase() === "YSDISC") {
-      price = 49;
+      price = 100;
     }
 
     // Create a Razorpay order
