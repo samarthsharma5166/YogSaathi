@@ -99,7 +99,7 @@ function AppContent() {
           <Route path="price" element={<Pricing />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
-          <Route path="/session" element={<DieticianSession />} />
+          {/* <Route path="/session" element={<DieticianSession />} /> */}
           <Route path="/yoga-session" element={<YogaSession />} />
           <Route path="/mainslider" element={<Mainslider />} />
           <Route path="/returnrefund" element={<RefundPolicy />} />
