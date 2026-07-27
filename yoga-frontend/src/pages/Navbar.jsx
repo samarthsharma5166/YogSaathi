@@ -333,12 +333,19 @@ const Navbar = () => {
             >
               Subscriptions
             </Link>
-            <Link
+            {/* <Link
               to="/retreat"
               onClick={closeMenu}
               className="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-green-600 rounded-full hover:bg-green-700 transition-all duration-200"
             >
               Rishikesh Retreat
+            </Link> */}
+            <Link
+              to="/yoga-session"
+              onClick={closeMenu}
+              className="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 transition-all duration-200 shadow-md"
+            >
+              Yoga Session
             </Link>
             {!user && (
               <Link

@@ -28,6 +28,12 @@ import b6 from "../assets/b6.jpeg";
 
 import logo from '/logomain.png'
 
+// ✅ YogSaathi Interactive Webinar Images
+import webinar1 from "../assets/webinar1.jpg";
+import webinar2 from "../assets/webinar2.jpg";
+import webinar3 from "../assets/webinar3.jpg";
+import webinar4 from "../assets/webinar4.jpg";
+
 // ✅ International Yoga Day 2026 Images
 import yogaDay1 from "../assets/yoga_day_1.jpg";
 import yogaDay2 from "../assets/yoga_day_2.jpg";
@@ -90,6 +96,29 @@ const initialChatMessages = [
   { id: 4, sender: "Kian Sharma", text: "I feel energetic through out the day after attending the session.", isMod: false, isIncoming: true },
   { id: 5, sender: "Meera Srivastav", text: "Namaste! when will you take surya namaskar aasan?", isMod: false, isIncoming: true },
   { id: 6, sender: "Monika (Instructor)", text: "Meera take surya Namaskar on every Sunday.", isMod: true, isIncoming: true }
+];
+
+const webinarGlimpses = [
+  {
+    src: webinar1,
+    title: "Webinar Overview & Expert Address",
+    desc: "Dt. Prerana Solanki discussing sustainable fat reduction and hormonal balance."
+  },
+  {
+    src: webinar2,
+    title: "Active Participant Engagement",
+    desc: "Good attendance with enthusiastic participants joining actively throughout the session."
+  },
+  {
+    src: webinar3,
+    title: "Interactive Q&A Session",
+    desc: "Insightful discussions and practical tips shared for holistic lifestyle management."
+  },
+  {
+    src: webinar4,
+    title: "Nutritional Framework Demonstration",
+    desc: "Detailed breakdown of foods supporting hormonal balance and healthy fat reduction."
+  }
 ];
 
 const mockPastEvents = [
@@ -220,6 +249,15 @@ function Liveevent() {
   const [selectedLightboxImage, setSelectedLightboxImage] = useState(null);
   const [timeLeft, setTimeLeft] = useState(4500); // 1 hour 15 mins in seconds
   const [activeYogaDayVideo, setActiveYogaDayVideo] = useState(yogaDayVideo1);
+  const [currentWebinarIndex, setCurrentWebinarIndex] = useState(0);
+
+  // Auto-slide interactive webinar carousel every 5 seconds
+  useEffect(() => {
+    const slideTimer = setInterval(() => {
+      setCurrentWebinarIndex((prev) => (prev + 1) % webinarGlimpses.length);
+    }, 5000);
+    return () => clearInterval(slideTimer);
+  }, []);
 
   const chatContainerRef = useRef(null);
 
@@ -302,6 +340,115 @@ function Liveevent() {
       <Toaster position="top-right" reverseOrder={false} />
 
       
+
+      {/* 🌟 YogSaathi Interactive Webinar Section */}
+      <section className="recent-highlights-container-box mb-10!">
+        <div className="section-title-wrapper mb-4!">
+          <h2 className="text-5xl! md:text-6xl!">YogSaathi Interactive Webinar</h2>
+          <p className="subtitle text-xl! md:text-2xl!">Weight Loss & Sustainable Fat Reduction</p>
+          <div className="section-title-divider mt-2"></div>
+        </div>
+
+        <div className="highlights-main-row" style={{ gap: "18px", marginTop: "14px", gridTemplateColumns: "1.1fr 1fr" }}>
+          {/* Main Image Highlight Carousel Card (Left Side) */}
+          <div className="highlight-video-card">
+            <div className="highlight-video-wrapper relative group" style={{ maxHeight: "300px" }}>
+              <img
+                key={currentWebinarIndex}
+                src={webinarGlimpses[currentWebinarIndex].src}
+                alt={webinarGlimpses[currentWebinarIndex].title}
+                className="highlight-video-player transition-transform duration-700 cursor-pointer hover:scale-105"
+                onClick={() => setSelectedLightboxImage(webinarGlimpses[currentWebinarIndex].src)}
+              />
+              <button
+                type="button"
+                className="slider-arrow prev"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentWebinarIndex((prev) =>
+                    prev === 0 ? webinarGlimpses.length - 1 : prev - 1
+                  );
+                }}
+                aria-label="Previous Glimpse"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <button
+                type="button"
+                className="slider-arrow next"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentWebinarIndex((prev) =>
+                    (prev + 1) % webinarGlimpses.length
+                  );
+                }}
+                aria-label="Next Glimpse"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+            <div className="video-playlist-tabs flex-wrap py-2! px-3! gap-2!">
+              {webinarGlimpses.map((item, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className={`playlist-tab text-xs! py-1.5! px-3! ${currentWebinarIndex === idx ? "active" : ""}`}
+                  onClick={() => setCurrentWebinarIndex(idx)}
+                >
+                  <Play size={10} fill="currentColor" style={{ marginRight: 4 }} /> Glimpse 0{idx + 1}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Description Card (Right Side) */}
+          <div className="highlight-brief-card p-6!">
+            <h4 className="text-2xl! mb-3!">Dietician Session By Yogsaathi</h4>
+            <p className="text-sm! mb-2.5!">
+              YogSaathi organised an interactive webinar on “Weight Loss & Sustainable Fat Reduction” on 19 July 2026, featuring Dt. Prerana Solanki, Co-Founder of Nutridiction.
+
+            </p>
+            <p className="text-sm! mb-2.5!">
+              The webinar received an enthusiastic response, with participants attending in good numbers and engaging actively throughout the session. The session offered practical, evidence-based insights into sustainable weight management, healthy nutrition, and lifestyle practices.
+            </p>
+            <p className="text-sm! mb-2.5!">
+              The interactive format encouraged participants to ask questions, share their perspectives, and engage directly with the expert speaker.
+
+            </p>
+            <p className="font-semibold text-[#1E352F] text-sm! mb-0!">
+              Here are a few glimpses from the insightful and interactive session. 📸
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom part: Horizontal Photo Row */}
+        <div
+          className="highlight-photos-row"
+          style={{ gridTemplateColumns: "repeat(4, 1fr)", marginTop: "14px", gap: "10px" }}
+        >
+          {webinarGlimpses.map((item, idx) => (
+            <div
+              key={idx}
+              className={`highlight-photo-item-horizontal ${
+                currentWebinarIndex === idx ? "ring-4 ring-[#D4AF37]" : ""
+              }`}
+              style={{ maxHeight: "110px" }}
+              onClick={() => setCurrentWebinarIndex(idx)}
+            >
+              <img src={item.src} alt={`Webinar Moment ${idx + 1}`} />
+              <div
+                className="photo-hover-overlay"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedLightboxImage(item.src);
+                }}
+              >
+                <Maximize2 size={16} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* 🌟 Recent Highlights Section */}
       <section className="recent-highlights-container-box">
