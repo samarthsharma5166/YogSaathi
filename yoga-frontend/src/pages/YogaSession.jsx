@@ -7,6 +7,7 @@ import {
   verifyYogaSessionPayment,
   validateYogaSessionPromo,
 } from "../services/api";
+import s4Img from "../assets/s4.jpeg";
 
 export default function YogaSession() {
   const [formData, setFormData] = useState({
@@ -196,7 +197,10 @@ export default function YogaSession() {
           </h1>
           
           <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            Reclaim your health and vitality. Join YogSaathi’s master yoga therapist for a premium 60 to 70 minute live session to discover therapeutic yoga sequences, breath regulation, and stress-reduction secrets scientifically structured to manage Diabetes, stabilize blood pressure, and boost cardiovascular wellness.
+            Join us for an interactive Yoga Demonstration Session on how yoga can support better management of lifestyle-related health concerns such as Diabetes, High Blood Pressure and Heart Health.
+            Led by experienced Yoga Trainers Upma Ji and Monika Ji, the session will include practical demonstrations, useful insights and an interactive Q&A to help you understand how regular yoga practice can contribute to a healthier lifestyle.
+
+
           </p>
         </div>
 
@@ -227,7 +231,7 @@ export default function YogaSession() {
               </div>
 
               <p className="text-gray-600 text-xs sm:text-sm mt-4 max-w-md leading-relaxed">
-                Invest in your health with this live session. This yoga online class is designed to lock in introductory pricing and help you start a structured journey towards controlling Diabetes, stabilizing blood pressure, and improving heart health.
+                Invest in your health with this live session. This yoga online session is designed to help you start a structured journey towards controlling Diabetes, stabilizing blood pressure and improving heart health.
               </p>
             </div>
 
@@ -246,14 +250,14 @@ export default function YogaSession() {
 
           {/* RIGHT COLUMN: Booking Form (White Card) */}
           <div className="lg:col-span-5 bg-white border border-gray-100 p-6 py-3 rounded-3xl shadow-xl shadow-[#12211d]/5 flex flex-col justify-center">
-            <h3 className="text-xl font-bold tracking-tight text-[#12211d] mb-1">
+            <h3 className="text-xl font-bold tracking-tight text-[#12211d] mb-1!">
               Secure Your Seat
             </h3>
-            <p className="text-gray-500 text-xs mb-4">
+            <p className="text-gray-500 text-xs mb-2">
               Enter your details below to unlock instant access
             </p>
 
-            <form onSubmit={handleRegister} className="space-y-3.5">
+            <form onSubmit={handleRegister} className="space-y-1">
               
               <div>
                 <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 ">Your Full Name</label>
@@ -266,7 +270,7 @@ export default function YogaSession() {
                     onChange={handleInputChange}
                     placeholder="John Doe"
                     style={{ paddingLeft: "42px" }}
-                    className="w-full pr-4 py-2 bg-gray-50/50 border border-gray-200 rounded-xl font-semibold placeholder:text-gray-400 focus:outline-none focus:border-[#3B6D11] focus:bg-white transition-all text-sm"
+                    className="w-full pr-4 py-2! bg-gray-50/50 border border-gray-200 rounded-xl font-semibold placeholder:text-gray-400 focus:outline-none focus:border-[#3B6D11] focus:bg-white transition-all text-sm"
                   />
                 </div>
               </div>
@@ -283,7 +287,7 @@ export default function YogaSession() {
                       onChange={handleInputChange}
                       placeholder="9876543210"
                       style={{ paddingLeft: "42px" }}
-                      className="w-full pr-4 py-2 bg-gray-50/50 border border-gray-200 rounded-xl font-semibold placeholder:text-gray-400 focus:outline-none focus:border-[#3B6D11] focus:bg-white transition-all text-sm"
+                      className="w-full pr-4 py-2! bg-gray-50/50 border border-gray-200 rounded-xl font-semibold placeholder:text-gray-400 focus:outline-none focus:border-[#3B6D11] focus:bg-white transition-all text-sm"
                     />
                   </div>
                 </div>
@@ -299,7 +303,7 @@ export default function YogaSession() {
                       onChange={handleInputChange}
                       placeholder="Optional"
                       style={{ paddingLeft: "42px" }}
-                      className="w-full pr-4 py-2 bg-gray-50/50 border border-gray-200 rounded-xl font-semibold placeholder:text-gray-400 focus:outline-none focus:border-[#3B6D11] focus:bg-white transition-all text-sm uppercase"
+                      className="w-full pr-4 py-2! bg-gray-50/50 border border-gray-200 rounded-xl font-semibold placeholder:text-gray-400 focus:outline-none focus:border-[#3B6D11] focus:bg-white transition-all text-sm uppercase"
                     />
                   </div>
                 </div>
@@ -316,7 +320,7 @@ export default function YogaSession() {
                     onChange={handleInputChange}
                     placeholder="john@example.com"
                     style={{ paddingLeft: "42px" }}
-                    className="w-full pr-4 py-2 bg-gray-50/50 border border-gray-200 rounded-xl font-semibold placeholder:text-gray-400 focus:outline-none focus:border-[#3B6D11] focus:bg-white transition-all text-sm"
+                    className="w-full pr-4 py-2! bg-gray-50/50 border border-gray-200 rounded-xl font-semibold placeholder:text-gray-400 focus:outline-none focus:border-[#3B6D11] focus:bg-white transition-all text-sm"
                   />
                 </div>
               </div>
@@ -341,7 +345,7 @@ export default function YogaSession() {
             </div>
             <div>
               <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Date</div>
-              <div className="font-extrabold text-[#12211d] text-base">Sunday, 12 July 2026</div>
+              <div className="font-extrabold text-[#12211d] text-base">Sunday, 09 August 2026</div>
             </div>
           </div>
 
@@ -351,7 +355,7 @@ export default function YogaSession() {
             </div>
             <div>
               <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Timing</div>
-              <div className="font-extrabold text-[#12211d] text-base">11:00 AM - 12:30 PM IST</div>
+              <div className="font-extrabold text-[#12211d] text-base">11:30 AM - 12:30 PM IST</div>
             </div>
           </div>
 
@@ -367,17 +371,21 @@ export default function YogaSession() {
         </div>
 
         {/* 👩‍⚕️ Clinical Yoga Panel */}
-        <div className="bg-[#EAF3DE]/40 border border-[#d4edbc] p-8 md:p-10 rounded-3xl flex flex-col md:flex-row items-center gap-8 md:gap-10">
-          <div className="w-28 h-28 rounded-2xl overflow-hidden shrink-0 bg-[#EAF3DE] flex items-center justify-center font-display font-semibold text-3xl text-[#3B6D11] border border-[#d4edbc]">
-            YS
+        <div className="bg-[#EAF3DE]/40 border border-[#d4edbc] p-6 md:p-10 rounded-3xl flex flex-col md:flex-row items-center gap-8 md:gap-12 shadow-sm">
+          <div className="w-full md:w-80 h-64 sm:h-72 rounded-2xl overflow-hidden shrink-0 border border-[#d4edbc] shadow-md bg-white">
+            <img
+              src={s4Img}
+              alt="YogSaathi Yoga Experts - Upma Ji and Monika Ji"
+              className="w-full h-full object-cover object-center"
+            />
           </div>
-          <div>
-            <span className="inline-block bg-[#3B6D11] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded mb-3">
+          <div className="flex-1">
+            <span className="inline-block bg-[#3B6D11] text-white text-[14px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md mb-3 shadow-sm">
               Session Facilitators by yogsaathi
             </span>
-            <h3 className="font-display text-2xl font-semibold text-[#12211d]">YogSaathi Yoga Experts</h3>
-            <p className="text-gray-600 text-sm mt-3 leading-relaxed">
-              Our master yoga therapists work alongside clinical experts to bring you the best synergy of restorative yoga postures (asanas), targeted breathwork (pranayama), and stress-management techniques. With years of experience guiding 1000+ candidates globally to regulate blood sugar, stabilize blood pressure, and restore cardiovascular vitality, we make holistic wellness simple, healthy, and lasting.
+            <h3 className="font-display text-2xl sm:text-3xl font-semibold text-[#12211d]">YogSaathi Yoga Experts</h3>
+            <p className="text-gray-600 text-sm sm:text-base mt-3 leading-relaxed">
+              The session will be conducted by Upma Ji and Monika Ji, both highly experienced and dedicated Yoga practitioners and trainers. With their deep knowledge, years of experience and sincere devotion to the practice of Yoga, they bring a practical and holistic approach to every session. Their guidance will help participants understand how Yoga can support better management of lifestyle-related health concerns.
             </p>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { prisma } from "../db/db.js";
 import { fulfillSubscription } from "./order.controller.js";
 import { fulfillEventPayment } from "./event.controller.js";
 import { fulfillDieticianPayment } from "./dietician.controller.js";
+import { fulfillYogaSessionPayment } from "./yogaSession.controller.js";
 
 export const handleRazorpayWebhook = async (req, res) => {
   try {
@@ -100,6 +101,20 @@ export const handleRazorpayWebhook = async (req, res) => {
       return res.status(200).json({
         status: "ok",
         type: "dietician",
+        alreadyCompleted: result.alreadyCompleted
+      });
+    }
+
+    // 4. Check if orderId belongs to a Yoga Masterclass session
+    const yogaReg = await prisma.yogaSessionRegistration.findUnique({
+      where: { orderId: orderId }
+    });
+    if (yogaReg) {
+      console.log(`Found matching Yoga session registration for order ID: ${orderId}. Fulfilling session registration.`);
+      const result = await fulfillYogaSessionPayment(orderId, paymentId, null);
+      return res.status(200).json({
+        status: "ok",
+        type: "yogaSession",
         alreadyCompleted: result.alreadyCompleted
       });
     }
