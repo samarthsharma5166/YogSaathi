@@ -28,14 +28,14 @@ const WomensProgram = () => {
   const benefits = [
     { text: "Improved flexibility and mobility", icon: <Activity className="w-5 h-5 text-emerald-600" />, bg: "bg-emerald-50/70 border-emerald-100" },
     { text: "Better balance", icon: <Compass className="w-5 h-5 text-amber-600" />, bg: "bg-amber-50/70 border-amber-100" },
-    { text: "Increased strength and muscle tone", icon: <Award className="w-5 h-5 text-blue-600" />, bg: "bg-blue-50/70 border-blue-100" },
+    { text: "Increased strength", icon: <Award className="w-5 h-5 text-blue-600" />, bg: "bg-blue-50/70 border-blue-100" },
     { text: "Pain management and relief", icon: <HeartPulse className="w-5 h-5 text-rose-600" />, bg: "bg-rose-50/70 border-rose-100" },
     { text: "Improved circulation", icon: <Activity className="w-5 h-5 text-red-600" />, bg: "bg-red-50/70 border-red-100" },
     { text: "Better posture", icon: <CheckCircle2 className="w-5 h-5 text-indigo-600" />, bg: "bg-indigo-50/70 border-indigo-100" },
     { text: "Improved bone health", icon: <Shield className="w-5 h-5 text-orange-600" />, bg: "bg-orange-50/70 border-orange-100" },
     { text: "Stress reduction", icon: <Smile className="w-5 h-5 text-pink-600" />, bg: "bg-pink-50/70 border-pink-100" },
-    { text: "Weight management and body confidence", icon: <Sparkles className="w-5 h-5 text-purple-600" />, bg: "bg-purple-50/70 border-purple-100" },
-    { text: "Mood enhancement and emotional well-being", icon: <Sun className="w-5 h-5 text-yellow-600" />, bg: "bg-yellow-50/70 border-yellow-100" },
+    { text: "Weight management", icon: <Sparkles className="w-5 h-5 text-purple-600" />, bg: "bg-purple-50/70 border-purple-100" },
+    { text: "emotional well-being", icon: <Sun className="w-5 h-5 text-yellow-600" />, bg: "bg-yellow-50/70 border-yellow-100" },
     { text: "Improved sleep quality", icon: <Moon className="w-5 h-5 text-violet-600" />, bg: "bg-violet-50/70 border-violet-100" },
     { text: "Increased body awareness", icon: <Brain className="w-5 h-5 text-teal-600" />, bg: "bg-teal-50/70 border-teal-100" },
     { text: "Menstrual symptom relief", icon: <Heart className="w-5 h-5 text-red-500" />, bg: "bg-red-50/70 border-red-100" },
@@ -166,20 +166,19 @@ const WomensProgram = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {benefits.map((item, idx) => (
-           <div>
+           <div key={idx} className="h-full">
               <motion.div
-                key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.05, duration: 0.5 }}
                 whileHover={{ y: -5, scale: 1.01 }}
-                className={`p-4 rounded-2xl border ${item.bg} shadow-sm backdrop-blur-sm transition-all duration-300 flex flex-col space-y-4 h-full`}
+                className={`h-full p-[0.8px] rounded-2xl border ${item.bg} shadow-sm backdrop-blur-sm transition-all duration-300 flex items-center text-left space-x-4`}
               >
-                <div className="bg-white p-3 rounded-xl w-fit shadow-sm border border-gray-100">
+                <div className="bg-white p-3 rounded-xl w-fit shadow-sm border border-gray-100 flex-shrink-0">
                   {item.icon}
                 </div>
-                <p className="font-bold text-gray-900 text-base leading-snug">
+                <p className="font-bold text-gray-900 text-sm sm:text-base leading-snug">
                   {item.text}
                 </p>
               </motion.div>

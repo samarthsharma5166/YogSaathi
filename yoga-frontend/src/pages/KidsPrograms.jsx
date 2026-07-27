@@ -192,20 +192,19 @@ const KidsPrograms = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {importanceItems.map((item, idx) => (
-            <div>
+            <div key={idx} className="h-full">
               <motion.div
-                key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.08, duration: 0.5 }}
                 whileHover={{ y: -6, scale: 1.02 }}
-                className="p-4 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-center text-center space-y-4"
+                className="h-full p-[4px] rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 flex items-center text-left space-x-4"
               >
-                <div className="bg-emerald-50 p-3 rounded-full border border-emerald-100">
+                <div className="bg-emerald-50 p-3 rounded-lg border border-emerald-100 flex-shrink-0">
                   {item.icon}
                 </div>
-                <p className="font-bold text-gray-900 text-base leading-snug">
+                <p className="font-bold text-gray-900 text-sm sm:text-base leading-snug">
                   {item.text}
                 </p>
               </motion.div>

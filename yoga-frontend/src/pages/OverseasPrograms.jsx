@@ -138,10 +138,10 @@ const OverseasPrograms = () => {
         <h2 className="text-2xl text-center font-extrabold text-gray-950">Regular practice may help in:</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {benefits.map((item, idx) => (
-            <div key={idx}>
-              <div className="p-3 rounded-2xl bg-white border border-gray-100 shadow-sm flex flex-col items-center text-center space-y-4">
-                <div className="bg-emerald-50 p-3 rounded-full border border-emerald-100">{item.icon}</div>
-                <p className="font-bold text-gray-900 text-base leading-snug">{item.text}</p>
+            <div key={idx} className="h-full">
+              <div className="h-full p-[4px] rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center text-left space-x-4">
+                <div className="bg-emerald-50 p-3 rounded-lg border border-emerald-100 flex-shrink-0">{item.icon}</div>
+                <p className="font-bold text-gray-900 text-sm sm:text-base leading-snug">{item.text}</p>
               </div>
             </div>
           ))}
