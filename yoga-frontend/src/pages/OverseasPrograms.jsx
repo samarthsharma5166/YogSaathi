@@ -141,7 +141,7 @@ const OverseasPrograms = () => {
             <div key={idx} className="h-full">
               <div className="h-full p-[4px] rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center text-left space-x-4">
                 <div className="bg-emerald-50 p-3 rounded-lg border border-emerald-100 flex-shrink-0">{item.icon}</div>
-                <p className="font-bold text-gray-900 text-sm sm:text-base leading-snug">{item.text}</p>
+                <p className="font-bold text-gray-900 text-sm! sm:text-base! leading-snug">{item.text}</p>
               </div>
             </div>
           ))}
