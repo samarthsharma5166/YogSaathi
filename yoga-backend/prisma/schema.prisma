@@ -330,3 +330,36 @@ model DieticianLead {
   updatedAt   DateTime @updatedAt
 }
 
+model YogaSessionRegistration {
+  id              String   @id @default(uuid())
+  name            String
+  phone           String
+  email           String
+  promocode       String?
+  challenge       String?
+  amount          Int
+  orderId         String?  @unique
+  paymentId       String?  @unique
+  signature       String?
+  status          String   @default("PENDING") // PENDING, PAID, FAILED
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model YogaSessionConfig {
+  id        String   @id @default("yoga-config")
+  price     Int      @default(99)
+  slotsLeft Int      @default(10)
+  updatedAt DateTime @updatedAt
+}
+
+model YogaSessionLead {
+  id          String   @id @default(uuid())
+  srNo        Int?
+  name        String
+  mobile      String?
+  willAttend  String?  // e.g. "Yes", "May be", "No"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+

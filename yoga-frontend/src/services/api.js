@@ -251,4 +251,29 @@ export const uploadDieticianLeads = (formData) =>
 export const deleteDieticianLead = (id) => API.delete(`/dietician/leads/${id}`);
 export const clearDieticianLeads = () => API.delete("/dietician/leads/clear");
 
+// ✅ YOGA SESSION APIs
+export const getYogaSessionConfig = () => API.get("/yoga-session/config");
+export const updateYogaSessionConfig = (data) => API.post("/yoga-session/config", data);
+export const createYogaSessionRegistration = (data) => API.post("/yoga-session/register", data);
+export const verifyYogaSessionPayment = (data) => API.post("/yoga-session/verify", data);
+export const getYogaSessionRegistrations = () => API.get("/yoga-session/registrations");
+export const downloadYogaSessionRegistrations = () =>
+  API.get("/yoga-session/registrations/download", {
+    responseType: "blob",
+  });
+export const validateYogaSessionPromo = (data) => API.post("/yoga-session/validate-promo", data);
+
+// Yoga Session Leads APIs
+export const getYogaSessionLeads = (page = 1, limit = 50, search = "") =>
+  API.get(`/yoga-session/leads?page=${page}&limit=${limit}&search=${search}`);
+export const uploadYogaSessionLeads = (formData) =>
+  API.post("/yoga-session/leads/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+export const deleteYogaSessionLead = (id) => API.delete(`/yoga-session/leads/${id}`);
+export const clearYogaSessionLeads = () => API.delete("/yoga-session/leads/clear");
+
 export default API;
+

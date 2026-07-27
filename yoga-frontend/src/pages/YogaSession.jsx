@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { ArrowRight, Sparkles, User, Phone, Mail, Clock, Calendar, CheckCircle2, ShieldCheck, Heart, Flame } from "lucide-react";
+import {
+  getYogaSessionConfig,
+  createYogaSessionRegistration,
+  verifyYogaSessionPayment,
+  validateYogaSessionPromo,
+} from "../services/api";
 
 export default function YogaSession() {
   const [formData, setFormData] = useState({
@@ -11,7 +17,46 @@ export default function YogaSession() {
   });
   
   const [selectedChallenge, setSelectedChallenge] = useState("");
-  const [slotsLeft, setSlotsLeft] = useState(3); // Mock remaining slots for early bird
+  const [config, setConfig] = useState({ price: 99, slotsLeft: 10 });
+  const [displayPrice, setDisplayPrice] = useState(99);
+  const [isPromoApplied, setIsPromoApplied] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function loadConfig() {
+      try {
+        const res = await getYogaSessionConfig();
+        setConfig(res.data);
+        setDisplayPrice(res.data.price);
+      } catch (err) {
+        console.error("Error loading yoga config:", err);
+      }
+    }
+    loadConfig();
+  }, []);
+
+  useEffect(() => {
+    const validatePromo = async () => {
+      if (!formData.promocode) {
+        setDisplayPrice(config.price);
+        setIsPromoApplied(false);
+        return;
+      }
+      try {
+        const res = await validateYogaSessionPromo({ promocode: formData.promocode });
+        setDisplayPrice(res.data.price);
+        setIsPromoApplied(res.data.isValid);
+      } catch (err) {
+        console.error("Error validating promo:", err);
+      }
+    };
+
+    const timer = setTimeout(() => {
+      validatePromo();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [formData.promocode, config.price]);
 
   const challenges = [
     { id: "cravings", label: "Stubborn Cravings", icon: "🍽️" },
@@ -27,7 +72,7 @@ export default function YogaSession() {
     });
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     if (!formData.name || !formData.phone || !formData.email) {
@@ -40,25 +85,68 @@ export default function YogaSession() {
       return;
     }
 
-    // Success notification
-    toast.success("Details captured! Redirecting to secure early-bird pricing...", {
-      duration: 4000
-    });
+    setLoading(true);
+    try {
+      const { data } = await createYogaSessionRegistration({
+        name: formData.name,
+        phone: formData.phone.startsWith("+91") ? formData.phone : "+91" + formData.phone.replace(/^0+/, ""),
+        email: formData.email,
+        promocode: formData.promocode,
+        challenge: selectedChallenge,
+      });
 
-    // Reduce slot count just for client simulation
-    if (slotsLeft > 1) {
-      setSlotsLeft(prev => prev - 1);
+      const { order, registrationId, keyId } = data;
+
+      const options = {
+        key: keyId,
+        amount: order.amount,
+        currency: order.currency,
+        name: "YogSaathi Yoga Session",
+        description: "Registration for Lifestyle Disorders Masterclass",
+        order_id: order.id,
+        modal: {
+          ondismiss: () => {
+            setLoading(false);
+          },
+        },
+        handler: async (response) => {
+          setLoading(true);
+          try {
+            await verifyYogaSessionPayment({
+              ...response,
+              registrationId,
+            });
+            toast.success("Registration Successful! WhatsApp confirmation sent.", {
+              duration: 5000,
+            });
+            const confRes = await getYogaSessionConfig();
+            setConfig(confRes.data);
+          } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong during payment verification.");
+          } finally {
+            setLoading(false);
+          }
+        },
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phone,
+        },
+        theme: { color: "#3B6D11" },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.on("payment.failed", function (response) {
+        toast.error(response.error.description || "Payment failed");
+        setLoading(false);
+      });
+      rzp.open();
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.error || "Failed to initiate registration");
+      setLoading(false);
     }
-
-    // Redirect to WhatsApp with prefilled message
-    setTimeout(() => {
-      const waNumber = "919971714091";
-      const challengeStr = selectedChallenge ? `\n• Primary Challenge: ${selectedChallenge}` : "";
-      const promoStr = formData.promocode ? `\n• Promo Code: ${formData.promocode.toUpperCase()}` : "";
-      const message = `Hi YogSaathi! I want to register for the Weight Loss & Sustainable Fat Burning Yoga Session on 12-Jul-2026.\n\nMy Details:\n• Name: ${formData.name}\n• Phone: ${formData.phone}\n• Email: ${formData.email}${challengeStr}${promoStr}\n\nPlease secure my early bird slot at ₹99!`;
-      const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank");
-    }, 1500);
   };
 
   return (
@@ -89,7 +177,7 @@ export default function YogaSession() {
         <div className="animate-marquee">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="inline-block px-8">
-              🔥 Lifestyle Disorders (Diabetes, BP & Heart Health) Session • Early Bird Offer ₹99 Active for First 10 Candidates • Only {slotsLeft} Slots Left! 🔥
+              🔥 Lifestyle Disorders (Diabetes, BP & Heart Health) Session • Early Bird Offer ₹{displayPrice} Active for First 10 Candidates • Only {config.slotsLeft} Slots Left! 🔥
             </span>
           ))}
         </div>
@@ -124,14 +212,16 @@ export default function YogaSession() {
               
               <div className="flex items-baseline gap-6 flex-wrap">
                 <div className="text-[70px] md:text-[90px] font-semibold leading-none text-[#12211d] tracking-tighter flex items-start">
-                  <span className="text-3xl font-normal mt-2 mr-1">₹</span>99
+                  <span className="text-3xl font-normal mt-2 mr-1">₹</span>{displayPrice}
                 </div>
                 <div className="mb-2">
                   <div className="text-gray-500 font-medium text-base line-through">
                     Regular: ₹149
                   </div>
-                  <div className="text-[#3B6D11] font-bold text-xs tracking-wide mt-0.5">
-                    Save ₹50 (33% OFF)
+                  <div className="text-[#3B6D11] font-bold text-xs tracking-wide mt-0.5 animate-pulse">
+                    {isPromoApplied
+                      ? `Promo Applied! Save ₹${149 - displayPrice} (${Math.round(((149 - displayPrice) / 149) * 100)}% OFF)`
+                      : `Save ₹${149 - displayPrice} (${Math.round(((149 - displayPrice) / 149) * 100)}% OFF)`}
                   </div>
                 </div>
               </div>
@@ -145,7 +235,7 @@ export default function YogaSession() {
               <div className="flex items-center gap-2.5 bg-white border border-[#d4edbc] px-4 py-2 rounded-full w-fit shadow-sm">
                 <span className="w-2.5 h-2.5 bg-red-500 rounded-full animate-ping" />
                 <span className="font-bold text-[#12211d] text-xs uppercase tracking-wider">
-                  Only {slotsLeft} Early-Bird Slots Left!
+                  Only {config.slotsLeft} Early-Bird Slots Left!
                 </span>
               </div>
               <p className="text-gray-500 text-[11px] mt-2">
@@ -159,10 +249,14 @@ export default function YogaSession() {
             <h3 className="text-xl font-bold tracking-tight text-[#12211d] mb-1">
               Secure Your Seat
             </h3>
+            <p className="text-gray-500 text-xs mb-4">
+              Enter your details below to unlock instant access
+            </p>
 
-            <form onSubmit={handleRegister} className="space-y-1">
+            <form onSubmit={handleRegister} className="space-y-3.5">
+              
               <div>
-                <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-0.5">Full Name</label>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 ">Your Full Name</label>
                 <div className="relative">
                   <User className="absolute left-3.5 top-3.5 w-4 h-4 text-gray-400" />
                   <input
@@ -172,14 +266,14 @@ export default function YogaSession() {
                     onChange={handleInputChange}
                     placeholder="John Doe"
                     style={{ paddingLeft: "42px" }}
-                    className="w-full pr-4 p-1 bg-gray-50/50 border border-gray-200 rounded-xl font-semibold placeholder:text-gray-400 focus:outline-none focus:border-[#3B6D11] focus:bg-white transition-all text-sm"
+                    className="w-full pr-4 py-2 bg-gray-50/50 border border-gray-200 rounded-xl font-semibold placeholder:text-gray-400 focus:outline-none focus:border-[#3B6D11] focus:bg-white transition-all text-sm"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 ">WhatsApp Mobile Number</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 ">WhatsApp Number</label>
                   <div className="relative">
                     <Phone className="absolute left-3.5 top-3.5 w-4 h-4 text-gray-400" />
                     <input
@@ -229,9 +323,10 @@ export default function YogaSession() {
 
               <button
                 type="submit"
-                className="w-full bg-[#3B6D11] hover:bg-[#2d540d] text-white py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-1.5 mt-1 cursor-pointer"
+                disabled={loading}
+                className="w-full bg-[#3B6D11] hover:bg-[#2d540d] text-white py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-1.5 mt-1 cursor-pointer disabled:opacity-50"
               >
-                Secure your Slot<ArrowRight className="w-4 h-4" />
+                {loading ? "Processing..." : "Secure your Slot"}<ArrowRight className="w-4 h-4" />
               </button>
             </form>
           </div>

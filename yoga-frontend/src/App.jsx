@@ -68,6 +68,8 @@ import RetreatEvent from "./pages/RetreatEvent.jsx";
 import AdminOverseasInquiries from "./Admin/AdminOverseasInquiries.jsx";
 import ManageDieticianSession from "./Admin/ManageDieticianSession.jsx";
 import DieticianLeads from "./Admin/DieticianLeads.jsx";
+import ManageYogaSession from "./Admin/ManageYogaSession.jsx";
+import YogaSessionLeads from "./Admin/YogaSessionLeads.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -133,6 +135,8 @@ function AppContent() {
             <Route path="overseas-inquiries" element={<AdminOverseasInquiries />} />
             <Route path="dietician-session" element={<ManageDieticianSession />} />
             <Route path="dietician-leads" element={<DieticianLeads />} />
+            <Route path="yoga-session" element={<ManageYogaSession />} />
+            <Route path="yoga-session-leads" element={<YogaSessionLeads />} />
           </Route>
 
           {/* User Routes with Layout */}
