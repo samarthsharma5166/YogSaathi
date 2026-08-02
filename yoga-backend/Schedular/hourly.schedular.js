@@ -532,6 +532,11 @@ async function getUsers(message) {
         },
     });
 
+    // Include subscriptions starting up to tomorrow (next day)
+    const nextDay = new Date(now);
+    nextDay.setDate(nextDay.getDate() + 1);
+    nextDay.setHours(23, 59, 59, 999);
+
     const filteredUsers = allUsers.filter(user => {
         // Always include Admins if that's your intended behavior
         if (user.role === "ADMIN") return true;
@@ -542,8 +547,8 @@ async function getUsers(message) {
 
         // ✅ BETTER LOGIC: Check for the most relevant subscription
         // We look for an active paid subscription first.
-        const activePaidSub = user.subscription.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now);
-        const activeTrialSub = user.subscription.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now);
+        const activePaidSub = user.subscription.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= nextDay);
+        const activeTrialSub = user.subscription.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= nextDay);
 
         // Default to the literal latest record if nothing is active
         const latestSub = user.subscription[0];
