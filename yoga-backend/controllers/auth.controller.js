@@ -161,6 +161,7 @@ export const register = async (req, res) => {
     // --- Helper: Get tomorrow's date ---
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(1, 0, 0, 0);
 
     // --- Get free trial plan ---
     const freeTrialPlan = await prisma.plan.findFirst({
@@ -184,7 +185,8 @@ export const register = async (req, res) => {
         });
       }
       const expiresAt = new Date(tomorrow);
-      expiresAt.setDate(expiresAt.getDate() + freeTrialPlan.duration - 1);
+      expiresAt.setHours(21, 0, 0, 0);
+      expiresAt.setDate(expiresAt.getDate() + freeTrialPlan.duration);
       user = await prisma.user.create({
         data: {
           name,
@@ -283,7 +285,8 @@ export const register = async (req, res) => {
   
 
     const expiresAt = new Date(tomorrow);
-    expiresAt.setDate(expiresAt.getDate() + freeTrialPlan.duration - 1);
+    expiresAt.setDate(expiresAt.getDate() + freeTrialPlan.duration );
+    expiresAt.setHours(21, 0, 0, 0);
     // 3. Assign new free trial (starting tomorrow)
     const subscription = await prisma.subscription.create({
       data: {

@@ -230,6 +230,7 @@ export const fulfillSubscription = async (razorpay_order_id, razorpay_payment_id
   }
 
   const subsStartDate = new Date(startDate);
+  subsStartDate.setHours(1, 0, 0, 0);
   const baseDuration = plan.duration;
   let expiresAt;
 
@@ -244,6 +245,10 @@ export const fulfillSubscription = async (razorpay_order_id, razorpay_payment_id
       subsStartDate.getTime() + baseDuration * 24 * 60 * 60 * 1000 + refferalDays
     );
   }
+
+  // Ensure subscription expires at 9:00 PM regardless of duration type or join time
+  expiresAt.setHours(21, 0, 0, 0);
+  
 
   // 4. Update/Create Subscription
   const existingSubscription = await prisma.subscription.findFirst({
