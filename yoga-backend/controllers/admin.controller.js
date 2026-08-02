@@ -128,8 +128,8 @@ export const getAllUsersAdmin = async (req, res) => {
           return usertype === "New-Users";
         }
 
-        const activePaidSub = user.subscription.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now);
-        const activeTrialSub = user.subscription.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now);
+        const activePaidSub = user.subscription.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
+        const activeTrialSub = user.subscription.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
 
         const hasTrial = user.subscription.some(s => s.plan.isFreeTrial);
         const hasPaid = user.subscription.some(s => !s.plan.isFreeTrial);
