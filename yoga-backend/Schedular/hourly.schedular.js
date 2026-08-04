@@ -379,7 +379,10 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
         
         if (message.templateName === "session_info"){
             const users = await getUsers(message);
-            users.map(user => session_info(user.phoneNumber, user.name, message.payload.topic, message.payload.date, message.payload.time, message.payload.duration, message.payload.instructor, message.payload.link))
+            const formattedDate = message.payload.date && !isNaN(new Date(message.payload.date))
+                ? format(new Date(message.payload.date), "dd/MM/yyyy")
+                : message.payload.date;
+            users.map(user => session_info(user.phoneNumber, user.name, message.payload.topic, formattedDate, message.payload.time, message.payload.duration, message.payload.instructor, message.payload.link))
         }
 
         if (message.templateName === "confirmation_regn"){
