@@ -490,6 +490,17 @@ async function getUsers(message) {
             email: reg.email
         }));
     }
+    if (audience === "Yoga-Session-Registrants") {
+        const registrations = await prisma.yogaSessionRegistration.findMany({
+            where: { status: "PAID" }
+        });
+        return registrations.map(reg => ({
+            id: reg.id,
+            name: reg.name,
+            phoneNumber: reg.phone,
+            email: reg.email
+        }));
+    }
     if (audience === "Free-Trial-And-Dietician-Registrants") {
         const paidRegistrations = await prisma.dieticianSessionRegistration.findMany({
             where: { status: "PAID" },

@@ -702,6 +702,7 @@ export default function ScheduledMessageManager() {
                                             <option value="Free-Trial-And-Dietician-Registrants">Free Trial & Dietician Session Registrants</option>
                                             <option value="Leads">Leads</option>
                                             <option value="Dietician-Leads">Dietician Session Leads</option>
+                                            <option value="Yoga-Session-Registrants">Yoga Session Registrants</option>
                                         </select>
                                     </div>
 
