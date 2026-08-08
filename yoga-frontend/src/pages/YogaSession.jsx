@@ -174,7 +174,7 @@ export default function YogaSession() {
       `}</style>
 
       {/* 📣 Elegant Announcement Sliding Banner */}
-      <div className="ticker-wrap w-full bg-[#EAF3DE] border-b border-[#d4edbc] text-[#3B6D11] py-3 overflow-hidden font-bold uppercase tracking-wider text-xs">
+      {/* <div className="ticker-wrap w-full bg-[#EAF3DE] border-b border-[#d4edbc] text-[#3B6D11] py-3 overflow-hidden font-bold uppercase tracking-wider text-xs">
         <div className="animate-marquee">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="inline-block px-8">
@@ -182,7 +182,7 @@ export default function YogaSession() {
             </span>
           ))}
         </div>
-      </div>
+      </div> */}
 
       <div className="max-w-6xl mx-auto px-4 md:px-8 mt-6">
         
@@ -210,15 +210,15 @@ export default function YogaSession() {
           {/* LEFT COLUMN: Large Pricing Stack (Soft Green Card) */}
           <div className="lg:col-span-7 bg-[#EAF3DE]/60 border border-[#d4edbc] p-6 rounded-3xl flex flex-col justify-between shadow-sm">
             <div>
-              <div className="flex items-center gap-1.5 text-[#3B6D11] text-xs font-bold uppercase tracking-wider mb-3">
+              {/* <div className="flex items-center gap-1.5 text-[#3B6D11] text-xs font-bold uppercase tracking-wider mb-3">
                 <Flame className="w-4 h-4 fill-currentColor" /> Early Bird Offer
-              </div>
+              </div> */}
               
               <div className="flex items-baseline gap-6 flex-wrap">
                 <div className="text-[70px] md:text-[90px] font-semibold leading-none text-[#12211d] tracking-tighter flex items-start">
                   <span className="text-3xl font-normal mt-2 mr-1">₹</span>{displayPrice}
                 </div>
-                <div className="mb-2">
+                {/* <div className="mb-2">
                   <div className="text-gray-500 font-medium text-base line-through">
                     Regular: ₹149
                   </div>
@@ -227,7 +227,7 @@ export default function YogaSession() {
                       ? `Promo Applied! Save ₹${149 - displayPrice} (${Math.round(((149 - displayPrice) / 149) * 100)}% OFF)`
                       : `Save ₹${149 - displayPrice} (${Math.round(((149 - displayPrice) / 149) * 100)}% OFF)`}
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <p className="text-gray-600 text-xs sm:text-sm mt-4 max-w-md leading-relaxed">
@@ -235,7 +235,7 @@ export default function YogaSession() {
               </p>
             </div>
 
-            <div className="border-t border-[#d4edbc] pt-4 mt-6">
+            {/* <div className="border-t border-[#d4edbc] pt-4 mt-6">
               <div className="flex items-center gap-2.5 bg-white border border-[#d4edbc] px-4 py-2 rounded-full w-fit shadow-sm">
                 <span className="w-2.5 h-2.5 bg-red-500 rounded-full animate-ping" />
                 <span className="font-bold text-[#12211d] text-xs uppercase tracking-wider">
@@ -245,7 +245,7 @@ export default function YogaSession() {
               <p className="text-gray-500 text-[11px] mt-2">
                 *The price will increase to ₹149/- once the early bird capacity of 10 is reached.
               </p>
-            </div>
+            </div> */}
           </div>
 
           {/* RIGHT COLUMN: Booking Form (White Card) */}
