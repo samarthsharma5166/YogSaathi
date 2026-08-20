@@ -2,7 +2,11 @@ import { prisma } from "../db/db.js"
 
 export const getScheduledMessages=async(req,res)=>{
     try {
-        const messages= await prisma.scheduledMessage.findMany();
+        const messages= await prisma.scheduledMessage.findMany({
+            orderBy:{
+                createdAt:"desc"
+            }
+        });
         if(!res){
             return res.status(404).json({ error: "User not found" });
         }
