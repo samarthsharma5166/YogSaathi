@@ -4,7 +4,7 @@ export const getScheduledMessages=async(req,res)=>{
     try {
         const messages= await prisma.scheduledMessage.findMany({
             orderBy:{
-                createdAt:"desc"
+                createdAt:"asc"
             }
         });
         if(!res){
