@@ -247,6 +247,10 @@ const templateName = [
     {
         name:"onetoone_yoga_support",
         inputs:[]
+    },
+    {
+        name:"yoga_session_info_f",
+        inputs:[]
     }
 ];
 

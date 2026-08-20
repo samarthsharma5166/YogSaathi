@@ -2428,3 +2428,45 @@ export const onetoone_yoga_support = (number,name) =>{
         }
     })
 }
+
+
+export const yoga_session_info_f =(number,name) =>{
+   axios.post("https://backend.chatmitra.com/developer/api/send_message", {
+  recipient_mobile_number: number,
+  messages: [{
+    kind: "template",
+    template: {
+      name: "yoga_session_info_f",
+      language: "en",
+      components: [
+  {
+    "type": "header",
+    "parameters": [
+      {
+        "type": "image",
+        "image": {
+          "link": "https://cdn.chatmitra.com/images/logo%20YogSaathi_1785751511046.png"
+        }
+      }
+    ]
+  },
+  {
+    "type": "body",
+    "parameters": [
+      {
+        "type": "text",
+        "text": name
+      }
+    ]
+  }
+]
+    }
+  }],
+  customer_name: name
+}, {
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
+  }
+})
+}
