@@ -236,10 +236,10 @@ const PlanFeatureTrays = () => (
 
 
 const durationOfferDetails = {
-  12: { originalSale: 3099, extraOff: 1100, label: "Bumper Offer", usdOriginal: 180, usdSavings: "52%" },
-  6: { originalSale: 2499, extraOff: 1100, label: "Super Offer", usdOriginal: 90, usdSavings: "38%" },
-  3: { originalSale: 1399, extraOff: 600, label: "Big Offer", usdOriginal: 45, usdSavings: "22%" },
-  1: { originalSale: 499, extraOff: 200, label: "Basic Offer", usdOriginal: 15, usdSavings: "0%" }
+  12: { originalSale: 3099, extraOff: 1100, label: "Bumper Offer", usdOriginal: 180, usdSavings: "61%" },
+  6: { originalSale: 2499, extraOff: 1100, label: "Super Offer", usdOriginal: 90, usdSavings: "55%" },
+  3: { originalSale: 1399, extraOff: 600, label: "Big Offer", usdOriginal: 45, usdSavings: "44%" },
+  1: { originalSale: 499, extraOff: 200, label: "Basic Offer", usdOriginal: 15, usdSavings: "33%" }
 };
 
 const Pricing = () => {
