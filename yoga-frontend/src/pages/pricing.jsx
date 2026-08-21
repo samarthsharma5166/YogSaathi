@@ -289,7 +289,7 @@ const Pricing = () => {
             Membership Plans
           </span>
           <h2 className="text-3xl font-extrabold text-[#27500a] tracking-tight mb-1.5">
-            Find Your Balance
+            Protect Your Bond, Nurture Your Health: Rakshabandhan Special
           </h2>
           <p className="text-gray-600 text-sm max-w-xl mx-auto">
             Choose a plan that fits your lifestyle. Get daily guidance, personalized postures, and holistic wellness support.
@@ -330,6 +330,10 @@ const Pricing = () => {
               <span>🇺🇸</span> USD ($)
             </button>
           </div>
+        </div>
+
+        <div>
+          <p className="text-center text-red-500 text-lg animate-pulse tracking-wider" style={{fontWeight:500}} >Limited Time Offer! Get extra discount on each plan!</p>
         </div>
 
         {/* Pricing Cards Grid */}
