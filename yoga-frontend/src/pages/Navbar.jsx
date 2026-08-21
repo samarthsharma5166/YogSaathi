@@ -55,8 +55,8 @@ const Navbar = () => {
     { name: "Corporate Wellness Retreats", path: "/corporateRetreats" },
     { name: "Yoga for Overseas Participants", path: "/overseasPrograms" },
     { name: "YogaCare Personalised Program", path: "/yogacare" },
-    { name: "Subscription Plans", path: "/price"},
-    { name: "Join Free Trial Class", path: "/auth/register "}
+    { name: "Subscription Plans", path: "/price" },
+    { name: "Join Free Trial Class", path: "/auth/register " }
   ];
 
   const isProgramActive = location.pathname === "/contact" && location.search.includes("program");
@@ -71,11 +71,10 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? "bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-200/50 py-2"
           : "bg-transparent py-4"
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
@@ -95,23 +94,21 @@ const Navbar = () => {
               {/* Home Link */}
               <Link
                 to="/"
-                className={`text-sm font-medium transition-colors duration-200 hover:text-green-600 ${
-                  location.pathname === "/" && !location.search.includes("program") ? "text-green-600" : "text-gray-700"
-                }`}
+                className={`text-sm font-medium transition-colors duration-200 hover:text-green-600 ${location.pathname === "/" && !location.search.includes("program") ? "text-green-600" : "text-gray-700"
+                  }`}
               >
                 Home
               </Link>
 
-             
+
 
               {/* Rest of Nav Links */}
               {navLinks.slice(1).map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`text-sm font-medium transition-colors duration-200 hover:text-green-600 ${
-                    location.pathname === link.path && !isProgramActive ? "text-green-600" : "text-gray-700"
-                  }`}
+                  className={`text-sm font-medium transition-colors duration-200 hover:text-green-600 ${location.pathname === link.path && !isProgramActive ? "text-green-600" : "text-gray-700"
+                    }`}
                 >
                   {link.name}
                 </Link>
@@ -161,7 +158,7 @@ const Navbar = () => {
               <Link
                 to="/price"
                 className="ml-4 inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
-               >
+              >
                 Subscriptions
               </Link>
               {/* <Link
@@ -256,20 +253,18 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-          mobileMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${mobileMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <div className="px-4 pt-2 pb-6 space-y-2 bg-white shadow-lg rounded-b-2xl border-t border-gray-100">
           {/* Home Link */}
           <Link
             to="/"
             onClick={closeMenu}
-            className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${
-              location.pathname === "/" && !location.search.includes("program")
+            className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${location.pathname === "/" && !location.search.includes("program")
                 ? "text-green-600 bg-green-50"
                 : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-            }`}
+              }`}
           >
             Home
           </Link>
@@ -278,11 +273,10 @@ const Navbar = () => {
           <div className="block">
             <button
               onClick={() => setMobileProgramsOpen((prev) => !prev)}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${
-                mobileProgramsOpen || isProgramActive
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${mobileProgramsOpen || isProgramActive
                   ? "text-green-600 bg-green-50/30"
                   : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-              }`}
+                }`}
             >
               <span>Yoga Programs</span>
               <svg
@@ -295,20 +289,18 @@ const Navbar = () => {
               </svg>
             </button>
             <div
-              className={`pl-4 space-y-1 transition-all duration-200 overflow-hidden ${
-                mobileProgramsOpen ? "max-h-60 opacity-100 mt-1" : "max-h-0 opacity-0"
-              }`}
+              className={`pl-4 space-y-1 transition-all duration-200 overflow-hidden ${mobileProgramsOpen ? "max-h-60 opacity-100 mt-1" : "max-h-0 opacity-0"
+                }`}
             >
               {programs.map((prog) => (
                 <Link
                   key={prog.name}
                   to={prog.path}
                   onClick={closeMenu}
-                  className={`block px-4 py-2 text-sm rounded-lg transition-colors duration-150 ${
-                    location.pathname + location.search === prog.path
+                  className={`block px-4 py-2 text-sm rounded-lg transition-colors duration-150 ${location.pathname + location.search === prog.path
                       ? "text-green-600 bg-green-50/50 font-medium"
                       : "text-gray-600 hover:text-green-600 hover:bg-green-50/50"
-                  }`}
+                    }`}
                 >
                   {prog.name}
                 </Link>
@@ -322,16 +314,15 @@ const Navbar = () => {
               key={link.name}
               to={link.path}
               onClick={closeMenu}
-              className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${
-                location.pathname === link.path && !isProgramActive
+              className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${location.pathname === link.path && !isProgramActive
                   ? "text-green-600 bg-green-50"
                   : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-              }`}
+                }`}
             >
               {link.name}
             </Link>
           ))}
-          
+
           <div className="border-t border-gray-100 pt-4 mt-2 flex flex-col gap-3 px-2">
             <Link
               to="/price"

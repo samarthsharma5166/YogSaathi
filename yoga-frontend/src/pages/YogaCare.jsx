@@ -248,64 +248,64 @@ const YogaCare = () => {
               </div>
 
               {/* Benefits Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex gap-4">
-                  <div className="w-10 h-10 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+                  <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     🧘
                   </div>
                   <div>
-                    <h3 className="font-bold text-base text-gray-900">Personalised attention</h3>
-                    <p className="text-gray-500 text-xs mt-1">From experienced and certified Yoga Teachers.</p>
+                    <h3 className="font-bold text-sm text-gray-900">Personalised attention</h3>
+                    <p className="text-gray-500 text-[11px] leading-tight mt-0!">From experienced and certified Yoga Teachers.</p>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex gap-4">
-                  <div className="w-10 h-10 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0">
+                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+                  <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     👤
                   </div>
-                  <div>
-                    <h3 className="font-bold text-base text-gray-900">One-to-One / Small Batches</h3>
-                    <p className="text-gray-500 text-xs mt-1">Individual classes or very small interactive groups.</p>
+                  <div >
+                    <h3 className="font-bold text-sm text-gray-900">One-to-One / Small Batches</h3>
+                    <p className="text-gray-500 text-[11px] leading-tight mt-0">Individual classes or very small interactive groups.</p>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex gap-4">
-                  <div className="w-10 h-10 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0">
+                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+                  <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     🎯
                   </div>
                   <div>
-                    <h3 className="font-bold text-base text-gray-900">Aligned to Your Goals</h3>
-                    <p className="text-gray-500 text-xs mt-1">Practices based on your specific health concerns.</p>
+                    <h3 className="font-bold text-sm text-gray-900">Aligned to Your Goals</h3>
+                    <p className="text-gray-500 text-[11px] leading-tight mt-0">Practices based on your specific health concerns.</p>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex gap-4">
-                  <div className="w-10 h-10 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0">
+                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+                  <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     🏠
                   </div>
                   <div>
-                    <h3 className="font-bold text-base text-gray-900">Comfort of Your Home</h3>
-                    <p className="text-gray-500 text-xs mt-1">Practice safely and comfortably in your own space.</p>
+                    <h3 className="font-bold text-sm text-gray-900">Comfort of Your Home</h3>
+                    <p className="text-gray-500 text-[11px] leading-tight mt-0">Practice safely and comfortably in your own space.</p>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex gap-4">
-                  <div className="w-10 h-10 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0">
+                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+                  <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     ⏰
                   </div>
                   <div>
-                    <h3 className="font-bold text-base text-gray-900">Preferred Time Slots</h3>
-                    <p className="text-gray-500 text-xs mt-1">Flexible scheduling that fits your lifestyle.</p>
+                    <h3 className="font-bold text-sm text-gray-900">Preferred Time Slots</h3>
+                    <p className="text-gray-500 text-[11px] leading-tight mt-0">Flexible scheduling that fits your lifestyle.</p>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex gap-4">
-                  <div className="w-10 h-10 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0">
+                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+                  <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     💻
                   </div>
                   <div>
-                    <h3 className="font-bold text-base text-gray-900">Live Online Sessions</h3>
-                    <p className="text-gray-500 text-xs mt-1">Highly interactive and convenient video classes.</p>
+                    <h3 className="font-bold text-sm text-gray-900">Live Online Sessions</h3>
+                    <p className="text-gray-500 text-[11px] leading-tight mt-0">Highly interactive and convenient video classes.</p>
                   </div>
                 </div>
               </div>
@@ -354,17 +354,17 @@ const YogaCare = () => {
                       <div
                         key={program.id}
                         onClick={() => handleSelectProgram(program)}
-                        className={`cursor-pointer bg-white border-2 rounded-2xl p-5 transition-all shadow-sm flex flex-col justify-between h-40 hover:scale-101 hover:shadow-md ${
-                          isSelected ? "border-[#3B6D11] bg-[#FAFDF6] ring-2 ring-[#3B6D11]/10" : "border-gray-100"
-                        }`}
+                        className={`cursor-pointer bg-white border-2 rounded-2xl p-3 transition-all shadow-sm flex flex-col justify-between h-fit hover:scale-101 hover:shadow-md ${isSelected ? "border-[#3B6D11] bg-[#FAFDF6] ring-2 ring-[#3B6D11]/10" : "border-gray-100"
+                          }`}
                       >
-                        <div className="text-3xl">{program.emoji}</div>
-                        <h4 className="font-bold text-sm text-gray-900 leading-snug">{program.name}</h4>
-                        <div className="flex items-center gap-1.5 text-xs font-semibold self-end mt-2">
+                        <div className="flex gap-2 items-center">
+                          <div className="text-3xl">{program.emoji}</div>
+                          <h4 className="font-bold text-sm text-gray-900 leading-snug">{program.name}</h4>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs font-semibold self-center mt-2">
                           <div
-                            className={`w-4 h-4 rounded-full border flex items-center justify-center ${
-                              isSelected ? "bg-[#3B6D11] border-[#3B6D11]" : "border-gray-300"
-                            }`}
+                            className={`w-4 h-4 rounded-full border flex items-center justify-center ${isSelected ? "bg-[#3B6D11] border-[#3B6D11]" : "border-gray-300"
+                              }`}
                           >
                             {isSelected && <Check className="w-2.5 h-2.5 text-white" strokeWidth={4} />}
                           </div>
@@ -463,22 +463,20 @@ const YogaCare = () => {
                     <button
                       type="button"
                       onClick={() => setFormData((prev) => ({ ...prev, participantType: "individual" }))}
-                      className={`py-2.5 px-4 border text-xs font-bold rounded-lg transition ${
-                        formData.participantType === "individual"
-                          ? "border-[#3B6D11] bg-[#FAFDF6] text-[#3B6D11]"
-                          : "border-gray-200 bg-white text-gray-500"
-                      }`}
+                      className={`py-2.5 px-4 border text-xs font-bold rounded-lg transition ${formData.participantType === "individual"
+                        ? "border-[#3B6D11] bg-[#FAFDF6] text-[#3B6D11]"
+                        : "border-gray-200 bg-white text-gray-500"
+                        }`}
                     >
                       1 Participant (Individual)
                     </button>
                     <button
                       type="button"
                       onClick={() => setFormData((prev) => ({ ...prev, participantType: "group_2_5" }))}
-                      className={`py-2.5 px-4 border text-xs font-bold rounded-lg transition ${
-                        formData.participantType === "group_2_5"
-                          ? "border-[#3B6D11] bg-[#FAFDF6] text-[#3B6D11]"
-                          : "border-gray-200 bg-white text-gray-500"
-                      }`}
+                      className={`py-2.5 px-4 border text-xs font-bold rounded-lg transition ${formData.participantType === "group_2_5"
+                        ? "border-[#3B6D11] bg-[#FAFDF6] text-[#3B6D11]"
+                        : "border-gray-200 bg-white text-gray-500"
+                        }`}
                     >
                       2–5 Participants (Small Group)
                     </button>
@@ -535,9 +533,8 @@ const YogaCare = () => {
                         <div
                           key={plan.id}
                           onClick={() => setSelectedPlanId(plan.id)}
-                          className={`cursor-pointer bg-white border-2 rounded-2xl p-5 transition-all shadow-sm hover:scale-101 hover:shadow-md flex flex-col justify-between h-44 ${
-                            isSelected ? "border-[#3B6D11] bg-[#FAFDF6] ring-2 ring-[#3B6D11]/10" : "border-gray-100"
-                          }`}
+                          className={`cursor-pointer bg-white border-2 rounded-2xl p-5 transition-all shadow-sm hover:scale-101 hover:shadow-md flex flex-col justify-between h-38 ${isSelected ? "border-[#3B6D11] bg-[#FAFDF6] ring-2 ring-[#3B6D11]/10" : "border-gray-100"
+                            }`}
                         >
                           <div className="flex justify-between items-start">
                             <div>
@@ -560,16 +557,15 @@ const YogaCare = () => {
                             <div className="flex items-baseline gap-0.5">
                               <span className="text-2xl font-black text-gray-900">{formattedPrice}</span>
                               <span className="text-gray-400 text-[10px] font-semibold">
-                                {plan.duration === 0 ? "one-time" : `/${plan.duration === 1 ? 'mo' : `${plan.duration} mos`}`}
+                                {/* {plan.duration === 0 ? "one-time" : `/${plan.duration === 1 ? 'mo' : `${plan.duration} mos`}`} */}
                               </span>
                             </div>
                           </div>
 
                           <div className="flex items-center gap-1.5 text-xs font-semibold self-end mt-2">
                             <div
-                              className={`w-4 h-4 rounded-full border flex items-center justify-center ${
-                                isSelected ? "bg-[#3B6D11] border-[#3B6D11]" : "border-gray-300"
-                              }`}
+                              className={`w-4 h-4 rounded-full border flex items-center justify-center ${isSelected ? "bg-[#3B6D11] border-[#3B6D11]" : "border-gray-300"
+                                }`}
                             >
                               {isSelected && <Check className="w-2.5 h-2.5 text-white" strokeWidth={4} />}
                             </div>
@@ -582,8 +578,8 @@ const YogaCare = () => {
                     })}
                   </div>
 
-                  <p className="text-[10px] text-gray-400 italic">
-                    ℹ️ You may book max 2 trail classes with 2 different teachers before subscribing the Plan.
+                  <p className="text-[14px] text-gray-400 italic">
+                    ℹ️ You may book max 2 trial classes with 2 different teachers before subscribing the Plan.
                   </p>
                 </div>
 
@@ -641,9 +637,8 @@ const YogaCare = () => {
                       <button
                         onClick={handleCheckout}
                         disabled={!selectedPlanId}
-                        className={`w-full bg-[#3B6D11] hover:bg-[#2d540d] text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer text-xs flex items-center justify-center gap-1.5 ${
-                          !selectedPlanId ? "opacity-50 cursor-not-allowed" : ""
-                        }`}
+                        className={`w-full bg-[#3B6D11] hover:bg-[#2d540d] text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer text-xs flex items-center justify-center gap-1.5 ${!selectedPlanId ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
                       >
                         <Lock className="w-3.5 h-3.5" />
                         Proceed to Payment
