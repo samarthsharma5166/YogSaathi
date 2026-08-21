@@ -34,6 +34,12 @@ import webinar2 from "../assets/webinar2.jpg";
 import webinar3 from "../assets/webinar3.jpg";
 import webinar4 from "../assets/webinar4.jpg";
 
+// ✅ YogSaathi Interactive Yoga Demo Images
+import demo1 from "../assets/demo1.jpg";
+import demo2 from "../assets/demo2.jpg";
+import demo3 from "../assets/demo3.jpg";
+
+
 // ✅ International Yoga Day 2026 Images
 import yogaDay1 from "../assets/yoga_day_1.jpg";
 import yogaDay2 from "../assets/yoga_day_2.jpg";
@@ -120,6 +126,25 @@ const webinarGlimpses = [
     desc: "Detailed breakdown of foods supporting hormonal balance and healthy fat reduction."
   }
 ];
+
+const yogaDemoGlimpses = [
+  {
+    src: demo1,
+    title: "Lifestyle Diseases Presentation",
+    desc: "Yoga Demonstration Session on Yoga for Lifestyle Disorders - Diabetes, BP & Heart Health."
+  },
+  {
+    src: demo2,
+    title: "Warm-up & Asana Demo",
+    desc: "Practical guidance on suitable warm-up practices and selected Yoga Asanas."
+  },
+  {
+    src: demo3,
+    title: "Breathing & Pranayama Session",
+    desc: "Instruction on breathing techniques and interactive Q&A session with participants."
+  }
+];
+
 
 const mockPastEvents = [
   {
@@ -250,6 +275,7 @@ function Liveevent() {
   const [timeLeft, setTimeLeft] = useState(4500); // 1 hour 15 mins in seconds
   const [activeYogaDayVideo, setActiveYogaDayVideo] = useState(yogaDayVideo1);
   const [currentWebinarIndex, setCurrentWebinarIndex] = useState(0);
+  const [currentYogaDemoIndex, setCurrentYogaDemoIndex] = useState(0);
 
   // Auto-slide interactive webinar carousel every 5 seconds
   useEffect(() => {
@@ -258,6 +284,15 @@ function Liveevent() {
     }, 5000);
     return () => clearInterval(slideTimer);
   }, []);
+
+  // Auto-slide interactive yoga demo carousel every 5 seconds
+  useEffect(() => {
+    const slideTimer = setInterval(() => {
+      setCurrentYogaDemoIndex((prev) => (prev + 1) % yogaDemoGlimpses.length);
+    }, 5000);
+    return () => clearInterval(slideTimer);
+  }, []);
+
 
   const chatContainerRef = useRef(null);
 
@@ -339,12 +374,116 @@ function Liveevent() {
     <div className="livestream-page-container">
       <Toaster position="top-right" reverseOrder={false} />
 
-      
+      {/* 🌟 YogSaathi Interactive Yoga Demo Section */}
+      <section className="recent-highlights-container-box mb-10!">
+        <div className="section-title-wrapper mb-4!">
+          <h2 className="text-5xl! md:text-6xl!">YogSaathi Interactive Yoga Demonstration</h2>
+          <p className="subtitle text-xl! md:text-2xl!">Yoga for Lifestyle Disorders – Diabetes, BP & Heart Health</p>
+          <div className="section-title-divider mt-2"></div>
+        </div>
+
+        <div className="highlights-main-row" style={{ gap: "18px", marginTop: "14px", gridTemplateColumns: "1.1fr 1fr" }}>
+          {/* Main Image Highlight Carousel Card (Left Side) */}
+          <div className="highlight-video-card">
+            <div className="highlight-video-wrapper relative group" style={{ maxHeight: "300px" }}>
+              <img
+                key={currentYogaDemoIndex}
+                src={yogaDemoGlimpses[currentYogaDemoIndex].src}
+                alt={yogaDemoGlimpses[currentYogaDemoIndex].title}
+                className="highlight-video-player transition-transform duration-700 cursor-pointer hover:scale-105"
+                onClick={() => setSelectedLightboxImage(yogaDemoGlimpses[currentYogaDemoIndex].src)}
+              />
+              <button
+                type="button"
+                className="slider-arrow prev"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentYogaDemoIndex((prev) =>
+                    prev === 0 ? yogaDemoGlimpses.length - 1 : prev - 1
+                  );
+                }}
+                aria-label="Previous Glimpse"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <button
+                type="button"
+                className="slider-arrow next"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentYogaDemoIndex((prev) =>
+                    (prev + 1) % yogaDemoGlimpses.length
+                  );
+                }}
+                aria-label="Next Glimpse"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+            <div className="video-playlist-tabs flex-wrap py-2! px-3! gap-2!">
+              {yogaDemoGlimpses.map((item, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className={`playlist-tab text-xs! py-1.5! px-3! ${currentYogaDemoIndex === idx ? "active" : ""}`}
+                  onClick={() => setCurrentYogaDemoIndex(idx)}
+                >
+                  <Play size={10} fill="currentColor" style={{ marginRight: 4 }} /> Glimpse 0{idx + 1}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Description Card (Right Side) */}
+          <div className="highlight-brief-card p-6!">
+            <h4 className="text-2xl! mb-3!">Yoga Demonstration Session by YogSaathi</h4>
+            <p className="text-sm! mb-2.5!">
+              YogSaathi organised an interactive Yoga Demonstration Session on “Yoga for Lifestyle Disorders – Diabetes, BP & Heart Health” on 09 August 2026, conducted by our experienced Yoga Teachers, Upma Ji and Monika Ji.
+            </p>
+            <p className="text-sm! mb-2.5!">
+              The session received an enthusiastic response, with participants joining in good numbers and engaging actively throughout the programme. The session provided practical guidance on suitable warm-up practices, selected Yoga Asanas, breathing techniques and important Do’s & Don’ts for supporting the management of lifestyle-related health concerns.
+            </p>
+            <p className="text-sm! mb-2.5!">
+              The interactive format encouraged participants to ask questions, seek guidance and better understand how Yoga can be practised safely and effectively as part of a healthy lifestyle.
+            </p>
+            <p className="font-semibold text-[#1E352F] text-sm! mb-0!">
+              Here are a few glimpses from the informative and interactive session. 📸
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom part: Horizontal Photo Row */}
+        <div
+          className="highlight-photos-row"
+          style={{ gridTemplateColumns: "repeat(3, 1fr)", marginTop: "14px", gap: "10px" }}
+        >
+          {yogaDemoGlimpses.map((item, idx) => (
+            <div
+              key={idx}
+              className={`highlight-photo-item-horizontal ${currentYogaDemoIndex === idx ? "ring-4 ring-[#D4AF37]" : ""
+                }`}
+              style={{ maxHeight: "110px" }}
+              onClick={() => setCurrentYogaDemoIndex(idx)}
+            >
+              <img src={item.src} alt={`Yoga Demo Moment ${idx + 1}`} />
+              <div
+                className="photo-hover-overlay"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedLightboxImage(item.src);
+                }}
+              >
+                <Maximize2 size={16} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* 🌟 YogSaathi Interactive Webinar Section */}
       <section className="recent-highlights-container-box mb-10!">
         <div className="section-title-wrapper mb-4!">
-          <h2 className="text-5xl! md:text-6xl!">YogSaathi Interactive Webinar</h2>
+          <h2 className="text-5xl! md:text-6xl!">YogSaathi Interactive Dietician Webinar</h2>
           <p className="subtitle text-xl! md:text-2xl!">Weight Loss & Sustainable Fat Reduction</p>
           <div className="section-title-divider mt-2"></div>
         </div>
@@ -449,6 +588,8 @@ function Liveevent() {
           ))}
         </div>
       </section>
+
+ 
 
       {/* 🌟 Recent Highlights Section */}
       <section className="recent-highlights-container-box">
