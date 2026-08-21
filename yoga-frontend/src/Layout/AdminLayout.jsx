@@ -26,6 +26,7 @@ const menuItems = [
   { name: "Dietician Leads", icon: <SlPeople />, path: "dietician-leads" },
   { name: "Yoga Session", icon: <SlCalender />, path: "yoga-session" },
   { name: "Yoga Leads", icon: <SlPeople />, path: "yoga-session-leads" },
+  { name: "YogaCare Users", icon: <SlPeople />, path: "yogacare" },
   { name: "Logout", icon: <SlLogout />, path: "logout" }
 ];
 

@@ -26,6 +26,8 @@ import eventRoutes from './routes/event.route.js';
 import overseasRoutes from './routes/overseas.route.js';
 import dieticianRoutes from './routes/dietician.route.js';
 import yogaSessionRoutes from './routes/yogaSession.route.js';
+import yogaCareRoutes from './routes/yogaCare.route.js';
+
 import { generateYogaInvoice } from './utils/generateInvoice.js';
 
 const app = express();
@@ -69,6 +71,8 @@ app.use("/api/event", eventRoutes);
 app.use("/api/overseas", overseasRoutes);
 app.use("/api/dietician", dieticianRoutes);
 app.use("/api/yoga-session", yogaSessionRoutes);
+app.use("/api/yogacare", yogaCareRoutes);
+
 
 app.post("/generateInvoice",async(req,res)=>{
   const { invoiceNo, planName,name, email, startDate, expiresAt, referralDays, finalEndDate ,isIndian, price} = req.body;

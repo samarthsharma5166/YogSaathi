@@ -62,6 +62,7 @@ model User {
   attendance     Attendance[]
 
   createdAt       DateTime    @default(now())
+
   updatedAt       DateTime    @updatedAt
 }
 
@@ -363,5 +364,26 @@ model YogaSessionLead {
   updatedAt   DateTime @updatedAt
 }
 
-
-
+model YogaCareRegistration {
+  id              String             @id @default(uuid())
+  programId       String             // e.g. general-fitness, weight-management, diabetes-support
+  programName     String             // exact copy of the selected program's title
+  participantType String             // 'individual' or 'group_2_5'
+  region          String             // 'india' or 'international'
+  planId          String             // 'trial', '1_month', '3_month', '6_month'
+  duration        Int                // in months, or 0 for trial
+  amount          Int                // Price in original currency (Rs or $)
+  currency        String             @default("INR") // INR or USD
+  customerName    String
+  email           String
+  phone           String
+  orderId         String?            @unique
+  paymentId       String?            @unique
+  signature       String?
+  status          String             @default("PENDING") // PENDING, PAID, FAILED
+  startDate       DateTime?
+  expiresAt       DateTime?
+  invoice         String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+}

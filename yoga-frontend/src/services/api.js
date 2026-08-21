@@ -275,5 +275,14 @@ export const uploadYogaSessionLeads = (formData) =>
 export const deleteYogaSessionLead = (id) => API.delete(`/yoga-session/leads/${id}`);
 export const clearYogaSessionLeads = () => API.delete("/yoga-session/leads/clear");
 
+// ✅ YOGACARE APIs
+export const createYogaCareRegistration = (data) => API.post("/yogacare/register", data);
+export const verifyYogaCarePayment = (data) => API.post("/yogacare/verify", data);
+export const getYogaCareRegistrations = () => API.get("/yogacare/registrations");
+export const downloadYogaCareRegistrations = () =>
+  API.get("/yogacare/registrations/download", {
+    responseType: "blob",
+  });
+
 export default API;
 

@@ -4,6 +4,8 @@ import { fulfillSubscription } from "./order.controller.js";
 import { fulfillEventPayment } from "./event.controller.js";
 import { fulfillDieticianPayment } from "./dietician.controller.js";
 import { fulfillYogaSessionPayment } from "./yogaSession.controller.js";
+import { fulfillYogaCarePayment } from "./yogaCare.controller.js";
+
 
 export const handleRazorpayWebhook = async (req, res) => {
   try {
@@ -119,11 +121,26 @@ export const handleRazorpayWebhook = async (req, res) => {
       });
     }
 
+    // 5. Check if orderId belongs to a YogaCare registration
+    const yogaCareReg = await prisma.yogaCareRegistration.findUnique({
+      where: { orderId: orderId }
+    });
+    if (yogaCareReg) {
+      console.log(`Found matching YogaCare registration for order ID: ${orderId}. Fulfilling registration.`);
+      const result = await fulfillYogaCarePayment(orderId, paymentId, null);
+      return res.status(200).json({
+        status: "ok",
+        type: "yogacare",
+        alreadyCompleted: result.alreadyCompleted
+      });
+    }
+
     console.warn(`Order ID: ${orderId} does not match any pending payment records in the database.`);
     return res.status(200).json({
       status: "ignored",
       reason: "order_id_not_found_in_db"
     });
+
 
   } catch (error) {
     console.error("Error processing Razorpay webhook:", error);

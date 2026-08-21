@@ -32,6 +32,8 @@ import CorporateRetreats from './pages/CorporateRetreats.jsx'
 import OverseasPrograms from './pages/OverseasPrograms.jsx'
 import DieticianSession from "./pages/DieticianSession.jsx";
 import YogaSession from "./pages/YogaSession.jsx";
+import YogaCare from "./pages/YogaCare.jsx";
+
 
 // Admin Pages
 import AdminDashboard from "./Admin/AdminDashboard";
@@ -70,6 +72,8 @@ import ManageDieticianSession from "./Admin/ManageDieticianSession.jsx";
 import DieticianLeads from "./Admin/DieticianLeads.jsx";
 import ManageYogaSession from "./Admin/ManageYogaSession.jsx";
 import YogaSessionLeads from "./Admin/YogaSessionLeads.jsx";
+import ManageYogaCare from "./Admin/ManageYogaCare.jsx";
+
 
 function AppContent() {
   const location = useLocation();
@@ -103,6 +107,8 @@ function AppContent() {
           <Route path="/about" element={<About />} />
           {/* <Route path="/session" element={<DieticianSession />} /> */}
           {/* <Route path="/yoga-session" element={<YogaSession />} /> */}
+          <Route path="/yogacare" element={<YogaCare />} />
+
           <Route path="/mainslider" element={<Mainslider />} />
           <Route path="/returnrefund" element={<RefundPolicy />} />
           <Route path="/mentalhealth" element={<MentalWellness />} />
@@ -137,6 +143,8 @@ function AppContent() {
             <Route path="dietician-leads" element={<DieticianLeads />} />
             <Route path="yoga-session" element={<ManageYogaSession />} />
             <Route path="yoga-session-leads" element={<YogaSessionLeads />} />
+            <Route path="yogacare" element={<ManageYogaCare />} />
+
           </Route>
 
           {/* User Routes with Layout */}

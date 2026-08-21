@@ -54,6 +54,7 @@ const Navbar = () => {
     { name: "Women Yoga", path: "/womenPrograms" },
     { name: "Corporate Wellness Retreats", path: "/corporateRetreats" },
     { name: "Yoga for Overseas Participants", path: "/overseasPrograms" },
+    { name: "YogaCare Personalised Program", path: "/yogacare" },
     { name: "Subscription Plans", path: "/price"},
     { name: "Join Free Trial Class", path: "/auth/register "}
   ];
