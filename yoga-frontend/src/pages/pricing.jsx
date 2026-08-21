@@ -336,13 +336,13 @@ const Pricing = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto mb-6">
           {plans && plans.length > 0 ? (
             plans.map((plan) => {
-              // const offerInfo = durationOfferDetails[plan.duration] || {
-              //   originalSale: plan.orignalPriceInInr,
-              //   extraOff: 0,
-              //   label: "Special Plan",
-              //   usdOriginal: plan.usdPrice,
-              //   usdSavings: "0%"
-              // };
+              const offerInfo = durationOfferDetails[plan.duration] || {
+                originalSale: plan.orignalPriceInInr,
+                extraOff: 0,
+                label: "Special Plan",
+                usdOriginal: plan.usdPrice,
+                usdSavings: "0%"
+              };
 
               const isPopular = plan.duration === 12;
 
@@ -364,13 +364,13 @@ const Pricing = () => {
 
                   {/* Plan Badge */}
                   <div className="mb-4 pt-3 text-center">
-                    {/* <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
+                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
                       isPopular 
                         ? "bg-[#EAF3DE] text-[#3B6D11]" 
                         : "bg-gray-100 text-gray-500"
                     }`}>
                       {offerInfo.label}
-                    </span> */}
+                    </span>
                     <h3 className="text-xl font-extrabold text-gray-900 mt-2">{plan.name}</h3>
                     <p className="text-xs text-gray-500 font-semibold mt-0.5">
                       {plan.duration} {plan.duration === 1 ? 'Month' : 'Months'} Membership
@@ -387,18 +387,18 @@ const Pricing = () => {
                             MRP: <span className="line-through">₹{plan.orignalPriceInInr}</span>
                           </div>
                           <div className="text-xs text-gray-500 font-semibold flex items-center justify-center gap-1">
-                            {/* Regular: <span className="line-through font-bold text-gray-600">₹{offerInfo.originalSale}</span> */}
+                            Regular: <span className="line-through font-bold text-gray-600">₹{offerInfo.originalSale}</span>
                           </div>
                         </div>
 
                         {/* Extra Discount Tag */}
-                        {/* <div className="inline-flex items-center justify-center gap-1 bg-[#EAF3DE] border border-[#a3c97a] rounded-md px-2 py-0.5 text-[#3B6D11] text-[12px] font-extrabold mx-auto mb-2">
+                        <div className="inline-flex items-center justify-center gap-1 bg-[#EAF3DE] border border-[#a3c97a] rounded-md px-2 py-0.5 text-[#3B6D11] text-[12px] font-extrabold mx-auto mb-2">
                           <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581a1.125 1.125 0 0 0 1.59 0l6.198-6.198a1.125 1.125 0 0 0 0-1.59L11.16 3.659A2.25 2.25 0 0 0 9.568 3Z" />
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 7.5h.008v.008H6V7.5Z" />
                           </svg>
                           Save ₹{offerInfo.extraOff} Extra!
-                        </div> */}
+                        </div>
 
                         {/* Current Final Price */}
                         <div className="flex items-baseline justify-center gap-0.5">
@@ -416,13 +416,13 @@ const Pricing = () => {
                         {/* USD Pricing representation */}
                         <div className="flex flex-col gap-0.5 mb-1.5">
                           <div className="text-[11px] text-gray-400 font-semibold">
-                            {/* Standard: <span className="line-through">${offerInfo.usdOriginal}</span> */}
+                            Standard: <span className="line-through">${offerInfo.usdOriginal}</span>
                           </div>
                         </div>
 
                         {plan.duration > 1 && (
                           <div className="inline-flex items-center justify-center gap-1 bg-amber-50 border border-amber-200 rounded-md px-2 py-0.5 text-amber-700 text-[10px] font-extrabold mx-auto mb-2">
-                            {/* Save {offerInfo.usdSavings} vs Monthly! */}
+                            Save {offerInfo.usdSavings} vs Monthly!
                           </div>
                         )}
 
