@@ -289,7 +289,7 @@ const Pricing = () => {
             Membership Plans
           </span>
           <h2 className="text-3xl font-extrabold text-[#27500a] tracking-tight mb-1.5">
-            Protect Your Bond, Nurture Your Health: Rakshabandhan Special
+            This Rakshabandhan, Tie the Bond of Love with the Promise of Better Health.
           </h2>
           <p className="text-gray-600 text-sm max-w-xl mx-auto">
             Choose a plan that fits your lifestyle. Get daily guidance, personalized postures, and holistic wellness support.
