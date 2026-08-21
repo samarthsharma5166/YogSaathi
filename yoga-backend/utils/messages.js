@@ -2445,7 +2445,7 @@ export const yoga_session_info_f =(number,name) =>{
       {
         "type": "image",
         "image": {
-          "link": "https://cdn.chatmitra.com/images/logo%20YogSaathi_1785751511046.png"
+            "link": "https://cdn.chatmitra.com/images/WhatsApp%20Image%202026-08-21%20at%2013.14.51_1787298324767.jpeg"
         }
       }
     ]
