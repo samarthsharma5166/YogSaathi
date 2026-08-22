@@ -329,7 +329,8 @@ const Navbar = () => {
               onClick={closeMenu}
               className="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all duration-200"
             >
-              Subscriptions
+              Subscriptions<br/>
+              (Raksha Bandhan)
             </Link>
             {/* <Link
               to="/retreat"
