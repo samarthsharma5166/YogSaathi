@@ -2431,7 +2431,7 @@ export const onetoone_yoga_support = (number,name) =>{
 
 
 export const yoga_session_info_f =(number,name) =>{
-   axios.post("https://backend.chatmitra.com/developer/api/send_message", {
+   return axios.post("https://backend.chatmitra.com/developer/api/send_message", {
   recipient_mobile_number: number,
   messages: [{
     kind: "template",

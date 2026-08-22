@@ -397,7 +397,14 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
 
         if (message.templateName === "yoga_session_info_f"){
             const users = await getUsers(message);
-            users.map(user => yoga_session_info_f(user.phoneNumber, user.name))
+            for (const user of users) {
+                try {
+                    await yoga_session_info_f(user.phoneNumber, user.name);
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                } catch (error) {
+                    console.error(`Error sending yoga_session_info_f to ${user.phoneNumber}:`, error.message);
+                }
+            }
         }
     });
 
