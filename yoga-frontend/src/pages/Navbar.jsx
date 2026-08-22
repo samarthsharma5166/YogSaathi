@@ -159,7 +159,7 @@ const Navbar = () => {
                 to="/price"
                 className="ml-4 inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
               >
-                Subscriptions
+                Subscriptions (Raksha Bandhan)
               </Link>
               {/* <Link
                 to="/retreat"
@@ -327,7 +327,7 @@ const Navbar = () => {
             <Link
               to="/price"
               onClick={closeMenu}
-              className="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all duration-200"
+              className="w-full h-fit inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all duration-200"
             >
               Subscriptions<br/>
               (Raksha Bandhan)
