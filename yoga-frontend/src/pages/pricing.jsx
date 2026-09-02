@@ -390,19 +390,19 @@ const Pricing = () => {
                           <div className="text-[11px] text-gray-400 font-semibold">
                             MRP: <span className="line-through">₹{plan.orignalPriceInInr}</span>
                           </div>
-                          <div className="text-xs text-gray-500 font-semibold flex items-center justify-center gap-1">
+                          {/* <div className="text-xs text-gray-500 font-semibold flex items-center justify-center gap-1">
                             Regular: <span className="line-through font-bold text-gray-600">₹{offerInfo.originalSale}</span>
-                          </div>
+                          </div> */}
                         </div>
 
                         {/* Extra Discount Tag */}
-                        <div className="inline-flex items-center justify-center gap-1 bg-[#EAF3DE] border border-[#a3c97a] rounded-md px-2 py-0.5 text-[#3B6D11] text-[12px] font-extrabold mx-auto mb-2">
+                        {/* <div className="inline-flex items-center justify-center gap-1 bg-[#EAF3DE] border border-[#a3c97a] rounded-md px-2 py-0.5 text-[#3B6D11] text-[12px] font-extrabold mx-auto mb-2">
                           <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581a1.125 1.125 0 0 0 1.59 0l6.198-6.198a1.125 1.125 0 0 0 0-1.59L11.16 3.659A2.25 2.25 0 0 0 9.568 3Z" />
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 7.5h.008v.008H6V7.5Z" />
                           </svg>
                           Save ₹{offerInfo.extraOff} Extra!
-                        </div>
+                        </div> */}
 
                         {/* Current Final Price */}
                         <div className="flex items-baseline justify-center gap-0.5">
