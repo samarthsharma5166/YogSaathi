@@ -251,6 +251,10 @@ const templateName = [
     {
         name:"yoga_session_info_f",
         inputs:[]
+    },
+    {
+        name:"yogsaathi_class_attendance_reminder",
+        inputs:[]
     }
 ];
 

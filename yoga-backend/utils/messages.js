@@ -42,13 +42,13 @@ export const sendRegistrationConfirmation = (number, date, name, refferalCode, r
             "Authorization": `Bearer ${token}`
         }
     }).then(response => {
-        console.log("sendRegistrationConfirmation",response)
+        console.log("sendRegistrationConfirmation", response)
     }).catch(error => {
         console.error("Error:", error);
     });
 }
 
-export const sendRegistrationConfirmationStep2 = (number, name)=>{
+export const sendRegistrationConfirmationStep2 = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "registration_confirmation__batch_details",
         language: "en",
@@ -88,7 +88,7 @@ export const sendRegistrationConfirmationStep2 = (number, name)=>{
     });
 }
 
-export const sendRegistrationConfirmationStep3 = (number, name, date, refferalCode, referralPoints)=>{
+export const sendRegistrationConfirmationStep3 = (number, name, date, refferalCode, referralPoints) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "intimation_first_class",
         language: "en",
@@ -130,13 +130,13 @@ export const sendRegistrationConfirmationStep3 = (number, name, date, refferalCo
             "Authorization": `Bearer ${token}`
         }
     }).then(response => {
-        console.log("sendRegistrationConfirmation3",response);
+        console.log("sendRegistrationConfirmation3", response);
     }).catch(error => {
         console.error("Error:", error);
     });
 }
 
-export const reffaralInformation = (number,inviter, invitee) => {
+export const reffaralInformation = (number, inviter, invitee) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "referral_update__account_note_added",
         language: "en",
@@ -282,7 +282,7 @@ export const class_reminder = (number, name, focusArea, refferalCode, referralPo
     });
 }
 
-export const your_weekly_yoga_schedule__access_details = (number, name, monday, tuesday, wednesday, thursday, friday, saturday, sunday, refferalCode, refferalCount ) =>{
+export const your_weekly_yoga_schedule__access_details = (number, name, monday, tuesday, wednesday, thursday, friday, saturday, sunday, refferalCode, refferalCount) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "your_weekly_yoga_schedule__access_details",
         language: "en",
@@ -399,7 +399,7 @@ export const join_session__mark_attendance = (number, name, refferalCode, reffer
 
 }
 
-export const session_reminder = (number, name, date, time, sessionLink) =>{
+export const session_reminder = (number, name, date, time, sessionLink) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "session_reminder",
         language: "en",
@@ -452,7 +452,7 @@ export const session_reminder = (number, name, date, time, sessionLink) =>{
 
 }
 
-export const giftwellness_yogsaathi = (number,name) =>{
+export const giftwellness_yogsaathi = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "giftwellness_yogsaathi",
         language: "en",
@@ -496,7 +496,7 @@ export const giftwellness_yogsaathi = (number,name) =>{
     });
 }
 
-export const yoga_subscription_offer = (number,name) =>{
+export const yoga_subscription_offer = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "yoga_subscription_offer",
         language: "en",
@@ -536,7 +536,7 @@ export const yoga_subscription_offer = (number,name) =>{
     });
 }
 
-export const weekly_attendance_status__yogsaathi_sessions = (number, name, mon,tue,wed,thr,fri,sat,sun) =>{
+export const weekly_attendance_status__yogsaathi_sessions = (number, name, mon, tue, wed, thr, fri, sat, sun) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "weekly_attendance_status__yogsaathi_sessions",
         language: "en",
@@ -604,7 +604,7 @@ export const weekly_attendance_status__yogsaathi_sessions = (number, name, mon,t
     });
 }
 
-export const share_wellness_14_days_of_free_yoga = (number, name, referral_code, referral_count) =>{
+export const share_wellness_14_days_of_free_yoga = (number, name, referral_code, referral_count) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "share_wellness_14daysfreeyoga",
         language: "en",
@@ -644,7 +644,7 @@ export const share_wellness_14_days_of_free_yoga = (number, name, referral_code,
     });
 }
 
-export const invoice_subscription_plan = (number,name,fileName)=>{
+export const invoice_subscription_plan = (number, name, fileName) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "invoice_subscription_plan",
         language: "en",
@@ -671,7 +671,7 @@ export const invoice_subscription_plan = (number,name,fileName)=>{
                     },
                     {
                         "type": "text",
-                        "text":`${process.env.BASE_URL_INVOICE}/api/invoices/${fileName}`
+                        "text": `${process.env.BASE_URL_INVOICE}/api/invoices/${fileName}`
                     }
                 ]
             }
@@ -688,7 +688,7 @@ export const invoice_subscription_plan = (number,name,fileName)=>{
     });
 }
 
-export const subscription_invitation = (number,name)=>{
+export const subscription_invitation = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "subscription_invitation",
         language: "en",
@@ -732,7 +732,7 @@ export const subscription_invitation = (number,name)=>{
     });
 }
 
-export const your_yogsaathi_otp_for_login =(number,name,otp) =>{
+export const your_yogsaathi_otp_for_login = (number, name, otp) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "your_yogsaathi_otp_for_login",
         language: "en",
@@ -773,7 +773,7 @@ export const your_yogsaathi_otp_for_login =(number,name,otp) =>{
 
 }
 
-export const vijayadashami_greetings = (number,name)=>{
+export const vijayadashami_greetings = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "vijayadashami_greetings",
         language: "en",
@@ -803,7 +803,7 @@ export const vijayadashami_greetings = (number,name)=>{
 
 }
 
-export const vijaydashmi_greetings_and_referrals = (number, name, referral_code, referral_count)=>{
+export const vijaydashmi_greetings_and_referrals = (number, name, referral_code, referral_count) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "vijaydashmi_greetings_and_referrals",
         language: "en",
@@ -836,7 +836,7 @@ export const vijaydashmi_greetings_and_referrals = (number, name, referral_code,
     });
 }
 
-export const yoga_trial_midway_update__reminder = (number,name) =>{
+export const yoga_trial_midway_update__reminder = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "yoga_trial_midway_update__reminder",
         language: "en",
@@ -865,7 +865,7 @@ export const yoga_trial_midway_update__reminder = (number,name) =>{
     });
 }
 
-export const yogsaathi_contact_detail = (number,name) =>{
+export const yogsaathi_contact_detail = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "yogsaathi_contact_detail",
         language: "en",
@@ -905,7 +905,7 @@ export const yogsaathi_contact_detail = (number,name) =>{
     });
 }
 
-export const festival_greetings = (number,name) =>{
+export const festival_greetings = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "festival_greetings",
         language: "en",
@@ -946,7 +946,7 @@ export const festival_greetings = (number,name) =>{
 
 }
 
-export const yoga_offer_reminder = (number,name) =>{
+export const yoga_offer_reminder = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "yoga_offer_reminder",
         language: "en",
@@ -987,7 +987,7 @@ export const yoga_offer_reminder = (number,name) =>{
 
 }
 
-export const yogsaathi_communication_channels = (number,name) =>{
+export const yogsaathi_communication_channels = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "yogsaathi_communication_channels",
         language: "en",
@@ -1029,7 +1029,7 @@ export const yogsaathi_communication_channels = (number,name) =>{
 
 
 
-export const free_online_yoga_trial_reminder =(number,name)=>{
+export const free_online_yoga_trial_reminder = (number, name) => {
 
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "free_online_yoga_trial_reminder",
@@ -1071,7 +1071,7 @@ export const free_online_yoga_trial_reminder =(number,name)=>{
 }
 
 
-export const yoga_class_time_details_as_per_ist = (number,name)=>{
+export const yoga_class_time_details_as_per_ist = (number, name) => {
 
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "yoga_class_time_details_as_per_ist",
@@ -1113,7 +1113,7 @@ export const yoga_class_time_details_as_per_ist = (number,name)=>{
 }
 
 
-export const yoga_trial_participation_reminder = (number,name,Link)=>{
+export const yoga_trial_participation_reminder = (number, name, Link) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "yoga_trial_participation_reminder",
         language: "en",
@@ -1147,7 +1147,7 @@ export const yoga_trial_participation_reminder = (number,name,Link)=>{
 }
 
 
-export const days_yoga_trial_intimation_hindi = (number,name,link)=>{
+export const days_yoga_trial_intimation_hindi = (number, name, link) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "21_days_yoga_trial_intimation_hindi",
         language: "en",
@@ -1192,7 +1192,7 @@ export const days_yoga_trial_intimation_hindi = (number,name,link)=>{
 
 }
 
-export const world_meditation_day_greetings = (number,name)=>{
+export const world_meditation_day_greetings = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "world_meditation_day_greetings",
         language: "en",
@@ -1233,7 +1233,7 @@ export const world_meditation_day_greetings = (number,name)=>{
 
 }
 
-export const festival_greetings_christmas_new_year = (number,name) =>{
+export const festival_greetings_christmas_new_year = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "festival_greetings_christmas_new_year",
         language: "en",
@@ -1275,7 +1275,7 @@ export const festival_greetings_christmas_new_year = (number,name) =>{
 }
 
 
-export const online_free_yoga_trial__joining_details = (number,name,link) =>{
+export const online_free_yoga_trial__joining_details = (number, name, link) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "online_free_yoga_trial__joining_details",
         language: "en",
@@ -1321,7 +1321,7 @@ export const online_free_yoga_trial__joining_details = (number,name,link) =>{
 }
 
 // number, name, link, focusArea
-export const class_reminder_free_yoga_for_all = (number, name, focusArea, refferalCode, referralPoints)=>{
+export const class_reminder_free_yoga_for_all = (number, name, focusArea, refferalCode, referralPoints) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "class_reminder_free_yoga_for_all",
         language: "en",
@@ -1369,7 +1369,7 @@ export const class_reminder_free_yoga_for_all = (number, name, focusArea, reffer
     });
 }
 
-export const subscription_plan_new_year_offer = (number,name)=>{
+export const subscription_plan_new_year_offer = (number, name) => {
     axios.post("https://backend.chatmitra.com/api/client/send_template", {
         templateName: "subscription_plan_new_year_offer",
         language: "en",
@@ -1410,7 +1410,7 @@ export const subscription_plan_new_year_offer = (number,name)=>{
 }
 
 
-export const payment_confirmation = (number,name,amount) =>{
+export const payment_confirmation = (number, name, amount) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1449,7 +1449,7 @@ export const payment_confirmation = (number,name,amount) =>{
 }
 
 
-export const yoga_training_1ram = (number,name) =>{
+export const yoga_training_1ram = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1483,7 +1483,7 @@ export const yoga_training_1ram = (number,name) =>{
     });
 }
 
-export const yoga_training_2 = (number,name) =>{
+export const yoga_training_2 = (number, name) => {
     // axios.post("https://backend.chatmitra.com/developer/api/send_message", {
     //     recipient_mobile_number: number,
     //     messages: [{
@@ -1558,7 +1558,7 @@ export const yoga_training_2 = (number,name) =>{
 }
 
 
-export const yoga_trail_intimation_=(number,name)=>{
+export const yoga_trail_intimation_ = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1594,7 +1594,7 @@ export const yoga_trail_intimation_=(number,name)=>{
     });
 }
 
-export const yogsaathi_payment_link_share = (number,name) =>{
+export const yogsaathi_payment_link_share = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1626,7 +1626,7 @@ export const yogsaathi_payment_link_share = (number,name) =>{
                 ]
             }
         }],
-        customer_name:name
+        customer_name: name
     }, {
         headers: {
             "Content-Type": "application/json",
@@ -1639,7 +1639,7 @@ export const yogsaathi_payment_link_share = (number,name) =>{
     });
 }
 
-export const yogsaathi_training_brochure_share = (number,name) =>{
+export const yogsaathi_training_brochure_share = (number, name) => {
     // axios.post("https://backend.chatmitra.com/developer/api/send_message", {
     //     recipient_mobile_number: number,
     //     messages: [{
@@ -1725,7 +1725,7 @@ export const yogsaathi_training_brochure_share = (number,name) =>{
     });
 }
 
-export const yoga_trial_enrolment = (number,name) =>{
+export const yoga_trial_enrolment = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1761,7 +1761,7 @@ export const yoga_trial_enrolment = (number,name) =>{
     });
 }
 
-export const opi =(number,name)=>{
+export const opi = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1797,7 +1797,7 @@ export const opi =(number,name)=>{
     });
 }
 
-export const yogsaathi_group_access_update = (number,name) =>{
+export const yogsaathi_group_access_update = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1833,7 +1833,7 @@ export const yogsaathi_group_access_update = (number,name) =>{
     });
 }
 
-export const inputs = (number,name) =>{
+export const inputs = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1869,7 +1869,7 @@ export const inputs = (number,name) =>{
     });
 }
 
-export const retreat_info_brochure = (number,name) =>{
+export const retreat_info_brochure = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1893,7 +1893,7 @@ export const retreat_info_brochure = (number,name) =>{
     });
 }
 
-export const trial_expiry_notification = (number,name)=>{
+export const trial_expiry_notification = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -1942,7 +1942,7 @@ export const trial_expiry_notification = (number,name)=>{
     });
 }
 
-export const session_schedule_notification = (number,name,title,speaker,date,link) =>{
+export const session_schedule_notification = (number, name, title, speaker, date, link) => {
     const safeLink = link ? link.replace(/_/g, '%5F') : '';
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
@@ -2005,7 +2005,7 @@ export const session_schedule_notification = (number,name,title,speaker,date,lin
 }
 
 
-export const orientation_program__new = (number, name, date, time,link) => {
+export const orientation_program__new = (number, name, date, time, link) => {
     const safeLink = link ? link.replace(/_/g, '%5F') : '';
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
@@ -2053,7 +2053,7 @@ export const orientation_program__new = (number, name, date, time,link) => {
 }
 
 
-export const regularity_key_hindi = (number,name)=>{
+export const regularity_key_hindi = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -2074,7 +2074,7 @@ export const regularity_key_hindi = (number,name)=>{
 }
 
 
-export const session_particulars = (number, name, date, time, link, topic, durationstart,durationend) =>{
+export const session_particulars = (number, name, date, time, link, topic, durationstart, durationend) => {
     const safeLink = link ? link.replace(/_/g, '%5F') : '';
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
@@ -2144,7 +2144,7 @@ export const session_particulars = (number, name, date, time, link, topic, durat
     });
 }
 
-export const subscription_offer_ = (number, name)=>{
+export const subscription_offer_ = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -2165,7 +2165,7 @@ export const subscription_offer_ = (number, name)=>{
                 ]
             }
         }],
-        customer_name:name
+        customer_name: name
     }, {
         headers: {
             "Content-Type": "application/json",
@@ -2178,7 +2178,7 @@ export const subscription_offer_ = (number, name)=>{
     });
 }
 
-export const template_session_20260627022218  = (number, name,topic,date,time,duration,instructor,link)=>{
+export const template_session_20260627022218 = (number, name, topic, date, time, duration, instructor, link) => {
     const safeLink = link ? link.replace(/_/g, '%5F') : '';
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
@@ -2259,7 +2259,7 @@ export const template_session_20260627022218  = (number, name,topic,date,time,du
     });
 }
 
-export const session_info =(number,name,topic,date,time,duration,instructor,link)=>{
+export const session_info = (number, name, topic, date, time, duration, instructor, link) => {
     const safeLink = link ? link.replace(/_/g, '%5F') : '';
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
@@ -2329,7 +2329,7 @@ export const session_info =(number,name,topic,date,time,duration,instructor,link
     });
 }
 
-export const confirmation_regn =(number,name,date,time,link)=>{
+export const confirmation_regn = (number, name, date, time, link) => {
     const safeLink = link ? link.replace(/_/g, '%5F') : '';
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
@@ -2388,7 +2388,7 @@ export const confirmation_regn =(number,name,date,time,link)=>{
 }
 
 
-export const onetoone_yoga_support = (number,name) =>{
+export const onetoone_yoga_support = (number, name) => {
     axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
@@ -2430,43 +2430,93 @@ export const onetoone_yoga_support = (number,name) =>{
 }
 
 
-export const yoga_session_info_f =(number,name) =>{
-   return axios.post("https://backend.chatmitra.com/developer/api/send_message", {
-  recipient_mobile_number: number,
-  messages: [{
-    kind: "template",
-    template: {
-      name: "yoga_session_info_f",
-      language: "en",
-      components: [
-  {
-    "type": "header",
-    "parameters": [
-      {
-        "type": "image",
-        "image": {
-            "link": "https://cdn.chatmitra.com/images/WhatsApp%20Image%202026-08-21%20at%2013.14.51_1787298324767.jpeg"
+export const yoga_session_info_f = (number, name) => {
+    return axios.post("https://backend.chatmitra.com/developer/api/send_message", {
+        recipient_mobile_number: number,
+        messages: [{
+            kind: "template",
+            template: {
+                name: "yoga_session_info_f",
+                language: "en",
+                components: [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "image",
+                                "image": {
+                                    "link": "https://cdn.chatmitra.com/images/WhatsApp%20Image%202026-08-21%20at%2013.14.51_1787298324767.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": [
+                            {
+                                "type": "text",
+                                "text": name
+                            }
+                        ]
+                    }
+                ]
+            }
+        }],
+        customer_name: name
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
         }
-      }
-    ]
-  },
-  {
-    "type": "body",
-    "parameters": [
-      {
-        "type": "text",
-        "text": name
-      }
-    ]
-  }
-]
-    }
-  }],
-  customer_name: name
-}, {
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
-  }
-})
+    })
+}
+
+export const yogsaathi_class_attendance_reminder = (number, name) => {
+    return axios.post("https://backend.chatmitra.com/developer/api/send_message", {
+        recipient_mobile_number: number,
+        messages: [{
+            kind: "template",
+            template: {
+                name: "yogsaathi_class_attendance_reminder",
+                language: "en",
+                components: [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "image",
+                                "image": {
+                                    "link": "https://cdn.chatmitra.com/images/logo%20YogSaathi_1785751511046.png"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": [
+                            {
+                                "type": "text",
+                                "text": name || "Yogi"
+                            },
+                            {
+                                "type": "text",
+                                "text": name || "Yogi"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }],
+        customer_name: name || number
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 15fa2ce18fcc924d167aa3c40d0e4730:402cb6d73f369a822d288b5494fbd374868d0f640c9ce9ee8c0ac822091b9f5bcc5bff29f1522fac7c54dbeebdf1a1a244177b891d5a36262ccea99c3f89bfd231cfefa1182ffdd8534165190c937195234b4e211b7c81bf14401dd8d5bfa0d16abf9cf6fb4bb3ba3706a5d777152b6032705b0e992e6bc1d9f0bd7857e7d34ad25a81d3dd4f1a633fa8c4abaadab23f9b2308dce696731a2af52c539080b79f397a7379732662f262c0e7088faf4c3d0e29c73e648c1e17945c2e6a0383c15e"
+        }
+    }).then(response => {
+        console.log("yogsaathi_class_attendance_reminder success:", response.data);
+    }).catch(error => {
+        console.error("yogsaathi_class_attendance_reminder error:", error.response?.data || error.message);
+        throw error;
+    });
 }
