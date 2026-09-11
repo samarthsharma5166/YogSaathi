@@ -18,7 +18,8 @@ import {
   Home,
   Tv,
   Globe,
-  Users
+  Users,
+  ExternalLink
 } from "lucide-react";
 import CustomPhoneInput from "../components/CustomPhoneInput";
 import { YOGA_CARE_PLANS, YOGA_CARE_PROGRAMS } from "../config/yogaCarePlans.js";
@@ -236,9 +237,17 @@ const YogaCare = () => {
             >
               {/* Hero Banner */}
               <div className="text-center space-y-4">
-                <span className="bg-[#EAF3DE] text-[#3B6D11] text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full">
-                  YogSaathi YogaCare
-                </span>
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  <span className="bg-[#EAF3DE] text-[#3B6D11] text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full">
+                    YogSaathi YogaCare
+                  </span>
+                  <button
+                    onClick={() => navigate("/yogacare/pricing")}
+                    className="inline-flex items-center gap-1.5 bg-white hover:bg-[#FAFDF6] text-[#3B6D11] text-xs font-bold px-3 py-1 rounded-full border border-[#a3c97a] transition shadow-xs cursor-pointer"
+                  >
+                    <span>💳</span> Full Pricing & Installment Guide <ExternalLink className="w-3 h-3" />
+                  </button>
+                </div>
                 <h1 className="text-4xl md:text-5xl font-black text-[#27500a] leading-tight">
                   YOGSAATHI YOGACARE PROGRAM
                 </h1>
@@ -377,12 +386,19 @@ const YogaCare = () => {
                   })}
                 </div>
 
-                <div className="text-center pt-6">
+                <div className="text-center pt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
                   <button
                     onClick={proceedToStep2}
                     className="inline-flex items-center gap-2 bg-[#3B6D11] hover:bg-[#2d540d] text-white font-bold py-3 px-8 rounded-full shadow-md shadow-[#3B6D11]/10 hover:shadow-lg transition cursor-pointer text-sm"
                   >
                     Continue to Registration <ArrowRight className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => navigate("/yogacare/pricing")}
+                    className="inline-flex items-center gap-1.5 bg-white hover:bg-gray-50 text-[#3B6D11] border border-[#a3c97a] font-bold py-3 px-6 rounded-full shadow-xs transition cursor-pointer text-sm"
+                  >
+                    View Complete Pricing & Installment Guide <ExternalLink className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
@@ -578,8 +594,27 @@ const YogaCare = () => {
                     })}
                   </div>
 
-                  <p className="text-[14px] text-gray-400 italic">
-                    ℹ️ You may book max 2 trial classes with 2 different teachers before subscribing the Plan.
+                  {/* Monthly Installment Callout Box */}
+                  <div className="bg-[#FAFDF6] border border-[#a3c97a]/50 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+                    <div className="space-y-0.5">
+                      <h4 className="font-bold text-xs text-[#27500a] flex items-center gap-1.5">
+                        <CreditCard className="w-3.5 h-3.5 text-[#3B6D11]" /> Prefer Monthly Installments?
+                      </h4>
+                      <p className="text-[11px] text-gray-500 leading-tight">
+                        Check our full fee breakdown, installment schedules, and country-wise pricing matrix.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => navigate("/yogacare/pricing")}
+                      className="shrink-0 text-xs font-bold text-[#3B6D11] hover:text-[#27500a] bg-white border border-[#a3c97a] hover:bg-[#EAF3DE] px-3.5 py-1.5 rounded-lg transition shadow-xs cursor-pointer flex items-center gap-1"
+                    >
+                      View Complete Pricing Guide <ExternalLink className="w-3 h-3" />
+                    </button>
+                  </div>
+
+                  <p className="text-[13px] text-gray-500 italic">
+                    ℹ️ You may take a Trial Class and attend it thru zoom link with teacher before actually taking the Plan.
                   </p>
                 </div>
 

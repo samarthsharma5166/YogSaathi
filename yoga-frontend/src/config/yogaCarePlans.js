@@ -9,8 +9,8 @@ export const YOGA_CARE_PLANS = {
     group_2_5: {
       trial: { amount: 199, currency: "INR", duration: 0, label: "Trial Class" },
       "1_month": { amount: 3000, originalAmount: 6000, discount: "50% Off", currency: "INR", duration: 1, label: "1 Month" },
-      "3_month": { amount: 7500, originalAmount: 18000, discount: "58% Off", currency: "INR", duration: 3, label: "3 Months" },
-      "6_month": { amount: 12500, originalAmount: 36000, discount: "65% Off", currency: "INR", duration: 6, label: "6 Months" }
+      "3_month": { amount: 8000, originalAmount: 18000, discount: "56% Off", currency: "INR", duration: 3, label: "3 Months" },
+      "6_month": { amount: 15000, originalAmount: 36000, discount: "58% Off", currency: "INR", duration: 6, label: "6 Months" }
     }
   },
   international: {

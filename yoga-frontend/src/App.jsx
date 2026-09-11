@@ -33,6 +33,7 @@ import OverseasPrograms from './pages/OverseasPrograms.jsx'
 import DieticianSession from "./pages/DieticianSession.jsx";
 import YogaSession from "./pages/YogaSession.jsx";
 import YogaCare from "./pages/YogaCare.jsx";
+import YogaCarePricing from "./pages/YogaCarePricing.jsx";
 
 
 // Admin Pages
@@ -108,6 +109,8 @@ function AppContent() {
           {/* <Route path="/session" element={<DieticianSession />} /> */}
           {/* <Route path="/yoga-session" element={<YogaSession />} /> */}
           <Route path="/yogacare" element={<YogaCare />} />
+          <Route path="/yogacare/pricing" element={<YogaCarePricing />} />
+          <Route path="/yogacare-pricing" element={<YogaCarePricing />} />
 
           <Route path="/mainslider" element={<Mainslider />} />
           <Route path="/returnrefund" element={<RefundPolicy />} />
