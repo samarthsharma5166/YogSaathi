@@ -254,13 +254,23 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
                 }
             })
             const users = await getUsers(message);
-            const link = await prisma.commonLink.findFirst();
+            // const link = await prisma.commonLink.findFirst();
             // number, name, link, focusArea
-            users.map((user) => {
-                // class_reminder(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
-                class_reminder_free_yoga_for_all(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
-                // class_reminder_free_yoga_for_all(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
-            })
+            // users.map((user) => {
+            //     // class_reminder(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
+            //     class_reminder_free_yoga_for_all(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
+            //     // class_reminder_free_yoga_for_all(user.phoneNumber, user.name, link.link, yogaClass.focusArea);
+            // })
+
+
+            for (const user of users) {
+                try {
+                    await class_reminder_free_yoga_for_all(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                } catch (error) {
+                    console.error(`Error sending yogsaathi_class_attendance_reminder to ${user.phoneNumber}:`, error.message);
+                }
+            }
         }
 
         if (message.templateName === "subscription_plan_new_year_offer"){
