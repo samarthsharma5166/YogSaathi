@@ -136,10 +136,16 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
         }
 
         if (message.templateName === "share_wellness_14_days_of_free_yoga"){
+
             const users = await getUsers(message);
-            users.map((user) => {
-                share_wellness_14_days_of_free_yoga(user.phoneNumber, user.name, user.referralCode,user.referralPoints);
-            })
+            for (const user of users) {
+                try {
+                    await share_wellness_14_days_of_free_yoga(user.phoneNumber, user.name, user.referralCode, user.referralPoints);
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                } catch (error) {
+                    console.error(`Error sending share_wellness_14_days_of_free_yoga to ${user.phoneNumber}:`, error.message);
+                }
+            }
         }
 
         if (message.templateName === "vijayadashami_greetings"){
@@ -188,9 +194,14 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
 
         if (message.templateName === "yogsaathi_communication_channels"){
             const users = await getUsers(message);
-            users.map((user) => {
-                yogsaathi_communication_channels(user.phoneNumber, user.name);
-            })
+            for (const user of users) {
+                try {
+                    await yogsaathi_communication_channels(user.phoneNumber, user.name);
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                } catch (error) {
+                    console.error(`Error sending yogsaathi_communication_channels to ${user.phoneNumber}:`, error.message);
+                }
+            }
         }
 
         if (message.templateName === "free_online_yoga_trial_reminder"){
@@ -331,9 +342,14 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
 
         if (message.templateName === "yogsaathi_group_access_update"){
             const users = await getUsers(message);
-            users.map((user) => {
-                yogsaathi_group_access_update(user.phoneNumber, user.name);
-            })
+            for (const user of users) {
+                try {
+                    await yogsaathi_group_access_update(user.phoneNumber, user.name);
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                } catch (error) {
+                    console.error(`Error sending yogsaathi_group_access_update to ${user.phoneNumber}:`, error.message);
+                }
+            }
         }
 
         if (message.templateName === "inputs"){
@@ -358,13 +374,17 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             users.map((user) => session_schedule_notification(user.phoneNumber,user.name,message.payload.title,message.payload.speaker,message.payload.date,message.payload.link))
         }
         
-        if (message.templateName === "orientation_program__new"){
-            const users = await getUsers(message)
-            users.map((user)=>{
-                const classLink = `${process.env.CLASS_BASE_URL}/class/join?ref=${user.referralCode}_${user.referralPoints}`
-                // const classLink = `https://www.youtube.com/`
-                orientation_program__new(user.phoneNumber, user.name, message.payload.date, message.payload.time, classLink)
-            })
+        if (message.templateName === "orientation_program__new"){   
+            const users = await getUsers(message);
+            for (const user of users) {
+                try {
+                    const classLink = `${process.env.CLASS_BASE_URL}/class/join?ref=${user.referralCode}_${user.referralPoints}`
+                    await orientation_program__new(user.phoneNumber, user.name, message.payload.date, message.payload.time, classLink)
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                } catch (error) {
+                    console.error(`Error sending yogsaathi_class_attendance_reminder to ${user.phoneNumber}:`, error.message);
+                }
+            }
         }
 
         if (message.templateName === "regularity_key_hindi"){
