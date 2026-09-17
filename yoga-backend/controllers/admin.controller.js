@@ -293,47 +293,76 @@ export const getUserDetails = async (req, res) => {
   }
 }
 
-export const removeUser = async(req,res) =>{
+export const removeUser = async (req, res) => {
   try {
     const { userId } = req.params;
 
     const user = await prisma.user.findUnique({
       where: {
-        id: userId
-      }
-    })
+        id: userId,
+      },
+    });
 
-    
-
-    if(!user){
-      return res.status(404).json({ message: "User not found" });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    const subscription = await prisma.subscription.findUnique({
-      where: {
-        userId
-      }
-    })
-
-    if (subscription) {
-      await prisma.subscription.delete({
-        where: {
-          userId
-        }
-      })
+    // Safety check: Prevent admin from deleting their own account
+    if (req.user?.id === userId) {
+      return res.status(400).json({
+        success: false,
+        message: "You cannot delete your own logged-in admin account.",
+      });
     }
 
-    await prisma.user.delete({
-      where: {
-        id: userId
-      }
-    })
-    return res.status(200).json({success: true, id:user.id, message: "User deleted successfully" });
+    await prisma.$transaction(async (tx) => {
+      // 1. Delete all attendance records associated with this user
+      await tx.attendance.deleteMany({
+        where: { userId },
+      });
+
+      // 2. Delete all payments associated with this user
+      await tx.payment.deleteMany({
+        where: { userId },
+      });
+
+      // 3. Delete all subscriptions associated with this user
+      await tx.subscription.deleteMany({
+        where: { userId },
+      });
+
+      // 4. Delete blogs authored by this user
+      await tx.blog.deleteMany({
+        where: { authorId: userId },
+      });
+
+      // 5. Unlink referred users (users who were referred by this user)
+      await tx.user.updateMany({
+        where: { referredById: userId },
+        data: { referredById: null },
+      });
+
+      // 6. Delete the user
+      await tx.user.delete({
+        where: { id: userId },
+      });
+    });
+
+    return res.status(200).json({
+      success: true,
+      id: user.id,
+      message: `User ${user.name} deleted successfully`,
+    });
   } catch (error) {
-    console.error("❌ Error in getAllUsers:", error.message);
-    res.status(500).json({ message: "Failed to fetch users" });
+    console.error("❌ Error in removeUser:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete user",
+      details: error.message,
+    });
   }
-}
+};
+
 
 export const downloadAttendance = async (req, res) => {
   try {

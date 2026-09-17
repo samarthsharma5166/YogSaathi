@@ -124,11 +124,15 @@ export const deleteUser = async (id) => {
   const res = API.delete("/admin/user/" + id);
   toast.promise(res, {
     loading: "Deleting user...",
-    success: "User deleted successfully!",
-    error: "Delete failed!",
+    success: (r) => r.data?.message || "User deleted successfully!",
+    error: (err) =>
+      err.response?.data?.message ||
+      err.response?.data?.error ||
+      "Failed to delete user!",
   });
   return (await res).data;
-}
+};
+
 
 export const handleDownloadInvoice = async (fileName) => {
   const response = await API.get(`/download-invoice/${fileName}`, {

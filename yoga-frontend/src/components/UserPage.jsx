@@ -1,41 +1,60 @@
-  import React, { useEffect, useState } from 'react'
-  import { useNavigate, useParams } from 'react-router-dom';
-  import API, { getUserDetails } from '../services/api';
-  import toast from 'react-hot-toast';
-  import { ArrowBack } from '@mui/icons-material';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import API, { getUserDetails, deleteUser } from '../services/api';
+import toast from 'react-hot-toast';
+import { ArrowBack } from '@mui/icons-material';
+import ConfirmationPopUp from './ConfirmationPopUp.jsx';
 
-  const UserPage = () => {
-    // Mock user data based on the provided structure
-    const { id } = useParams();
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+const UserPage = () => {
+  // Mock user data based on the provided structure
+  const { id } = useParams();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const navigate = useNavigate();
 
-    async function fetchUser() {
-      try {
-        const res = await getUserDetails(id);
-        setUser(res.data.user);
-      } catch (error) {
-        console.log(error)
-        toast.error(error?.response?.data?.message || error?.response?.data?.error || "Failed to fetch user.");
-      }
+  async function fetchUser() {
+    try {
+      setLoading(true);
+      const res = await getUserDetails(id);
+      setUser(res.data.user);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || error?.response?.data?.error || "Failed to fetch user.");
+    } finally {
+      setLoading(false);
     }
+  }
 
-    useEffect(() => {
-      fetchUser();
-    }, [id])
+  useEffect(() => {
+    fetchUser();
+  }, [id]);
 
-    const handleEdit = () => {
-      alert("Edit functionality to be implemented");
-      // Navigate to edit page or open edit modal
-    };
+  const handleEdit = () => {
+    alert("Edit functionality to be implemented");
+    // Navigate to edit page or open edit modal
+  };
 
-    const handleDelete = () => {
-      if (window.confirm("Are you sure you want to delete this user? This action cannot be undone.")) {
-        alert("Delete functionality to be implemented");
-        // Implement delete logic
+  const handleDelete = () => {
+    setDeleteModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    setIsDeleting(true);
+    try {
+      const res = await deleteUser(id);
+      if (res && res.success) {
+        setDeleteModal(false);
+        navigate("/admin/manage-user");
       }
-    };
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
 
      const handleDownloadInvoice = async (fileName) => {
       const response = await API.get(`/download-invoice/${fileName}`, {
@@ -104,7 +123,22 @@
 
     return (
       <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-        <button onClick={() => navigate(-1)} className='mb-4 ml-2 text-white w-10 h-10 flex items-center justify-center rounded-full bg-green-800 p-1'>
+        {deleteModal && (
+          <ConfirmationPopUp
+            title="Delete User Account"
+            message={`Are you sure you want to delete "${user.name}" (${user.email || user.phoneNumber || "No contact info"})?`}
+            subMessage="⚠️ This will permanently remove all associated subscriptions, attendance records, blogs, and payment transactions. This action cannot be undone."
+            confirmText="Delete User"
+            cancelText="Cancel"
+            isLoading={isDeleting}
+            isDanger={true}
+            confirmHandler={handleConfirmDelete}
+            closeHandler={() => {
+              if (!isDeleting) setDeleteModal(false);
+            }}
+          />
+        )}
+        <button onClick={() => navigate(-1)} className='mb-4 ml-2 text-white w-10 h-10 flex items-center justify-center rounded-full bg-green-800 p-1 cursor-pointer'>
           <ArrowBack />
         </button>
         <div className="max-w-4xl mx-auto">
@@ -141,7 +175,7 @@
                   </button>
                   <button
                     onClick={handleDelete}
-                    className="bg-red-500 bg-opacity-80 hover:bg-opacity-100 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center space-x-2"
+                    className="bg-red-500 bg-opacity-80 hover:bg-opacity-100 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center space-x-2 cursor-pointer shadow-sm"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>

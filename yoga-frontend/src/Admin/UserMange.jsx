@@ -29,7 +29,8 @@ const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState(userType.ALL);
-  const [deleteModal,setDeleteModal]=useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -50,23 +51,27 @@ const ManageUsers = () => {
     }
   };
 
-  const handleDeletePopUp = async (id) => {
-    setSelectedUser(id);  
+  const handleDeletePopUp = (user) => {
+    setSelectedUser(user);
     setDeleteModal(true);
   };
 
-  const handleDeleteUser=async()=>{
+  const handleDeleteUser = async () => {
+    if (!selectedUser) return;
+    setIsDeleting(true);
     try {
-      const res = await deleteUser(selectedUser);
-      if(res.success){
+      const res = await deleteUser(selectedUser.id);
+      if (res && res.success) {
         setDeleteModal(false);
+        setSelectedUser(null);
         fetchUsers();
       }
     } catch (err) {
-      console.log(err);
-      toast.error(err.response?.data?.error || err.response?.data?.message);
+      console.error(err);
+    } finally {
+      setIsDeleting(false);
     }
-  }
+  };
 
 
   const filteredUsers = users.filter(
@@ -92,9 +97,27 @@ const ManageUsers = () => {
 
   return (
     <div className=" bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-      {deleteModal && <ConfirmationPopUp confirmHandler={handleDeleteUser} closeHandler={()=>setDeleteModal(false)}/>}
+      {deleteModal && (
+        <ConfirmationPopUp
+          title="Delete User Account"
+          message={`Are you sure you want to delete "${selectedUser?.name || "this user"}" (${selectedUser?.email || selectedUser?.phoneNumber || "No contact info"})?`}
+          subMessage="⚠️ This will permanently remove all associated subscriptions, attendance records, blogs, and payment transactions. This action cannot be undone."
+          confirmText="Delete User"
+          cancelText="Cancel"
+          isLoading={isDeleting}
+          isDanger={true}
+          confirmHandler={handleDeleteUser}
+          closeHandler={() => {
+            if (!isDeleting) {
+              setDeleteModal(false);
+              setSelectedUser(null);
+            }
+          }}
+        />
+      )}
       <div className="bg-white flex justify-between rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
         <h2 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent ">Manage Users</h2>
+
 
       <div className="flex items-center gap-2">
         <Filter className="h-4 w-4 text-gray-500" />
@@ -294,8 +317,8 @@ const ManageUsers = () => {
                         </button>
 
                         <button
-                          onClick={() => handleDeletePopUp(user.id)}
-                          className="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors group"
+                          onClick={() => handleDeletePopUp(user)}
+                          className="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors group cursor-pointer"
                           title="Delete user"
                         >
                           <Trash2 size={16} className="group-hover:scale-110 transition-transform" />
