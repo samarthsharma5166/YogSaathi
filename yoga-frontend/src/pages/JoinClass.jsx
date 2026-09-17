@@ -83,32 +83,82 @@ const JoinClass = () => {
             case "error":
             case "no_ref":
                 return (
-                    <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
-                        <FiAlertTriangle className="text-7xl text-yellow-500 mx-auto" />
-                        <h1 className="text-4xl font-bold text-gray-800 mt-6">{status === 'no_ref' ? 'Invalid Link' : 'Class Not Open'}</h1>
+                    <motion.div
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="max-w-xl mx-auto w-full px-4"
+                    >
+                        <FiAlertTriangle className="text-6xl text-amber-500 mx-auto" />
+                        <h1 className="text-2xl sm:text-2xl font-bold text-gray-800 mt-4 mb-2">
+                            Welcome to <span className="text-green-600">YogSaathi</span> Online Yoga Classes
+                        </h1>
                         
-                        <div className="mt-6 p-6 bg-white rounded-xl shadow-md border border-gray-100 max-w-md mx-auto text-center">
-                            <h2 className="text-xl font-bold text-[#607957] mb-4">Welcome to YogSaathi online Classes</h2>
-                            
-                            <div className="space-y-2 mb-4">
-                                <p className="text-md text-gray-700 font-medium">Link will work at class timings</p>
-                                <p className="text-md text-gray-700 font-medium">लिंक क्लास के समय कार्य करेगा</p>
+                        <div className="mt-6 bg-white rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8 text-left space-y-6">
+                            {/* 🇬🇧 English Section */}
+                            <div className="space-y-3">
+                                <div>
+                                    <p className="text-sm font-semibold text-gray-800 flex items-center gap-1.5 mb-2">
+                                        <span>⏰</span> Please note the Class Timings:
+                                    </p>
+                                    <div className="bg-emerald-50/70 border border-emerald-100 rounded-xl p-3 text-xs sm:text-sm font-medium text-emerald-900 space-y-1">
+                                        <p><span className="font-bold">Morning:</span> 6:00 AM • 7:00 AM • 8:30 AM</p>
+                                        <p><span className="font-bold">Evening:</span> 5:30 PM • 6:30 PM • 7:30 PM</p>
+                                    </div>
+                                </div>
+                                
+                                <div className="text-xs sm:text-sm text-gray-600 space-y-1">
+                                    <p className="font-semibold text-gray-700 flex items-start gap-1.5">
+                                        <span>🔗</span>
+                                        <span className="text-red-700">This link will open only at the above class timings.</span>
+                                    </p>
+                                    <p className="text-gray-500 pl-5">
+                                        Please try opening the link at the class time.
+                                    </p>
+                                </div>
                             </div>
-                            
-                            <div className="bg-green-50 py-3 px-4 rounded-lg">
-                                <p className="text-md font-bold text-green-800">
-                                    (6 AM, 7 AM, 8.30 AM, 5.30 PM, 6.30 PM & 7.30PM)
-                                </p>
+
+                            {/* 🌐 Divider */}
+                            <div className="relative flex py-1 items-center">
+                                <div className="flex-grow border-t border-gray-200"></div>
+                                <span className="flex-shrink mx-3 text-gray-400 text-xs uppercase tracking-wider font-semibold">हिंदी विवरण</span>
+                                <div className="flex-grow border-t border-gray-200"></div>
+                            </div>
+
+                            {/* 🇮🇳 Hindi Section */}
+                            <div className="space-y-3">
+                                <h2 className="text-lg sm:text-xl font-bold text-[#607957] border-b border-gray-100 pb-2">
+                                    YogSaathi ऑनलाइन योग कक्षाओं में आपका स्वागत है
+                                </h2>
+                                
+                                <div>
+                                    <p className="text-sm font-semibold text-gray-800 flex items-center gap-1.5 mb-2">
+                                        <span>⏰</span> कृपया योग कक्षा का समय ध्यान रखें:
+                                    </p>
+                                    <div className="bg-emerald-50/70 border border-emerald-100 rounded-xl p-3 text-xs sm:text-sm font-medium text-emerald-900 space-y-1">
+                                        <p><span className="font-bold">सुबह:</span> 6:00 बजे • 7:00 बजे • 8:30 बजे</p>
+                                        <p><span className="font-bold">शाम:</span> 5:30 बजे • 6:30 बजे • 7:30 बजे</p>
+                                    </div>
+                                </div>
+                                
+                                <div className="text-xs sm:text-sm text-gray-600 space-y-1">
+                                    <p className="font-semibold text-gray-700 flex items-start gap-1.5">
+                                        <span>🔗</span>
+                                        <span className="text-red-700">यह लिंक केवल ऊपर दिए गए कक्षा के समय पर ही खुलेगा।</span>
+                                    </p>
+                                    <p className="text-gray-500 pl-5">
+                                        कृपया कक्षा के समय पर लिंक खोलकर देखें।
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
                         {errorMessage && (
-                            <p className="text-sm text-gray-500 mt-6 max-w-md mx-auto">{errorMessage}</p>
+                            <p className="text-xs text-gray-400 mt-4">{errorMessage}</p>
                         )}
                         
                         <Link
                             to="/"
-                            className="mt-6 inline-block bg-[#607957] hover:bg-green-800 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
+                            className="mt-6 inline-block bg-[#607957] hover:bg-green-800 text-white font-semibold py-3 px-8 rounded-xl shadow-md transition-all duration-300 transform hover:scale-105"
                         >
                             Return to Homepage
                         </Link>

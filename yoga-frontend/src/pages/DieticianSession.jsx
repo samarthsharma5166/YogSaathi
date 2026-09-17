@@ -173,7 +173,7 @@ export default function DieticianSession() {
         <div className="animate-marquee">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="inline-block px-8">
-              🔥   Weight Loss & Sustainable Fat Reduction Masterclass (19-Jul-2026)
+              🔥   Weight Loss & Sustainable Fat Reduction Masterclass (04-Oct-2026)
             </span>
           ))}
         </div>
@@ -186,15 +186,20 @@ export default function DieticianSession() {
         <div className="mb-8 text-center max-w-4xl mx-auto">
           <div className="inline-flex  items-center gap-2 bg-[#EAF3DE] text-[#3B6D11] px-4 py-1.5 rounded-full text-xl font-bold uppercase tracking-wider mb-3">
             {/* <Sparkles className="w-3.5 h-3.5" /> */}
-            Special Interactive Dietician Session
+            Dietician Interactive Webinar Details
           </div>
 
           <h1 className="font-display text-3xl sm:text-4xl md:text-[36px] mt-2 font-medium tracking-tight text-[#12211d] leading-none mb-3">
-            <span className="italic text-[#3B6D11]">Weight Loss</span> & Sustainable Fat Reduction
+            {/* <span className="italic text-[#3B6D11]">Weight Loss</span> Diet for Energy, Immunity & Overall Wellness */}
+            <span className="text-[#3B6D11]">Diet </span> for Energy, Immunity & Overall Wellness
           </h1>
 
+          {/* <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            Stop crash dieting and counting crumbs. Join YogSaathi’s clinical dietician for a premium 60 to 65 minute masterclass to unlock the science of permanent fat loss, metabolic resets, and healthy weight management.
+          </p> */}
+
           <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            Stop crash dieting and counting crumbs. Join YogSaathi’s clinical dietician for a premium 60 to 70 minute masterclass to unlock the science of permanent fat loss, metabolic resets, and healthy weight management.
+            Discover how everyday food choices and the right balance of nutrients can boost energy, support immunity and promote overall wellness. Learn practical, easy-to-follow dietary tips that can be incorporated into your daily routine for a healthier, more energetic life.
           </p>
         </div>
 
@@ -311,17 +316,17 @@ export default function DieticianSession() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="mt-3 text-[#d35400] font-bold text-sm tracking-wide flex items-center gap-1.5">
                 ⏳ Limited Time Offer
               </div>
 
               <p className="text-gray-600 text-xs sm:text-sm mt-4 max-w-md leading-relaxed">
-                Take advantage of our introductory rate for this weight-loss masterclass. Join our interactive webinar to get your personalized nutrition queries answered by our expert dieticians.
+                Take advantage of our introductory rate for this masterclass on Diet for Energy, Immunity & Overall Wellness. Join our interactive webinar to get your personalized nutrition queries answered by our expert dieticians.
               </p>
               <p className="text-gray-600 text-xs sm:text-sm mt-1 max-w-md leading-relaxed">
                 The founders of Nutridiction, Dt. Prerana Solanki and Dt. Sonal Sureka, shall conduct an
-                interactive online webinar on &quot;Weight Loss &amp; Sustainable Fat Reduction&quot;
+                interactive online webinar on &quot;Diet for Energy, Immunity & Overall Wellness&quot;
               </p>
             </div>
 
@@ -430,7 +435,7 @@ export default function DieticianSession() {
             </div>
             <div>
               <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Date</div>
-              <div className="font-extrabold text-[#12211d] text-base">Sunday, 19 July 2026</div>
+              <div className="font-extrabold text-[#12211d] text-base">Sunday, 04 October 2026</div>
             </div>
           </div>
 

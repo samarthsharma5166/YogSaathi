@@ -67,8 +67,8 @@ export const createRegistration = async (req, res) => {
     const config = await getOrCreateConfig();
     let price = config.price;
 
-    // Apply promo code YSDISC if provided
-    if (promocode && promocode.trim().toUpperCase() === "YSDISC") {
+    // Apply promo code YSDIET if provided
+    if (promocode && promocode.trim().toUpperCase() === "YSDIET") {
       price = 49;
     }
 
@@ -270,7 +270,7 @@ export const validatePromoCode = async (req, res) => {
     const { promocode } = req.body;
     const config = await getOrCreateConfig();
 
-    if (promocode && promocode.trim().toUpperCase() === "YSDISC") {
+    if (promocode && promocode.trim().toUpperCase() === "YSDIET") {
       return res.status(200).json({ isValid: true, price: 49 });
     }
 

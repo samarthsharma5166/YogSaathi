@@ -248,8 +248,8 @@ export const register = async (req, res) => {
       },
     });
 
-    if (freeTrialCount >= 2) {
-      return res.status(400).json({ message: "User has already used 2 free trials." });
+    if (freeTrialCount >= 1) {
+      return res.status(400).json({ message: "User has already used 1 free trial. Please purchase a plan to continue.(आपने मुफ्त ट्रायल का उपयोग पहले ही कर लिया है। आगे जारी रखने के लिए कृपया प्लान खरीदें।)" });
     }
 
     // 2. Check for active paid subscription
