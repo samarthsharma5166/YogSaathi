@@ -100,10 +100,16 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
         }
 
         if (message.templateName === "yoga_subscription_offer"){
+
             const users = await getUsers(message);
-            users.map((user) => {
-                yoga_subscription_offer(user.phoneNumber, user.name);
-            })
+            for (const user of users) {
+                try {
+                    await yoga_subscription_offer(user.phoneNumber, user.name);
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                } catch (error) {
+                    console.error(`Error sending share_wellness_14_days_of_free_yoga to ${user.phoneNumber}:`, error.message);
+                }
+            }
         }
 
         if (message.templateName === "weekly_attendance_status__yogsaathi_sessions"){
