@@ -56,7 +56,7 @@ const Navbar = () => {
     { name: "Yoga for Overseas Participants", path: "/overseasPrograms" },
     { name: "YogaCare Personalised Program", path: "/yogacare" },
     { name: "Subscription Plans", path: "/price" },
-    { name: "Join Free Trial Class", path: "/auth/register " }
+    { name: "Join Free Trial Class", path: "/auth/register" }
   ];
 
   const isProgramActive = location.pathname === "/contact" && location.search.includes("program");
@@ -253,30 +253,49 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${mobileMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-          }`}
+        className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+          mobileMenuOpen ? "max-h-[calc(100vh-80px)] opacity-100 overflow-y-auto" : "max-h-0 opacity-0"
+        }`}
       >
         <div className="px-4 pt-2 pb-6 space-y-2 bg-white shadow-lg rounded-b-2xl border-t border-gray-100">
           {/* Home Link */}
           <Link
             to="/"
             onClick={closeMenu}
-            className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${location.pathname === "/" && !location.search.includes("program")
+            className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${
+              location.pathname === "/" && !location.search.includes("program")
                 ? "text-green-600 bg-green-50"
                 : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-              }`}
+            }`}
           >
             Home
           </Link>
+
+          {/* Rest of Nav Links */}
+          {navLinks.slice(1).map((link) => (
+            <Link
+              key={link.name}
+              to={link.path}
+              onClick={closeMenu}
+              className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${
+                location.pathname === link.path && !isProgramActive
+                  ? "text-green-600 bg-green-50"
+                  : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
 
           {/* Yoga Programs Accordion */}
           <div className="block">
             <button
               onClick={() => setMobileProgramsOpen((prev) => !prev)}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${mobileProgramsOpen || isProgramActive
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${
+                mobileProgramsOpen || isProgramActive
                   ? "text-green-600 bg-green-50/30"
                   : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-                }`}
+              }`}
             >
               <span>Yoga Programs</span>
               <svg
@@ -289,18 +308,20 @@ const Navbar = () => {
               </svg>
             </button>
             <div
-              className={`pl-4 space-y-1 transition-all duration-200 overflow-hidden ${mobileProgramsOpen ? "max-h-60 opacity-100 mt-1" : "max-h-0 opacity-0"
-                }`}
+              className={`pl-4 space-y-1 transition-all duration-200 overflow-hidden ${
+                mobileProgramsOpen ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"
+              }`}
             >
               {programs.map((prog) => (
                 <Link
                   key={prog.name}
                   to={prog.path}
                   onClick={closeMenu}
-                  className={`block px-4 py-2 text-sm rounded-lg transition-colors duration-150 ${location.pathname + location.search === prog.path
+                  className={`block px-4 py-2 text-sm rounded-lg transition-colors duration-150 ${
+                    location.pathname + location.search === prog.path
                       ? "text-green-600 bg-green-50/50 font-medium"
                       : "text-gray-600 hover:text-green-600 hover:bg-green-50/50"
-                    }`}
+                  }`}
                 >
                   {prog.name}
                 </Link>
@@ -308,52 +329,71 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Rest of Nav Links */}
-          {navLinks.slice(1).map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              onClick={closeMenu}
-              className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 ${location.pathname === link.path && !isProgramActive
-                  ? "text-green-600 bg-green-50"
-                  : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-                }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-
+          {/* Action Buttons & Auth / User Section */}
           <div className="border-t border-gray-100 pt-4 mt-2 flex flex-col gap-3 px-2">
             <Link
               to="/price"
               onClick={closeMenu}
-              className="w-full h-fit inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all duration-200"
+              className="w-full inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all duration-200"
             >
-              Subscriptions<br/>
-              (Raksha Bandhan)
+              Subscriptions
             </Link>
-            {/* <Link
-              to="/retreat"
+
+            <Link
+              to="/session"
               onClick={closeMenu}
-              className="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-green-600 rounded-full hover:bg-green-700 transition-all duration-200"
+              className="w-full text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 transition-all duration-200"
             >
-              Rishikesh Retreat
-            </Link> */}
-            {/* <Link
-              to="/yoga-session"
+              Dietician Session
+            </Link>
+
+            <Link
+              to="/yogacare"
               onClick={closeMenu}
-              className="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 transition-all duration-200 shadow-md"
+              className="w-full text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 transition-all duration-200"
             >
-              Yoga Session
-            </Link> */}
-            {!user && (
+              Yoga Care
+            </Link>
+
+            {!user ? (
               <Link
                 to="/auth/register"
                 onClick={closeMenu}
-                className="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-green-600 rounded-full hover:bg-green-700 transition-all duration-200"
+                className="w-full text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-full hover:bg-green-700 transition-all duration-200"
               >
                 Join Free Trial
               </Link>
+            ) : (
+              <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100 mt-1">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-green-500 to-emerald-400 text-white font-bold shadow-sm">
+                    {user?.name?.charAt(0).toUpperCase() || "U"}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-gray-500">Signed in as</p>
+                    <p className="text-sm font-semibold text-gray-900 truncate">{user.name}</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <Link
+                    to={user.role === "ADMIN" ? "/admin/admin-dashboard" : "/user/dashboard"}
+                    onClick={closeMenu}
+                    className="w-full text-center px-4 py-2 text-sm font-medium text-green-700 bg-green-100/70 hover:bg-green-100 rounded-xl transition-colors"
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={() => {
+                      closeMenu();
+                      handleLogout();
+                    }}
+                    className="w-full text-center px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-colors cursor-pointer"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </div>
