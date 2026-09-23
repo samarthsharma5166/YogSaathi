@@ -1,3 +1,5 @@
+process.env.TZ = "Asia/Kolkata";
+
 import axios from "axios";
 import app from "./app.js";
 import Razorpay from 'razorpay'
