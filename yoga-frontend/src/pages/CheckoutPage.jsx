@@ -419,7 +419,7 @@ const CheckoutPage = () => {
                                         <div className="flex gap-2">
                                             <input
                                                 type="text"
-                                                placeholder="Enter promo code (e.g. UOR86)"
+                                                placeholder="Enter promo code"
                                                 value={promocode}
                                                 onChange={(e) => {
                                                     setPromocode(e.target.value.toUpperCase());
