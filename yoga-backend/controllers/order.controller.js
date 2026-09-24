@@ -10,7 +10,7 @@ import { invoice_subscription_plan } from "../utils/messages.js";
 // 1. Create Razorpay Order
 export const createOrder = async (req, res) => {
   try {
-    const { planId, phoneNumber, startDate, name } = req.body;
+    const { planId, phoneNumber, startDate, name, promocode } = req.body;
 
     const plan = await prisma.plan.findUnique({ where: { id: planId } });
     if (!plan) return res.status(404).json({ success: false, message: "Plan not found" });
@@ -69,9 +69,140 @@ export const createOrder = async (req, res) => {
       return res.status(400).json({ success: false, message: "User already has a subscription" });
     }
 
-    // check user is from indian or not
     const isIndian = isIndianNumber(phoneNumber);
+    const currency = isIndian ? "INR" : "USD";
 
+    // ── PROMO CODE UOR86 CHECK (3 Months Plan Only) ──
+    const normalizedPromo = promocode ? promocode.trim().toUpperCase() : null;
+
+    if (normalizedPromo) {
+      if (normalizedPromo === "UOR86") {
+        const is3MonthPlan = plan.duration === 3 && plan.durationType === "MONTH";
+        if (!is3MonthPlan) {
+          return res.status(400).json({
+            success: false,
+            message: "Promo code UOR86 is only valid for the 3 Months plan",
+          });
+        }
+
+        // 100% Free - fulfill immediately without Razorpay
+        const subsStartDate = new Date(startDate);
+        subsStartDate.setHours(1, 0, 0, 0);
+        const baseDuration = plan.duration;
+
+        let expiresAt = new Date(subsStartDate);
+        expiresAt.setMonth(expiresAt.getMonth() + baseDuration);
+        const refferalDays = (user.referralPoints * 10) * 24 * 60 * 60 * 1000;
+        expiresAt = new Date(expiresAt.getTime() + refferalDays);
+        expiresAt.setHours(21, 0, 0, 0);
+
+        const existingSub = await prisma.subscription.findFirst({
+          where: { userId: user.id },
+          include: { plan: true },
+        });
+
+        let subscription;
+        if (existingSub && existingSub.plan?.isFreeTrial) {
+          subscription = await prisma.subscription.update({
+            where: { id: existingSub.id },
+            data: {
+              planId: plan.id,
+              startDate: subsStartDate,
+              baseDuration,
+              extraDays: user.referralPoints * 10,
+              expiresAt,
+              status: "active",
+            },
+          });
+        } else {
+          subscription = await prisma.subscription.create({
+            data: {
+              userId: user.id,
+              planId: plan.id,
+              startDate: subsStartDate,
+              baseDuration,
+              extraDays: user.referralPoints * 10,
+              expiresAt,
+              status: "active",
+            },
+          });
+        }
+
+        const freeOrderId = `order_free_${Date.now()}`;
+        const freePaymentId = `pay_free_${Date.now()}`;
+
+        const payment = await prisma.payment.create({
+          data: {
+            razorpay_order_id: freeOrderId,
+            razorpay_payment_id: freePaymentId,
+            userId: user.id,
+            planId: plan.id,
+            subscriptionId: subscription.id,
+            amount: 0,
+            currency,
+            status: "COMPLETED",
+            verified: true,
+            verificationNote: `100% discount with promo code ${normalizedPromo}`,
+            startDate,
+          },
+        });
+
+        // Generate Invoice
+        const shortId = subscription.id.split("-")[0];
+        const year = new Date().getFullYear().toString().slice(-2);
+        const invoiceNo = `YS${year}${shortId.toUpperCase()}`;
+
+        try {
+          const invoicePath = await generateYogaInvoice({
+            invoiceNo,
+            dateOfIssue: new Date().toLocaleDateString(),
+            companyEmail: "healthy.horizons111@gmail.com",
+            website: "www.yogsaathi.com",
+            customerName: user.name,
+            customerEmail: user.email,
+            programStart: subsStartDate.toLocaleDateString(),
+            programEnd: expiresAt.toLocaleDateString(),
+            referralDays: user.referralPoints * 10,
+            finalEndDate: expiresAt.toLocaleDateString(),
+            description: `${plan.name} – Online Yoga (Promo Code: ${normalizedPromo})`,
+            amount: 0,
+            amountType: currency,
+          });
+
+          await prisma.subscription.update({
+            where: { id: subscription.id },
+            data: {
+              invoice: invoicePath.fileName,
+              paymentId: payment.id,
+            },
+          });
+
+          invoice_subscription_plan(user.phoneNumber, user.name, invoicePath.fileName);
+        } catch (invErr) {
+          console.error("Error generating invoice for promo order:", invErr);
+        }
+
+        if (user.referralPoints > 0) {
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { referralPoints: 0 },
+          });
+        }
+
+        return res.json({
+          success: true,
+          isFree: true,
+          message: "Promo code UOR86 applied! 3 Months subscription activated successfully.",
+          subscription,
+          userId: user.id,
+        });
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid promo code",
+        });
+      }
+    }
 
     const amount = isIndian
       ? (plan.inrPrice ? plan.inrPrice * 100 : 0)
@@ -80,7 +211,6 @@ export const createOrder = async (req, res) => {
     if (amount <= 0) {
       return res.status(400).json({ success: false, message: "Invalid plan pricing" });
     }
-    const currency = isIndian ? "INR" : "USD";
     const options = {
       amount,
       currency,

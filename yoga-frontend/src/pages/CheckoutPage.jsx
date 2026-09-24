@@ -17,7 +17,9 @@ import {
     ArrowLeft, 
     Sparkles, 
     Info,
-    Phone
+    Phone,
+    Tag,
+    X
 } from "lucide-react";
 
 const CheckoutPage = () => {
@@ -38,6 +40,11 @@ const CheckoutPage = () => {
         name: "",
         startDate: ""
     });
+
+    // Promo Code state
+    const [promocode, setPromocode] = useState("");
+    const [appliedPromo, setAppliedPromo] = useState(null);
+    const [promoError, setPromoError] = useState("");
 
     useEffect(() => {
         const fetchPlan = async () => {
@@ -75,6 +82,38 @@ const CheckoutPage = () => {
         setFormData({ ...formData, startDate: selectedDate });
     };
 
+    const handleApplyPromo = () => {
+        const cleanCode = promocode.trim().toUpperCase();
+        if (!cleanCode) {
+            toast.error("Please enter a promo code");
+            return;
+        }
+
+        if (cleanCode === "UOR86") {
+            const is3Months = plan.duration === 3 && plan.durationType === "MONTH";
+            if (!is3Months) {
+                setPromoError("Promo code UOR86 is only valid for the 3 Months plan.");
+                toast.error("Promo code UOR86 is only valid for the 3 Months plan.");
+                return;
+            }
+            setAppliedPromo("UOR86");
+            setPromoError("");
+            toast.success("Promo code UOR86 applied! 100% discount applied.");
+        } else {
+            setPromoError("Invalid promo code");
+            toast.error("Invalid promo code");
+        }
+    };
+
+    const handleRemovePromo = () => {
+        setAppliedPromo(null);
+        setPromocode("");
+        setPromoError("");
+        toast("Promo code removed", { icon: "ℹ️" });
+    };
+
+    const isFreeWithPromo = appliedPromo === "UOR86" && plan && plan.duration === 3 && plan.durationType === "MONTH";
+
     const handleCheckout = async () => {
         try {
             // Validate required fields before calling backend
@@ -93,11 +132,35 @@ const CheckoutPage = () => {
                 name: formData.name,
                 phoneNumber: formData.phone,
                 planName: plan.name,
-                startDate: formData.startDate
+                startDate: formData.startDate,
+                promocode: appliedPromo || undefined
             });
 
             if (orderResponse.data.success === false) {
                 toast.error(orderResponse.data.message);
+                return;
+            }
+
+            // If order was 100% free with promo code, bypass payment gateway
+            if (orderResponse.data.isFree) {
+                toast.success(orderResponse.data.message || "Subscription activated successfully!");
+                const token = localStorage.getItem("token");
+                const userStr = localStorage.getItem("user");
+                if (token && userStr) {
+                    try {
+                        const user = JSON.parse(userStr);
+                        if (user && user.role === "ADMIN") {
+                            navigate("/admin/admin-dashboard");
+                        } else {
+                            navigate("/user/dashboard");
+                        }
+                    } catch (e) {
+                        console.error("Failed to parse user session", e);
+                        navigate("/user/dashboard");
+                    }
+                } else {
+                    navigate("/auth/login");
+                }
                 return;
             }
 
@@ -337,6 +400,72 @@ const CheckoutPage = () => {
                                         required
                                     />
                                 </div>
+
+                                {/* Promo Code Section */}
+                                <div className="pt-2 border-t border-gray-100 space-y-1.5">
+                                    <label className="text-[11px] font-bold text-gray-700 flex items-center justify-between">
+                                        <span className="flex items-center gap-1">
+                                            <Tag className="h-3 w-3 text-[#3B6D11]" />
+                                            Have a Promo Code?
+                                        </span>
+                                        {isFreeWithPromo && (
+                                            <span className="text-[10px] text-green-700 font-bold flex items-center gap-1 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
+                                                <Check className="w-2.5 h-2.5" /> 100% OFF Applied
+                                            </span>
+                                        )}
+                                    </label>
+                                    
+                                    {!appliedPromo ? (
+                                        <div className="flex gap-2">
+                                            <input
+                                                type="text"
+                                                placeholder="Enter promo code (e.g. UOR86)"
+                                                value={promocode}
+                                                onChange={(e) => {
+                                                    setPromocode(e.target.value.toUpperCase());
+                                                    setPromoError("");
+                                                }}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === "Enter") {
+                                                        e.preventDefault();
+                                                        handleApplyPromo();
+                                                    }
+                                                }}
+                                                className={`flex-1 px-3.5 py-2.5 h-10 border ${promoError ? 'border-red-400 bg-red-50/30' : 'border-gray-300'} rounded-lg bg-white text-gray-800 text-xs uppercase font-semibold focus:outline-none focus:border-[#3B6D11] focus:ring-2 focus:ring-[#3B6D11]/15 transition-all placeholder:normal-case placeholder:font-normal placeholder:text-gray-400`}
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={handleApplyPromo}
+                                                className="px-4 h-10 bg-gray-900 hover:bg-black text-white text-xs font-bold rounded-lg transition-colors cursor-pointer shrink-0 shadow-sm"
+                                            >
+                                                Apply
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center justify-between p-2.5 bg-gradient-to-r from-[#EAF3DE] to-[#d4edbc]/60 border border-[#a3c97a] rounded-lg">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-6 h-6 rounded-full bg-[#3B6D11] text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                                                    %
+                                                </div>
+                                                <div>
+                                                    <span className="font-bold text-xs text-gray-900 tracking-wider block leading-tight">{appliedPromo}</span>
+                                                    <span className="text-[10px] text-[#27500a] font-semibold">100% discount applied to 3 Months plan</span>
+                                                </div>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={handleRemovePromo}
+                                                className="text-gray-500 hover:text-red-600 text-xs font-bold px-2 py-1 hover:bg-red-50 rounded transition-colors flex items-center gap-1 cursor-pointer"
+                                            >
+                                                <X className="w-3.5 h-3.5" /> Remove
+                                            </button>
+                                        </div>
+                                    )}
+                                    
+                                    {promoError && (
+                                        <p className="text-[10px] text-red-600 font-semibold pl-1">{promoError}</p>
+                                    )}
+                                </div>
                             </div>
 
                             {/* Secure transaction notice */}
@@ -347,8 +476,17 @@ const CheckoutPage = () => {
                                     className="w-full bg-[#3B6D11] hover:bg-[#2d540d] transition-all duration-200 text-white py-3 px-5 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#3B6D11]/10 hover:shadow-lg cursor-pointer"
                                     onClick={handleCheckout}
                                 >
-                                    <Lock className="w-3.5 h-3.5" />
-                                    Pay {isUSD ? `$${plan.usdPrice}` : `₹${plan.inrPrice}`} & Secure Slot
+                                    {isFreeWithPromo ? (
+                                        <>
+                                            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+                                            Activate 3 Months Free (₹0) & Secure Slot
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Lock className="w-3.5 h-3.5" />
+                                            Pay {isUSD ? `$${plan.usdPrice}` : `₹${plan.inrPrice}`} & Secure Slot
+                                        </>
+                                    )}
                                 </motion.button>
 
                                 <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-gray-400 text-[9px] font-semibold">
@@ -373,9 +511,20 @@ const CheckoutPage = () => {
                                 </div>
                                 <div className="text-right">
                                     <span className="text-[10px] text-gray-400 block font-semibold">Total Due</span>
-                                    <span className="text-xl font-black text-gray-900 leading-none block mt-0.5">
-                                        {isUSD ? `$${plan.usdPrice}` : `₹${plan.inrPrice}`}
-                                    </span>
+                                    {isFreeWithPromo ? (
+                                        <div className="flex flex-col items-end">
+                                            <span className="text-xs text-gray-400 line-through font-semibold">
+                                                {isUSD ? `$${plan.usdPrice}` : `₹${plan.inrPrice}`}
+                                            </span>
+                                            <span className="text-xl font-black text-[#27500a] leading-none block mt-0.5">
+                                                ₹0 <span className="text-[10px] font-bold text-green-700 bg-green-100 px-1.5 py-0.5 rounded">FREE</span>
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        <span className="text-xl font-black text-gray-900 leading-none block mt-0.5">
+                                            {isUSD ? `$${plan.usdPrice}` : `₹${plan.inrPrice}`}
+                                        </span>
+                                    )}
                                     <span className="text-gray-400 text-[9px] font-bold">({plan.duration} {plan.durationType === "MONTH" ? "months" : "days"})</span>
                                 </div>
                             </div>
