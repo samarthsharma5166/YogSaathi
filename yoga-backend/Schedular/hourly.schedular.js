@@ -414,11 +414,18 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
         }
         
         if (message.templateName === "session_info"){
-            const users = await getUsers(message);
             const formattedDate = message.payload.date && !isNaN(new Date(message.payload.date))
                 ? format(new Date(message.payload.date), "dd/MM/yyyy")
                 : message.payload.date;
-            users.map(user => session_info(user.phoneNumber, user.name, message.payload.topic, formattedDate, message.payload.time, message.payload.duration, message.payload.instructor, message.payload.link))
+            const users = await getUsers(message);
+            for (const user of users) {
+                try {
+                    await session_info(user.phoneNumber, user.name, message.payload.topic, formattedDate, message.payload.time, message.payload.duration, message.payload.instructor, message.payload.link);
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                } catch (error) {
+                    console.error(`Error sending yoga_session_info_f to ${user.phoneNumber}:`, error.message);
+                }
+            }
         }
 
         if (message.templateName === "confirmation_regn"){
