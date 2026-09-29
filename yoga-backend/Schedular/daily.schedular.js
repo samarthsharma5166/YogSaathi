@@ -68,7 +68,7 @@ const TRIAL_OFFER_CONFIG = {
     },
 };
 
-export const freeTrialOfferJob = new CronJob('0 20 * * *', async () => {
+export const freeTrialOfferJob = new CronJob('0 10 * * *', async () => {
     try {
         const now = new Date();
 
@@ -89,13 +89,13 @@ export const freeTrialOfferJob = new CronJob('0 20 * * *', async () => {
 
         for (const sub of activeTrials) {
             try {
-                if (!sub.user || !sub.user.phoneNumber) continue;
+                if (!sub.user || !sub.user.phoneNumber || !sub.startDate) continue;
 
-                // 2. Calculate remaining days in free trial
-                const daysLeft = differenceInCalendarDays(new Date(sub.expiresAt), now);
-                const offer = TRIAL_OFFER_CONFIG[daysLeft];
+                // 2. Calculate day of free trial from start date (Day 1 = startDate)
+                const diffDays = differenceInCalendarDays(now, new Date(sub.startDate)) + 1;
+                const offer = TRIAL_OFFER_CONFIG[diffDays];
 
-                // 3. Send offer template if daysLeft is 7, 9, 12, or 14
+                // 3. Send offer template if diffDays is 5, 7, 9, 12, or 14
                 if (offer) {
                     await subscription_offer_day_english(
                         sub.user.phoneNumber,
@@ -144,7 +144,7 @@ const TRIAL_HINDI_OFFER_CONFIG = {
 
 
 
-export const freeTrialOfferHindiJob = new CronJob('0 21 * * *', async () => {
+export const freeTrialOfferHindiJob = new CronJob('0 11 * * *', async () => {
     try {
         const now = new Date();
 
@@ -165,13 +165,13 @@ export const freeTrialOfferHindiJob = new CronJob('0 21 * * *', async () => {
 
         for (const sub of activeTrials) {
             try {
-                if (!sub.user || !sub.user.phoneNumber) continue;
+                if (!sub.user || !sub.user.phoneNumber || !sub.startDate) continue;
 
-                // 2. Calculate remaining days in free trial
-                const daysLeft = differenceInCalendarDays(new Date(sub.expiresAt), now);
-                const offer = TRIAL_HINDI_OFFER_CONFIG[daysLeft];
+                // 2. Calculate day of free trial from start date (Day 1 = startDate)
+                const diffDays = differenceInCalendarDays(now, new Date(sub.startDate)) + 1;
+                const offer = TRIAL_HINDI_OFFER_CONFIG[diffDays];
 
-                // 3. Send offer template if daysLeft is 7, 9, 12, or 14
+                // 3. Send offer template if diffDays is 5, 7, 9, 12, or 14
                 if (offer) {
                     await subscription_offer_day_hindi(
                         sub.user.phoneNumber,
