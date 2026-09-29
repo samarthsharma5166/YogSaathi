@@ -25,12 +25,12 @@ const planHighlights = {
     "Flexible Timing",
     "1 Dietician Interactive Webinar",
     "1 Yoga Demo on Zoom",
-    "Exclusive Whats AppGroups",
+    "Exclusive WhatsApp Groups",
   ],
   1: [
     "Daily Yoga classes (6 times a day)",
     "Flexible Timing",
-    "Exclusive Whats AppGroups",
+    "Exclusive WhatsApp Groups",
   ],
 };
 
