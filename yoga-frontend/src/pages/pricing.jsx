@@ -306,7 +306,7 @@ const planThemeConfig = {
   },
   1: {
     badge: "🎯 Starter Offer",
-    badgeClass: "bg-slate-100 text-slate-900 border border-slate-300",
+    badgeClass: "bg-teal-100 text-teal-900 border border-teal-300",
     cardBorder: "border border-gray-200/80 shadow-sm hover:shadow-lg hover:border-gray-300 hover:-translate-y-1",
     cardBg: "bg-white",
     titleColor: "text-gray-900",
