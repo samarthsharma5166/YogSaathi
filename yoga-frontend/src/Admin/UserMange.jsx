@@ -10,27 +10,44 @@ import { CiEdit, CiTrash } from "react-icons/ci";
 import { AiOutlineEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import ConfirmationPopUp from "../components/ConfirmationPopUp.jsx";
-import { Search, Users, Filter, Eye, Trash2, UserPlus } from "lucide-react";
+import {
+  Search,
+  Users,
+  Filter,
+  Eye,
+  Trash2,
+  UserPlus,
+  Clock,
+  CheckCircle2,
+  AlertCircle,
+  PhoneCall,
+  Sparkles,
+  Shield,
+  UserX,
+  RefreshCw
+} from "lucide-react";
 
 const userType = {
   "ALL": "ALL",
   "ADMIN": "Admin",
-  "Active-Free-Trial":"Active Free Trial",
-  "Inactive-Free-Trial":"Inactive Free Trial",
-  "Active-Subscribers":"Active Subscribers",
-  "Inactive-Subscribers":"Inactive Subscribers",
+  "Active-Free-Trial": "Active Free Trial",
+  "Inactive-Free-Trial": "Inactive Free Trial",
+  "Active-Subscribers": "Active Subscribers",
+  "Inactive-Subscribers": "Inactive Subscribers",
   "Active-Trial-And-Subscribers": "Active Free Trial & Active Subscribers",
   "Dietician-Registrants": "Dietician Session Registrants",
   "Free-Trial-And-Dietician-Registrants": "Free Trial & Dietician Session Registrants",
   "Dietician-Leads": "Dietician Session Leads",
-}
+};
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
+  const [counts, setCounts] = useState({});
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState(userType.ALL);
+  const [filter, setFilter] = useState("ALL");
   const [deleteModal, setDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -42,13 +59,26 @@ const ManageUsers = () => {
   }, [filter, startDate, endDate]);
 
   const fetchUsers = async () => {
+    setIsLoading(true);
     try {
       const res = await getAllUsersFromDb(filter, startDate, endDate);
       setUsers(res.data.users || []);
+      if (res.data.counts) {
+        setCounts(res.data.counts);
+      }
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.error || "Failed to fetch users.");
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const handleResetFilters = () => {
+    setStartDate("");
+    setEndDate("");
+    setFilter("ALL");
+    setSearch("");
   };
 
   const handleDeletePopUp = (user) => {
@@ -73,12 +103,12 @@ const ManageUsers = () => {
     }
   };
 
-
   const filteredUsers = users.filter(
     (u) =>
-      u.name.toLowerCase().includes(search.toLowerCase())
+      u.name?.toLowerCase().includes(search.toLowerCase()) ||
+      u.email?.toLowerCase().includes(search.toLowerCase()) ||
+      u.phoneNumber?.includes(search)
   );
-
 
   const getStatusBadge = (role) => {
     const baseClasses = "px-3 py-1 rounded-full text-xs font-medium";
@@ -94,9 +124,19 @@ const ManageUsers = () => {
     }
   };
 
+  const statCards = [
+    { key: "ALL", label: "All Users", icon: Users, color: "text-gray-700", activeBg: "border-green-600 bg-green-50/70" },
+    { key: "Active-Free-Trial", label: "Active Free Trial", icon: Clock, color: "text-amber-700", activeBg: "border-amber-600 bg-amber-50/70" },
+    { key: "Active-Subscribers", label: "Active Subscribers", icon: CheckCircle2, color: "text-emerald-700", activeBg: "border-emerald-600 bg-emerald-50/70" },
+    { key: "Inactive-Free-Trial", label: "Inactive Free Trial", icon: AlertCircle, color: "text-orange-700", activeBg: "border-orange-600 bg-orange-50/70" },
+    { key: "Inactive-Subscribers", label: "Inactive Subscribers", icon: UserX, color: "text-rose-700", activeBg: "border-rose-600 bg-rose-50/70" },
+    { key: "Active-Trial-And-Subscribers", label: "Active Trial & Paid", icon: Sparkles, color: "text-teal-700", activeBg: "border-teal-600 bg-teal-50/70" },
+    { key: "Dietician-Registrants", label: "Dietician Regs", icon: Sparkles, color: "text-blue-700", activeBg: "border-blue-600 bg-blue-50/70" },
+    { key: "Dietician-Leads", label: "Dietician Leads", icon: PhoneCall, color: "text-purple-700", activeBg: "border-purple-600 bg-purple-50/70" },
+  ];
 
   return (
-    <div className=" bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
       {deleteModal && (
         <ConfirmationPopUp
           title="Delete User Account"
@@ -115,76 +155,132 @@ const ManageUsers = () => {
           }}
         />
       )}
-      <div className="bg-white flex justify-between rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-        <h2 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent ">Manage Users</h2>
 
-
-      <div className="flex items-center gap-2">
-        <Filter className="h-4 w-4 text-gray-500" />
-        <select
-          onChange={(e) => setFilter(e.target.value)}
-          value={filter}
-          className="px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-sm font-medium min-w-[140px] cursor-pointer hover:border-green-400 transition-colors"
-        >
-          <option value="ALL">{userType.ALL}</option>
-            <option value="ADMIN">{userType.ADMIN}</option>
-
-            <option value="Active-Free-Trial">{userType["Active-Free-Trial"]}</option>
-          {/* <option value="Subscribed">{userType.SUBSCRIBED}</option> */}
-
-            <option value="Inactive-Free-Trial">{userType["Inactive-Free-Trial"]}</option>
-            <option value="Active-Subscribers">{userType["Active-Subscribers"]}</option>
-            <option value="Inactive-Subscriber">{userType["Inactive-Subscribers"]}</option>
-            <option value="Active-Trial-And-Subscribers">{userType["Active-Trial-And-Subscribers"]}</option>
-            <option value="Dietician-Registrants">{userType["Dietician-Registrants"]}</option>
-            <option value="Free-Trial-And-Dietician-Registrants">{userType["Free-Trial-And-Dietician-Registrants"]}</option>
-            <option value="Dietician-Leads">{userType["Dietician-Leads"]}</option>
-
-        </select>
-      </div>
-      </div>
-        <div className="flex justify-between gap-2 mb-2">
-          <div className="flex items-center gap-2">
-            <div>
-              <label className="text-sm font-medium text-gray-700">Start Date: </label>
-              <input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-sm font-medium"
-              />
-            </div>
-            
-                    <div>
-            <label className="text-sm font-medium text-gray-700">Start Date: </label>
-              <input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-sm font-medium"
-              />
-                    </div>
-          </div>
-          <button
-            onClick={fetchUsers}
-            className="px-4 py-2 bg-green-600 text-white rounded-lg shadow-sm hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-          >
-            Filter
-          </button>
+      {/* Header Section */}
+      <div className="bg-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4 rounded-xl shadow-xs border border-gray-200 p-5 mb-6">
+        <div>
+          <h2 className="text-3xl md:text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+            Manage Users
+          </h2>
+          <p className="text-xs text-gray-500 font-medium mt-1">
+            Filter, search, and manage all users and membership statuses
+          </p>
         </div>
 
+        <div className="flex items-center gap-2 w-full md:w-auto">
+          <Filter className="h-4 w-4 text-gray-500 flex-shrink-0" />
+          <select
+            onChange={(e) => setFilter(e.target.value)}
+            value={filter}
+            className="w-full md:w-auto px-4 py-2.5 bg-white border border-gray-300 rounded-lg shadow-2xs focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-sm font-semibold cursor-pointer hover:border-green-400 transition-colors"
+          >
+            <option value="ALL">All Users ({counts["ALL"] ?? users.length})</option>
+            <option value="Active-Free-Trial">Active Free Trial ({counts["Active-Free-Trial"] ?? 0})</option>
+            <option value="Active-Subscribers">Active Subscribers ({counts["Active-Subscribers"] ?? 0})</option>
+            <option value="Inactive-Free-Trial">Inactive Free Trial ({counts["Inactive-Free-Trial"] ?? 0})</option>
+            <option value="Inactive-Subscribers">Inactive Subscribers ({counts["Inactive-Subscribers"] ?? 0})</option>
+            <option value="Active-Trial-And-Subscribers">Active Trial & Subscribers ({counts["Active-Trial-And-Subscribers"] ?? 0})</option>
+            <option value="Dietician-Registrants">Dietician Registrants ({counts["Dietician-Registrants"] ?? 0})</option>
+            <option value="Free-Trial-And-Dietician-Registrants">Free Trial & Dietician ({counts["Free-Trial-And-Dietician-Registrants"] ?? 0})</option>
+            <option value="Dietician-Leads">Dietician Leads ({counts["Dietician-Leads"] ?? 0})</option>
+            <option value="ADMIN">Admin ({counts["ADMIN"] ?? 0})</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Quick Filter Counts Cards Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 mb-6">
+        {statCards.map((item) => {
+          const Icon = item.icon;
+          const isSelected = filter === item.key;
+          const count = counts[item.key] ?? (item.key === "ALL" ? users.length : 0);
+
+          return (
+            <button
+              key={item.key}
+              onClick={() => setFilter(item.key)}
+              className={`p-3 rounded-xl border text-left transition-all duration-150 cursor-pointer flex flex-col justify-between ${
+                isSelected
+                  ? "ring-2 ring-green-600 border-green-600 bg-green-50/80 shadow-xs scale-[1.02]"
+                  : "bg-gray-50/60 hover:bg-white hover:border-gray-300 border-gray-200"
+              }`}
+            >
+              <div className="flex items-center justify-between gap-1 mb-1.5">
+                <span className={`text-[11px] font-bold truncate ${isSelected ? "text-green-900" : "text-gray-600"}`}>
+                  {item.label}
+                </span>
+                <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${isSelected ? "text-green-600" : "text-gray-400"}`} />
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className={`text-xl font-black ${isSelected ? "text-green-950" : "text-gray-900"}`}>
+                  {count}
+                </span>
+                <span className="text-[10px] text-gray-400 font-medium">users</span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Date Range & Actions Filter Bar */}
+      <div className="bg-gray-50/70 border border-gray-200 rounded-xl p-3.5 mb-5 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-1.5">
+            <label className="text-xs font-semibold text-gray-600">From:</label>
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="px-3 py-1.5 bg-white border border-gray-300 rounded-lg shadow-2xs focus:ring-2 focus:ring-green-500 text-xs font-medium"
+            />
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <label className="text-xs font-semibold text-gray-600">To:</label>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="px-3 py-1.5 bg-white border border-gray-300 rounded-lg shadow-2xs focus:ring-2 focus:ring-green-500 text-xs font-medium"
+            />
+          </div>
+
+          <button
+            onClick={fetchUsers}
+            disabled={isLoading}
+            className="px-4 py-1.5 bg-green-600 text-white rounded-lg shadow-2xs hover:bg-green-700 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+          >
+            {isLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : null}
+            Filter Dates
+          </button>
+
+          {(startDate || endDate || filter !== "ALL" || search) && (
+            <button
+              onClick={handleResetFilters}
+              className="px-3 py-1.5 bg-white border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-100 text-xs font-semibold transition-all cursor-pointer"
+            >
+              Reset All
+            </button>
+          )}
+        </div>
+
+        <div className="text-xs font-bold text-gray-500 bg-white px-3 py-1.5 rounded-lg border border-gray-200">
+          Current Filter: <span className="text-green-700">{userType[filter] || filter}</span> ({filteredUsers.length} shown)
+        </div>
+      </div>
+
       {/* Search Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+      <div className="bg-white rounded-xl shadow-xs border border-gray-200 p-3.5 mb-6">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-gray-400" />
+            <Search className="h-4 w-4 text-gray-400" />
           </div>
           <input
             type="text"
-            placeholder="Search users by name..."
+            placeholder="Search by name, email, or phone number..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="block w-full !pl-10 pr-3 py-3 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm transition-colors"
+            className="block w-full !pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm transition-colors"
           />
         </div>
       </div>

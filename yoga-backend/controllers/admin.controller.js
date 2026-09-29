@@ -5,12 +5,10 @@ import { Parser } from 'json2csv';
 // ----------Get All Users----------
 export const getAllUsersAdmin = async (req, res) => {
   try {
-    const { usertype, startDate, endDate } = req.query;
+    const { usertype = "ALL", startDate, endDate } = req.query;
     const now = new Date();
 
-    let users = [];
     const whereClause = {};
-
     if (startDate && endDate) {
       whereClause.createdAt = {
         gte: new Date(startDate),
@@ -18,142 +16,129 @@ export const getAllUsersAdmin = async (req, res) => {
       };
     }
 
-    if (usertype === "ALL") {
-      users = await prisma.user.findMany({
-        where: whereClause,
-        include: {
-          subscription: {
-            orderBy: {
-              createdAt: 'desc',
-            },
-            include: {
-              plan: true,
-            },
-          },
+    // 1. Fetch all users with their subscriptions
+    const allUsers = await prisma.user.findMany({
+      where: whereClause,
+      include: {
+        subscription: {
+          orderBy: { createdAt: 'desc' },
+          include: { plan: true },
         },
-      });
-    } else if (usertype === "ADMIN") {
-      whereClause.role = "ADMIN";
-      users = await prisma.user.findMany({
-        where: whereClause,
-      });
-    } else if (usertype === "Dietician-Leads") {
-      const leads = await prisma.dieticianLead.findMany({
-        where: startDate && endDate ? {
-          createdAt: {
-            gte: new Date(startDate),
-            lte: new Date(endDate)
-          }
-        } : {}
-      });
-      users = leads.map(lead => ({
+      },
+    });
+
+    // 2. Fetch Dietician Leads
+    const dieticianLeads = await prisma.dieticianLead.findMany({
+      where: startDate && endDate ? {
+        createdAt: {
+          gte: new Date(startDate),
+          lte: new Date(endDate)
+        }
+      } : {}
+    });
+
+    // 3. Fetch Paid Dietician Registrations
+    const paidDieticianRegistrations = await prisma.dieticianSessionRegistration.findMany({
+      where: { status: "PAID" },
+      select: { phone: true, email: true },
+    });
+    const dieticianPhones = new Set(paidDieticianRegistrations.map(r => r.phone).filter(Boolean));
+    const cleanDieticianPhones = new Set(paidDieticianRegistrations.map(r => r.phone?.replace(/^\+91/, "")).filter(Boolean));
+    const dieticianEmails = new Set(paidDieticianRegistrations.map(r => r.email?.toLowerCase()).filter(Boolean));
+
+    const isDieticianMatch = (user) => {
+      const userPhone = user.phoneNumber;
+      const cleanPhone = userPhone ? userPhone.replace(/^\+91/, "") : null;
+      const userEmail = user.email ? user.email.toLowerCase() : null;
+
+      return (
+        (userPhone && (dieticianPhones.has(userPhone) || dieticianPhones.has(`+91${userPhone}`))) ||
+        (cleanPhone && cleanDieticianPhones.has(cleanPhone)) ||
+        (userEmail && dieticianEmails.has(userEmail))
+      );
+    };
+
+    // 4. Categorize users and build counts
+    const categorized = {
+      "ALL": allUsers,
+      "ADMIN": [],
+      "Active-Free-Trial": [],
+      "Inactive-Free-Trial": [],
+      "Active-Subscribers": [],
+      "Inactive-Subscribers": [],
+      "Active-Trial-And-Subscribers": [],
+      "Dietician-Registrants": [],
+      "Free-Trial-And-Dietician-Registrants": [],
+      "Dietician-Leads": dieticianLeads.map(lead => ({
         id: lead.id,
         name: lead.name,
         phoneNumber: lead.mobile,
         email: null,
         role: "USER",
         subscription: []
-      }));
-    } else if (usertype === "Dietician-Registrants") {
-      const paidRegistrations = await prisma.dieticianSessionRegistration.findMany({
-        where: { status: "PAID" },
-        select: { phone: true, email: true },
-      });
-      const phones = paidRegistrations.map(r => r.phone);
-      const cleanPhones = phones.map(p => p.replace(/^\+91/, ""));
-      const emails = paidRegistrations.map(r => r.email);
+      })),
+    };
 
-      users = await prisma.user.findMany({
-        where: {
-          OR: [
-            { phoneNumber: { in: phones } },
-            { phoneNumber: { in: cleanPhones } },
-            { email: { in: emails } }
-          ],
-          ...whereClause
-        },
-        include: {
-          subscription: {
-            orderBy: { createdAt: 'desc' },
-            include: { plan: true }
-          }
+    for (const user of allUsers) {
+      if (user.role === "ADMIN") {
+        categorized["ADMIN"].push(user);
+      }
+
+      const activePaidSub = user.subscription?.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
+      const activeTrialSub = user.subscription?.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
+      const hasTrial = user.subscription?.some(s => s.plan.isFreeTrial);
+      const hasPaid = user.subscription?.some(s => !s.plan.isFreeTrial);
+
+      if (activeTrialSub) {
+        categorized["Active-Free-Trial"].push(user);
+      }
+      if (hasTrial && !activeTrialSub && !activePaidSub) {
+        categorized["Inactive-Free-Trial"].push(user);
+      }
+      if (activePaidSub) {
+        categorized["Active-Subscribers"].push(user);
+      }
+      if (hasPaid && !activePaidSub) {
+        categorized["Inactive-Subscribers"].push(user);
+      }
+      if (activeTrialSub || activePaidSub) {
+        categorized["Active-Trial-And-Subscribers"].push(user);
+      }
+
+      if (isDieticianMatch(user)) {
+        categorized["Dietician-Registrants"].push(user);
+        if (hasTrial) {
+          categorized["Free-Trial-And-Dietician-Registrants"].push(user);
         }
-      });
-    } else if (usertype === "Free-Trial-And-Dietician-Registrants") {
-      const paidRegistrations = await prisma.dieticianSessionRegistration.findMany({
-        where: { status: "PAID" },
-        select: { phone: true, email: true },
-      });
-      const phones = paidRegistrations.map(r => r.phone);
-      const cleanPhones = phones.map(p => p.replace(/^\+91/, ""));
-      const emails = paidRegistrations.map(r => r.email);
-
-      const matchUsers = await prisma.user.findMany({
-        where: {
-          OR: [
-            { phoneNumber: { in: phones } },
-            { phoneNumber: { in: cleanPhones } },
-            { email: { in: emails } }
-          ],
-          ...whereClause
-        },
-        include: {
-          subscription: {
-            orderBy: { createdAt: 'desc' },
-            include: { plan: true }
-          }
-        }
-      });
-
-      users = matchUsers.filter(user => 
-        user.subscription.some(s => s.plan.isFreeTrial)
-      );
-    } else {
-      const allUsers = await prisma.user.findMany({
-        where: whereClause,
-        include: {
-          subscription: {
-            orderBy: {
-              createdAt: 'desc',
-            },
-            include: {
-              plan: true,
-            },
-          },
-        },
-      });
-
-      users = allUsers.filter(user => {
-        if (user.subscription.length === 0) {
-          return usertype === "New-Users";
-        }
-
-        const activePaidSub = user.subscription.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
-        const activeTrialSub = user.subscription.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
-
-        const hasTrial = user.subscription.some(s => s.plan.isFreeTrial);
-        const hasPaid = user.subscription.some(s => !s.plan.isFreeTrial);
-
-        switch (usertype) {
-          case "Active-Free-Trial":
-            return !!activeTrialSub;
-          case "Inactive-Free-Trial":
-            // They have trials, but none are active, and they don't have an active paid sub
-            return hasTrial && !activeTrialSub && !activePaidSub;
-          case "Active-Subscribers":
-            return !!activePaidSub;
-          case "Inactive-Subscriber":
-            // They have paid plans, but none are active
-            return hasPaid && !activePaidSub;
-          case "Active-Trial-And-Subscribers":
-            return !!activeTrialSub || !!activePaidSub;
-          default:
-            return false;
-        }
-      });
+      }
     }
 
-    return res.status(200).json({ success: true, users });
+    const counts = {
+      "ALL": categorized["ALL"].length,
+      "ADMIN": categorized["ADMIN"].length,
+      "Active-Free-Trial": categorized["Active-Free-Trial"].length,
+      "Inactive-Free-Trial": categorized["Inactive-Free-Trial"].length,
+      "Active-Subscribers": categorized["Active-Subscribers"].length,
+      "Inactive-Subscribers": categorized["Inactive-Subscribers"].length,
+      "Active-Trial-And-Subscribers": categorized["Active-Trial-And-Subscribers"].length,
+      "Dietician-Registrants": categorized["Dietician-Registrants"].length,
+      "Free-Trial-And-Dietician-Registrants": categorized["Free-Trial-And-Dietician-Registrants"].length,
+      "Dietician-Leads": categorized["Dietician-Leads"].length,
+    };
+
+    // Normalize usertype for singular/plural
+    const normalizedType = usertype === "Inactive-Subscriber" ? "Inactive-Subscribers" : usertype;
+    const users = categorized[normalizedType] || categorized["ALL"];
+
+    return res.status(200).json({ success: true, users, counts });
+  } catch (err) {
+    console.error("Error in getAllUsersAdmin:", err);
+    res.status(500).json({
+      error: "Failed to fetch users.",
+      details: err.message,
+    });
+  }
+};
 
   } catch (err) {
     console.log(err)
