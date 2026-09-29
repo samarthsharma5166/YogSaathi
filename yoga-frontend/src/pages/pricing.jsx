@@ -8,24 +8,28 @@ import axios from 'axios';
 const planHighlights = {
   12: [
     "Daily Yoga classes (6 times a day)",
+    "Flexible Timing",
     "3 Dietician Interactive Webinars",
     "3 Yoga Demo on Zoom",
     "Exclusive Whats App Groups",
   ],
   6: [
     "Daily Yoga classes (6 times a day)",
+    "Flexible Timing",
     "1 Dietician Interactive Webinars",
     "2 Yoga Demo on Zoom",
     "Exclusive Whats App Groups",
   ],
   3: [
     "Daily Yoga classes (6 times a day)",
+    "Flexible Timing",
     "1 Dietician Interactive Webinars",
     "1 Yoga Demo on Zoom",
     "Exclusive Whats App Groups",
   ],
   1: [
     "Daily Yoga classes (6 times a day)",
+    "Flexible Timing",
     "Exclusive Whats App Groups",
   ],
 };
@@ -36,6 +40,7 @@ const planFeatures = [
     badge: "Most Value",
     features: [
       { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "Flexible Timing", sub: "Join any slot at your convenience" },
       { main: "3 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
       { main: "3 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
       { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
@@ -46,6 +51,7 @@ const planFeatures = [
     badge: null,
     features: [
       { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "Flexible Timing", sub: "Join any slot at your convenience" },
       { main: "1 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
       { main: "2 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
       { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
@@ -56,6 +62,7 @@ const planFeatures = [
     badge: null,
     features: [
       { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "Flexible Timing", sub: "Join any slot at your convenience" },
       { main: "1 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
       { main: "1 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
       { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
@@ -66,6 +73,7 @@ const planFeatures = [
     badge: null,
     features: [
       { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "Flexible Timing", sub: "Join any slot at your convenience" },
       { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
     ],
   },
@@ -262,6 +270,53 @@ const PlanFeatureTrays = () => (
 );
 
 
+const planThemeConfig = {
+  12: {
+    badge: "⭐ Best Value & Savings",
+    badgeClass: "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-xs",
+    cardBorder: "border-2 border-[#27500a] shadow-xl shadow-[#27500a]/10 ring-4 ring-[#EAF3DE]/80 scale-[1.01] lg:scale-[1.03]",
+    cardBg: "bg-gradient-to-b from-[#F2F8EC] via-white to-white",
+    titleColor: "text-[#27500a]",
+    perMonthBox: "bg-gradient-to-r from-[#EAF3DE] to-[#d8eebe] border-[#97c459]",
+    btnGradient: "bg-gradient-to-r from-[#27500a] to-[#3B6D11] hover:from-[#1b3807] hover:to-[#27500a] text-white shadow-md shadow-[#27500a]/25",
+    ribbon: "bg-gradient-to-r from-[#27500a] via-[#3B6D11] to-[#4c8c14] text-white",
+    discountTag: "bg-gradient-to-r from-rose-600 to-red-600 text-white",
+  },
+  6: {
+    badge: "🌿 Super Offer",
+    badgeClass: "bg-emerald-100 text-emerald-900 border border-emerald-300",
+    cardBorder: "border border-emerald-200/90 shadow-md hover:shadow-xl hover:border-emerald-400 hover:-translate-y-1",
+    cardBg: "bg-gradient-to-b from-[#FAFDF7] via-white to-white",
+    titleColor: "text-emerald-950",
+    perMonthBox: "bg-emerald-50/80 border-emerald-200",
+    btnGradient: "bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm hover:shadow-md",
+    ribbon: null,
+    discountTag: "bg-emerald-700 text-white",
+  },
+  3: {
+    badge: "✨ Big Offer",
+    badgeClass: "bg-teal-100 text-teal-900 border border-teal-300",
+    cardBorder: "border border-teal-200/90 shadow-md hover:shadow-xl hover:border-teal-400 hover:-translate-y-1",
+    cardBg: "bg-gradient-to-b from-[#F7FCFC] via-white to-white",
+    titleColor: "text-teal-950",
+    perMonthBox: "bg-teal-50/80 border-teal-200",
+    btnGradient: "bg-teal-700 hover:bg-teal-800 text-white shadow-sm hover:shadow-md",
+    ribbon: null,
+    discountTag: "bg-teal-700 text-white",
+  },
+  1: {
+    badge: "🎯 Basic Monthly",
+    badgeClass: "bg-slate-100 text-slate-800 border border-slate-300",
+    cardBorder: "border border-gray-200/80 shadow-sm hover:shadow-lg hover:border-gray-300 hover:-translate-y-1",
+    cardBg: "bg-white",
+    titleColor: "text-gray-900",
+    perMonthBox: "bg-gray-50 border-gray-200",
+    btnGradient: "bg-white text-[#27500a] border-2 border-[#27500a] hover:bg-[#EAF3DE]",
+    ribbon: null,
+    discountTag: "bg-slate-700 text-white",
+  },
+};
+
 const durationOfferDetails = {
   12: { originalSale: 3099, extraOff: 1100, label: "Bumper Offer", usdOriginal: 180, usdSavings: "61%" },
   6: { originalSale: 2499, extraOff: 1100, label: "Super Offer", usdOriginal: 90, usdSavings: "55%" },
@@ -312,17 +367,17 @@ const Pricing = () => {
         
         {/* Header Section */}
         <div className="text-center mb-6">
-          <span className="inline-block bg-[#EAF3DE] text-[#3B6D11] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+          <span className="inline-block text-2xl! bg-[#EAF3DE] text-[#27500a] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
             Membership Plans
           </span>
           <h2 className="text-3xl font-extrabold text-[#27500a] tracking-tight mb-1.5">
-            <span className="mb-1! text-4xl">YogSaathi Announces Special Offers on Ist Anniversary.</span><br /> <span className="text-red-500 text-xl font-bold mt-1">Offers Valid for Limited Time - Hurry Up! Subscribe Now! Special Anniversary Discounts</span>
+            <span className="mb-1! text-4xl">YogSaathi Announces Special Offers on Ist Anniversary</span><br /> <span className="text-red-500 text-xl font-bold mt-1">Offers Valid for Limited Time - Hurry Up! Subscribe Now! Special Anniversary Discounts</span>
           </h2>
           <p className="text-gray-600 text-sm max-w-xl mx-auto">
             Choose a plan that fits your lifestyle. Get daily guidance, personalized postures, and holistic wellness support.
           </p>
           <p className="text-3xl max-w-xl mx-auto">
-            Thank you very much <span className="text-green-800 italic">1000+</span> have done <span className="text-green-800 italic">yoga</span> with us.
+            Thank you very much! <br/><span className="text-green-800 font-semibold">1000+</span> have done <span className="text-green-800 italic">yoga</span> with us.
           </p>
         </div>
 
@@ -362,12 +417,12 @@ const Pricing = () => {
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <p className="text-center text-red-500 text-lg animate-pulse tracking-wider" style={{fontWeight:500}} >Limited Time Offer! Get extra discount on each plan!</p>
-        </div>
+        </div> */}
 
         {/* Pricing Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-8 items-stretch">
           {plans && plans.length > 0 ? (
             plans.map((plan) => {
               const offerInfo = durationOfferDetails[plan.duration] || {
@@ -379,138 +434,141 @@ const Pricing = () => {
               };
 
               const isPopular = plan.duration === 12;
+              const theme = planThemeConfig[plan.duration] || planThemeConfig[1];
+
+              const originalPerMonthInr = Math.round(plan.orignalPriceInInr / plan.duration);
+              const effectivePerMonthInr = Math.round(plan.inrPrice / plan.duration);
+
+              const originalPerMonthUsd = Math.round(offerInfo.usdOriginal / plan.duration);
+              const effectivePerMonthUsd = Math.round(plan.usdPrice / plan.duration);
 
               return (
                 <div
                   key={plan.name}
-                  className={`bg-white rounded-2xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden p-5 md:p-6 border ${
-                    isPopular
-                      ? "border-[#3B6D11] border-2 shadow-lg scale-[1.01] lg:scale-[1.02]"
-                      : "border-gray-200/80 shadow-sm hover:shadow-md hover:-translate-y-0.5"
-                  }`}
+                  className={`rounded-2xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden p-5 md:p-6 ${theme.cardBg} ${theme.cardBorder}`}
                 >
                   {/* Highlight Ribbon */}
-                  {isPopular && (
-                    <div className="absolute top-0 right-0 left-0 bg-[#3B6D11] text-white text-center py-1 text-[10px] font-bold tracking-widest uppercase">
-                      Best Value & Savings
+                  {theme.ribbon && (
+                    <div className={`absolute top-0 right-0 left-0 ${theme.ribbon} text-center py-1 text-[12px] font-black tracking-widest uppercase shadow-xs`}>
+                      ★ BEST VALUE & SAVINGS ★
                     </div>
                   )}
 
-                  {/* Plan Badge */}
-                  <div className="mb-4 pt-3 text-center">
-                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
-                      isPopular 
-                        ? "bg-[#EAF3DE] text-[#3B6D11]" 
-                        : "bg-gray-100 text-gray-500"
-                    }`}>
-                      {offerInfo.label}
+                  {/* Plan Badge & Header */}
+                  <div className={`mb-3 flex flex-col gap-2 text-center ${isPopular ? "pt-4" : "pt-1"}`}>
+                    <span className={`inline-block text-[12px] font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-full ${theme.badgeClass}`}>
+                      {theme.badge}
                     </span>
-                    <h3 className="text-xl font-extrabold text-gray-900 mt-2">{plan.name}</h3>
-                    <p className="text-xs text-gray-500 font-semibold mt-0.5">
-                      {plan.duration} {plan.duration === 1 ? 'Month' : 'Months'} Membership
-                    </p>
+                    {/* <h3 className={`text-2xl font-black ${theme.titleColor} mt-2 tracking-tight`}>
+                      {plan.name}
+                    </h3> */}
+                    <div className="inline-block bg-white/90 px-3 py-0.5 rounded-full text-md font-bold text-gray-700 border border-gray-200 shadow-2xs mt-1">
+                      {plan.duration} {plan.duration === 1 ? 'Month' : 'Months'} 
+                    </div>
                   </div>
 
                   {/* Pricing Stack */}
-                  <div className="my-3 py-2.5 border-t border-b border-gray-100 flex flex-col justify-center min-h-[120px] text-center">
+                  <div className="my-2 py-3 border-y border-gray-200/70 flex flex-col justify-center text-center">
                     {currency === "INR" ? (
                       <>
-                        {/* Strikethrough MRP and Regular Sale Price */}
-                        <div className="flex flex-col gap-0.5 mb-1.5">
-                          <div className="text-[11px] text-gray-400 font-semibold">
-                            MRP: <span className="line-through">₹{plan.orignalPriceInInr}</span>
-                          </div>
-                          {/* <div className="text-xs text-gray-500 font-semibold flex items-center justify-center gap-1">
-                            Regular: <span className="line-through font-bold text-gray-600">₹{offerInfo.originalSale}</span>
-                          </div> */}
+                        {/* MRP Line + Discount badge */}
+                        <div className="flex items-center justify-center gap-2 mb-1 flex-wrap">
+                          <span className="text-md text-gray-400 font-semibold line-through">
+                            MRP: ₹{plan.orignalPriceInInr}
+                          </span>
+                          {/* {plan.duration > 1 && (
+                            <span className="text-[11px] text-gray-400 line-through">
+                              (₹{originalPerMonthInr}/mo)
+                            </span>
+                          )} */}
+                          <span className={`text-[11px] font-black px-2 py-0.5 rounded-full uppercase tracking-wide shadow-2xs ${theme.discountTag}`}>
+                            {plan.discount}% OFF
+                          </span>
                         </div>
-
-                        {/* Extra Discount Tag */}
-                        {/* <div className="inline-flex items-center justify-center gap-1 bg-[#EAF3DE] border border-[#a3c97a] rounded-md px-2 py-0.5 text-[#3B6D11] text-[12px] font-extrabold mx-auto mb-2">
-                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581a1.125 1.125 0 0 0 1.59 0l6.198-6.198a1.125 1.125 0 0 0 0-1.59L11.16 3.659A2.25 2.25 0 0 0 9.568 3Z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 7.5h.008v.008H6V7.5Z" />
-                          </svg>
-                          Save ₹{offerInfo.extraOff} Extra!
-                        </div> */}
 
                         {/* Current Final Price */}
-                        <div className="flex items-baseline justify-center gap-0.5">
-                          <span className="text-3xl font-black text-gray-900">₹{plan.inrPrice}</span>
-                          <span className="text-gray-500 text-[10px] font-semibold">only</span>
+                        <div className="flex items-baseline justify-center gap-1 my-0.5">
+                          <span className="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
+                            ₹{plan.inrPrice}
+                          </span>
+                          <span className="text-gray-500 text-xs font-semibold italic">
+                            total
+                          </span>
                         </div>
 
-                        {/* Percentage Off MRP */}
-                        <div className="text-[10px] font-black text-[#3B6D11] mt-1">
-                          {plan.discount}% Total Savings Off MRP
+                        {/* Prominent Per Month Callout Box */}
+                        <div className={`mt-2 py-1.5 px-3 rounded-xl  flex items-center justify-between`}>
+                          <span className="text-[11px] font-bold text-gray-600 uppercase tracking-wide">
+                            Per Month:
+                          </span>
+                          <span className="text-base font-black text-gray-600! flex items-baseline gap-0.5">
+                            ₹{effectivePerMonthInr}
+                            <span className="text-[11px] text-gray-600 font-semibold">/mo</span>
+                          </span>
                         </div>
                       </>
                     ) : (
                       <>
                         {/* USD Pricing representation */}
-                        <div className="flex flex-col gap-0.5 mb-1.5">
-                          <div className="text-[11px] text-gray-400 font-semibold">
-                            Standard: <span className="line-through">${offerInfo.usdOriginal}</span>
-                          </div>
+                        <div className="flex items-center justify-center gap-2 mb-1 flex-wrap">
+                          <span className="text-xs text-gray-400 font-semibold line-through">
+                            Standard: ${offerInfo.usdOriginal}
+                          </span>
+                          {plan.duration > 1 && (
+                            <span className="text-[10px] font-extrabold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
+                              Save {offerInfo.usdSavings}
+                            </span>
+                          )}
                         </div>
 
-                        {plan.duration > 1 && (
-                          <div className="inline-flex items-center justify-center gap-1 bg-amber-50 border border-amber-200 rounded-md px-2 py-0.5 text-amber-700 text-[10px] font-extrabold mx-auto mb-2">
-                            Save {offerInfo.usdSavings} vs Monthly!
-                          </div>
-                        )}
-
-                        <div className="flex items-baseline justify-center gap-0.5">
-                          <span className="text-3xl font-black text-gray-900">${plan.usdPrice}</span>
-                          <span className="text-gray-500 text-[10px] font-semibold">/ pack</span>
+                        <div className="flex items-baseline justify-center gap-1 my-0.5">
+                          <span className="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
+                            ${plan.usdPrice}
+                          </span>
+                          <span className="text-gray-500 text-xs font-semibold italic">
+                            total
+                          </span>
                         </div>
 
-                        <div className="text-[10px] font-bold text-gray-500 mt-1">
-                          Billed once
+                        {/* USD Per Month Box */}
+                        <div className={`mt-2 py-1.5 px-3 rounded-xl border flex items-center justify-between ${theme.perMonthBox}`}>
+                          <span className="text-[11px] font-bold text-gray-700 uppercase tracking-wide">
+                            Per Month:
+                          </span>
+                          <span className="text-base font-black text-emerald-900 flex items-baseline gap-0.5">
+                            ${effectivePerMonthUsd}
+                            <span className="text-[11px] text-gray-600 font-semibold">/mo</span>
+                          </span>
                         </div>
                       </>
                     )}
                   </div>
 
                   {/* Highlights included in this card */}
-                  <div className="space-y-1.5 mb-5 text-left text-xs min-h-[110px]">
-                    <div className="text-[10px] font-bold uppercase text-gray-400 tracking-wider mb-0.5">Highlights</div>
+                  <div className="space-y-2 mb-5 text-left text-xs min-h-[145px] pt-1">
+                    <div className="text-[11px] text-center font-extrabold uppercase bg-amber-400/90 py-1 text-gray-700 rounded-xl px-2 tracking-wider mb-2 flex items-center justify-center gap-1">
+                      Plan Includeds
+                    </div>
                     {(planHighlights[plan.duration] || ["Exclusive Whats App Groups"]).map((highlight, idx) => (
-                      <div key={idx} className="flex items-center gap-1.5 text-gray-700">
-                        <CircleCheckIcon />
+                      <div key={idx} className="flex items-start gap-2 text-gray-700 font-medium text-[13px] leading-snug">
+                        <div className="mt-0.5 bg-[#EAF3DE] text-[#27500a] p-0.5 rounded-full flex-shrink-0 flex items-center justify-center">
+                          <CircleCheckIcon />
+                        </div>
                         <span>{highlight}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* CTA Button */}
-                  <Button
-                    size="medium"
-                    variant="contained"
-                    fullWidth
+                  <button
                     onClick={() => handleClick(plan.id, currency)}
-                    sx={{
-                      backgroundColor: isPopular ? "#3B6D11" : "#ffffff",
-                      color: isPopular ? "#ffffff" : "#3B6D11",
-                      border: isPopular ? "none" : "2px solid #3B6D11",
-                      borderRadius: "12px",
-                      padding: "8px 16px",
-                      fontWeight: "bold",
-                      textTransform: "none",
-                      fontSize: "0.85rem",
-                      boxShadow: isPopular ? "0 2px 6px rgba(59, 109, 17, 0.15)" : "none",
-                      "&.MuiButton-root": {
-                        marginTop: "auto"
-                      },
-                      "&:hover": {
-                        backgroundColor: isPopular ? "#2d540d" : "#EAF3DE",
-                        borderColor: "#3B6D11",
-                        boxShadow: isPopular ? "0 4px 10px rgba(59, 109, 17, 0.2)" : "none",
-                      }
-                    }}
+                    className={`w-full py-3 px-4 rounded-xl font-extrabold text-sm tracking-wide transition-all duration-200 flex items-center justify-center gap-2 mt-auto cursor-pointer ${theme.btnGradient} hover:scale-[1.02] active:scale-[0.99]`}
                   >
-                    Buy Now
-                  </Button>
+                    <span>Subscribe Now</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                    </svg>
+                  </button>
                 </div>
               );
             })

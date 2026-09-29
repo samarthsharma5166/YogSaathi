@@ -271,6 +271,7 @@ const CheckoutPage = () => {
             case 12:
                 return [
                     { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+                    { main: "Flexible Timing", sub: "Join any slot at your convenience" },
                     { main: "3 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
                     { main: "3 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
                     { main: "Exclusive Whats App Groups", sub: "Daily access & community support" }
@@ -278,6 +279,7 @@ const CheckoutPage = () => {
             case 6:
                 return [
                     { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+                    { main: "Flexible Timing", sub: "Join any slot at your convenience" },
                     { main: "1 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
                     { main: "2 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
                     { main: "Exclusive Whats App Groups", sub: "Daily access & community support" }
@@ -285,6 +287,7 @@ const CheckoutPage = () => {
             case 3:
                 return [
                     { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+                    { main: "Flexible Timing", sub: "Join any slot at your convenience" },
                     { main: "1 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
                     { main: "1 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
                     { main: "Exclusive Whats App Groups", sub: "Daily access & community support" }
@@ -293,6 +296,7 @@ const CheckoutPage = () => {
             default:
                 return [
                     { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+                    { main: "Flexible Timing", sub: "Join any slot at your convenience" },
                     { main: "Exclusive Whats App Groups", sub: "Daily access & community support" }
                 ];
         }
