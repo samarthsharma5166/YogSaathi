@@ -192,3 +192,52 @@ export const freeTrialOfferHindiJob = new CronJob('0 11 * * *', async () => {
     scheduled: true,
     timezone: "Asia/Kolkata",
 });
+
+
+
+export const trialExpiryNotificationJob = new CronJob('0 17 * * *', async () => {
+    try {
+        const now = new Date();
+
+        // 1. Fetch all active free trial subscriptions with user details
+        const activeTrials = await prisma.subscription.findMany({
+            where: {
+                status: "active",
+                expiresAt: { gte: now },
+                plan: {
+                    isFreeTrial: true,
+                },
+            },
+            include: {
+                user: true,
+                plan: true,
+            },
+        });
+
+        for (const sub of activeTrials) {
+            try {
+                if (!sub.user || !sub.user.phoneNumber || !sub.startDate) continue;
+
+                // 2. Calculate day of free trial from start date (Day 1 = startDate)
+                const diffDays = differenceInCalendarDays(now, new Date(sub.startDate)) + 1;
+
+                // 3. Send expiry notification on 10th and 13th days
+                if (diffDays === 10 || diffDays === 13) {
+                    await trial_expiry_notification(
+                        sub.user.phoneNumber,
+                        sub.user.name
+                    );
+                    await new Promise((resolve) => setTimeout(resolve, 100)); // Rate-limit buffer
+                }
+            } catch (userErr) {
+                console.error(`[trialExpiryNotificationJob] Error sending message to ${sub.user?.phoneNumber}:`, userErr.message);
+            }
+        }
+    } catch (err) {
+        console.error("[trialExpiryNotificationJob] Error in trial expiry notification job:", err);
+    }
+}, {
+    scheduled: true,
+    timezone: "Asia/Kolkata",
+});
+

@@ -1894,7 +1894,7 @@ export const retreat_info_brochure = (number, name) => {
 }
 
 export const trial_expiry_notification = (number, name) => {
-    axios.post("https://backend.chatmitra.com/developer/api/send_message", {
+    return axios.post("https://backend.chatmitra.com/developer/api/send_message", {
         recipient_mobile_number: number,
         messages: [{
             kind: "template",
