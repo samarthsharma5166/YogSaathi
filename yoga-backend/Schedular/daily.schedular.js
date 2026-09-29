@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
 import { prisma } from '../db/db.js';
-import { trial_expiry_notification, subscription_offer_day_english } from '../utils/messages.js';
+import { trial_expiry_notification, subscription_offer_day_english, subscription_offer_day_hindi } from '../utils/messages.js';
 import { differenceInCalendarDays } from 'date-fns';
 
 export const dailyJob = new CronJob('0 9 * * *', async () => {
@@ -46,6 +46,10 @@ export const dailyJob = new CronJob('0 9 * * *', async () => {
 });
 
 const TRIAL_OFFER_CONFIG = {
+    5:{
+        image:"https://cdn.chatmitra.com/images/WhatsApp%20Image%202026-09-29%20at%2014.28.12_1790672410729.jpeg",
+        days:"5th day"
+    },
     7: {
         image: "https://cdn.chatmitra.com/images/WhatsApp%20Image%202026-09-22%20at%2010.51.04_1790138624023.jpeg",
         days: "7th day",
@@ -113,3 +117,78 @@ export const freeTrialOfferJob = new CronJob('0 20 * * *', async () => {
     timezone: "Asia/Kolkata",
 });
 
+
+
+const TRIAL_HINDI_OFFER_CONFIG = {
+    5: {
+        image: "https://cdn.chatmitra.com/images/WhatsApp%20Image%202026-09-29%20at%2014.28.12%20(1)_1790672714577.jpeg",
+        days: "5th day"
+    },
+    7: {
+        image: "https://cdn.chatmitra.com/images/WhatsApp%20Image%202026-09-29%20at%2014.28.13_1790672812510.jpeg",
+        days: "7th day",
+    },
+    9: {
+        image: "https://cdn.chatmitra.com/images/WhatsApp%20Image%202026-09-29%20at%2014.28.14_1790672864873.jpeg",
+        days: "9th day",
+    },
+    12: {
+        image: "https://cdn.chatmitra.com/images/WhatsApp%20Image%202026-09-29%20at%2014.28.15_1790672911214.jpeg",
+        days: "12th day",
+    },
+    14: {
+        image: "https://cdn.chatmitra.com/images/WhatsApp%20Image%202026-09-29%20at%2014.28.16_1790672956599.jpeg",
+        days: "14th day",
+    },
+};
+
+
+
+export const freeTrialOfferHindiJob = new CronJob('0 21 * * *', async () => {
+    try {
+        const now = new Date();
+
+        // 1. Fetch all active free trial subscriptions with user details
+        const activeTrials = await prisma.subscription.findMany({
+            where: {
+                status: "active",
+                expiresAt: { gte: now },
+                plan: {
+                    isFreeTrial: true,
+                },
+            },
+            include: {
+                user: true,
+                plan: true,
+            },
+        });
+
+        for (const sub of activeTrials) {
+            try {
+                if (!sub.user || !sub.user.phoneNumber) continue;
+
+                // 2. Calculate remaining days in free trial
+                const daysLeft = differenceInCalendarDays(new Date(sub.expiresAt), now);
+                const offer = TRIAL_HINDI_OFFER_CONFIG[daysLeft];
+
+                // 3. Send offer template if daysLeft is 7, 9, 12, or 14
+                if (offer) {
+                    await subscription_offer_day_hindi(
+                        sub.user.phoneNumber,
+                        sub.user.name,
+                        offer.image,
+                        offer.days
+                    );
+                    await new Promise((resolve) => setTimeout(resolve, 100)); // Rate-limit buffer
+                }
+            } catch (userErr) {
+                console.error(`[freeTrialOfferJob] Error sending message to ${sub.user?.phoneNumber}:`, userErr.message);
+            }
+        }
+    } catch (err) {
+        console.error("[freeTrialOfferJob] Error in free trial offer job:", err);
+    }
+}, {
+    scheduled: true,
+    timezone: "Asia/Kolkata",
+});
