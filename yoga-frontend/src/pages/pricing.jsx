@@ -362,7 +362,7 @@ const Pricing = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white py-6 px-4 md:px-6 text-[#1C2623] font-sans flex flex-col justify-center">
+    <div className="min-h-screen bg-[#FAF8F5] py-6 px-4 md:px-6 text-[#1C2623] font-sans flex flex-col justify-center">
       <div className="max-w-7xl mx-auto w-full">
         
         {/* Header Section */}
