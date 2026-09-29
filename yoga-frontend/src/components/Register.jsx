@@ -245,7 +245,7 @@ function Register() {
       <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center relative z-10 pb-4">
 
         {/* LEFT COLUMN: Visual Showcase & Trial Perks */}
-        <div className="lg:col-span-7 flex flex-col justify-center space-y-3">
+        <div className="order-2 lg:order-1 lg:col-span-7 flex flex-col justify-center space-y-3">
 
           {/* Featured Yoga Studio Hero Image */}
           <motion.div
@@ -310,7 +310,7 @@ function Register() {
         </div>
 
         {/* RIGHT COLUMN: Modern Compact Registration Form Card */}
-        <div className="lg:col-span-5 flex justify-center w-full">
+        <div className="order-1 lg:order-2 lg:col-span-5 flex justify-center w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
