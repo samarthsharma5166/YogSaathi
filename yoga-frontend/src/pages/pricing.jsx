@@ -9,28 +9,28 @@ const planHighlights = {
   12: [
     "Daily Yoga classes (6 times a day)",
     "Flexible Timing",
-    "3 Dietician Interactive Webinars",
+    "3 Dietician Interactive Webinar",
     "3 Yoga Demo on Zoom",
-    "Exclusive Whats App Groups",
+    "Exclusive WhatsApp Groups",
   ],
   6: [
     "Daily Yoga classes (6 times a day)",
     "Flexible Timing",
-    "1 Dietician Interactive Webinars",
+    "1 Dietician Interactive Webinar",
     "2 Yoga Demo on Zoom",
-    "Exclusive Whats App Groups",
+    "Exclusive WhatsApp Groups",
   ],
   3: [
     "Daily Yoga classes (6 times a day)",
     "Flexible Timing",
-    "1 Dietician Interactive Webinars",
+    "1 Dietician Interactive Webinar",
     "1 Yoga Demo on Zoom",
-    "Exclusive Whats App Groups",
+    "Exclusive Whats AppGroups",
   ],
   1: [
     "Daily Yoga classes (6 times a day)",
     "Flexible Timing",
-    "Exclusive Whats App Groups",
+    "Exclusive Whats AppGroups",
   ],
 };
 
