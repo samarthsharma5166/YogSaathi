@@ -63,7 +63,7 @@ const TRIAL_OFFER_CONFIG = {
         days: "12th day",
     },
     14: {
-        image: "https://cdn.chatmitra.com/images/logo%20YogSaathi_1785751511046.png",
+        image: "https://cdn.chatmitra.com/images/WhatsApp%20Image%202026-09-29%20at%2014.28.15%20(1)_1790675291435.jpeg",
         days: "14th day",
     },
 };
