@@ -139,15 +139,6 @@ export const getAllUsersAdmin = async (req, res) => {
     });
   }
 };
-
-  } catch (err) {
-    console.log(err)
-    res.status(500).json({
-      error: "Failed to fetch users.",
-      details: err.message,
-    });
-  }
-};
 // ----------Get All Users That Subscribed To A Plan----------
 export const getPaidSubscribers = async (req, res) => {
   try {
