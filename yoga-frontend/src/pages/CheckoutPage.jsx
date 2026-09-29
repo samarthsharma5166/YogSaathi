@@ -270,35 +270,30 @@ const CheckoutPage = () => {
         switch (plan.duration) {
             case 12:
                 return [
-                    { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
-                    { main: "3 Online Yoga Consultations", sub: "Posture correction" },
-                    { main: "2 Online Dietician Consultations", sub: "Certified dietician" },
-                    { main: "Diet Suggestions & Support", sub: "Personalized advice" },
-                    { main: "Exclusive WhatsApp Group", sub: "Daily access links" }
+                    { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+                    { main: "3 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
+                    { main: "3 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
+                    { main: "Exclusive Whats App Groups", sub: "Daily access & community support" }
                 ];
             case 6:
                 return [
-                    { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
-                    { main: "2 Online Yoga Consultations", sub: "Posture correction" },
-                    { main: "1 Online Dietician Consultation", sub: "Certified dietician" },
-                    { main: "Diet Suggestions & Support", sub: "Personalized advice" },
-                    { main: "Exclusive WhatsApp Group", sub: "Daily access links" }
+                    { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+                    { main: "1 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
+                    { main: "2 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
+                    { main: "Exclusive Whats App Groups", sub: "Daily access & community support" }
                 ];
             case 3:
                 return [
-                    { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
-                    { main: "1 Online Yoga Consultation", sub: "Posture correction" },
-                    { main: "1 Online Dietician Consultation", sub: "Certified dietician" },
-                    { main: "Diet Suggestions & Support", sub: "Personalized advice" },
-                    { main: "Exclusive WhatsApp Group", sub: "Daily access links" }
+                    { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+                    { main: "1 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
+                    { main: "1 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
+                    { main: "Exclusive Whats App Groups", sub: "Daily access & community support" }
                 ];
             case 1:
             default:
                 return [
-                    { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
-                    { main: "1 Online Dietician Consultation", sub: "Certified dietician" },
-                    { main: "Diet Suggestions & Support", sub: "Personalized advice" },
-                    { main: "Exclusive WhatsApp Group", sub: "Daily access links" }
+                    { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+                    { main: "Exclusive Whats App Groups", sub: "Daily access & community support" }
                 ];
         }
     };

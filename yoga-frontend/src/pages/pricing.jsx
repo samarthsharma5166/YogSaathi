@@ -5,40 +5,68 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
+const planHighlights = {
+  12: [
+    "Daily Yoga classes (6 times a day)",
+    "3 Dietician Interactive Webinars",
+    "3 Yoga Demo on Zoom",
+    "Exclusive Whats App Groups",
+  ],
+  6: [
+    "Daily Yoga classes (6 times a day)",
+    "1 Dietician Interactive Webinars",
+    "2 Yoga Demo on Zoom",
+    "Exclusive Whats App Groups",
+  ],
+  3: [
+    "Daily Yoga classes (6 times a day)",
+    "1 Dietician Interactive Webinars",
+    "1 Yoga Demo on Zoom",
+    "Exclusive Whats App Groups",
+  ],
+  1: [
+    "Daily Yoga classes (6 times a day)",
+    "Exclusive Whats App Groups",
+  ],
+};
+
 const planFeatures = [
   {
     duration: 12,
     badge: "Most Value",
     features: [
-      { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
-      { main: "3 Live Yoga Online Consultations", sub: "Posture correction & queries" },
-      { main: "2 Dietician Online Consultations", sub: "Certified dietician" },
+      { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "3 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
+      { main: "3 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
+      { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
     ],
   },
   {
     duration: 6,
     badge: null,
     features: [
-      { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
-      { main: "2 Live Yoga Online Consultations", sub: "Posture correction & queries" },
-      { main: "1 Dietician Online Consultation", sub: "Certified dietician" },
+      { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "1 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
+      { main: "2 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
+      { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
     ],
   },
   {
     duration: 3,
     badge: null,
     features: [
-      { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
-      { main: "1 Live Yoga Online Consultation", sub: "Posture correction & queries" },
-      { main: "1 Dietician Online Consultation", sub: "Certified dietician" },
+      { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "1 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
+      { main: "1 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
+      { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
     ],
   },
   {
     duration: 1,
     badge: null,
     features: [
-      { main: "Daily Online Sessions (45 min)", sub: "6 sessions per day" },
-      { main: "1 Dietician Online Consultation", sub: "Certified dietician" },
+      { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
     ],
   },
 ];
@@ -181,9 +209,8 @@ const PlanFeatureTrays = () => (
 
             {/* Static Features */}
             {[
-              "Diet Suggestions",
-              "Support for Queries",
-              "Exclusive WhatsApp Group",
+              "Diet Suggestions & Nutrition Guidance",
+              "Live Query Support & Guidance",
             ].map((item) => (
               <div
                 key={item}
@@ -289,10 +316,13 @@ const Pricing = () => {
             Membership Plans
           </span>
           <h2 className="text-3xl font-extrabold text-[#27500a] tracking-tight mb-1.5">
-            This Rakshabandhan, Tie the Bond of Love with the Promise of Better Health.
+            <span className="mb-1! text-4xl">YogSaathi Announces Special Offers on Ist Anniversary.</span><br /> <span className="text-red-500 text-xl font-bold mt-1">Offers Valid for Limited Time - Hurry Up! Subscribe Now! Special Anniversary Discounts</span>
           </h2>
           <p className="text-gray-600 text-sm max-w-xl mx-auto">
             Choose a plan that fits your lifestyle. Get daily guidance, personalized postures, and holistic wellness support.
+          </p>
+          <p className="text-3xl max-w-xl mx-auto">
+            Thank you very much <span className="text-green-800 italic">1000+</span> have done <span className="text-green-800 italic">yoga</span> with us.
           </p>
         </div>
 
@@ -443,26 +473,14 @@ const Pricing = () => {
                   </div>
 
                   {/* Highlights included in this card */}
-                  <div className="space-y-1.5 mb-5 text-left text-xs">
+                  <div className="space-y-1.5 mb-5 text-left text-xs min-h-[110px]">
                     <div className="text-[10px] font-bold uppercase text-gray-400 tracking-wider mb-0.5">Highlights</div>
-                    <div className="flex items-center gap-1.5 text-gray-700">
-                      <CircleCheckIcon />
-                      <span>Daily live classes (6x a day)</span>
-                    </div>
-                    {plan.duration >= 3 && (
-                      <div className="flex items-center gap-1.5 text-gray-700">
+                    {(planHighlights[plan.duration] || ["Exclusive Whats App Groups"]).map((highlight, idx) => (
+                      <div key={idx} className="flex items-center gap-1.5 text-gray-700">
                         <CircleCheckIcon />
-                        <span>
-                          {plan.duration === 12 ? '3' : plan.duration === 6 ? '2' : '1'} Yoga Consultations
-                        </span>
+                        <span>{highlight}</span>
                       </div>
-                    )}
-                    <div className="flex items-center gap-1.5 text-gray-700">
-                      <CircleCheckIcon />
-                      <span>
-                        {plan.duration === 1 ? '1' : plan.duration === 12 ? '2' : '1'} Dietician Consultations
-                      </span>
-                    </div>
+                    ))}
                   </div>
 
                   {/* CTA Button */}
