@@ -182,11 +182,11 @@ export const freeTrialOfferHindiJob = new CronJob('0 21 * * *', async () => {
                     await new Promise((resolve) => setTimeout(resolve, 100)); // Rate-limit buffer
                 }
             } catch (userErr) {
-                console.error(`[freeTrialOfferJob] Error sending message to ${sub.user?.phoneNumber}:`, userErr.message);
+                console.error(`[freeTrialOfferHindiJob] Error sending message to ${sub.user?.phoneNumber}:`, userErr.message);
             }
         }
     } catch (err) {
-        console.error("[freeTrialOfferJob] Error in free trial offer job:", err);
+        console.error("[freeTrialOfferHindiJob] Error in free trial offer Hindi job:", err);
     }
 }, {
     scheduled: true,
