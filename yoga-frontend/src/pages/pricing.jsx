@@ -272,7 +272,7 @@ const PlanFeatureTrays = () => (
 
 const planThemeConfig = {
   12: {
-    badge: "⭐ Best Value & Savings",
+    badge: "⭐ Best Value Offers",
     badgeClass: "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-xs",
     cardBorder: "border-2 border-[#27500a] shadow-xl shadow-[#27500a]/10 ring-4 ring-[#EAF3DE]/80 scale-[1.01] lg:scale-[1.03]",
     cardBg: "bg-gradient-to-b from-[#F2F8EC] via-white to-white",
@@ -302,10 +302,10 @@ const planThemeConfig = {
     perMonthBox: "bg-teal-50/80 border-teal-200",
     btnGradient: "bg-teal-700 hover:bg-teal-800 text-white shadow-sm hover:shadow-md",
     ribbon: null,
-    discountTag: "bg-teal-700 text-white",
+    discountTag: "bg-emerald-700 text-white",
   },
   1: {
-    badge: "🎯 Basic Monthly",
+    badge: "🏷️ Starter Offer",
     badgeClass: "bg-slate-100 text-slate-800 border border-slate-300",
     cardBorder: "border border-gray-200/80 shadow-sm hover:shadow-lg hover:border-gray-300 hover:-translate-y-1",
     cardBg: "bg-white",
@@ -313,7 +313,7 @@ const planThemeConfig = {
     perMonthBox: "bg-gray-50 border-gray-200",
     btnGradient: "bg-white text-[#27500a] border-2 border-[#27500a] hover:bg-[#EAF3DE]",
     ribbon: null,
-    discountTag: "bg-slate-700 text-white",
+    discountTag: "bg-emerald-700 text-white",
   },
 };
 
@@ -448,11 +448,11 @@ const Pricing = () => {
                   className={`rounded-2xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden p-5 md:p-6 ${theme.cardBg} ${theme.cardBorder}`}
                 >
                   {/* Highlight Ribbon */}
-                  {theme.ribbon && (
+                  {/* {theme.ribbon && (
                     <div className={`absolute top-0 right-0 left-0 ${theme.ribbon} text-center py-1 text-[12px] font-black tracking-widest uppercase shadow-xs`}>
                       ★ BEST VALUE & SAVINGS ★
                     </div>
-                  )}
+                  )} */}
 
                   {/* Plan Badge & Header */}
                   <div className={`mb-3 flex flex-col gap-2 text-center ${isPopular ? "pt-4" : "pt-1"}`}>
@@ -473,21 +473,16 @@ const Pricing = () => {
                       <>
                         {/* MRP Line + Discount badge */}
                         <div className="flex items-center justify-center gap-2 mb-1 flex-wrap">
-                          <span className="text-md text-gray-400 font-semibold line-through">
+                          <span className="text-sm text-gray-400 font-semibold line-through">
                             MRP: ₹{plan.orignalPriceInInr}
                           </span>
-                          {/* {plan.duration > 1 && (
-                            <span className="text-[11px] text-gray-400 line-through">
-                              (₹{originalPerMonthInr}/mo)
-                            </span>
-                          )} */}
                           <span className={`text-[11px] font-black px-2 py-0.5 rounded-full uppercase tracking-wide shadow-2xs ${theme.discountTag}`}>
                             {plan.discount}% OFF
                           </span>
                         </div>
 
                         {/* Current Final Price */}
-                        <div className="flex items-baseline justify-center gap-1 my-0.5">
+                        <div className="flex items-baseline justify-center gap-1.5 my-0.5">
                           <span className="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
                             ₹{plan.inrPrice}
                           </span>
@@ -496,15 +491,9 @@ const Pricing = () => {
                           </span>
                         </div>
 
-                        {/* Prominent Per Month Callout Box */}
-                        <div className={`mt-2 py-1.5 px-3 rounded-xl  flex items-center justify-between`}>
-                          <span className="text-[11px] font-bold text-gray-600 uppercase tracking-wide">
-                            Per Month:
-                          </span>
-                          <span className="text-base font-black text-gray-600! flex items-baseline gap-0.5">
-                            ₹{effectivePerMonthInr}
-                            <span className="text-[11px] text-gray-600 font-semibold">/mo</span>
-                          </span>
+                        {/* Per Month Secondary Text */}
+                        <div className="text-xs text-gray-500 font-medium mt-1">
+                          ₹{effectivePerMonthInr} / month
                         </div>
                       </>
                     ) : (
@@ -521,7 +510,7 @@ const Pricing = () => {
                           )}
                         </div>
 
-                        <div className="flex items-baseline justify-center gap-1 my-0.5">
+                        <div className="flex items-baseline justify-center gap-1.5 my-0.5">
                           <span className="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
                             ${plan.usdPrice}
                           </span>
@@ -530,15 +519,9 @@ const Pricing = () => {
                           </span>
                         </div>
 
-                        {/* USD Per Month Box */}
-                        <div className={`mt-2 py-1.5 px-3 rounded-xl border flex items-center justify-between ${theme.perMonthBox}`}>
-                          <span className="text-[11px] font-bold text-gray-700 uppercase tracking-wide">
-                            Per Month:
-                          </span>
-                          <span className="text-base font-black text-emerald-900 flex items-baseline gap-0.5">
-                            ${effectivePerMonthUsd}
-                            <span className="text-[11px] text-gray-600 font-semibold">/mo</span>
-                          </span>
+                        {/* USD Per Month Secondary Text */}
+                        <div className="text-xs text-gray-500 font-medium mt-1">
+                          ${effectivePerMonthUsd} / month
                         </div>
                       </>
                     )}
