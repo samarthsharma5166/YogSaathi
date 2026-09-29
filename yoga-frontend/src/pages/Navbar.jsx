@@ -157,7 +157,7 @@ const Navbar = () => {
             <div className="flex items-center gap-1 border-l border-gray-300 pl-4">
               <Link
                 to="/price"
-                className="ml-4 inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                className="ml-4 text-center inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
               >
                 Membership Plans
               </Link>
@@ -334,7 +334,7 @@ const Navbar = () => {
             <Link
               to="/price"
               onClick={closeMenu}
-              className="w-full inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all duration-200"
+              className="w-full text-center inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all duration-200"
             >
               Membership Plans
             </Link>
