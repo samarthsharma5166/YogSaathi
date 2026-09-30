@@ -255,6 +255,9 @@ const templateName = [
     {
         name:"yogsaathi_class_attendance_reminder",
         inputs:[]
+    },{
+        name:"ignore_template",
+        inputs:[]
     }
 ];
 
