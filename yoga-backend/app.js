@@ -106,8 +106,8 @@ dieticianSessionJob.start();
 yogaSessionJob.start();
 hourlyJob.start();
 dailyJob.start();
-freeTrialOfferJob.start();
-freeTrialOfferHindiJob.start();
+// freeTrialOfferJob.start();
+// freeTrialOfferHindiJob.start();
 trialExpiryNotificationJob.start();
 weeklyAttendanceJob.start();
 
