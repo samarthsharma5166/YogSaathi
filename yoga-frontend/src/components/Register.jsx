@@ -88,8 +88,8 @@ const testimonials = [
 const trialPerks = [
   {
     icon: Clock,
-    title: "6 Daily Live Batches",
-    desc: "Join any slot from 6:00 AM to 8:00 PM"
+    title: "7 Daily Live Batches",
+    desc: "Join any slot from 5:00 AM to 8:00 PM"
   },
   {
     icon: Activity,

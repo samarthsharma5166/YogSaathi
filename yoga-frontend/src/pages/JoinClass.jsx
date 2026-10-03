@@ -101,7 +101,7 @@ const JoinClass = () => {
                                         <span>⏰</span> Please note the Class Timings:
                                     </p>
                                     <div className="bg-emerald-50/70 border border-emerald-100 rounded-xl p-3 text-xs sm:text-sm font-medium text-emerald-900 space-y-1">
-                                        <p><span className="font-bold">Morning:</span> 6:00 AM • 7:00 AM • 8:30 AM</p>
+                                        <p><span className="font-bold">Morning:</span> 5:00 AM • 6:00 AM • 7:00 AM • 8:30 AM</p>
                                         <p><span className="font-bold">Evening:</span> 5:30 PM • 6:30 PM • 7:30 PM</p>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@ const JoinClass = () => {
                                         <span>⏰</span> कृपया योग कक्षा का समय ध्यान रखें:
                                     </p>
                                     <div className="bg-emerald-50/70 border border-emerald-100 rounded-xl p-3 text-xs sm:text-sm font-medium text-emerald-900 space-y-1">
-                                        <p><span className="font-bold">सुबह:</span> 6:00 बजे • 7:00 बजे • 8:30 बजे</p>
+                                        <p><span className="font-bold">सुबह:</span> 5:00 बजे • 6:00 बजे • 7:00 बजे • 8:30 बजे</p>
                                         <p><span className="font-bold">शाम:</span> 5:30 बजे • 6:30 बजे • 7:30 बजे</p>
                                     </div>
                                 </div>

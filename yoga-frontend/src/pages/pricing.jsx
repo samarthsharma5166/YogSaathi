@@ -7,28 +7,28 @@ import axios from 'axios';
 
 const planHighlights = {
   12: [
-    "Daily Yoga classes (6 times a day)",
+    "Daily Yoga classes (7 times a day)",
     "Flexible Timing",
     "3 Dietician Interactive Webinar",
     "3 Yoga Demo on Zoom",
     "Exclusive WhatsApp Groups",
   ],
   6: [
-    "Daily Yoga classes (6 times a day)",
+    "Daily Yoga classes (7 times a day)",
     "Flexible Timing",
     "1 Dietician Interactive Webinar",
     "2 Yoga Demo on Zoom",
     "Exclusive WhatsApp Groups",
   ],
   3: [
-    "Daily Yoga classes (6 times a day)",
+    "Daily Yoga classes (7 times a day)",
     "Flexible Timing",
     "1 Dietician Interactive Webinar",
     "1 Yoga Demo on Zoom",
     "Exclusive WhatsApp Groups",
   ],
   1: [
-    "Daily Yoga classes (6 times a day)",
+    "Daily Yoga classes (7 times a day)",
     "Flexible Timing",
     "Exclusive WhatsApp Groups",
   ],
@@ -39,42 +39,42 @@ const planFeatures = [
     duration: 12,
     badge: "Most Value",
     features: [
-      { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "Daily Yoga classes (7 times a day)", sub: "7 sessions per day" },
       { main: "Flexible Timing", sub: "Join any slot at your convenience" },
       { main: "3 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
       { main: "3 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
-      { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
+      { main: "Exclusive WhatsApp Groups", sub: "Daily access & community support" },
     ],
   },
   {
     duration: 6,
     badge: null,
     features: [
-      { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "Daily Yoga classes (7 times a day)", sub: "7 sessions per day" },
       { main: "Flexible Timing", sub: "Join any slot at your convenience" },
       { main: "1 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
       { main: "2 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
-      { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
+      { main: "Exclusive WhatsApp Groups", sub: "Daily access & community support" },
     ],
   },
   {
     duration: 3,
     badge: null,
     features: [
-      { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "Daily Yoga classes (7 times a day)", sub: "7 sessions per day" },
       { main: "Flexible Timing", sub: "Join any slot at your convenience" },
       { main: "1 Dietician Interactive Webinars", sub: "Interactive nutrition guidance" },
       { main: "1 Yoga Demo on Zoom", sub: "Posture correction & live demo" },
-      { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
+      { main: "Exclusive WhatsApp Groups", sub: "Daily access & community support" },
     ],
   },
   {
     duration: 1,
     badge: null,
     features: [
-      { main: "Daily Yoga classes (6 times a day)", sub: "6 sessions per day" },
+      { main: "Daily Yoga classes (7 times a day)", sub: "7 sessions per day" },
       { main: "Flexible Timing", sub: "Join any slot at your convenience" },
-      { main: "Exclusive Whats App Groups", sub: "Daily access & community support" },
+      { main: "Exclusive WhatsApp Groups", sub: "Daily access & community support" },
     ],
   },
 ];
