@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { getClassLink } from "../services/api";
-import { FiAlertTriangle, FiCheckCircle } from "react-icons/fi";
+import { FiAlertTriangle, FiCheckCircle, FiLock, FiArrowRight } from "react-icons/fi";
 
 const JoinClass = () => {
     const location = useLocation();
-    const [status, setStatus] = useState("loading"); // 'loading', 'success', 'error', 'no_ref'
+    const [status, setStatus] = useState("loading"); // 'loading', 'success', 'error', 'expired', 'no_ref'
     const [errorMessage, setErrorMessage] = useState("");
 
     const queryParams = new URLSearchParams(location.search);
@@ -35,8 +35,16 @@ const JoinClass = () => {
                 }
             } catch (error) {
                 console.error("Error fetching class:", error);
-                setStatus("error");
-                setErrorMessage(error.response?.data?.message || "We couldn't find an active class right now.");
+                const errData = error.response?.data;
+                const statusHttp = error.response?.status;
+
+                if (statusHttp === 403 || errData?.isExpired || (errData?.message && errData.message.toLowerCase().includes("expire"))) {
+                    setStatus("expired");
+                    setErrorMessage(errData?.message || "Your free trial or subscription has expired.");
+                } else {
+                    setStatus("error");
+                    setErrorMessage(errData?.message || "We couldn't find an active class right now.");
+                }
             }
         };
 
@@ -78,6 +86,73 @@ const JoinClass = () => {
                         <FiCheckCircle className="text-7xl text-green-500 mx-auto" />
                         <h1 className="text-4xl font-bold text-gray-800 mt-6">You're in!</h1>
                         <p className="text-lg text-gray-500">Redirecting you to the class...</p>
+                    </motion.div>
+                );
+            case "expired":
+                return (
+                    <motion.div
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="max-w-xl mx-auto w-full px-4"
+                    >
+                        <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto mb-3 shadow-inner">
+                            <FiLock className="text-3xl" />
+                        </div>
+                        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-2 mb-2">
+                            Subscription / Free Trial Expired
+                        </h1>
+                        <p className="text-sm text-gray-600 max-w-md mx-auto">
+                            Your trial period or membership has ended. Renew your plan to continue attending live classes.
+                        </p>
+
+                        <div className="mt-6 bg-white rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8 text-left space-y-6">
+                            {/* 🇬🇧 English Section */}
+                            <div className="space-y-2">
+                                <h2 className="text-base sm:text-lg font-bold text-gray-800 flex items-center gap-2">
+                                    <span>⚠️</span> Free Trial / Subscription Ended
+                                </h2>
+                                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                                    Your 14-day free trial or active subscription has expired. To continue enjoying daily live interactive yoga sessions with expert instructors, please choose a membership plan.
+                                </p>
+                            </div>
+
+                            {/* 🌐 Divider */}
+                            <div className="relative flex py-1 items-center">
+                                <div className="flex-grow border-t border-gray-200"></div>
+                                <span className="flex-shrink mx-3 text-gray-400 text-xs uppercase tracking-wider font-semibold">हिंदी विवरण</span>
+                                <div className="flex-grow border-t border-gray-200"></div>
+                            </div>
+
+                            {/* 🇮🇳 Hindi Section */}
+                            <div className="space-y-2">
+                                <h2 className="text-base sm:text-lg font-bold text-[#607957] flex items-center gap-2">
+                                    <span>🧘</span> सदस्यता या मुफ्त ट्रायल समाप्त
+                                </h2>
+                                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                                    आपका 14 दिनों का मुफ्त ट्रायल या सदस्यता समाप्त हो चुकी है। दैनिक 7 लाइव बैचों में निरंतर अभ्यास और मार्गदर्शन के लिए कृपया मेंबरशिप प्लान चुनें।
+                                </p>
+                            </div>
+
+                            {/* Call to Action Button */}
+                            <div className="pt-2">
+                                <Link
+                                    to="/price"
+                                    className="w-full group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#27500a] via-[#3B6D11] to-[#27500a] hover:from-[#1e3e08] hover:to-[#2e570c] text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-emerald-900/15 hover:shadow-xl transition-all duration-200 transform hover:scale-[1.01]"
+                                >
+                                    <span>View Membership Plans (प्लान देखें)</span>
+                                    <FiArrowRight className="text-lg group-hover:translate-x-1 transition-transform" />
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div className="mt-5">
+                            <Link
+                                to="/"
+                                className="text-xs text-gray-500 hover:text-gray-800 underline underline-offset-2 font-medium"
+                            >
+                                Return to Homepage
+                            </Link>
+                        </div>
                     </motion.div>
                 );
             case "error":

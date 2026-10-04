@@ -130,6 +130,7 @@ export const getClassLink = async (req, res) => {
             include: {
                 subscription: {
                     where: {
+                        status: "active",
                         expiresAt: { gte: yesterdayUTC },
                         startDate: { lte: tomorrowUTC },
                     },
@@ -138,15 +139,31 @@ export const getClassLink = async (req, res) => {
         });
 
         const commonLink = await prisma.commonLink.findFirst({
-            where: { 
-                ref: code,
-                expiryDate: { gte: yesterdayUTC },
-                startDate: { lte: tomorrowUTC },
-             },
+            where: { ref: code },
         });
 
         if (!user && !commonLink) {
-            return res.status(404).json({ success: false, message: "User not found or Link expired" });
+            return res.status(404).json({ success: false, isExpired: false, message: "User not found or link is invalid" });
+        }
+
+        // 🔹 Check common link expiry
+        if (commonLink && !user) {
+            if (new Date(commonLink.expiryDate) < yesterdayUTC || new Date(commonLink.startDate) > tomorrowUTC) {
+                return res.status(403).json({
+                    success: false,
+                    isExpired: true,
+                    message: "This class link has expired.",
+                });
+            }
+        }
+
+        // 🔹 Check user subscription expiry (Admins bypass)
+        if (user && user.role !== "ADMIN" && user.subscription.length === 0) {
+            return res.status(403).json({
+                success: false,
+                isExpired: true,
+                message: "Your free trial or subscription has expired. Please choose a membership plan to continue attending live classes.",
+            });
         }
 
         // 🔹 Find active yoga class
@@ -163,6 +180,7 @@ export const getClassLink = async (req, res) => {
         if (!yogaClass) {
             return res.status(404).json({
                 success: false,
+                isExpired: false,
                 message: "No active yoga class, try later",
             });
         }
@@ -174,13 +192,6 @@ export const getClassLink = async (req, res) => {
         // 🔹 Admins bypass subscription logic
         if (user && user.role === "ADMIN") {
             return res.status(200).json({ success: true, link: yogaClass.videoLink });
-        }
-
-        if (user && user.subscription.length === 0) {
-            return res.status(403).json({
-                success: false,
-                message: "Subscription expired or inactive",
-            });
         }
 
         const activeSub = user.subscription[0];
