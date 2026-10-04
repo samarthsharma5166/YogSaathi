@@ -3,16 +3,15 @@ import { prisma } from '../db/db.js';
 import { weekly_attendance_status__yogsaathi_sessions } from '../utils/messages.js';
 import { startOfWeek, endOfWeek, addDays, format, isBefore, startOfDay } from "date-fns";
 
-export const weeklyAttendanceJob = new CronJob('0 21 * * 0', async () => {
+export async function sendWeeklyAttendanceReport() {
     try {
         const now = new Date();
         const threeDaysAgo = addDays(now, -3);
 
-        // 1. Fetch active users and their active subscription
+        console.log(`[weeklyAttendanceJob] Starting weekly attendance report at ${now.toISOString()}...`);
+
+        // 1. Fetch active users and their active subscription (Removed invalid phoneNumber: { not: null } which caused PrismaClientValidationError)
         const allUsers = await prisma.user.findMany({
-            where: {
-                phoneNumber: { not: null },
-            },
             include: {
                 subscription: {
                     where: {
@@ -26,12 +25,14 @@ export const weeklyAttendanceJob = new CronJob('0 21 * * 0', async () => {
             },
         });
 
-        const activeUsers = allUsers.filter(user => user.role === "ADMIN" || user.subscription.length > 0);
+        const activeUsers = allUsers.filter(user => user.phoneNumber && (user.role === "ADMIN" || user.subscription.length > 0));
 
         if (activeUsers.length === 0) {
             console.log("[weeklyAttendanceJob] No active users found to notify.");
-            return;
+            return { success: true, count: 0 };
         }
+
+        console.log(`[weeklyAttendanceJob] Found ${activeUsers.length} active users to notify.`);
 
         const userIds = activeUsers.map(u => u.id);
         const { weekStart, weekEnd } = getWeekRange(now);
@@ -59,6 +60,9 @@ export const weeklyAttendanceJob = new CronJob('0 21 * * 0', async () => {
             recordsByUser.get(record.userId).push(record);
         }
 
+        let sentCount = 0;
+        let failCount = 0;
+
         // 4. Send formatted attendance status to each user
         for (const user of activeUsers) {
             try {
@@ -66,8 +70,10 @@ export const weeklyAttendanceJob = new CronJob('0 21 * * 0', async () => {
                 const userSubStartDate = user.subscription?.[0]?.startDate || null;
                 const weekAttendance = formatAttendance(userRecords, now, userSubStartDate);
 
+                const cleanPhone = String(user.phoneNumber).replace(/[^0-9]/g, '');
+
                 await weekly_attendance_status__yogsaathi_sessions(
-                    user.phoneNumber,
+                    cleanPhone,
                     user.name,
                     weekAttendance.Mon,
                     weekAttendance.Tue,
@@ -78,15 +84,23 @@ export const weeklyAttendanceJob = new CronJob('0 21 * * 0', async () => {
                     weekAttendance.Sun
                 );
 
-                await new Promise(resolve => setTimeout(resolve, 100)); // Rate limit buffer
+                sentCount++;
+                await new Promise(resolve => setTimeout(resolve, 150)); // Rate limit buffer
             } catch (userError) {
+                failCount++;
                 console.error(`[weeklyAttendanceJob] Error sending message to ${user.phoneNumber}:`, userError.message);
             }
         }
+
+        console.log(`[weeklyAttendanceJob] Broadcast completed. Sent: ${sentCount}, Failed: ${failCount}`);
+        return { success: true, sentCount, failCount };
     } catch (error) {
         console.error("[weeklyAttendanceJob] Critical error running weekly attendance job:", error);
+        return { success: false, error: error.message };
     }
-}, null, true, "Asia/Kolkata");
+}
+
+export const weeklyAttendanceJob = new CronJob('0 23 * * 0', sendWeeklyAttendanceReport, null, true, "Asia/Kolkata");
 
 function getWeekRange(referenceDate = new Date()) {
     const weekStart = startOfWeek(referenceDate, { weekStartsOn: 1 }); // Monday 00:00:00
@@ -126,4 +140,3 @@ function formatAttendance(records, referenceDate = new Date(), subscriptionStart
 
     return attendanceMap;
 }
-
