@@ -110,7 +110,7 @@ hourlyJob.start();
 // freeTrialOfferHindiJob.start();
 
 // start this 
-// trialExpiryNotificationJob.start();
+trialExpiryNotificationJob.start();
 weeklyAttendanceJob.start();
 
 // ✅ Start server
