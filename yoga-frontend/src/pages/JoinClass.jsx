@@ -40,7 +40,7 @@ const JoinClass = () => {
 
                 if (statusHttp === 403 || errData?.isExpired || (errData?.message && errData.message.toLowerCase().includes("expire"))) {
                     setStatus("expired");
-                    setErrorMessage(errData?.message || "Your free trial or subscription has expired.");
+                    setErrorMessage(errData?.message || "Your free trial has expired.");
                 } else {
                     setStatus("error");
                     setErrorMessage(errData?.message || "We couldn't find an active class right now.");
@@ -99,7 +99,7 @@ const JoinClass = () => {
                             <FiLock className="text-3xl" />
                         </div>
                         <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-2 mb-2">
-                            Subscription / Free Trial Expired
+                            Free Trial Expired
                         </h1>
                         <p className="text-sm text-gray-600 max-w-md mx-auto">
                             Your trial period or membership has ended. Renew your plan to continue attending live classes.
@@ -109,10 +109,10 @@ const JoinClass = () => {
                             {/* 🇬🇧 English Section */}
                             <div className="space-y-2">
                                 <h2 className="text-base sm:text-lg font-bold text-gray-800 flex items-center gap-2">
-                                    <span>⚠️</span> Free Trial / Subscription Ended
+                                    <span>⚠️</span> Free Trial Ended
                                 </h2>
                                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                                    Your 14-day free trial or active subscription has expired. To continue enjoying daily live interactive yoga sessions with expert instructors, please choose a membership plan.
+                                    Your 14-day free trial has expired. To continue enjoying daily live interactive yoga sessions with expert instructors, please choose a membership plan.
                                 </p>
                             </div>
 
