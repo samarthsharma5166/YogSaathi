@@ -285,6 +285,10 @@ export default function ScheduledMessageManager() {
     const [audienceFilter, setAudienceFilter] = useState('ALL');
     const [statusFilter, setStatusFilter] = useState('ALL');
     const [classes, setClasses] = useState([]);
+    const [audienceCounts, setAudienceCounts] = useState({});
+    const [calculatingCount, setCalculatingCount] = useState(false);
+    const [previewCount, setPreviewCount] = useState(null);
+    const [previewBreakdown, setPreviewBreakdown] = useState({});
     const [formData, setFormData] = useState({
         templateName: '',
         scheduledDate: '',
@@ -298,6 +302,9 @@ export default function ScheduledMessageManager() {
         try {
             const res = await getAllScheduledMessages();
             setMessages(res.messages || []);
+            if (res.audienceCounts) {
+                setAudienceCounts(res.audienceCounts);
+            }
         } catch (error) {
             toast.error(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch scheduled messages');
         }
@@ -323,6 +330,36 @@ export default function ScheduledMessageManager() {
         setLoading(true);
         getScheduledMessages().finally(() => setLoading(false));
     }, []);
+
+    // Live preview recipient count calculation when audience or date filters change
+    useEffect(() => {
+        if (!showForm || formData.selectedAudiences.length === 0) {
+            setPreviewCount(0);
+            setPreviewBreakdown({});
+            return;
+        }
+
+        const timer = setTimeout(async () => {
+            setCalculatingCount(true);
+            try {
+                const res = await getRecipientCountPreview({
+                    targetAudiences: formData.selectedAudiences,
+                    filterStartDate: formData.filterStartDate,
+                    filterEndDate: formData.filterEndDate
+                });
+                if (res?.success) {
+                    setPreviewCount(res.count);
+                    setPreviewBreakdown(res.breakdown || {});
+                }
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setCalculatingCount(false);
+            }
+        }, 300);
+
+        return () => clearTimeout(timer);
+    }, [showForm, formData.selectedAudiences, formData.filterStartDate, formData.filterEndDate]);
 
     // Get the selected template configuration
     const selectedTemplate = useMemo(() => {

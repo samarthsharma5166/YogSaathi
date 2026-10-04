@@ -546,7 +546,7 @@ function formatAttendance(records) {
     return attendanceMap;
 }
 
-async function getUsers(message) {
+export async function getUsers(message) {
     const now = new Date();
     const audience = message.targetAudience;
 
