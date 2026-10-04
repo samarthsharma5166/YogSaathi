@@ -14,11 +14,11 @@ const menuItems = [
   { name: "Manage Plans", icon: <SlCalender />, path: "manage-Plans" },
   { name: "Manage Offers", icon: <MdOutlineLocalOffer />, path: "manage-offers" },
   { name: "My Plans", icon: <SlWallet />, path: "myPlans" },
-  { name: "Manage classes", icon: <SlGraduation /> , path: "classes" },
-  { name: "Free Trial Campign", icon: <SlMagnet />, path: "manage-campign" },
+  { name: "Manage Classes", icon: <SlGraduation /> , path: "classes" },
+  { name: "Free Trial Campaign", icon: <SlMagnet />, path: "manage-campign" },
   { name: "Manage Payment", icon: <MdOutlinePayment />, path: "managePayment" },
-  { name: "Manage Refferal", icon: <SlLink />, path: "refferal" },
-  { name: "scheduledMessage", icon: <SlClock />, path: "scheduledMessage" },
+  { name: "Manage Referral", icon: <SlLink />, path: "refferal" },
+  { name: "Scheduled Messages", icon: <SlClock />, path: "scheduledMessage" },
   { name: "Manage Common Link", icon: <SlLink />, path: "manage-common-link" },
   { name: "Retreat Users", icon: <SlPeople />, path: "retreat-users" },
   { name: "Overseas Users", icon: <SlPeople />, path: "overseas-inquiries" },
@@ -42,15 +42,14 @@ const Adminlayout = () => {
   }, [token, navigate]);
 
   return (
-    <div className="admin-container mt-20">
-      <Navbarr open={open} setOpen={setOpen} text="" />
+    <div className="admin-container">
+      <Navbarr open={open} setOpen={setOpen} text="Admin Panel" />
 
       <div className="admin-body">
         <Sidebar menuItems={menuItems} open={open} setOpen={setOpen} />
-        {/* New Drawer */}
-        <div className="main-content">
+        <main className="main-content">
           <Outlet />
-        </div>
+        </main>
       </div>
     </div>
   );

@@ -85,7 +85,7 @@ function AppContent() {
   return (
     <>
       {!hideLayout && <Navbar />}
-      <div style={{ marginTop: "70px" }}>
+      <div style={{ marginTop: hideLayout ? "0px" : "70px" }}>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<HomePage />} />

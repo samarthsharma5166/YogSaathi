@@ -5,10 +5,10 @@ import { startOfWeek, addDays, format } from "date-fns";
 
 export const hourlyJob = new CronJob('*/10 * * * *', async () => {
     const now = new Date();
-    
+
     const scheduledMessages = await prisma.scheduledMessage.findMany({
         where: {
-            scheduledDate:{
+            scheduledDate: {
                 gte: new Date(now.getTime() - 15 * 60 * 1000), // within last 15 min
                 lte: new Date(now.getTime() + 15 * 60 * 1000)  // or upcoming 15 min
             },
@@ -18,31 +18,31 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
 
     scheduledMessages.forEach(async (message) => {
         // session_reminder__orientation_for_free_trial
-        if (message.templateName === "session_reminder__orientation_for_free_trial"){
+        if (message.templateName === "session_reminder__orientation_for_free_trial") {
 
             const users = await getUsers(message);
 
             const { date, time, sessionLink } = message.payload;
-            users.map((user)=>{
-                
-                session_reminder__orientation_for_free_trial(user.phoneNumber,user.name,date,time ,sessionLink);
+            users.map((user) => {
+
+                session_reminder__orientation_for_free_trial(user.phoneNumber, user.name, date, time, sessionLink);
             })
 
         }
 
         // class_reminder
-        if (message.templateName === "class_reminder"){
+        if (message.templateName === "class_reminder") {
 
             const yogaClass = await prisma.yogaClass.findFirst({
                 where: {
-                    id:message.payload.classId,
+                    id: message.payload.classId,
                     isActive: true
                 }
             })
 
             const users = await getUsers(message);
             // const link = await prisma.commonLink.findFirst();
-            users.map((user)=>{
+            users.map((user) => {
                 // class_reminder_free_yoga_for_all(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
                 class_reminder(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
             })
@@ -51,31 +51,31 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
                 where: { id: yogaClass.id },
                 data: { isActive: false }
             })
-        
+
 
         }
 
-        if (message.templateName === "your_weekly_yoga_schedule__access_details"){
+        if (message.templateName === "your_weekly_yoga_schedule__access_details") {
             const users = await getUsers(message);
-            const { monday,tuesday,wednesday,thursday,friday,saturday,sunday} = message.payload;
-            users.map((user)=>{
-                your_weekly_yoga_schedule__access_details(user.phoneNumber,user.name,monday,tuesday,wednesday,thursday,friday,saturday,sunday,user.referralCode,user.referralPoints);
+            const { monday, tuesday, wednesday, thursday, friday, saturday, sunday } = message.payload;
+            users.map((user) => {
+                your_weekly_yoga_schedule__access_details(user.phoneNumber, user.name, monday, tuesday, wednesday, thursday, friday, saturday, sunday, user.referralCode, user.referralPoints);
             })
         }
 
-        if (message.templateName === "join_session__mark_attendance"){
+        if (message.templateName === "join_session__mark_attendance") {
             const users = await getUsers(message);
             const { sessionLink } = message.payload;
-            users.map((user)=>{
-                join_session__mark_attendance(user.phoneNumber,user.name,user.referralCode,user.referralPoints);
+            users.map((user) => {
+                join_session__mark_attendance(user.phoneNumber, user.name, user.referralCode, user.referralPoints);
             })
         }
 
-        if (message.templateName === "session_reminder__orientation_for_free_trial"){
+        if (message.templateName === "session_reminder__orientation_for_free_trial") {
             const users = await getUsers(message);
             const { date, time, sessionLink } = message.payload;
             const convertedTime = formatTo12Hour(time);
-            users.map((user)=>{
+            users.map((user) => {
                 session_reminder__orientation_for_free_trial(user.phoneNumber, user.name, convertedTime, time, sessionLink);
             })
         }
@@ -92,14 +92,14 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
         }
 
 
-        if (message.templateName === "giftwellness_yogsaathi"){
+        if (message.templateName === "giftwellness_yogsaathi") {
             const users = await getUsers(message);
             users.map((user) => {
                 giftwellness_yogsaathi(user.phoneNumber, user.name);
             })
         }
 
-        if (message.templateName === "yoga_subscription_offer"){
+        if (message.templateName === "yoga_subscription_offer") {
 
             const users = await getUsers(message);
             for (const user of users) {
@@ -112,7 +112,7 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             }
         }
 
-        if (message.templateName === "weekly_attendance_status__yogsaathi_sessions"){
+        if (message.templateName === "weekly_attendance_status__yogsaathi_sessions") {
             const users = await getUsers(message);
 
             for (const user of users) {
@@ -134,14 +134,14 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
 
         }
 
-        if (message.templateName === "subscription_invitation"){
-            const users = await getUsers(message);  
+        if (message.templateName === "subscription_invitation") {
+            const users = await getUsers(message);
             users.map((user) => {
                 subscription_invitation(user.phoneNumber, user.name);
             })
         }
 
-        if (message.templateName === "share_wellness_14_days_of_free_yoga"){
+        if (message.templateName === "share_wellness_14_days_of_free_yoga") {
 
             const users = await getUsers(message);
             for (const user of users) {
@@ -154,7 +154,7 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             }
         }
 
-        if (message.templateName === "vijayadashami_greetings"){
+        if (message.templateName === "vijayadashami_greetings") {
             const users = await getUsers(message);
             users.map((user) => {
                 vijayadashami_greetings(user.phoneNumber, user.name);
@@ -168,19 +168,19 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             })
         }
 
-        if (message.templateName === "yoga_trial_midway_update__reminder"){
+        if (message.templateName === "yoga_trial_midway_update__reminder") {
             const users = await getUsers(message);
-            users.map((user)=>{
+            users.map((user) => {
                 // yoga_trial_midway_update__reminder(user.phoneNumber,user.name);
-                yoga_trial_midway_update__reminder(user.phoneNumber,user.name);
+                yoga_trial_midway_update__reminder(user.phoneNumber, user.name);
             })
         }
 
-        if (message.templateName === "yogsaathi_contact_detail"){
+        if (message.templateName === "yogsaathi_contact_detail") {
             const users = await getUsers(message);
-            users.map((user)=>{
+            users.map((user) => {
                 // yoga_trial_midway_update__reminder(user.phoneNumber,user.name);
-                yogsaathi_contact_detail(user.phoneNumber,user.name);
+                yogsaathi_contact_detail(user.phoneNumber, user.name);
             })
         }
 
@@ -191,14 +191,14 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             })
         }
 
-        if (message.templateName === "festival_greetings"){
+        if (message.templateName === "festival_greetings") {
             const users = await getUsers(message);
             users.map((user) => {
                 festival_greetings(user.phoneNumber, user.name);
             })
         }
 
-        if (message.templateName === "yogsaathi_communication_channels"){
+        if (message.templateName === "yogsaathi_communication_channels") {
             const users = await getUsers(message);
             for (const user of users) {
                 try {
@@ -210,56 +210,56 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             }
         }
 
-        if (message.templateName === "free_online_yoga_trial_reminder"){
+        if (message.templateName === "free_online_yoga_trial_reminder") {
             const users = await getUsers(message);
             users.map((user) => {
                 free_online_yoga_trial_reminder(user.phoneNumber, user.name);
-            
+
             })
         }
-        
-        if (message.templateName === "yoga_class_time_details_as_per_ist"){
+
+        if (message.templateName === "yoga_class_time_details_as_per_ist") {
             const users = await getUsers(message);
             users.map((user) => {
                 yoga_class_time_details_as_per_ist(user.phoneNumber, user.name);
             })
         }
 
-        if (message.templateName === "yoga_trial_participation_reminder"){
+        if (message.templateName === "yoga_trial_participation_reminder") {
             const users = await getUsers(message);
-            const {Link} = message.payload;
+            const { Link } = message.payload;
             users.map((user) => {
                 yoga_trial_participation_reminder(user.phoneNumber, user.name, Link);
-            })  
+            })
         }
 
-        if (message.templateName === "21_days_yoga_trial_intimation_hindi"){
+        if (message.templateName === "21_days_yoga_trial_intimation_hindi") {
             const users = await getUsers(message);
             const link = await prisma.commonLink.findFirst();
             users.map((user) => {
-                days_yoga_trial_intimation_hindi(user.phoneNumber, user.name, link.link);          
+                days_yoga_trial_intimation_hindi(user.phoneNumber, user.name, link.link);
             })
         }
 
-        if(message.templateName === "world_meditation_day_greetings"){
+        if (message.templateName === "world_meditation_day_greetings") {
             const users = await getUsers(message);
             users.map((user) => {
-                world_meditation_day_greetings(user.phoneNumber, user.name);          
+                world_meditation_day_greetings(user.phoneNumber, user.name);
             })
         }
 
-        if (message.templateName === "festival_greetings_christmas_new_year"){
+        if (message.templateName === "festival_greetings_christmas_new_year") {
             const users = await getUsers(message);
             users.map((user) => {
-                festival_greetings_christmas_new_year(user.phoneNumber, user.name);          
+                festival_greetings_christmas_new_year(user.phoneNumber, user.name);
             })
         }
 
-        if (message.templateName === "online_free_yoga_trial__joining_details"){
+        if (message.templateName === "online_free_yoga_trial__joining_details") {
             const users = await getUsers(message);
             const link = await prisma.commonLink.findFirst();
-            users.map((user)=>{
-                online_free_yoga_trial__joining_details(user.phoneNumber,user.name,link.link);
+            users.map((user) => {
+                online_free_yoga_trial__joining_details(user.phoneNumber, user.name, link.link);
             })
         }
 
@@ -290,21 +290,21 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             }
         }
 
-        if (message.templateName === "subscription_plan_new_year_offer"){
+        if (message.templateName === "subscription_plan_new_year_offer") {
             const users = await getUsers(message);
             users.map((user) => {
                 subscription_plan_new_year_offer(user.phoneNumber, user.name);
             })
         }
 
-        if (message.templateName === "yoga_training_1ram"){
+        if (message.templateName === "yoga_training_1ram") {
             const users = await getUsers(message);
             users.map((user) => {
                 yoga_training_1ram(user.phoneNumber, user.name);
             })
         }
 
-        if (message.templateName === "yoga_training_2"){
+        if (message.templateName === "yoga_training_2") {
             const users = await getUsers(message);
             users.map((user) => {
                 yoga_training_2(user.phoneNumber, user.name);
@@ -332,21 +332,21 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             })
         }
 
-        if (message.templateName === "yoga_trial_enrolment"){
+        if (message.templateName === "yoga_trial_enrolment") {
             const users = await getUsers(message);
             users.map((user) => {
                 yoga_trial_enrolment(user.phoneNumber, user.name);
             })
         }
 
-        if (message.templateName === "opi"){
+        if (message.templateName === "opi") {
             const users = await getUsers(message);
             users.map((user) => {
                 opi(user.phoneNumber, user.name);
             })
         }
 
-        if (message.templateName === "yogsaathi_group_access_update"){
+        if (message.templateName === "yogsaathi_group_access_update") {
             const users = await getUsers(message);
             for (const user of users) {
                 try {
@@ -358,29 +358,29 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             }
         }
 
-        if (message.templateName === "inputs"){
+        if (message.templateName === "inputs") {
             const users = await getUsers(message);
             users.map((user) => {
                 inputs(user.phoneNumber, user.name);
             })
         }
-    
-        if (message.templateName === "retreat_info_brochure"){
+
+        if (message.templateName === "retreat_info_brochure") {
             const users = await getUsers(message);
-            users.map((user) => retreat_info_brochure(user.phoneNumber,user.name))
+            users.map((user) => retreat_info_brochure(user.phoneNumber, user.name))
         }
 
-        if (message.templateName === "trial_expiry_notification"){
+        if (message.templateName === "trial_expiry_notification") {
             const users = await getUsers(message);
-            users.map((user) => trial_expiry_notification(user.phoneNumber,user.name))
+            users.map((user) => trial_expiry_notification(user.phoneNumber, user.name))
         }
 
-        if (message.templateName === "session_schedule_notification"){
+        if (message.templateName === "session_schedule_notification") {
             const users = await getUsers(message);
-            users.map((user) => session_schedule_notification(user.phoneNumber,user.name,message.payload.title,message.payload.speaker,message.payload.date,message.payload.link))
+            users.map((user) => session_schedule_notification(user.phoneNumber, user.name, message.payload.title, message.payload.speaker, message.payload.date, message.payload.link))
         }
-        
-        if (message.templateName === "orientation_program__new"){   
+
+        if (message.templateName === "orientation_program__new") {
             const users = await getUsers(message);
             for (const user of users) {
                 try {
@@ -393,27 +393,27 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             }
         }
 
-        if (message.templateName === "regularity_key_hindi"){
+        if (message.templateName === "regularity_key_hindi") {
             const users = await getUsers(message);
-            users.map(user => regularity_key_hindi(user.phoneNumber,user.name))
+            users.map(user => regularity_key_hindi(user.phoneNumber, user.name))
         }
 
-        if (message.templateName === "session_particulars"){
+        if (message.templateName === "session_particulars") {
             const users = await getUsers(message);
-            users.map(user => session_particulars(user.phoneNumber, user.name, message.payload.date, message.payload.time, message.payload.link, message.payload.topic,message.payload.durationstart, message.payload.durationend))
+            users.map(user => session_particulars(user.phoneNumber, user.name, message.payload.date, message.payload.time, message.payload.link, message.payload.topic, message.payload.durationstart, message.payload.durationend))
         }
 
-        if (message.templateName === "subscription_offer_"){
+        if (message.templateName === "subscription_offer_") {
             const users = await getUsers(message);
             users.map(user => subscription_offer_(user.phoneNumber, user.name))
         }
 
-        if (message.templateName === "template_session_20260627022218"){
+        if (message.templateName === "template_session_20260627022218") {
             const users = await getUsers(message);
             users.map(user => template_session_20260627022218(user.phoneNumber, user.name, message.payload.topic, message.payload.date, message.payload.time, message.payload.duration, message.payload.instructor, message.payload.link))
         }
-        
-        if (message.templateName === "session_info"){
+
+        if (message.templateName === "session_info") {
             const formattedDate = message.payload.date && !isNaN(new Date(message.payload.date))
                 ? format(new Date(message.payload.date), "dd/MM/yyyy")
                 : message.payload.date;
@@ -428,17 +428,17 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             }
         }
 
-        if (message.templateName === "confirmation_regn"){
+        if (message.templateName === "confirmation_regn") {
             const users = await getUsers(message);
             users.map(user => confirmation_regn(user.phoneNumber, user.name, message.payload.date, message.payload.time, message.payload.link))
         }
 
-        if (message.templateName === "onetoone_yoga_support"){
+        if (message.templateName === "onetoone_yoga_support") {
             const users = await getUsers(message);
             users.map(user => onetoone_yoga_support(user.phoneNumber, user.name))
         }
 
-        if (message.templateName === "yoga_session_info_f"){
+        if (message.templateName === "yoga_session_info_f") {
             const users = await getUsers(message);
             for (const user of users) {
                 try {
@@ -450,7 +450,7 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             }
         }
 
-        if (message.templateName === "yogsaathi_class_attendance_reminder"){
+        if (message.templateName === "yogsaathi_class_attendance_reminder") {
             const users = await getUsers(message);
             for (const user of users) {
                 try {
@@ -550,10 +550,57 @@ async function getUsers(message) {
     const now = new Date();
     const audience = message.targetAudience;
 
+    // Extract optional start & end date bounds for filtering user group
+    const filterStartDate = message.filterStartDate || message.payload?.filterStartDate || message.payload?.startDateFilter;
+    const filterEndDate = message.filterEndDate || message.payload?.filterEndDate || message.payload?.endDateFilter;
+
+    let startBound = null;
+    let endBound = null;
+
+    if (filterStartDate) {
+        if (typeof filterStartDate === 'string' && filterStartDate.length === 10) {
+            startBound = new Date(`${filterStartDate}T00:00:00+05:30`);
+        } else {
+            startBound = new Date(filterStartDate);
+        }
+    }
+
+    if (filterEndDate) {
+        if (typeof filterEndDate === 'string' && filterEndDate.length === 10) {
+            endBound = new Date(`${filterEndDate}T23:59:59.999+05:30`);
+        } else {
+            endBound = new Date(filterEndDate);
+        }
+    }
+
+    const isWithinDateRange = (dateToCheck) => {
+        if (!startBound && !endBound) return true;
+        if (!dateToCheck) return false;
+        const d = new Date(dateToCheck);
+        if (startBound && d < startBound) return false;
+        if (endBound && d > endBound) return false;
+        return true;
+    };
+
     // 1. Handle Simple Cases
-    if (audience === "Leads") return await prisma.lead.findMany();
+    if (audience === "Leads") {
+        const where = {};
+        if (startBound || endBound) {
+            where.createdAt = {};
+            if (startBound) where.createdAt.gte = startBound;
+            if (endBound) where.createdAt.lte = endBound;
+        }
+        return await prisma.lead.findMany({ where });
+    }
+
     if (audience === "Dietician-Leads") {
-        const leads = await prisma.dieticianLead.findMany();
+        const where = {};
+        if (startBound || endBound) {
+            where.createdAt = {};
+            if (startBound) where.createdAt.gte = startBound;
+            if (endBound) where.createdAt.lte = endBound;
+        }
+        const leads = await prisma.dieticianLead.findMany({ where });
         return leads.map(lead => ({
             id: lead.id,
             name: lead.name,
@@ -561,11 +608,30 @@ async function getUsers(message) {
             email: null
         }));
     }
-    if (audience === "ALL") return await prisma.user.findMany();
-    if (audience === "ADMIN") return await prisma.user.findMany({ where: { role: "ADMIN" } });
+
+    if (audience === "ALL") {
+        const where = {};
+        if (startBound || endBound) {
+            where.createdAt = {};
+            if (startBound) where.createdAt.gte = startBound;
+            if (endBound) where.createdAt.lte = endBound;
+        }
+        return await prisma.user.findMany({ where });
+    }
+
+    if (audience === "ADMIN") {
+        return await prisma.user.findMany({ where: { role: "ADMIN" } });
+    }
+
     if (audience === "Dietician-Registrants") {
+        const where = { status: "PAID" };
+        if (startBound || endBound) {
+            where.createdAt = {};
+            if (startBound) where.createdAt.gte = startBound;
+            if (endBound) where.createdAt.lte = endBound;
+        }
         const registrations = await prisma.dieticianSessionRegistration.findMany({
-            where: { status: "PAID" }
+            where
         });
         return registrations.map(reg => ({
             id: reg.id,
@@ -574,9 +640,16 @@ async function getUsers(message) {
             email: reg.email
         }));
     }
+
     if (audience === "Yoga-Session-Registrants") {
+        const where = { status: "PAID" };
+        if (startBound || endBound) {
+            where.createdAt = {};
+            if (startBound) where.createdAt.gte = startBound;
+            if (endBound) where.createdAt.lte = endBound;
+        }
         const registrations = await prisma.yogaSessionRegistration.findMany({
-            where: { status: "PAID" }
+            where
         });
         return registrations.map(reg => ({
             id: reg.id,
@@ -585,6 +658,7 @@ async function getUsers(message) {
             email: reg.email
         }));
     }
+
     if (audience === "Free-Trial-And-Dietician-Registrants") {
         const paidRegistrations = await prisma.dieticianSessionRegistration.findMany({
             where: { status: "PAID" },
@@ -610,8 +684,8 @@ async function getUsers(message) {
             }
         });
 
-        return matchUsers.filter(user => 
-            user.subscription.some(s => s.plan.isFreeTrial)
+        return matchUsers.filter(user =>
+            user.subscription.some(s => s.plan.isFreeTrial && isWithinDateRange(s.startDate || s.createdAt))
         ).map(user => ({
             id: user.id,
             name: user.name,
@@ -640,30 +714,48 @@ async function getUsers(message) {
         if (user.role === "ADMIN") return true;
 
         if (user.subscription.length === 0) {
-            return audience === "New-Users";
+            return audience === "New-Users" && isWithinDateRange(user.createdAt);
         }
 
-        // ✅ BETTER LOGIC: Check for the most relevant subscription
-        // We look for an active paid subscription first.
+        // ✅ Check for the most relevant subscription
         const activePaidSub = user.subscription.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= nextDay);
         const activeTrialSub = user.subscription.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= nextDay);
 
-        // Default to the literal latest record if nothing is active
-        const latestSub = user.subscription[0];
-
         switch (audience) {
             case "Active-Free-Trial":
+                if (startBound || endBound) {
+                    return !!activeTrialSub && isWithinDateRange(activeTrialSub.startDate || activeTrialSub.createdAt);
+                }
                 return !!activeTrialSub;
+
             case "Inactive-Free-Trial":
                 // They have trials, but none are active, and they don't have a paid sub
+                if (startBound || endBound) {
+                    return user.subscription.some(s => s.plan.isFreeTrial && isWithinDateRange(s.startDate || s.createdAt)) && !activeTrialSub && !activePaidSub;
+                }
                 return user.subscription.some(s => s.plan.isFreeTrial) && !activeTrialSub && !activePaidSub;
+
             case "Active-Subscribers":
+                if (startBound || endBound) {
+                    return !!activePaidSub && isWithinDateRange(activePaidSub.startDate || activePaidSub.createdAt);
+                }
                 return !!activePaidSub;
+
             case "Inactive-Subscribers":
                 // They have paid plans, but none are active
+                if (startBound || endBound) {
+                    return user.subscription.some(s => !s.plan.isFreeTrial && isWithinDateRange(s.startDate || s.createdAt)) && !activePaidSub;
+                }
                 return user.subscription.some(s => !s.plan.isFreeTrial) && !activePaidSub;
+
             case "Active-Trial-And-Subscribers":
+                if (startBound || endBound) {
+                    const validTrial = activeTrialSub && isWithinDateRange(activeTrialSub.startDate || activeTrialSub.createdAt);
+                    const validPaid = activePaidSub && isWithinDateRange(activePaidSub.startDate || activePaidSub.createdAt);
+                    return !!validTrial || !!validPaid;
+                }
                 return !!activeTrialSub || !!activePaidSub;
+
             default:
                 return false;
         }
