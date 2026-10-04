@@ -283,7 +283,7 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
             for (const user of users) {
                 try {
                     await class_reminder_free_yoga_for_all(user.phoneNumber, user.name, yogaClass.focusArea, user.referralCode, user.referralPoints);
-                    await new Promise(resolve => setTimeout(resolve, 100));
+                    await new Promise(resolve => setTimeout(resolve, 200));
                 } catch (error) {
                     console.error(`Error sending yogsaathi_class_attendance_reminder to ${user.phoneNumber}:`, error.message);
                 }
