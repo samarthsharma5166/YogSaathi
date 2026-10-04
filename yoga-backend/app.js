@@ -105,10 +105,12 @@ orientationJob.start();
 dieticianSessionJob.start();
 yogaSessionJob.start();
 hourlyJob.start();
-dailyJob.start();
+// dailyJob.start();
 // freeTrialOfferJob.start();
 // freeTrialOfferHindiJob.start();
-trialExpiryNotificationJob.start();
+
+// start this 
+// trialExpiryNotificationJob.start();
 weeklyAttendanceJob.start();
 
 // ✅ Start server
