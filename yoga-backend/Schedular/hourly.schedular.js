@@ -550,6 +550,16 @@ export async function getUsers(message) {
     const now = new Date();
     const audience = message.targetAudience;
 
+    // Timezone-safe IST (+5:30) calculation for "end of tomorrow in IST" (23:59:59.999 IST)
+    // Ensures active subscriptions and any trial/subscription starting tomorrow are always included regardless of server UTC time
+    const istOffsetMs = 5.5 * 60 * 60 * 1000;
+    const nowIST = new Date(Date.now() + istOffsetMs);
+    const tomorrowIST = new Date(nowIST.getTime() + 24 * 60 * 60 * 1000);
+    const tYear = tomorrowIST.getUTCFullYear();
+    const tMonth = String(tomorrowIST.getUTCMonth() + 1).padStart(2, '0');
+    const tDay = String(tomorrowIST.getUTCDate()).padStart(2, '0');
+    const tomorrowEndOfDayIST = new Date(`${tYear}-${tMonth}-${tDay}T23:59:59.999+05:30`);
+
     // Extract optional start & end date bounds for filtering user group
     const filterStartDate = message.filterStartDate || message.payload?.filterStartDate || message.payload?.startDateFilter;
     const filterEndDate = message.filterEndDate || message.payload?.filterEndDate || message.payload?.endDateFilter;
@@ -685,7 +695,12 @@ export async function getUsers(message) {
         });
 
         return matchUsers.filter(user =>
-            user.subscription.some(s => s.plan.isFreeTrial && isWithinDateRange(s.startDate || s.createdAt))
+            user.subscription.some(s => 
+                s.plan.isFreeTrial && 
+                new Date(s.expiresAt) >= now && 
+                new Date(s.startDate) <= tomorrowEndOfDayIST &&
+                isWithinDateRange(s.startDate || s.createdAt)
+            )
         ).map(user => ({
             id: user.id,
             name: user.name,
@@ -704,11 +719,6 @@ export async function getUsers(message) {
         },
     });
 
-    // Include subscriptions starting up to tomorrow (next day)
-    const nextDay = new Date(now);
-    nextDay.setDate(nextDay.getDate() + 1);
-    nextDay.setHours(23, 59, 59, 999);
-
     const filteredUsers = allUsers.filter(user => {
         // Always include Admins if that's your intended behavior
         if (user.role === "ADMIN") return true;
@@ -717,9 +727,9 @@ export async function getUsers(message) {
             return audience === "New-Users" && isWithinDateRange(user.createdAt);
         }
 
-        // ✅ Check for the most relevant subscription
-        const activePaidSub = user.subscription.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= nextDay);
-        const activeTrialSub = user.subscription.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= nextDay);
+        // ✅ Check for active subscription or starting by tomorrow in IST
+        const activePaidSub = user.subscription.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= tomorrowEndOfDayIST);
+        const activeTrialSub = user.subscription.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= tomorrowEndOfDayIST);
 
         switch (audience) {
             case "Active-Free-Trial":
