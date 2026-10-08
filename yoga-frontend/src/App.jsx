@@ -74,6 +74,7 @@ import DieticianLeads from "./Admin/DieticianLeads.jsx";
 import ManageYogaSession from "./Admin/ManageYogaSession.jsx";
 import YogaSessionLeads from "./Admin/YogaSessionLeads.jsx";
 import ManageYogaCare from "./Admin/ManageYogaCare.jsx";
+import WhatsAppButton from "./components/WhatsAppButton.jsx";
 
 
 function AppContent() {
@@ -163,6 +164,7 @@ function AppContent() {
       </div>
 
       {!hideLayout && <Footer />}
+      <WhatsAppButton />
     </>
   );
 }
