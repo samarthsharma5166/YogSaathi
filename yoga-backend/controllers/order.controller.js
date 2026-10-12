@@ -96,37 +96,18 @@ export const createOrder = async (req, res) => {
         expiresAt = new Date(expiresAt.getTime() + refferalDays);
         expiresAt.setHours(21, 0, 0, 0);
 
-        const existingSub = await prisma.subscription.findFirst({
-          where: { userId: user.id },
-          include: { plan: true },
+        // Always create a new subscription for the purchased plan so any active free trial continues uninterrupted
+        const subscription = await prisma.subscription.create({
+          data: {
+            userId: user.id,
+            planId: plan.id,
+            startDate: subsStartDate,
+            baseDuration,
+            extraDays: user.referralPoints * 10,
+            expiresAt,
+            status: "active",
+          },
         });
-
-        let subscription;
-        if (existingSub && existingSub.plan?.isFreeTrial) {
-          subscription = await prisma.subscription.update({
-            where: { id: existingSub.id },
-            data: {
-              planId: plan.id,
-              startDate: subsStartDate,
-              baseDuration,
-              extraDays: user.referralPoints * 10,
-              expiresAt,
-              status: "active",
-            },
-          });
-        } else {
-          subscription = await prisma.subscription.create({
-            data: {
-              userId: user.id,
-              planId: plan.id,
-              startDate: subsStartDate,
-              baseDuration,
-              extraDays: user.referralPoints * 10,
-              expiresAt,
-              status: "active",
-            },
-          });
-        }
 
         const freeOrderId = `order_free_${Date.now()}`;
         const freePaymentId = `pay_free_${Date.now()}`;
@@ -381,44 +362,20 @@ export const fulfillSubscription = async (razorpay_order_id, razorpay_payment_id
   
 
   // 4. Update/Create Subscription
-  const existingSubscription = await prisma.subscription.findFirst({
-    where: { userId: user.id },
-    select: {
-      id: true,
-      plan: {
-        select: {
-          isFreeTrial: true
-        }
-      }
-    }
+  // 4. Create New Subscription for the purchased plan
+  // We always create a new subscription record so that any active or past free trial
+  // remains intact and continues uninterrupted until its natural expiry date.
+  const subscription = await prisma.subscription.create({
+    data: {
+      userId: user.id,
+      planId,
+      startDate: subsStartDate,
+      baseDuration,
+      extraDays: (user.referralPoints * 10),
+      expiresAt,
+      status: "active",
+    },
   });
-
-  let subscription;
-
-  if (existingSubscription && existingSubscription.plan.isFreeTrial === true) {
-    subscription = await prisma.subscription.update({
-      where: { id: existingSubscription.id },
-      data: {
-        planId,
-        startDate: subsStartDate,
-        baseDuration,
-        extraDays: (user.referralPoints * 10),
-        expiresAt,
-        status: "active",
-      },
-    });
-  } else {
-    subscription = await prisma.subscription.create({
-      data: {
-        userId: user.id,
-        planId,
-        startDate: subsStartDate,
-        baseDuration,
-        extraDays: (user.referralPoints * 10),
-        expiresAt,
-      },
-    });
-  }
 
   // 5. Calculate Referral End Date
   const referralDays = user.referralPoints * 10;

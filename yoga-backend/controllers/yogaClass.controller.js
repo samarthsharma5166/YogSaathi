@@ -134,6 +134,9 @@ export const getClassLink = async (req, res) => {
                         expiresAt: { gte: yesterdayUTC },
                         startDate: { lte: tomorrowUTC },
                     },
+                    include: {
+                        plan: true,
+                    },
                 },
             },
         });
@@ -159,6 +162,31 @@ export const getClassLink = async (req, res) => {
 
         // 🔹 Check user subscription expiry (Admins bypass)
         if (user && user.role !== "ADMIN" && user.subscription.length === 0) {
+            // Check if user has an upcoming paid subscription starting in the future
+            const upcomingSub = await prisma.subscription.findFirst({
+                where: {
+                    userId: user.id,
+                    status: "active",
+                    startDate: { gt: tomorrowUTC },
+                },
+                orderBy: { startDate: "asc" },
+                include: { plan: true },
+            });
+
+            if (upcomingSub) {
+                const formattedStart = new Date(upcomingSub.startDate).toLocaleDateString("en-IN", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                });
+                return res.status(403).json({
+                    success: false,
+                    isExpired: false,
+                    isUpcoming: true,
+                    message: `Your membership plan starts on ${formattedStart}. You will be able to join live classes once your plan starts.`,
+                });
+            }
+
             return res.status(403).json({
                 success: false,
                 isExpired: true,
@@ -194,7 +222,12 @@ export const getClassLink = async (req, res) => {
             return res.status(200).json({ success: true, link: yogaClass.videoLink });
         }
 
-        const activeSub = user.subscription[0];
+        // 🔹 Select currently active subscription for attendance
+        // Prefer active paid plan over free trial if both are ongoing today
+        const activeSub =
+            user.subscription.find(s => !s.plan?.isFreeTrial && new Date(s.startDate) <= nowUTC && new Date(s.expiresAt) >= nowUTC) ||
+            user.subscription.find(s => new Date(s.startDate) <= nowUTC && new Date(s.expiresAt) >= nowUTC) ||
+            user.subscription[0];
 
         // 🔹 Attendance window
         const classStart = new Date(yogaClass.date);

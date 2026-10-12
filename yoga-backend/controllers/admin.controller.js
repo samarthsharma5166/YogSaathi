@@ -396,19 +396,22 @@ export const downloadAttendance = async (req, res) => {
           }
           return false;
         }
-        const latestSubscription = user.subscription[0];
-        const isActive = latestSubscription.expiresAt >= now;
-        const isFreeTrial = latestSubscription.plan.isFreeTrial;
+
+        const activePaidSub = user.subscription?.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
+        const activeTrialSub = user.subscription?.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
+        const hasTrial = user.subscription?.some(s => s.plan.isFreeTrial);
+        const hasPaid = user.subscription?.some(s => !s.plan.isFreeTrial);
 
         switch (usertype) {
           case "Active-Free-Trial":
-            return isFreeTrial && isActive;
+            return !!activeTrialSub;
           case "Inactive-Free-Trial":
-            return isFreeTrial && !isActive;
+            return hasTrial && !activeTrialSub && !activePaidSub;
           case "Active-Subscribers":
-            return !isFreeTrial && isActive;
+            return !!activePaidSub;
           case "Inactive-Subscriber":
-            return !isFreeTrial && !isActive;
+          case "Inactive-Subscribers":
+            return hasPaid && !activePaidSub;
           default:
             return false;
         }
