@@ -84,8 +84,18 @@ export const getAllUsersAdmin = async (req, res) => {
         categorized["ADMIN"].push(user);
       }
 
-      const activePaidSub = user.subscription?.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
-      const activeTrialSub = user.subscription?.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
+      // In Admin Dashboard Manage Users: include all current and upcoming paid subscribers (expiresAt >= now)
+      const activePaidSub = user.subscription?.find(s => 
+        !s.plan.isFreeTrial && 
+        (s.status === "active" || !s.status) && 
+        new Date(s.expiresAt) >= now
+      );
+      // In Admin Dashboard Manage Users: include all current and upcoming free trial users (expiresAt >= now)
+      const activeTrialSub = user.subscription?.find(s => 
+        s.plan.isFreeTrial && 
+        (s.status === "active" || !s.status) && 
+        new Date(s.expiresAt) >= now
+      );
       const hasTrial = user.subscription?.some(s => s.plan.isFreeTrial);
       const hasPaid = user.subscription?.some(s => !s.plan.isFreeTrial);
 
@@ -397,8 +407,8 @@ export const downloadAttendance = async (req, res) => {
           return false;
         }
 
-        const activePaidSub = user.subscription?.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
-        const activeTrialSub = user.subscription?.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= now);
+        const activePaidSub = user.subscription?.find(s => !s.plan.isFreeTrial && (s.status === "active" || !s.status) && new Date(s.expiresAt) >= now);
+        const activeTrialSub = user.subscription?.find(s => s.plan.isFreeTrial && (s.status === "active" || !s.status) && new Date(s.expiresAt) >= now);
         const hasTrial = user.subscription?.some(s => s.plan.isFreeTrial);
         const hasPaid = user.subscription?.some(s => !s.plan.isFreeTrial);
 

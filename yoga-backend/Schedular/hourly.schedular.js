@@ -696,10 +696,11 @@ export async function getUsers(message) {
 
         return matchUsers.filter(user =>
             user.subscription.some(s => 
-                s.plan.isFreeTrial && 
+                s.plan?.isFreeTrial && 
+                (s.status === "active" || !s.status) &&
                 new Date(s.expiresAt) >= now && 
                 new Date(s.startDate) <= tomorrowEndOfDayIST &&
-                isWithinDateRange(s.startDate || s.createdAt)
+                (isWithinDateRange(s.startDate) || isWithinDateRange(s.createdAt) || isWithinDateRange(user.createdAt))
             )
         ).map(user => ({
             id: user.id,
@@ -727,41 +728,59 @@ export async function getUsers(message) {
             return audience === "New-Users" && isWithinDateRange(user.createdAt);
         }
 
+        // Helper to check if subscription or registration date matches optional filter range
+        const isSubWithinFilter = (sub) => {
+            if (!startBound && !endBound) return true;
+            if (!sub) return false;
+            return isWithinDateRange(sub.startDate) || isWithinDateRange(sub.createdAt) || isWithinDateRange(user.createdAt);
+        };
+
         // ✅ Check for active subscription or starting by tomorrow in IST
-        const activePaidSub = user.subscription.find(s => !s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= tomorrowEndOfDayIST);
-        const activeTrialSub = user.subscription.find(s => s.plan.isFreeTrial && new Date(s.expiresAt) >= now && new Date(s.startDate) <= tomorrowEndOfDayIST);
+        // Includes: currently active (startDate <= now) + starting tomorrow (startDate <= tomorrowEndOfDayIST)
+        const activePaidSub = user.subscription.find(s => 
+            !s.plan?.isFreeTrial && 
+            (s.status === "active" || !s.status) &&
+            new Date(s.expiresAt) >= now && 
+            new Date(s.startDate) <= tomorrowEndOfDayIST
+        );
+        const activeTrialSub = user.subscription.find(s => 
+            s.plan?.isFreeTrial && 
+            (s.status === "active" || !s.status) &&
+            new Date(s.expiresAt) >= now && 
+            new Date(s.startDate) <= tomorrowEndOfDayIST
+        );
 
         switch (audience) {
             case "Active-Free-Trial":
                 if (startBound || endBound) {
-                    return !!activeTrialSub && isWithinDateRange(activeTrialSub.startDate || activeTrialSub.createdAt);
+                    return !!activeTrialSub && isSubWithinFilter(activeTrialSub);
                 }
                 return !!activeTrialSub;
 
             case "Inactive-Free-Trial":
-                // They have trials, but none are active, and they don't have a paid sub
+                // They have trials, but none are active or starting tomorrow, and they don't have a paid sub
                 if (startBound || endBound) {
-                    return user.subscription.some(s => s.plan.isFreeTrial && isWithinDateRange(s.startDate || s.createdAt)) && !activeTrialSub && !activePaidSub;
+                    return user.subscription.some(s => s.plan?.isFreeTrial && (isWithinDateRange(s.startDate) || isWithinDateRange(s.createdAt))) && !activeTrialSub && !activePaidSub;
                 }
-                return user.subscription.some(s => s.plan.isFreeTrial) && !activeTrialSub && !activePaidSub;
+                return user.subscription.some(s => s.plan?.isFreeTrial) && !activeTrialSub && !activePaidSub;
 
             case "Active-Subscribers":
                 if (startBound || endBound) {
-                    return !!activePaidSub && isWithinDateRange(activePaidSub.startDate || activePaidSub.createdAt);
+                    return !!activePaidSub && isSubWithinFilter(activePaidSub);
                 }
                 return !!activePaidSub;
 
             case "Inactive-Subscribers":
-                // They have paid plans, but none are active
+                // They have paid plans, but none are active or starting tomorrow
                 if (startBound || endBound) {
-                    return user.subscription.some(s => !s.plan.isFreeTrial && isWithinDateRange(s.startDate || s.createdAt)) && !activePaidSub;
+                    return user.subscription.some(s => !s.plan?.isFreeTrial && (isWithinDateRange(s.startDate) || isWithinDateRange(s.createdAt))) && !activePaidSub;
                 }
-                return user.subscription.some(s => !s.plan.isFreeTrial) && !activePaidSub;
+                return user.subscription.some(s => !s.plan?.isFreeTrial) && !activePaidSub;
 
             case "Active-Trial-And-Subscribers":
                 if (startBound || endBound) {
-                    const validTrial = activeTrialSub && isWithinDateRange(activeTrialSub.startDate || activeTrialSub.createdAt);
-                    const validPaid = activePaidSub && isWithinDateRange(activePaidSub.startDate || activePaidSub.createdAt);
+                    const validTrial = activeTrialSub && isSubWithinFilter(activeTrialSub);
+                    const validPaid = activePaidSub && isSubWithinFilter(activePaidSub);
                     return !!validTrial || !!validPaid;
                 }
                 return !!activeTrialSub || !!activePaidSub;
