@@ -100,7 +100,7 @@ export async function sendWeeklyAttendanceReport() {
     }
 }
 
-export const weeklyAttendanceJob = new CronJob('0 22 * * 0', sendWeeklyAttendanceReport, null, true, "Asia/Kolkata");
+export const weeklyAttendanceJob = new CronJob('0 21 * * 0', sendWeeklyAttendanceReport, null, true, "Asia/Kolkata");
 
 function getWeekRange(referenceDate = new Date()) {
     const weekStart = startOfWeek(referenceDate, { weekStartsOn: 1 }); // Monday 00:00:00

@@ -404,8 +404,16 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
         }
 
         if (message.templateName === "subscription_offer_") {
+
             const users = await getUsers(message);
-            users.map(user => subscription_offer_(user.phoneNumber, user.name))
+            for (const user of users) {
+                try {
+                    await subscription_offer_(user.phoneNumber, user.name);
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                } catch (error) {
+                    console.error(`Error sending subscription_offer_ to ${user.phoneNumber}:`, error.message);
+                }
+            }
         }
 
         if (message.templateName === "template_session_20260627022218") {
