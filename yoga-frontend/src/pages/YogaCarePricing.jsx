@@ -38,9 +38,9 @@ const PRICING_DATA = {
           basePrice: 12000,
           fullPayment: 6000,
           discount: "50% Off",
-          monthlyOptionTotal: 7000,
+          monthlyOptionTotal: 6000,
           installments: [
-            { month: "Month 1", amount: 7000 }
+            { month: "Month 1", amount: 6000 }
           ],
           classesCount: 12,
           popular: false
@@ -99,7 +99,7 @@ const PRICING_DATA = {
           months: 3,
           basePrice: 18000,
           fullPayment: 8000,
-          discount: "56% Off",
+          discount: "58% Off",
           monthlyOptionTotal: 9000,
           installments: [
             { month: "Month 1", amount: 4500 },
@@ -113,7 +113,7 @@ const PRICING_DATA = {
           months: 6,
           basePrice: 36000,
           fullPayment: 15000,
-          discount: "58% Off",
+          discount: "65% Off",
           monthlyOptionTotal: 18000,
           installments: [
             { month: "Month 1", amount: 4500 },
@@ -279,13 +279,13 @@ const YogaCarePricing = () => {
         {/* Hero Header */}
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-1.5 bg-[#EAF3DE] text-[#3B6D11] text-xs font-extrabold uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-[#a3c97a]/30">
-            <Sparkles className="w-3.5 h-3.5" /> Monthly Payment Plans
+            <Sparkles className="w-3.5 h-3.5" /> Pricing Plans & Fee Structure
           </span>
           <h1 className="text-3xl md:text-5xl font-black text-[#27500a] tracking-tight leading-tight">
-            YogaCare Monthly Fee Structure & Pricing Plans
+            YogaCare Fee Structure & Pricing Plans
           </h1>
           <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-            Convenient <strong className="text-gray-900">Monthly Payment Plans</strong> with structured installment schedules. All plans feature 12 live interactive classes per month (45 mins each, 3x per week).
+            Convenient <strong className="text-gray-900">One-Time Payment</strong> options with maximum savings, or flexible monthly installments. All plans feature 12 live interactive classes per month (45 mins each, 3x per week).
           </p>
         </div>
 
@@ -401,7 +401,6 @@ const YogaCarePricing = () => {
             {currentGroupData.plans.map((plan, idx) => {
               const fullAmt = `${symbol}${plan.fullPayment.toLocaleString()}`;
               const baseAmt = plan.basePrice ? `${symbol}${plan.basePrice.toLocaleString()}` : null;
-              const monthlyTotalAmt = `${symbol}${plan.monthlyOptionTotal.toLocaleString()}`;
 
               return (
                 <div
@@ -414,7 +413,7 @@ const YogaCarePricing = () => {
                 >
                   {plan.popular && (
                     <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#3B6D11] text-white text-[10px] font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm">
-                      Installment Plan
+                      Most Popular
                     </div>
                   )}
 
@@ -427,37 +426,33 @@ const YogaCarePricing = () => {
                       </p>
                     </div>
 
-                    {/* Monthly Installment Box */}
-                    <div className="bg-[#FAFDF6] border border-[#a3c97a]/50 rounded-2xl p-4 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-extrabold text-[#3B6D11] uppercase tracking-wider flex items-center gap-1">
-                          <CreditCard className="w-3.5 h-3.5 text-[#3B6D11]" /> Monthly Payment Plan
+                    {/* One-Time Payment Price Box */}
+                    <div className="bg-[#FAFDF6] border border-[#a3c97a]/40 rounded-2xl p-4 text-center space-y-2">
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-[11px] font-extrabold text-[#3B6D11] uppercase tracking-wider">
+                          One-Time Payment
                         </span>
-                        <span className="bg-[#EAF3DE] text-[#3B6D11] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#3B6D11]/20">
-                          {plan.months} {plan.months === 1 ? "Month" : "Months"}
+                        {plan.discount && (
+                          <span className="bg-[#EAF3DE] text-[#3B6D11] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#3B6D11]/20">
+                            {plan.discount}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex items-baseline justify-center gap-2">
+                        {baseAmt && (
+                          <span className="text-gray-400 line-through text-sm md:text-base font-semibold">
+                            {baseAmt}
+                          </span>
+                        )}
+                        <span className="text-3xl md:text-4xl font-black text-[#27500a]">
+                          {fullAmt}
                         </span>
                       </div>
 
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-3xl font-black text-[#27500a]">{monthlyTotalAmt}</span>
-                        <span className="text-gray-500 text-xs font-semibold">total cost</span>
-                      </div>
-
-                      {/* Installment breakdown list */}
-                      <div className="space-y-1.5 pt-1">
-                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">
-                          Installment Breakdown:
-                        </span>
-                        {plan.installments.map((inst, i) => (
-                          <div
-                            key={i}
-                            className="flex justify-between items-center text-xs py-1.5 px-3 bg-white rounded-xl border border-gray-200/80 shadow-2xs"
-                          >
-                            <span className="text-gray-600 font-medium">{inst.month}:</span>
-                            <strong className="text-gray-900 font-bold">{symbol}{inst.amount.toLocaleString()}</strong>
-                          </div>
-                        ))}
-                      </div>
+                      <p className="text-[11px] text-gray-500 font-medium">
+                        Full payment for {plan.duration} ({plan.classesCount} live classes)
+                      </p>
                     </div>
 
                     {/* Features list */}
@@ -475,19 +470,33 @@ const YogaCarePricing = () => {
                         <span>Customized postures & health adjustments</span>
                       </div>
                     </div>
+
+                    {/* For installment payment contact us */}
+                    <div className="pt-3 border-t border-gray-100 text-center">
+                      <p className="text-xs text-gray-600">
+                        For installment payment{" "}
+                        <button
+                          type="button"
+                          onClick={() => navigate("/contact")}
+                          className="font-bold text-[#3B6D11] hover:text-[#27500a] underline underline-offset-2 cursor-pointer transition"
+                        >
+                          contact us
+                        </button>
+                      </p>
+                    </div>
                   </div>
 
                   {/* Plan CTA */}
-                  <div className="pt-6">
+                  <div className="pt-5">
                     <button
-                      onClick={() => navigate("/contact")}
+                      onClick={handleRegisterClick}
                       className={`w-full py-3 px-4 rounded-xl font-bold text-xs md:text-sm transition flex items-center justify-center gap-1.5 cursor-pointer ${
                         plan.popular
                           ? "bg-[#3B6D11] hover:bg-[#2d540d] text-white shadow-md shadow-[#3B6D11]/20"
                           : "bg-[#EAF3DE] hover:bg-[#d4edbc] text-[#27500a]"
                       }`}
                     >
-                      Contact Us <ArrowRight className="w-4 h-4" />
+                      Book Your Plan <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
@@ -518,8 +527,9 @@ const YogaCarePricing = () => {
                 <tr className="bg-[#FAFDF6] border-b border-gray-200 text-gray-700">
                   <th className="py-3.5 px-4 font-bold">Plan Duration</th>
                   <th className="py-3.5 px-4 font-bold">Classes Count</th>
+                  <th className="py-3.5 px-4 font-bold text-[#27500a]">One-Time Payment</th>
                   <th className="py-3.5 px-4 font-bold">Installment Schedule</th>
-                  <th className="py-3.5 px-4 font-bold text-[#27500a]">Total Plan Cost</th>
+                  <th className="py-3.5 px-4 font-bold text-[#27500a]">Total on Installment</th>
                   <th className="py-3.5 px-4 font-bold text-center">Action</th>
                 </tr>
               </thead>
@@ -530,8 +540,13 @@ const YogaCarePricing = () => {
                     <span className="w-2 h-2 rounded-full bg-amber-500"></span> Trial Class
                   </td>
                   <td className="py-3.5 px-4 text-gray-600">1 Class (Live Zoom)</td>
+                  <td className="py-3.5 px-4 font-black text-[#27500a] text-sm">
+                    {symbol}{currentRegionData.trial.amount}
+                  </td>
                   <td className="py-3.5 px-4 text-gray-500">Single payment of {symbol}{currentRegionData.trial.amount}</td>
-                  <td className="py-3.5 px-4 font-black text-[#27500a] text-sm">{symbol}{currentRegionData.trial.amount}</td>
+                  <td className="py-3.5 px-4 font-black text-gray-700 text-sm">
+                    {symbol}{currentRegionData.trial.amount}
+                  </td>
                   <td className="py-3.5 px-4 text-center">
                     <button
                       onClick={handleRegisterClick}
@@ -549,6 +564,16 @@ const YogaCarePricing = () => {
                       <span className="w-2 h-2 rounded-full bg-[#3B6D11]"></span> {p.duration}
                     </td>
                     <td className="py-3.5 px-4 text-gray-700 font-medium">{p.classesCount} live classes 45 min duration</td>
+                    <td className="py-3.5 px-4">
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="font-black text-[#27500a] text-sm">{symbol}{p.fullPayment.toLocaleString()}</span>
+                        {p.basePrice && (
+                          <span className="text-gray-400 line-through text-[11px]">
+                            {symbol}{p.basePrice.toLocaleString()}
+                          </span>
+                        )}
+                      </div>
+                    </td>
                     <td className="py-3.5 px-4 text-gray-600">
                       <div className="space-y-1">
                         {p.installments.map((inst, idx) => (
