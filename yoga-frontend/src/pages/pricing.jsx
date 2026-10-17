@@ -473,13 +473,30 @@ const Pricing = () => {
                       <>
                         {/* MRP Line + Discount badge */}
                         <div className="flex items-center justify-center gap-2 mb-1 flex-wrap">
-                          <span className="text-sm text-gray-400 font-semibold line-through">
+                          <span className="text-xs text-gray-400 font-semibold line-through">
                             MRP: ₹{plan.orignalPriceInInr}
                           </span>
                           <span className={`text-[11px] font-black px-2 py-0.5 rounded-full uppercase tracking-wide shadow-2xs ${theme.discountTag}`}>
                             {plan.discount}% OFF
                           </span>
                         </div>
+
+                        {/* Regular Price with Red Strikethrough */}
+                        {offerInfo.originalSale && (
+                          <div className="flex items-center justify-center gap-1.5 text-xs text-gray-600 font-semibold my-0.5">
+                            <span className="text-gray-500 font-medium">Regular Price:</span>
+                            <span
+                              className="line-through decoration-red-500 decoration-2 font-bold text-gray-800 text-sm"
+                              style={{
+                                textDecoration: "line-through",
+                                textDecorationColor: "#dc2626",
+                                textDecorationThickness: "2px",
+                              }}
+                            >
+                              ₹{offerInfo.originalSale.toLocaleString("en-IN")}
+                            </span>
+                          </div>
+                        )}
 
                         {/* Current Final Price */}
                         <div className="flex items-baseline justify-center gap-1.5 my-0.5">
@@ -498,11 +515,21 @@ const Pricing = () => {
                       </>
                     ) : (
                       <>
-                        {/* USD Pricing representation */}
+                        {/* USD Regular Price Representation */}
                         <div className="flex items-center justify-center gap-2 mb-1 flex-wrap">
-                          <span className="text-xs text-gray-400 font-semibold line-through">
-                            Standard: ${offerInfo.usdOriginal}
-                          </span>
+                          <div className="flex items-center justify-center gap-1.5 text-xs text-gray-600 font-semibold">
+                            <span className="text-gray-500 font-medium">Regular Price:</span>
+                            <span
+                              className="line-through decoration-red-500 decoration-2 font-bold text-gray-800 text-sm"
+                              style={{
+                                textDecoration: "line-through",
+                                textDecorationColor: "#dc2626",
+                                textDecorationThickness: "2px",
+                              }}
+                            >
+                              ${offerInfo.usdOriginal}
+                            </span>
+                          </div>
                           {plan.duration > 1 && (
                             <span className="text-[10px] font-extrabold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
                               Save {offerInfo.usdSavings}

@@ -518,7 +518,7 @@ const YogaCarePricing = () => {
                 <tr className="bg-[#FAFDF6] border-b border-gray-200 text-gray-700">
                   <th className="py-3.5 px-4 font-bold">Plan Duration</th>
                   <th className="py-3.5 px-4 font-bold">Classes Count</th>
-                  <th className="py-3.5 px-4 font-bold">Monthly Installment Schedule</th>
+                  <th className="py-3.5 px-4 font-bold">Installment Schedule</th>
                   <th className="py-3.5 px-4 font-bold text-[#27500a]">Total Plan Cost</th>
                   <th className="py-3.5 px-4 font-bold text-center">Action</th>
                 </tr>
