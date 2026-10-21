@@ -27,6 +27,7 @@ import overseasRoutes from './routes/overseas.route.js';
 import dieticianRoutes from './routes/dietician.route.js';
 import yogaSessionRoutes from './routes/yogaSession.route.js';
 import yogaCareRoutes from './routes/yogaCare.route.js';
+import ashtangaRoutes from './routes/ashtanga.route.js';
 
 import { generateYogaInvoice } from './utils/generateInvoice.js';
 
@@ -72,6 +73,7 @@ app.use("/api/overseas", overseasRoutes);
 app.use("/api/dietician", dieticianRoutes);
 app.use("/api/yoga-session", yogaSessionRoutes);
 app.use("/api/yogacare", yogaCareRoutes);
+app.use("/api/ashtanga", ashtangaRoutes);
 
 
 app.post("/generateInvoice",async(req,res)=>{

@@ -55,6 +55,8 @@ const Navbar = () => {
     { name: "Corporate Wellness Retreats", path: "/corporateRetreats" },
     { name: "Yoga for Overseas Participants", path: "/overseasPrograms" },
     { name: "YogaCare Personalised Program", path: "/yogacare" },
+    { name: "YogaCare Pricing & Plans", path: "/yogacare/pricing" },
+    { name: "Ashtanga Primary Series", path: "/ashtanga" },
     { name: "Membership Plans", path: "/price" },
     { name: "Join Free Trial Class", path: "/auth/register" }
   ];
@@ -182,9 +184,16 @@ const Navbar = () => {
               </Link> */}
               <Link
                 to="/yogacare"
-                className="ml-4 text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                className="ml-3 text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
               >
                 Yoga Care
+              </Link>
+
+              <Link
+                to="/ashtanga"
+                className="ml-3 text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#27500A] to-[#3B6D11] rounded-full hover:bg-[#1a3806] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+              >
+                Ashtanga Yoga
               </Link>
 
               {!user ? (
@@ -353,6 +362,14 @@ const Navbar = () => {
               className="w-full text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 transition-all duration-200"
             >
               Yoga Care
+            </Link>
+
+            <Link
+              to="/ashtanga"
+              onClick={closeMenu}
+              className="w-full text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#27500A] to-[#3B6D11] rounded-full hover:bg-[#1a3806] transition-all duration-200"
+            >
+              Ashtanga Yoga
             </Link>
 
             {!user ? (

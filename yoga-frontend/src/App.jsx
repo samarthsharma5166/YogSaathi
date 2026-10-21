@@ -34,6 +34,7 @@ import DieticianSession from "./pages/DieticianSession.jsx";
 import YogaSession from "./pages/YogaSession.jsx";
 import YogaCare from "./pages/YogaCare.jsx";
 import YogaCarePricing from "./pages/YogaCarePricing.jsx";
+import Ashtanga from "./pages/Ashtanga.jsx";
 
 
 // Admin Pages
@@ -74,6 +75,7 @@ import DieticianLeads from "./Admin/DieticianLeads.jsx";
 import ManageYogaSession from "./Admin/ManageYogaSession.jsx";
 import YogaSessionLeads from "./Admin/YogaSessionLeads.jsx";
 import ManageYogaCare from "./Admin/ManageYogaCare.jsx";
+import ManageAshtanga from "./Admin/ManageAshtanga.jsx";
 import WhatsAppButton from "./components/WhatsAppButton.jsx";
 
 
@@ -112,6 +114,8 @@ function AppContent() {
           <Route path="/yogacare" element={<YogaCare />} />
           <Route path="/yogacare/pricing" element={<YogaCarePricing />} />
           <Route path="/yogacare-pricing" element={<YogaCarePricing />} />
+          <Route path="/ashtanga" element={<Ashtanga />} />
+          <Route path="/ashtanga/pricing" element={<Ashtanga />} />
 
           <Route path="/mainslider" element={<Mainslider />} />
           <Route path="/returnrefund" element={<RefundPolicy />} />
@@ -148,6 +152,7 @@ function AppContent() {
             <Route path="yoga-session" element={<ManageYogaSession />} />
             <Route path="yoga-session-leads" element={<YogaSessionLeads />} />
             <Route path="yogacare" element={<ManageYogaCare />} />
+            <Route path="ashtanga" element={<ManageAshtanga />} />
 
           </Route>
 

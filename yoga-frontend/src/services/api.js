@@ -288,5 +288,14 @@ export const downloadYogaCareRegistrations = () =>
     responseType: "blob",
   });
 
+// ✅ ASHTANGA APIs
+export const createAshtangaRegistration = (data) => API.post("/ashtanga/register", data);
+export const verifyAshtangaPayment = (data) => API.post("/ashtanga/verify", data);
+export const getAshtangaRegistrations = () => API.get("/ashtanga/registrations");
+export const downloadAshtangaRegistrations = () =>
+  API.get("/ashtanga/registrations/download", {
+    responseType: "blob",
+  });
+
 export default API;
 

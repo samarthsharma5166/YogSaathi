@@ -427,3 +427,126 @@ export function generateYogaCareInvoice({
     writeStream.on("error", reject);
   });
 }
+
+export function generateAshtangaInvoice({
+  invoiceNo,
+  dateOfIssue,
+  companyEmail,
+  website,
+  customerName,
+  customerEmail,
+  customerPhone,
+  countryOfResidence,
+  sessionType,
+  planName,
+  programStart,
+  programEnd,
+  duration,
+  classesCount,
+  amount,
+  amountType
+}) {
+  const invoiceDir = path.join(process.cwd(), "invoices");
+  fs.mkdirSync(invoiceDir, { recursive: true });
+
+  const safeInvoiceNo = invoiceNo.replace(/[\/\\]/g, "-");
+  const fileName = `invoice-${safeInvoiceNo}.pdf`;
+  const invoicePath = path.join(invoiceDir, fileName);
+
+  const doc = new PDFDocument({ margin: 60 });
+  const writeStream = fs.createWriteStream(invoicePath);
+  doc.pipe(writeStream);
+
+  // ---------------- HEADER ----------------
+  doc.fontSize(20).font("Helvetica-Bold").text("Healthy Horizons Pvt. Ltd.", { align: "center" });
+  doc.moveDown(0.4);
+  doc.fontSize(10).font("Helvetica").text(`Email: ${companyEmail} | Website: ${website}`, { align: "center" });
+  doc.moveDown(0.8);
+
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown(0.8);
+
+  doc.fontSize(18).font("Helvetica-Bold").text("INVOICE", { align: "center" });
+  doc.fontSize(11).font("Helvetica").text("YogSaathi YogaCare Ashtanga Primary Series", { align: "center" });
+  doc.moveDown(0.8);
+
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown(1.2);
+
+  // ---------------- INVOICE DETAILS ----------------
+  doc.fontSize(12).font("Helvetica-Bold").text("Invoice Details", { underline: true });
+  doc.moveDown(0.5);
+  doc.font("Helvetica").text(`Invoice No:  ${invoiceNo}`);
+  doc.text(`Date of Issue: ${dateOfIssue}`);
+  doc.moveDown(1.2);
+
+  // ---------------- CUSTOMER DETAILS ----------------
+  doc.fontSize(12).font("Helvetica-Bold").text("Customer Details", { underline: true });
+  doc.moveDown(0.5);
+  doc.font("Helvetica").text(`Name:  ${customerName}`);
+  doc.text(`Email: ${customerEmail}`);
+  if (customerPhone) doc.text(`Phone: ${customerPhone}`);
+  if (countryOfResidence) doc.text(`Country: ${countryOfResidence}`);
+  doc.moveDown(1.2);
+
+  // ---------------- PROGRAM DETAILS ----------------
+  doc.fontSize(12).font("Helvetica-Bold").text("Program & Session Details", { underline: true });
+  doc.moveDown(0.5);
+  doc.font("Helvetica").text(`Program: YogSaathi Ashtanga Primary Series Class`);
+  doc.text(`Session Type: ${sessionType === "individual" ? "Single Individual (One to One Class)" : "Group Class (2 or more people)"}`);
+  doc.text(`Package: ${planName}`);
+  doc.text(`Classes: ${classesCount} live interactive class${classesCount > 1 ? "es" : ""} (1 Hour each)`);
+  doc.text(`Program Start Date:  ${programStart}`);
+  doc.text(`Program End Date:   ${programEnd}`);
+  doc.moveDown(1.2);
+
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown(0.8);
+
+  // ---------------- DESCRIPTION TABLE ----------------
+  doc.fontSize(12).font("Helvetica-Bold").text("Description", 50, doc.y, { continued: true });
+  doc.text(`Amount (${amountType})`, { align: "right" });
+  doc.moveDown(0.3);
+
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown(0.6);
+
+  const descText = `YogSaathi Ashtanga Primary Series Class – ${planName} (${sessionType === "individual" ? "One to One" : "Group"})\nClass Duration: 1 Hour | Live Interactive Session`;
+  doc.font("Helvetica").text(descText, 50, doc.y, { continued: true });
+  doc.text(`$${amount} ${amountType}`, { align: "right" });
+  doc.moveDown(1);
+
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown(0.8);
+
+  doc.font("Helvetica-Bold").text("Net Payable", 50, doc.y, { continued: true });
+  doc.text(`$${amount} ${amountType}`, { align: "right" });
+  doc.moveDown(0.8);
+
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown(0.8);
+
+  doc.font("Helvetica-Bold").text("Total Amount Paid", 50, doc.y, { continued: true });
+  doc.text(`$${amount} ${amountType}`, { align: "right" });
+  doc.moveDown(1.2);
+
+  // ---------------- NOTES ----------------
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown(0.8);
+  doc.fontSize(11).font("Helvetica-Bold").text("Note:");
+  doc.font("Helvetica").text("Participant Consent & Terms of Service accepted online. This is a computer-generated invoice and requires no physical signature.");
+  doc.moveDown(1);
+
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown(1.5);
+
+  // ---------------- FOOTER ----------------
+  doc.fontSize(12).font("Helvetica-Bold").text("Thank you for choosing YogSaathi Ashtanga Primary Series Class!", { align: "center" });
+
+  doc.end();
+
+  return new Promise((resolve, reject) => {
+    writeStream.on("finish", () => resolve({ invoicePath, fileName }));
+    writeStream.on("error", reject);
+  });
+}

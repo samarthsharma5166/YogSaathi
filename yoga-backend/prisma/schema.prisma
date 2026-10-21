@@ -387,3 +387,36 @@ model YogaCareRegistration {
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
 }
+
+model AshtangaRegistration {
+  id                  String             @id @default(uuid())
+  customerName        String
+  dateOfBirth         String?
+  countryOfResidence  String?
+  citizenship         String?
+  occupation          String?
+  jobType             String?            // "Desk job", "Touring", etc.
+  email               String
+  phone               String
+  timezone            String?
+  sessionType         String             // "individual" (One to One) or "group" (2 or more people)
+  hasHealthLimitation String?            // "no" or "yes"
+  healthDetails       String?            @db.Text
+  planId              String             // "trial", "1_month", "3_month"
+  planName            String             // "Trial Class", "Monthly Package (12 Classes)", "Quarterly Package (36 Classes)"
+  duration            Int                // 0, 1, 3 (in months)
+  classesCount        Int                // 1, 12, 36
+  amount              Int                // Price in USD ($14, $10, $275, $200, $725, $550)
+  currency            String             @default("USD")
+  orderId             String?            @unique
+  paymentId           String?            @unique
+  signature           String?
+  status              String             @default("PENDING") // PENDING, PAID, FAILED
+  termsAccepted       Boolean            @default(true)
+  termsAcceptedAt     DateTime?
+  startDate           DateTime?
+  expiresAt           DateTime?
+  invoice             String?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+}

@@ -5,6 +5,7 @@ import { fulfillEventPayment } from "./event.controller.js";
 import { fulfillDieticianPayment } from "./dietician.controller.js";
 import { fulfillYogaSessionPayment } from "./yogaSession.controller.js";
 import { fulfillYogaCarePayment } from "./yogaCare.controller.js";
+import { fulfillAshtangaPayment } from "./ashtanga.controller.js";
 
 
 export const handleRazorpayWebhook = async (req, res) => {
@@ -131,6 +132,20 @@ export const handleRazorpayWebhook = async (req, res) => {
       return res.status(200).json({
         status: "ok",
         type: "yogacare",
+        alreadyCompleted: result.alreadyCompleted
+      });
+    }
+
+    // 6. Check if orderId belongs to an Ashtanga registration
+    const ashtangaReg = await prisma.ashtangaRegistration.findUnique({
+      where: { orderId: orderId }
+    });
+    if (ashtangaReg) {
+      console.log(`Found matching Ashtanga registration for order ID: ${orderId}. Fulfilling registration.`);
+      const result = await fulfillAshtangaPayment(orderId, paymentId, null);
+      return res.status(200).json({
+        status: "ok",
+        type: "ashtanga",
         alreadyCompleted: result.alreadyCompleted
       });
     }
