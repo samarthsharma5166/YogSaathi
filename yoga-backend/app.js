@@ -13,7 +13,14 @@ import userRoutes from './routes/user.route.js';
 import blogRoutes from './routes/blog.route.js';
 import campignRoutes from './routes/freeTrialCampaignRoutes.js';
 import { hourlyJob } from './Schedular/hourly.schedular.js';
-import { dailyJob, freeTrialOfferJob, freeTrialOfferHindiJob, trialExpiryNotificationJob } from './Schedular/daily.schedular.js';
+import {
+  dailyJob,
+  freeTrialOfferJob,
+  freeTrialOfferHindiJob,
+  trialExpiryNotificationJob,
+  subscriptionInfoEnglishJob,
+  subscriptionInfoHindiJob
+} from './Schedular/daily.schedular.js';
 import { weeklyAttendanceJob } from './Schedular/weekly.schedular.js';
 import yogaClassRoute from './routes/yogaClass.routes.js';
 import bodyParser from "body-parser";
@@ -114,6 +121,8 @@ hourlyJob.start();
 // start this 
 trialExpiryNotificationJob.start();
 weeklyAttendanceJob.start();
+subscriptionInfoEnglishJob.start();
+subscriptionInfoHindiJob.start();
 
 // ✅ Start server
 

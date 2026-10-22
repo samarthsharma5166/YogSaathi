@@ -1,6 +1,12 @@
 import { CronJob } from 'cron';
 import { prisma } from '../db/db.js';
-import { trial_expiry_notification, subscription_offer_day_english, subscription_offer_day_hindi } from '../utils/messages.js';
+import {
+    trial_expiry_notification,
+    subscription_offer_day_english,
+    subscription_offer_day_hindi,
+    subscription_info_english,
+    subscription_info_hindi
+} from '../utils/messages.js';
 import { differenceInCalendarDays } from 'date-fns';
 
 export const dailyJob = new CronJob('0 9 * * *', async () => {
@@ -240,4 +246,121 @@ export const trialExpiryNotificationJob = new CronJob('0 17 * * *', async () => 
     scheduled: true,
     timezone: "Asia/Kolkata",
 });
+
+
+// =========================================================================
+// 📌 PAID SUBSCRIPTION EXPIRY NOTIFICATIONS (30, 15, 7, and 3 Days Before)
+// =========================================================================
+
+const SUBSCRIPTION_EXPIRY_NOTIFICATION_DAYS = [30, 15, 7, 3];
+
+/**
+ * Normalizes any timestamp to midnight UTC corresponding to the exact calendar date in Asia/Kolkata (IST).
+ * Eliminates timezone drift and hour/minute variance across any server environment (UTC, US, etc.).
+ */
+export function getISTCalendarDate(date = new Date()) {
+    const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Asia/Kolkata",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric"
+    }).formatToParts(new Date(date));
+    const y = parts.find(p => p.type === "year").value;
+    const m = parts.find(p => p.type === "month").value.padStart(2, "0");
+    const d = parts.find(p => p.type === "day").value.padStart(2, "0");
+    return new Date(`${y}-${m}-${d}T00:00:00.000Z`);
+}
+
+/**
+ * Formats a Date into standard dd/MM/yyyy string in Asia/Kolkata timezone.
+ */
+export function formatISTDate(date) {
+    return new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Kolkata",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+    }).format(new Date(date));
+}
+
+/**
+ * Shared executor for sending subscription expiry reminders.
+ * Queries only users who purchased a plan (non-free-trial active subscriptions).
+ */
+export async function processSubscriptionExpiryReminders(sendTemplateFn, jobName) {
+    try {
+        const now = new Date();
+        const todayIST = getISTCalendarDate(now);
+
+        // Fetch all active paid plan subscriptions with user details
+        const activePaidSubscriptions = await prisma.subscription.findMany({
+            where: {
+                status: "active",
+                expiresAt: { gte: now },
+                plan: {
+                    isFreeTrial: false,
+                },
+            },
+            include: {
+                user: true,
+                plan: true,
+            },
+        });
+
+        // Group by user and pick the subscription with the latest expiresAt (handles renewals gracefully)
+        const userLatestSubMap = new Map();
+        for (const sub of activePaidSubscriptions) {
+            if (!sub.user || !sub.user.phoneNumber || !sub.expiresAt) continue;
+            const existing = userLatestSubMap.get(sub.userId);
+            if (!existing || new Date(sub.expiresAt) > new Date(existing.expiresAt)) {
+                userLatestSubMap.set(sub.userId, sub);
+            }
+        }
+
+        for (const sub of userLatestSubMap.values()) {
+            try {
+                const expiryIST = getISTCalendarDate(sub.expiresAt);
+                const diffDays = differenceInCalendarDays(expiryIST, todayIST);
+
+                if (SUBSCRIPTION_EXPIRY_NOTIFICATION_DAYS.includes(diffDays)) {
+                    const formattedDate = formatISTDate(sub.expiresAt);
+                    await sendTemplateFn(
+                        sub.user.phoneNumber,
+                        sub.user.name || "Member",
+                        formattedDate
+                    );
+                    console.log(`[${jobName}] Sent ${diffDays}-day reminder to ${sub.user.phoneNumber} (expiry: ${formattedDate})`);
+                    await new Promise((resolve) => setTimeout(resolve, 150)); // Rate-limit buffer
+                }
+            } catch (userErr) {
+                console.error(`[${jobName}] Error sending reminder to ${sub.user?.phoneNumber}:`, userErr.message);
+            }
+        }
+    } catch (err) {
+        console.error(`[${jobName}] Error in job execution:`, err);
+    }
+}
+
+/**
+ * 5:30 PM IST (17:30) -> subscription_info_english
+ * Sent 30, 15, 7, and 3 days before subscription end to users who purchased a plan
+ */
+export const subscriptionInfoEnglishJob = new CronJob('30 17 * * *', async () => {
+    await processSubscriptionExpiryReminders(subscription_info_english, "subscriptionInfoEnglishJob");
+}, {
+    scheduled: true,
+    timezone: "Asia/Kolkata",
+});
+
+/**
+ * 6:30 PM IST (18:30) -> subscription_info_hindi
+ * Sent 30, 15, 7, and 3 days before subscription end to users who purchased a plan
+ */
+export const subscriptionInfoHindiJob = new CronJob('30 18 * * *', async () => {
+    await processSubscriptionExpiryReminders(subscription_info_hindi, "subscriptionInfoHindiJob");
+}, {
+    scheduled: true,
+    timezone: "Asia/Kolkata",
+});
+
 
