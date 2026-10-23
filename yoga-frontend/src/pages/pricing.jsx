@@ -367,16 +367,16 @@ const Pricing = () => {
         
         {/* Header Section */}
         <div className="text-center mb-6">
-          <span className="inline-block text-2xl! bg-[#EAF3DE] text-[#27500a] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+          <span className="inline-block bg-[#EAF3DE] text-[#27500a] text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider mb-2 border border-[#a3c97a]/30">
             Membership Plans
           </span>
-          <h2 className="text-3xl font-extrabold text-[#27500a] tracking-tight mb-1.5">
-            <span className="mb-1! text-4xl">YogSaathi Announces Special Offers on Ist Anniversary</span><br /> <span className="text-red-500 text-xl font-bold mt-1">Offers Valid for Limited Time - Hurry Up! Subscribe Now! Special Anniversary Discounts</span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-[#27500a] tracking-tight mb-2">
+            Find Your Balance
           </h2>
           <p className="text-gray-600 text-sm max-w-xl mx-auto">
             Choose a plan that fits your lifestyle. Get daily guidance, personalized postures, and holistic wellness support.
           </p>
-          <p className="text-3xl max-w-xl mx-auto">
+          <p className="text-2xl md:text-3xl max-w-xl mx-auto mt-2">
             Thank you very much! <br/><span className="text-green-800 font-semibold">1000+</span> have done <span className="text-green-800 italic">yoga</span> with us.
           </p>
         </div>
