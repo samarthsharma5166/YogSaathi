@@ -481,8 +481,8 @@ const Pricing = () => {
                           </span>
                         </div>
 
-                        {/* Regular Price with Red Strikethrough */}
-                        {offerInfo.originalSale && (
+                        {/* Regular Price with Red Strikethrough (commented) */}
+                        {/* {offerInfo.originalSale && (
                           <div className="flex items-center justify-center gap-1.5 text-xs text-gray-600 font-semibold my-0.5">
                             <span className="text-gray-500 font-medium">Regular Price:</span>
                             <span
@@ -496,7 +496,7 @@ const Pricing = () => {
                               ₹{offerInfo.originalSale.toLocaleString("en-IN")}
                             </span>
                           </div>
-                        )}
+                        )} */}
 
                         {/* Current Final Price */}
                         <div className="flex items-baseline justify-center gap-1.5 my-0.5">
@@ -515,8 +515,8 @@ const Pricing = () => {
                       </>
                     ) : (
                       <>
-                        {/* USD Regular Price Representation */}
-                        <div className="flex items-center justify-center gap-2 mb-1 flex-wrap">
+                        {/* USD Regular Price Representation (commented) */}
+                        {/* <div className="flex items-center justify-center gap-2 mb-1 flex-wrap">
                           <div className="flex items-center justify-center gap-1.5 text-xs text-gray-600 font-semibold">
                             <span className="text-gray-500 font-medium">Regular Price:</span>
                             <span
@@ -535,7 +535,7 @@ const Pricing = () => {
                               Save {offerInfo.usdSavings}
                             </span>
                           )}
-                        </div>
+                        </div> */}
 
                         <div className="flex items-baseline justify-center gap-1.5 my-0.5">
                           <span className="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
