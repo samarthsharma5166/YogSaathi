@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import {  sentOtp, verifyOtp } from "../services/api";
+import { sentOtp, verifyOtp } from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-// import PhoneInput from "react-phone-input-2";
 import CustomPhoneInput from "./CustomPhoneInput";
 import toast from "react-hot-toast";
 
@@ -14,11 +13,12 @@ function Login() {
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSendOtp = async(e) => {
+  const handleSendOtp = async (e) => {
     e.preventDefault();
 
-    if (!form.phoneNumber) {
-      toast.error("Please enter your phone number.");
+    const digitsOnly = form.phoneNumber ? form.phoneNumber.replace(/\D/g, "") : "";
+    if (!form.phoneNumber || digitsOnly.length < 10) {
+      toast.error("Please enter a valid phone number.");
       return;
     }
 
@@ -81,25 +81,11 @@ function Login() {
 
         <form onSubmit={step === 1 ? handleSendOtp : handleLogin} className="space-y-4">
           <section>
-            <span>
-              {/* <PhoneInput
-                country={"in"}
-                enableSearch={true}
-                placeholder="Enter phone number"  
-                value={form.phoneNumber}  
-                onChange={(value) => setForm({ ...form, phoneNumber: `+${value}` })}
-                inputProps={{
-                  name: "phoneNumber",
-                  required: true,
-                  // className: "w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400",
-                }}
-              /> */}
-              <CustomPhoneInput
-                value={form.phoneNumber}
-                onChange={(value) => setForm({ ...form, phoneNumber: value })}
-                placeholder="Enter phone number"
-              />
-            </span>
+            <CustomPhoneInput
+              value={form.phoneNumber}
+              onChange={(value) => setForm({ ...form, phoneNumber: value })}
+              placeholder="Enter phone number"
+            />
           </section>
           {step === 2 && (
             <input

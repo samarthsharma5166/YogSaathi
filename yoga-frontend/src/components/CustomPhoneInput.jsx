@@ -1,71 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import "../pages/CSS/phoneinput.css";
 
-const countries = [
-    { code: "+91", name: "🇮🇳" },
-    { code: "+1", name: "🇺🇸" },
-    { code: "+44", name: "🇬🇧" },
-    { code: "+61", name: "🇦🇺" },
-    { code: "+971", name: "🇦🇪" },
-];
+const PhoneInputComponent =
+    typeof PhoneInput === "function" ? PhoneInput : PhoneInput.default || PhoneInput;
 
-function CustomPhoneInput({ value, onChange, placeholder }) {
-    const [countryCode, setCountryCode] = useState("+91");
-    const [number, setNumber] = useState("");
-
-    // Sync state if value is passed from outside
-    useEffect(() => {
-        if (value) {
-            const matchedCountry = countries.find((c) => value.startsWith(c.code));
-            if (matchedCountry) {
-                setCountryCode(matchedCountry.code);
-                setNumber(value.slice(matchedCountry.code.length));
-            } else if (!value.startsWith("+")) {
-                setNumber(value);
-            }
+function CustomPhoneInput({
+    value = "",
+    onChange,
+    placeholder = "Enter phone number",
+    disabled = false,
+    className = "",
+    required = false,
+}) {
+    const handlePhoneChange = (phone, countryData) => {
+        if (!onChange) return;
+        if (!phone) {
+            onChange("");
+            return;
         }
-    }, [value]);
-
-    const handleChange = (e) => {
-        const phone = e.target.value.replace(/\D/g, "");
-        setNumber(phone);
-        onChange(`${countryCode}${phone}`);
-    };
-
-    const handleCountryChange = (e) => {
-        const newCode = e.target.value;
-        setCountryCode(newCode);
-        onChange(`${newCode}${number}`);
+        // Ensure standard E.164-style string with leading '+'
+        const formatted = phone.startsWith("+") ? phone : `+${phone}`;
+        onChange(formatted);
     };
 
     return (
-        <div className="flex w-full items-center h-10 border border-gray-300 rounded-lg bg-white focus-within:border-[#3B6D11] focus-within:ring-2 focus-within:ring-[#3B6D11]/20 transition-all duration-200 overflow-hidden shadow-2xs">
-            {/* Country Code Dropdown */}
-            <div className="relative flex items-center shrink-0 border-r border-gray-200 bg-gray-50/80 h-full">
-                <select
-                    value={countryCode}
-                    onChange={handleCountryChange}
-                    aria-label="Select Country Code"
-                    className="h-full pl-2.5 pr-5 bg-transparent text-gray-700 focus:outline-none text-xs font-semibold cursor-pointer appearance-none"
-                >
-                    {countries.map((c) => (
-                        <option key={c.code} value={c.code}>
-                            {c.name} {c.code}
-                        </option>
-                    ))}
-                </select>
-                <div className="absolute right-1.5 pointer-events-none text-gray-400 text-[8px]">
-                    ▼
-                </div>
-            </div>
-
-            {/* Phone Number Input */}
-            <input
-                type="tel"
-                value={number}
-                onChange={handleChange}
-                maxLength={15}
-                placeholder={placeholder || "Enter 10-digit number"}
-                className="w-full h-full px-3 bg-transparent focus:outline-none text-gray-800 text-xs sm:text-sm placeholder:text-gray-400"
+        <div className={`custom-phone-input-container w-full relative ${className}`}>
+            <PhoneInputComponent
+                country="in"
+                preferredCountries={["in", "us", "gb", "ae", "ca", "au"]}
+                enableSearch={true}
+                searchPlaceholder="Search country..."
+                searchNotFound="No country found"
+                value={value ? (value.startsWith("+") ? value.slice(1) : value) : ""}
+                onChange={handlePhoneChange}
+                disabled={disabled}
+                placeholder={placeholder}
+                inputProps={{
+                    name: "phoneNumber",
+                    required: required,
+                    autoComplete: "tel",
+                }}
+                containerClass="!w-full !font-sans"
+                inputClass="!w-full !h-10 !text-xs sm:!text-sm !text-gray-800 !bg-white !border !border-gray-300 !rounded-lg focus:!border-[#3B6D11] focus:!ring-2 focus:!ring-[#3B6D11]/20 !transition-all !pl-[58px]"
+                buttonClass="!w-[48px] !bg-gray-50/80 !border-gray-300 !rounded-l-lg hover:!bg-gray-100"
+                dropdownClass="!text-xs !shadow-2xl !rounded-xl !border !border-gray-200 !z-50"
             />
         </div>
     );
