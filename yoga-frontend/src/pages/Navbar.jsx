@@ -70,13 +70,14 @@ const Navbar = () => {
     { name: "Live Events", path: "/livestream" },
     { name: "About Us", path: "/about" },
     { name: "Contact Us", path: "/contact" },
+    { name: "Certificate", path: "/certificate" },
   ];
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? "bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-200/50 py-2"
-          : "bg-transparent py-4"
+          : "bg-transparent py-3"
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -84,7 +85,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" onClick={closeMenu} className="flex-shrink-0 flex items-center gap-2 group">
             <img
-              className="w-16 h-auto transition-transform duration-300 group-hover:scale-105"
+              className="w-14 sm:w-16 h-auto transition-transform duration-300 group-hover:scale-105"
               src={logo}
               alt="YogSaathi Logo"
             />
@@ -92,25 +93,23 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex lg:items-center lg:gap-8">
-            <div className="flex items-center gap-6">
+          <div className="hidden lg:flex lg:items-center lg:gap-4 xl:gap-6">
+            <div className="flex items-center gap-3.5 xl:gap-5">
               {/* Home Link */}
               <Link
                 to="/"
-                className={`text-sm font-medium transition-colors duration-200 hover:text-green-600 ${location.pathname === "/" && !location.search.includes("program") ? "text-green-600" : "text-gray-700"
+                className={`text-xs xl:text-[13px] font-medium transition-colors duration-200 hover:text-green-600 ${location.pathname === "/" && !location.search.includes("program") ? "text-green-600 font-semibold" : "text-gray-700"
                   }`}
               >
                 Home
               </Link>
-
-
 
               {/* Rest of Nav Links */}
               {navLinks.slice(1).map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`text-sm font-medium transition-colors duration-200 hover:text-green-600 ${location.pathname === link.path && !isProgramActive ? "text-green-600" : "text-gray-700"
+                  className={`text-xs xl:text-[13px] font-medium transition-colors duration-200 hover:text-green-600 ${location.pathname === link.path && !isProgramActive ? "text-green-600 font-semibold" : "text-gray-700"
                     }`}
                 >
                   {link.name}
@@ -127,7 +126,7 @@ const Navbar = () => {
             >
               <button
                 onClick={() => setProgramsMenuOpen((prev) => !prev)}
-                className={`flex text-sm! items-center gap-1  font-medium transition-colors duration-200 hover:text-green-600 focus:outline-none py-2 ${programsMenuOpen || isProgramActive ? "text-green-600" : "text-gray-700"
+                className={`flex text-xs xl:text-[13px] items-center gap-1 font-medium transition-colors duration-200 hover:text-green-600 focus:outline-none py-1.5 ${programsMenuOpen || isProgramActive ? "text-green-600 font-semibold" : "text-gray-700"
                   }`}
               >
                 Yoga Programs
@@ -157,42 +156,24 @@ const Navbar = () => {
               )}
             </div>
 
-            <div className="flex items-center gap-1 border-l border-gray-300 pl-4">
+            <div className="flex items-center gap-2 border-l border-gray-300 pl-3">
               <Link
                 to="/price"
-                className="ml-4 text-center inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                className="text-center inline-flex items-center justify-center px-3.5 xl:px-4 py-2 text-xs font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shrink-0"
               >
                 Membership Plans
               </Link>
-              {/* <Link
-                to="/retreat"
-                className="ml-4 inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-full hover:bg-green-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
-                >
-                Rishikesh Retreat
-              </Link> */}
-              {/* <Link
-                to="/session"
-                className="ml-4 text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
-                >
-                Dietician Session
-              </Link> */}
 
-              {/* <Link
-                to="/yoga-session"
-                className="ml-4 text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
-              >
-                Yoga Session
-              </Link> */}
               <Link
                 to="/yogacare"
-                className="ml-3 text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                className="text-center inline-flex items-center justify-center px-3 xl:px-3.5 py-2 text-xs font-semibold text-white bg-gradient-to-b from-red-600 to-red-400 rounded-full hover:bg-red-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shrink-0"
               >
                 Yoga Care
               </Link>
 
               <Link
                 to="/ashtanga"
-                className="ml-3 text-center inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#27500A] to-[#3B6D11] rounded-full hover:bg-[#1a3806] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                className="text-center inline-flex items-center justify-center px-3 xl:px-3.5 py-2 text-xs font-semibold text-white bg-gradient-to-r from-[#27500A] to-[#3B6D11] rounded-full hover:bg-[#1a3806] hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shrink-0"
               >
                 Ashtanga Yoga
               </Link>
@@ -200,15 +181,15 @@ const Navbar = () => {
               {!user ? (
                 <Link
                   to="/auth/register"
-                  className="text-center ml-4 inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-full hover:bg-green-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                  className="text-center inline-flex items-center justify-center px-3.5 xl:px-4 py-2 text-xs font-semibold text-white bg-green-600 rounded-full hover:bg-green-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shrink-0"
                 >
                   Join Free Trial
                 </Link>
               ) : (
-                <div className="relative ml-2" ref={dropdownRef}>
+                <div className="relative ml-1" ref={dropdownRef}>
                   <button
                     onClick={() => setUserMenuOpen((prev) => !prev)}
-                    className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-green-500 to-emerald-400 text-white font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                    className="flex items-center justify-center w-8 h-8 xl:w-9 xl:h-9 rounded-full bg-gradient-to-tr from-green-500 to-emerald-400 text-white font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 text-xs"
                   >
                     {user?.name?.charAt(0).toUpperCase() || 'U'}
                   </button>
