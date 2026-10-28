@@ -297,5 +297,12 @@ export const downloadAshtangaRegistrations = () =>
     responseType: "blob",
   });
 
+// ✅ MILESTONE CERTIFICATE APIs
+export const checkMilestoneCertificates = (phoneNumber) =>
+  API.post("/certificate/check", { phoneNumber });
+
+export const getCertificatePdfUrl = (phoneNumber, tier) =>
+  `${import.meta.env.VITE_BACKEND_URL || "http://localhost:8000/api"}/certificate/download-pdf?phoneNumber=${encodeURIComponent(phoneNumber)}&tier=${encodeURIComponent(tier)}&v=3.0&_t=${Date.now()}`;
+
 export default API;
 

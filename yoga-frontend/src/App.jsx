@@ -35,6 +35,7 @@ import YogaSession from "./pages/YogaSession.jsx";
 import YogaCare from "./pages/YogaCare.jsx";
 import YogaCarePricing from "./pages/YogaCarePricing.jsx";
 import Ashtanga from "./pages/Ashtanga.jsx";
+import CertificatePage from "./pages/CertificatePage.jsx";
 
 
 // Admin Pages
@@ -116,6 +117,8 @@ function AppContent() {
           <Route path="/yogacare-pricing" element={<YogaCarePricing />} />
           <Route path="/ashtanga" element={<Ashtanga />} />
           <Route path="/ashtanga/pricing" element={<Ashtanga />} />
+          <Route path="/certificate" element={<CertificatePage />} />
+          <Route path="/certificates" element={<CertificatePage />} />
 
           <Route path="/mainslider" element={<Mainslider />} />
           <Route path="/returnrefund" element={<RefundPolicy />} />

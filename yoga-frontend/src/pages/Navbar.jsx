@@ -58,6 +58,7 @@ const Navbar = () => {
     { name: "YogaCare Pricing & Plans", path: "/yogacare/pricing" },
     { name: "Ashtanga Primary Series", path: "/ashtanga" },
     { name: "Membership Plans", path: "/price" },
+    { name: "Milestone Certificates 🏆", path: "/certificate" },
     { name: "Join Free Trial Class", path: "/auth/register" }
   ];
 
