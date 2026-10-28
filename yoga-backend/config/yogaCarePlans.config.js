@@ -39,5 +39,6 @@ export const YOGA_CARE_PROGRAMS = {
   "pcod-pcos-womens-wellness": "YogaCare – PCOD/PCOS & Women’s Wellness",
   "stress-sleep": "YogaCare – Stress & Sleep",
   "senior-citizens-wellness": "YogaCare – Senior Citizens’ Wellness",
-  "posture-mobility": "YogaCare – Posture & Mobility"
+  "posture-mobility": "YogaCare – Posture & Mobility",
+  "prenatal-yoga": "YogaCare – Prenatal Yoga (Yoga during pregnancy)"
 };

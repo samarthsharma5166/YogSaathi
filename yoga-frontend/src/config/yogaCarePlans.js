@@ -39,5 +39,6 @@ export const YOGA_CARE_PROGRAMS = [
   { id: "pcod-pcos-womens-wellness", name: "YogaCare – PCOD/PCOS & Women’s Wellness", emoji: "7️⃣" },
   { id: "stress-sleep", name: "YogaCare – Stress & Sleep", emoji: "8️⃣" },
   { id: "senior-citizens-wellness", name: "YogaCare – Senior Citizens’ Wellness", emoji: "9️⃣" },
-  { id: "posture-mobility", name: "YogaCare – Posture & Mobility", emoji: "🔟" }
+  { id: "posture-mobility", name: "YogaCare – Posture & Mobility", emoji: "🔟" },
+  { id: "prenatal-yoga", name: "YogaCare – Prenatal Yoga (Yoga during pregnancy)", emoji: "1️⃣1️⃣" }
 ];

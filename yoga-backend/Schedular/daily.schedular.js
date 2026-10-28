@@ -5,7 +5,9 @@ import {
     subscription_offer_day_english,
     subscription_offer_day_hindi,
     subscription_info_english,
-    subscription_info_hindi
+    subscription_info_hindi,
+    _free_trial_end,
+    _free_trial_end_hindi
 } from '../utils/messages.js';
 import { differenceInCalendarDays } from 'date-fns';
 
@@ -358,6 +360,108 @@ export const subscriptionInfoEnglishJob = new CronJob('30 17 * * *', async () =>
  */
 export const subscriptionInfoHindiJob = new CronJob('30 18 * * *', async () => {
     await processSubscriptionExpiryReminders(subscription_info_hindi, "subscriptionInfoHindiJob");
+}, {
+    scheduled: true,
+    timezone: "Asia/Kolkata",
+});
+
+// =========================================================================
+// 📌 FREE TRIAL END NOTIFICATIONS (Day 7 & 10 for Hindi, Day 8 & 12 for English at 5:30 PM IST)
+// =========================================================================
+
+/**
+ * Shared executor for Free Trial End reminders.
+ * Only targets active free trial subscriptions where user has NO active paid plan.
+ * 
+ * @param {Function} templateFn - Message sending function (_free_trial_end or _free_trial_end_hindi)
+ * @param {number[]} targetDays - Target days from start date (e.g. [7, 10] or [8, 12])
+ * @param {string} jobName - Identifier for logging
+ */
+export async function processFreeTrialEndReminders(templateFn, targetDays, jobName) {
+    try {
+        const now = new Date();
+        const todayIST = getISTCalendarDate(now);
+
+        // Fetch all active free trial subscriptions where user has NO active paid plan
+        const activeTrials = await prisma.subscription.findMany({
+            where: {
+                status: "active",
+                expiresAt: { gte: now },
+                plan: {
+                    isFreeTrial: true,
+                },
+                user: {
+                    subscription: {
+                        none: {
+                            status: "active",
+                            expiresAt: { gte: now },
+                            plan: { isFreeTrial: false }
+                        }
+                    }
+                }
+            },
+            include: {
+                user: true,
+                plan: true,
+            },
+        });
+
+        // Group by user and pick latest subscription by startDate
+        const userLatestSubMap = new Map();
+        for (const sub of activeTrials) {
+            if (!sub.user || !sub.user.phoneNumber || !sub.startDate) continue;
+            const existing = userLatestSubMap.get(sub.userId);
+            if (!existing || new Date(sub.startDate) > new Date(existing.startDate)) {
+                userLatestSubMap.set(sub.userId, sub);
+            }
+        }
+
+        for (const sub of userLatestSubMap.values()) {
+            try {
+                const startIST = getISTCalendarDate(sub.startDate);
+                const diffDays = differenceInCalendarDays(todayIST, startIST) + 1;
+
+                if (targetDays.includes(diffDays)) {
+                    const expiryDateStr = formatISTDate(
+                        sub.expiresAt || new Date(new Date(sub.startDate).getTime() + 14 * 24 * 60 * 60 * 1000)
+                    );
+                    const userName = sub.user.name || "Member";
+
+                    await templateFn(
+                        sub.user.phoneNumber,
+                        userName,
+                        expiryDateStr
+                    );
+
+                    console.log(`[${jobName}] Sent Day ${diffDays} free trial end template to ${sub.user.phoneNumber} (${userName}, Expiry: ${expiryDateStr})`);
+                    await new Promise((resolve) => setTimeout(resolve, 150)); // Rate-limit buffer
+                }
+            } catch (userErr) {
+                console.error(`[${jobName}] Error sending template to ${sub.user?.phoneNumber}:`, userErr.message);
+            }
+        }
+    } catch (err) {
+        console.error(`[${jobName}] Error in ${jobName} execution:`, err);
+    }
+}
+
+/**
+ * 5:30 PM IST (17:30) -> _free_trial_end_hindi
+ * Sent on the 7th day and 10th day from the start date to active free trial users
+ */
+export const freeTrialEndHindiJob = new CronJob('30 17 * * *', async () => {
+    await processFreeTrialEndReminders(_free_trial_end_hindi, [7, 10], "freeTrialEndHindiJob");
+}, {
+    scheduled: true,
+    timezone: "Asia/Kolkata",
+});
+
+/**
+ * 5:30 PM IST (17:30) -> _free_trial_end (English)
+ * Sent on the 8th day and 12th day from the start date to active free trial users
+ */
+export const freeTrialEndEnglishJob = new CronJob('30 17 * * *', async () => {
+    await processFreeTrialEndReminders(_free_trial_end, [8, 12], "freeTrialEndEnglishJob");
 }, {
     scheduled: true,
     timezone: "Asia/Kolkata",

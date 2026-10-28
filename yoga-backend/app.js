@@ -19,7 +19,9 @@ import {
   freeTrialOfferHindiJob,
   trialExpiryNotificationJob,
   subscriptionInfoEnglishJob,
-  subscriptionInfoHindiJob
+  subscriptionInfoHindiJob,
+  freeTrialEndHindiJob,
+  freeTrialEndEnglishJob
 } from './Schedular/daily.schedular.js';
 import { weeklyAttendanceJob } from './Schedular/weekly.schedular.js';
 import yogaClassRoute from './routes/yogaClass.routes.js';
@@ -125,6 +127,8 @@ trialExpiryNotificationJob.start();
 weeklyAttendanceJob.start();
 subscriptionInfoEnglishJob.start();
 subscriptionInfoHindiJob.start();
+freeTrialEndHindiJob.start();
+freeTrialEndEnglishJob.start();
 
 // ✅ Start server
 
