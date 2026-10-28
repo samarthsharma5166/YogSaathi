@@ -257,64 +257,64 @@ const YogaCare = () => {
               </div>
 
               {/* Benefits Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
+                <div className="bg-white rounded-xl py-2 px-3.5 border border-gray-100 shadow-sm flex gap-3 items-center">
                   <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     🧘
                   </div>
-                  <div>
-                    <h3 className="font-bold text-sm text-gray-900">Personalised attention</h3>
-                    <p className="text-gray-500 text-[11px] leading-tight mt-0!">From experienced and certified Yoga Teachers.</p>
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-sm text-gray-900 leading-tight">Personalised attention</h3>
+                    <p className="text-gray-500 text-xs leading-tight mt-[-13px]">From experienced and certified Yoga Teachers.</p>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+                <div className="bg-white rounded-xl py-2 px-3.5 border border-gray-100 shadow-sm flex gap-3 items-center">
                   <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     👤
                   </div>
-                  <div >
-                    <h3 className="font-bold text-sm text-gray-900">One-to-One / Small Batches</h3>
-                    <p className="text-gray-500 text-[11px] leading-tight mt-0">Individual classes or very small interactive groups.</p>
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-sm text-gray-900 leading-tight">One-to-One / Small Batches</h3>
+                    <p className="mt-[-13px] text-gray-500 text-xs leading-tight ">Individual classes or very small interactive groups.</p>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+                <div className="bg-white rounded-xl py-2 px-3.5 border border-gray-100 shadow-sm flex gap-3 items-center">
                   <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     🎯
                   </div>
-                  <div>
-                    <h3 className="font-bold text-sm text-gray-900">Aligned to Your Goals</h3>
-                    <p className="text-gray-500 text-[11px] leading-tight mt-0">Practices based on your specific health concerns.</p>
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-sm text-gray-900 leading-tight">Aligned to Your Goals</h3>
+                    <p className="text-gray-500 text-xs leading-tight mt-[-13px]">Practices based on your specific health concerns.</p>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+                <div className="bg-white rounded-xl py-2 px-3.5 border border-gray-100 shadow-sm flex gap-3 items-center">
                   <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     🏠
                   </div>
-                  <div>
-                    <h3 className="font-bold text-sm text-gray-900">Comfort of Your Home</h3>
-                    <p className="text-gray-500 text-[11px] leading-tight mt-0">Practice safely and comfortably in your own space.</p>
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-sm text-gray-900 leading-tight">Comfort of Your Home</h3>
+                    <p className="text-gray-500 text-xs leading-tight mt-[-13px]">Practice safely and comfortably in your own space.</p>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+                <div className="bg-white rounded-xl py-2 px-3.5 border border-gray-100 shadow-sm flex gap-3 items-center">
                   <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     ⏰
                   </div>
-                  <div>
-                    <h3 className="font-bold text-sm text-gray-900">Preferred Time Slots</h3>
-                    <p className="text-gray-500 text-[11px] leading-tight mt-0">Flexible scheduling that fits your lifestyle.</p>
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-sm text-gray-900 leading-tight">Preferred Time Slots</h3>
+                    <p className="text-gray-500 text-xs leading-tight mt-[-13px]">Flexible scheduling that fits your lifestyle.</p>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex gap-3.5 items-center">
+                <div className="bg-white rounded-xl py-2 px-3.5 border border-gray-100 shadow-sm flex gap-3 items-center">
                   <div className="w-8 h-8 bg-[#EAF3DE] text-[#3B6D11] rounded-full flex items-center justify-center shrink-0 text-sm">
                     💻
                   </div>
-                  <div>
-                    <h3 className="font-bold text-sm text-gray-900">Live Online Sessions</h3>
-                    <p className="text-gray-500 text-[11px] leading-tight mt-0">Highly interactive and convenient video classes.</p>
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-sm text-gray-900 leading-tight">Live Online Sessions</h3>
+                    <p className="text-gray-500 text-xs leading-tight mt-[-13px]">Highly interactive and convenient video classes.</p>
                   </div>
                 </div>
               </div>
@@ -324,22 +324,22 @@ const YogaCare = () => {
                 <h3 className="text-lg font-bold text-[#27500a] flex items-center gap-2">
                   <span>✨</span> The Programme Includes:
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="p-4 bg-white/50 border border-gray-100 rounded-xl space-y-1">
-                    <span className="text-gray-400 text-xs block">Duration</span>
-                    <strong className="text-sm font-bold text-gray-800">45-minute live sessions</strong>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+                  <div className="py-2 px-3.5 bg-white/60 border border-gray-100 rounded-xl space-y-0.5">
+                    <span className="text-gray-400 text-2xs block">Duration</span>
+                    <strong className="text-xs sm:text-sm font-bold text-gray-800 leading-snug block">45-minute live sessions</strong>
                   </div>
-                  <div className="p-4 bg-white/50 border border-gray-100 rounded-xl space-y-1">
-                    <span className="text-gray-400 text-xs block">Frequency</span>
-                    <strong className="text-sm font-bold text-gray-800">3 sessions per week</strong>
+                  <div className="py-2 px-3.5 bg-white/60 border border-gray-100 rounded-xl space-y-0.5">
+                    <span className="text-gray-400 text-2xs block">Frequency</span>
+                    <strong className="text-xs sm:text-sm font-bold text-gray-800 leading-snug block">3 sessions per week</strong>
                   </div>
-                  <div className="p-4 bg-white/50 border border-gray-100 rounded-xl space-y-1">
-                    <span className="text-gray-400 text-xs block">Format</span>
-                    <strong className="text-sm font-bold text-gray-800">One-to-one / small groups</strong>
+                  <div className="py-2 px-3.5 bg-white/60 border border-gray-100 rounded-xl space-y-0.5">
+                    <span className="text-gray-400 text-2xs block">Format</span>
+                    <strong className="text-xs sm:text-sm font-bold text-gray-800 leading-snug block">One-to-one / small groups</strong>
                   </div>
-                  <div className="p-4 bg-white/50 border border-gray-100 rounded-xl space-y-1">
-                    <span className="text-gray-400 text-xs block">Bonus</span>
-                    <strong className="text-sm font-bold text-gray-800">Complimentary wellness benefits</strong>
+                  <div className="py-2 px-3.5 bg-white/60 border border-gray-100 rounded-xl space-y-0.5">
+                    <span className="text-gray-400 text-2xs block">Bonus</span>
+                    <strong className="text-xs sm:text-sm font-bold text-gray-800 leading-snug block">Complimentary wellness benefits</strong>
                   </div>
                 </div>
                 <p className="text-[#3B6D11] italic text-xs font-semibold pt-2">
@@ -370,7 +370,7 @@ const YogaCare = () => {
                           <div className="text-3xl">{program.emoji}</div>
                           <h4 className="font-bold text-sm text-gray-900 leading-snug">{program.name}</h4>
                         </div>
-                        <div className="flex items-center gap-1.5 text-xs font-semibold self-center mt-2">
+                        <div className="flex items-center gap-1.5 text-xs font-semibold self-center mt-0">
                           <div
                             className={`w-4 h-4 rounded-full border flex items-center justify-center ${isSelected ? "bg-[#3B6D11] border-[#3B6D11]" : "border-gray-300"
                               }`}
