@@ -119,7 +119,7 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
                 const records = await getWeeklyAttendance(user.id);
                 const weekAttendance = formatAttendance(records);
 
-                weekly_attendance_status__yogsaathi_sessions(
+                await weekly_attendance_status__yogsaathi_sessions(
                     user.phoneNumber,
                     user.name,
                     weekAttendance.Mon,
@@ -130,6 +130,8 @@ export const hourlyJob = new CronJob('*/10 * * * *', async () => {
                     weekAttendance.Sat,
                     weekAttendance.Sun
                 );
+
+                await new Promise(resolve => setTimeout(resolve, 100));
             }
 
         }
