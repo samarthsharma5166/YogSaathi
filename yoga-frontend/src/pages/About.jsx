@@ -9,9 +9,9 @@ const About = () => {
     <div className="about-container bg-gray-50 py-12 px-6 sm:px-12">
       <SEO
         title="About YogSaathi - Authentic Online Yoga with Certified Masters"
-        description="Learn about YogSaathi's mission to make authentic yoga accessible worldwide. Founded by Sanjay Kumar Mahesh (IIT Roorkee alumnus) with AYUSH-certified teachers."
+        description="Learn about YogSaathi's mission to make authentic yoga accessible worldwide. Founded by Sanjay Kumar Mahesh (IIT Roorkee alumnus) with expert certified teachers."
         canonical="/about"
-        keywords="about YogSaathi, yoga masters India, AYUSH certified yoga teachers, Sanjay Kumar Mahesh, online yoga community"
+        keywords="about YogSaathi, yoga masters India, certified yoga teachers, Sanjay Kumar Mahesh, online yoga community"
       />
       <div className="max-w-6xl mx-auto container bg-white p-8 rounded-xl shadow-md">
         <h1 className="text-2xl md:text-3xl font-bold text-center text-[#2e7d32] mb-4">
@@ -43,8 +43,7 @@ const About = () => {
           <h3 className="text-[#424242]">What Makes YogSaathi Special?</h3>
           <ul>
             <li>
-              <strong>✨ Flexible Timings:</strong> 6 convenient time slots
-              every day.
+              <strong>✨ Flexible Timings:</strong> 7 convenient time slots every day (5:00 AM, 6:00 AM, 7:00 AM, 8:30 AM, 5:30 PM, 6:30 PM, 7:30 PM).
             </li>
             <li>
               <strong>✨ Daily Yoga, Year-Round:</strong> 365 days of expert-led

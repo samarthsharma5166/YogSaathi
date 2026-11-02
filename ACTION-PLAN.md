@@ -75,7 +75,7 @@ Publish 1 pillar guide and 3 supporting cluster articles per month in the `/blog
 1. **E-E-A-T Backlink Acquisition:**
    - Feature articles or quotes from Sanjay Kumar Mahesh (Founder, IIT Roorkee) on health & wellness podcasts, entrepreneurship publications, and IIT alumni platforms.
    - Publish press releases announcing YogSaathi's affordable nationwide online yoga initiative.
-2. **Ayush & Yoga Directory Citations:**
+2. **Yoga & Wellness Directory Citations:**
    - List YogSaathi on Indian wellness portals (Practo, Justdial, Sulekha, Fitternity, Yoga Alliance directory).
 3. **Student Video Testimonials & YouTube Optimization:**
    - Upload snippet clips of daily classes and student reviews to YouTube with titles like `"YogSaathi Online Yoga Class Experience"` and direct links in descriptions.

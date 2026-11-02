@@ -366,7 +366,7 @@ const Pricing = () => {
     <div className="min-h-screen bg-[#FAF8F5] py-6 px-4 md:px-6 text-[#1C2623] font-sans flex flex-col justify-center">
       <SEO
         title="Affordable Online Yoga Class Plans & Pricing | YogSaathi"
-        description="Transparent and affordable online yoga subscription plans. 6 daily flexible live slots with free nutritionist sessions and money-saving multi-month bonuses."
+        description="Transparent and affordable online yoga subscription plans. 7 daily flexible live slots (5:00 AM to 7:30 PM) with free nutritionist sessions and money-saving multi-month bonuses."
         canonical="/price"
         keywords="online yoga pricing, yoga membership plans India, daily yoga classes cost, cheap yoga classes online, YogSaathi price"
       />

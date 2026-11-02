@@ -65,7 +65,7 @@ Before implementation, YogSaathi operated as a bare Single Page Application (SPA
 
 #### 5. AI Search & Generative Engine Optimization (GEO) Readiness (Resolved)
 - **Baseline Evidence:** `llms_txt_checker.py` scored 5/100 due to nonexistent `/llms.txt`.
-- **Implemented Fix:** Authored standard-compliant [`public/llms.txt`](./yoga-frontend/public/llms.txt) and [`public/llms-full.txt`](./yoga-frontend/public/llms-full.txt) following the `llmstxt.org` specification, defining YogSaathi's philosophy, 6 daily time slots, AYUSH trainer credentials, and therapeutic programs.
+- **Implemented Fix:** Authored standard-compliant [`public/llms.txt`](./yoga-frontend/public/llms.txt) and [`public/llms-full.txt`](./yoga-frontend/public/llms-full.txt) following the `llmstxt.org` specification, defining YogSaathi's philosophy, 7 daily time slots (5:00 AM to 7:30 PM), expert trainer credentials, and therapeutic programs.
 
 ---
 
@@ -94,7 +94,7 @@ To ensure all interior routes (`/price`, `/yogacare`, `/ashtanga`, `/womenProgra
 
 Google strongly prioritizes E-E-A-T for **YMYL (Your Money Your Life)** health and wellness queries. YogSaathi has exceptional real-world credentials that are now formally highlighted for search engines:
 1. **Founder Credibility:** Sanjay Kumar Mahesh — Mechanical Engineering graduate from **IIT Roorkee** with 38+ years of leadership and yoga dedication.
-2. **Ministry of AYUSH Certification:** Senior Trainer Ms. Upma Gupta holds certification from the Yoga Certification Board, Ministry of AYUSH, Government of India, and 15+ years of clinical teaching experience.
+2. **Senior Teaching Certification:** Senior Trainer Ms. Upma Gupta holds Diploma in Naturopathy and Yoga, MA in Science of Living, Preksha Meditation & Yoga, and 15+ years of clinical teaching experience.
 3. **Formal Yogic Science Degrees:** Instructors hold DNYS (Diploma in Naturopathy & Yogic Science) and Masters in Yogic Science (Gurukul Kangri, Haridwar).
 4. **Structured Entity Schema:** All credentials are now integrated into JSON-LD schema with direct attribution.
 

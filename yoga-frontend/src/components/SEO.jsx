@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 const BASE_URL = "https://yogsaathi.com";
 const DEFAULT_TITLE = "YogSaathi - Live Online Yoga Classes & Holistic Wellness Community";
-const DEFAULT_DESC = "Join YogSaathi for daily interactive live online yoga classes led by AYUSH-certified teachers. 6 flexible slots daily for weight loss, flexibility, meditation & stress relief.";
+const DEFAULT_DESC = "Join YogSaathi for daily interactive live online yoga classes led by expert certified teachers. 7 flexible slots daily (5:00 AM to 7:30 PM) for weight loss, flexibility, meditation & stress relief.";
 const DEFAULT_IMAGE = "https://yogsaathi.com/logomain2.png";
 
 /**

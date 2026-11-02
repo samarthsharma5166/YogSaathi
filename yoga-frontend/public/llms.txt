@@ -1,10 +1,10 @@
 # YogSaathi - Online Yoga & Wellness Platform
 
-> YogSaathi (https://yogsaathi.com) is an online yoga and holistic health platform providing daily interactive live yoga sessions, personalized yoga therapy (YogaCare), and wellness programs. Sessions are conducted in Hindi and English by Ministry of AYUSH-certified instructors across six flexible daily time slots.
+> YogSaathi (https://yogsaathi.com) is an online yoga and holistic health platform providing daily interactive live yoga sessions, personalized yoga therapy (YogaCare), and wellness programs. Sessions are conducted in Hindi and English by expert certified instructors across seven flexible daily time slots (5:00 AM, 6:00 AM, 7:00 AM, 8:30 AM, 5:30 PM, 6:30 PM, 7:30 PM).
 
 ## Core Programs & Services
 
-- [Live Online Yoga Classes](https://yogsaathi.com/): Daily live interactive yoga sessions across 6 morning and evening slots (from 6:00 AM to 6:30 PM) for all fitness and experience levels.
+- [Live Online Yoga Classes](https://yogsaathi.com/): Daily live interactive yoga sessions across 7 morning and evening slots (5:00 AM, 6:00 AM, 7:00 AM, 8:30 AM, 5:30 PM, 6:30 PM, 7:30 PM) for all fitness and experience levels.
 - [Subscription Plans & Pricing](https://yogsaathi.com/price): Transparent, highly affordable membership plans with flexible slots, bonus access, and free nutritionist counseling.
 - [Yoga Care Personalized Therapy](https://yogsaathi.com/yogacare): Dedicated therapeutic yoga sessions tailored to individual health conditions including back pain, diabetes, hypertension, arthritis, and lifestyle disorders.
 - [Ashtanga Yoga Program](https://yogsaathi.com/ashtanga): Traditional primary and intermediate series focusing on dynamic flow, stamina, core strength, and breath synchronization.
@@ -15,7 +15,7 @@
 
 ## Expert Trainers & Leadership
 
-- [About YogSaathi](https://yogsaathi.com/about): Founded by Sanjay Kumar Mahesh (B.E. Mechanical Engineering from IIT Roorkee with 38+ years corporate experience). Instructors include Ms. Upma Gupta (Ministry of AYUSH certified, 15+ years experience), Monika Bhatnagar (DNYS certified, 12+ years experience), and Aniket Saini (M.Sc. Yogic Science, Haridwar, 6+ years experience).
+- [About YogSaathi](https://yogsaathi.com/about): Founded by Sanjay Kumar Mahesh (B.E. Mechanical Engineering from IIT Roorkee with 38+ years corporate experience). Instructors include Ms. Upma Gupta (Certified Senior Yoga Master, 15+ years experience), Monika Bhatnagar (DNYS certified, 12+ years experience), and Aniket Saini (M.Sc. Yogic Science, Haridwar, 6+ years experience).
 
 ## Wellness & Knowledge Hub
 

@@ -149,7 +149,7 @@ const HomePage = () => {
     {
       question: "Can I change the Slots as per my convenience?",
       answer:
-        "Absolutely yes. For example,  you can join session today at 6 AM, tomorrow at 8.30 AM and next day 6.30 PM as per your convenience. Total six slots are available every day, you can chose any one.",
+        "Absolutely yes. For example, you can join session at 5:00 AM, 6:00 AM, 7:00 AM, 8:30 AM, 5:30 PM, 6:30 PM, or 7:30 PM as per your convenience. Total 7 flexible slots are available every day, you can choose any one.",
     },
     {
       question: "Whether  it is possible to join for part session?",
@@ -184,7 +184,7 @@ const HomePage = () => {
     {
       name: "Ms.Upma Gupta",
       about:
-        "Certificate from Yoga Certification Board, Ministry of AYUSH, Government of India, Diploma in Naturopathy and Yoga, MA – Science of Living, Preksha Meditation & Yoga,  having more than 15 Years Experience of imparting Yoga Training.",
+        "Certified Senior Yoga Master, Diploma in Naturopathy and Yoga, MA – Science of Living, Preksha Meditation & Yoga, having more than 15 Years Experience of imparting Yoga Training.",
       image: "./teacher1.jpeg",
     },
     {
@@ -286,7 +286,7 @@ const HomePage = () => {
     <div className="home-wrapper mt-24">
       <SEO
         title="YogSaathi - Live Online Yoga Classes & Holistic Wellness Community"
-        description="Join YogSaathi for daily interactive live online yoga classes led by AYUSH-certified masters. 6 flexible daily slots for weight loss, flexibility, meditation & holistic wellness."
+        description="Join YogSaathi for daily interactive live online yoga classes led by expert certified teachers. 7 flexible daily slots (5:00 AM to 7:30 PM) for weight loss, flexibility, meditation & holistic wellness."
         canonical="/"
       />
 
@@ -296,7 +296,7 @@ const HomePage = () => {
           Live Online Yoga Classes &amp; Holistic Wellness Community
         </h1>
         <p className="text-gray-600 mt-1 max-w-2xl mx-auto text-xs md:text-sm">
-          Interactive yoga sessions led by AYUSH-certified teachers across 6 flexible daily slots with complimentary nutritionist guidance.
+          Interactive yoga sessions led by expert certified teachers across 7 flexible daily slots (5:00 AM, 6:00 AM, 7:00 AM, 8:30 AM, 5:30 PM, 6:30 PM, 7:30 PM) with complimentary nutritionist guidance.
         </p>
       </div>
       {/* offer */}
