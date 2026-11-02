@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { getBlogById } from "../services/api";
+import SEO from "../components/SEO";
 
 const BlogPost = () => {
     const { id } = useParams();
@@ -32,8 +33,37 @@ const BlogPost = () => {
         );
     }
 
+    const blogDescription = blog.content
+        ? blog.content.replace(/<[^>]*>?/gm, "").slice(0, 155)
+        : "Read this insightful yoga and wellness guide on YogSaathi.";
+    const blogImageUrl = blog.img
+        ? (blog.img.startsWith("http") ? blog.img : `https://yogsaathi.com/api/${blog.img}`)
+        : "https://yogsaathi.com/logomain2.png";
+
     return (
         <div className="min-h-screen bg-gray-50 py-10 px-4">
+            <SEO
+                title={`${blog.title} | YogSaathi Yoga Blog`}
+                description={blogDescription}
+                canonical={`/blog/${id}`}
+                ogType="article"
+                ogImage={blogImageUrl}
+                schema={{
+                    "@context": "https://schema.org",
+                    "@type": "BlogPosting",
+                    "headline": blog.title,
+                    "description": blogDescription,
+                    "image": blogImageUrl,
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "YogSaathi",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "https://yogsaathi.com/logomain2.png"
+                        }
+                    }
+                }}
+            />
             <motion.div
                 className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden"
                 initial={{ opacity: 0, y: 30 }}

@@ -37,6 +37,7 @@ import indianAshtangaSeated from "../assets/indian_ashtanga_seated.jpg";
 import indianAshtangaStanding from "../assets/indian_ashtanga_standing.jpg";
 import CustomPhoneInput from "../components/CustomPhoneInput";
 import { ASHTANGA_PLANS, ASHTANGA_TERMS } from "../config/ashtangaPlans.js";
+import SEO from "../components/SEO";
 import {
   createAshtangaRegistration,
   verifyAshtangaPayment,
@@ -240,6 +241,12 @@ const Ashtanga = () => {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#1C2623] font-sans pt-20 pb-16 px-4 md:px-8">
+      <SEO
+        title="Online Ashtanga Yoga Classes & Primary Series | YogSaathi"
+        description="Learn authentic Ashtanga Yoga Primary Series online with certified Indian yoga masters. 1-on-1 and small group live classes with personalized alignment cues."
+        canonical="/ashtanga"
+        keywords="ashtanga yoga online, ashtanga primary series, ashtanga classes, vinyasa yoga, authentic ashtanga India, YogSaathi ashtanga"
+      />
       <Toaster position="top-right" />
 
       <div className="max-w-5xl mx-auto space-y-8">

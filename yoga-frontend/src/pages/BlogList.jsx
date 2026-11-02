@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllBlogs } from "../services/api";
 import "../pages/CSS/BlogList.css";
 import Slider from "react-slick";
+import SEO from "../components/SEO";
 
 export default function PublicBlogList() {
   const [blogs, setBlogs] = useState([]);
@@ -53,6 +54,12 @@ export default function PublicBlogList() {
 
   return (
     <div className="min-h-screen mt-[100px] bg-gray-50">
+      <SEO
+        title="Yoga & Wellness Blogs - Tips, Asanas & Health Guides | YogSaathi"
+        description="Explore expert yoga articles, step-by-step asana guides, breathing techniques, nutrition advice, and holistic lifestyle wisdom from YogSaathi masters."
+        canonical="/blogs"
+        keywords="yoga blogs, yoga articles, pranayama guides, healthy yogic diet, yoga for wellness, YogSaathi blog"
+      />
       <div className=" mx-auto px-4 py-8">
         {/* Header Section */}
         <div className="text-center mb-12">

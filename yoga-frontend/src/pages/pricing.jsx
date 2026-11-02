@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { fetchPlans, getActiveOffer } from "../services/api";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import SEO from "../components/SEO";
 
 
 const planHighlights = {
@@ -363,6 +364,12 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] py-6 px-4 md:px-6 text-[#1C2623] font-sans flex flex-col justify-center">
+      <SEO
+        title="Affordable Online Yoga Class Plans & Pricing | YogSaathi"
+        description="Transparent and affordable online yoga subscription plans. 6 daily flexible live slots with free nutritionist sessions and money-saving multi-month bonuses."
+        canonical="/price"
+        keywords="online yoga pricing, yoga membership plans India, daily yoga classes cost, cheap yoga classes online, YogSaathi price"
+      />
       <div className="max-w-7xl mx-auto w-full">
         
         {/* Header Section */}
@@ -370,9 +377,9 @@ const Pricing = () => {
           <span className="inline-block bg-[#EAF3DE] text-[#27500a] text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider mb-2 border border-[#a3c97a]/30">
             Membership Plans
           </span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#27500a] tracking-tight mb-2">
-            Find Your Balance
-          </h2>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-[#27500a] tracking-tight mb-2">
+            Affordable Online Yoga Class Plans &amp; Pricing
+          </h1>
           <p className="text-gray-600 text-sm max-w-xl mx-auto">
             Choose a plan that fits your lifestyle. Get daily guidance, personalized postures, and holistic wellness support.
           </p>

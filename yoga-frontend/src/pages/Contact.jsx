@@ -1,6 +1,7 @@
 import React from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
+import SEO from "../components/SEO";
 
 const contactItems = [
   {
@@ -25,15 +26,21 @@ const contactItems = [
 const Contact = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-100 via-white to-green-50 flex items-center justify-center px-4 py-10">
+      <SEO
+        title="Contact YogSaathi - Connect for Online Yoga & Support"
+        description="Have questions about our live online yoga classes, schedules, or pricing? Contact YogSaathi today via phone, email, or WhatsApp."
+        canonical="/contact"
+        keywords="contact YogSaathi, yoga customer support, yoga classes phone number, Noida yoga online"
+      />
       <motion.section
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="backdrop-blur-lg bg-white/70 border border-green-100 shadow-2xl rounded-3xl px-6 sm:px-10 py-10 w-full max-w-2xl"
       >
-        <h2 className="text-4xl font-extrabold text-center text-green-700 mb-10 tracking-tight">
-          Contact Us
-        </h2>
+        <h1 className="text-3xl md:text-4xl font-extrabold text-center text-green-700 mb-10 tracking-tight">
+          Contact YogSaathi - Get in Touch Today
+        </h1>
 
         <ul className="space-y-6 text-gray-800">
           {contactItems.map((item, index) => (

@@ -16,6 +16,7 @@ import {
   HeartPulse
 } from "lucide-react";
 import heroImg from "../assets/womens_yoga_hero.png";
+import SEO from "../components/SEO";
 
 const WomensProgram = () => {
   const benefitsSectionRef = useRef(null);
@@ -47,6 +48,12 @@ const WomensProgram = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F5F8F2] via-white to-[#EEF5EB] overflow-x-hidden text-gray-800 pb-20">
+      <SEO
+        title="Online Yoga Classes for Women - Hormonal Health & Strength | YogSaathi"
+        description="Specialized online yoga classes for women. Targeted asanas for PCOD/PCOS relief, hormonal balance, prenatal care, flexibility, stress relief, and weight management."
+        canonical="/womenPrograms"
+        keywords="yoga for women, women yoga online, yoga for PCOS PCOD, prenatal yoga online, women wellness classes, YogSaathi women yoga"
+      />
       {/* Background Blobs for Atmosphere */}
       <div className="absolute top-0 right-0 w-[45vw] h-[45vw] rounded-full bg-emerald-200/20 blur-[100px] -z-10 pointer-events-none" />
       <div className="absolute top-[40%] left-0 w-[35vw] h-[35vw] rounded-full bg-amber-100/30 blur-[90px] -z-10 pointer-events-none" />

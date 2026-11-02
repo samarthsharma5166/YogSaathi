@@ -1,0 +1,29 @@
+# YogSaathi - Online Yoga & Wellness Platform
+
+> YogSaathi (https://yogsaathi.com) is an online yoga and holistic health platform providing daily interactive live yoga sessions, personalized yoga therapy (YogaCare), and wellness programs. Sessions are conducted in Hindi and English by Ministry of AYUSH-certified instructors across six flexible daily time slots.
+
+## Core Programs & Services
+
+- [Live Online Yoga Classes](https://yogsaathi.com/): Daily live interactive yoga sessions across 6 morning and evening slots (from 6:00 AM to 6:30 PM) for all fitness and experience levels.
+- [Subscription Plans & Pricing](https://yogsaathi.com/price): Transparent, highly affordable membership plans with flexible slots, bonus access, and free nutritionist counseling.
+- [Yoga Care Personalized Therapy](https://yogsaathi.com/yogacare): Dedicated therapeutic yoga sessions tailored to individual health conditions including back pain, diabetes, hypertension, arthritis, and lifestyle disorders.
+- [Ashtanga Yoga Program](https://yogsaathi.com/ashtanga): Traditional primary and intermediate series focusing on dynamic flow, stamina, core strength, and breath synchronization.
+- [Yoga for Women](https://yogsaathi.com/womenPrograms): Specialized routines for hormonal balance, PCOS/PCOD management, prenatal & postnatal wellness, and pelvic health.
+- [Kids Yoga & Mindfulness](https://yogsaathi.com/kidsPrograms): Engaging yoga sessions to improve focus, posture, concentration, and flexibility in children.
+- [Corporate Yoga Retreats](https://yogsaathi.com/corporateRetreats): Workplace wellness and executive stress relief programs.
+- [Overseas Yoga Programs](https://yogsaathi.com/overseasPrograms): Global timezone-adapted online yoga sessions for the Indian diaspora and international practitioners.
+
+## Expert Trainers & Leadership
+
+- [About YogSaathi](https://yogsaathi.com/about): Founded by Sanjay Kumar Mahesh (B.E. Mechanical Engineering from IIT Roorkee with 38+ years corporate experience). Instructors include Ms. Upma Gupta (Ministry of AYUSH certified, 15+ years experience), Monika Bhatnagar (DNYS certified, 12+ years experience), and Aniket Saini (M.Sc. Yogic Science, Haridwar, 6+ years experience).
+
+## Wellness & Knowledge Hub
+
+- [Yoga & Health Blogs](https://yogsaathi.com/blogs): Evidence-based guides on yoga asanas, pranayama, natural nutrition, and holistic lifestyle.
+- [Mental Wellness](https://yogsaathi.com/mentalhealth): Guided meditation, stress relief, and breathing techniques.
+- [Nutrition & Diet](https://yogsaathi.com/nutrition): Complementary nutritional counseling and diet advice.
+
+## Contact & Inquiries
+
+- [Contact Us](https://yogsaathi.com/contact): Direct WhatsApp and inquiry support for class trials and bookings.
+

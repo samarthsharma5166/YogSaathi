@@ -24,6 +24,7 @@ import {
 import CustomPhoneInput from "../components/CustomPhoneInput";
 import { YOGA_CARE_PLANS, YOGA_CARE_PROGRAMS } from "../config/yogaCarePlans.js";
 import { createYogaCareRegistration, verifyYogaCarePayment } from "../services/api.js";
+import SEO from "../components/SEO";
 
 const YogaCare = () => {
   const navigate = useNavigate();
@@ -205,6 +206,12 @@ const YogaCare = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FAF8F5] via-[#F4F9EE] to-[#EAF3DE] text-[#1C2623] py-12 px-4 md:px-8 font-sans">
+      <SEO
+        title="YogaCare - Personalized Yoga Therapy & Healing | YogSaathi"
+        description="Personalized 1-on-1 and small batch online yoga therapy for back pain, diabetes, hypertension, arthritis, and lifestyle health conditions."
+        canonical="/yogacare"
+        keywords="yoga therapy, personalized yoga, online yoga care, yoga for back pain, therapeutic yoga classes, YogSaathi yoga care"
+      />
       <div className="max-w-6xl mx-auto">
 
         {/* Step Indicator */}

@@ -35,6 +35,7 @@ import teacher1 from '../assets/teacher1.jpeg'
 import { registerUser } from "../services/api";
 import { MdOutlineFreeBreakfast } from "react-icons/md";
 import Testimonials from "../components/Testimonials";
+import SEO from "../components/SEO";
 
 const teamMembers = [
   {
@@ -283,6 +284,21 @@ const HomePage = () => {
 
   return (
     <div className="home-wrapper mt-24">
+      <SEO
+        title="YogSaathi - Live Online Yoga Classes & Holistic Wellness Community"
+        description="Join YogSaathi for daily interactive live online yoga classes led by AYUSH-certified masters. 6 flexible daily slots for weight loss, flexibility, meditation & holistic wellness."
+        canonical="/"
+      />
+
+      {/* Accessible, Keyword-Rich Primary Heading for Search Engines & Visitors */}
+      <div className="text-center px-4 py-4 bg-gradient-to-r from-teal-50 via-white to-teal-50 border-b border-teal-100 mb-2">
+        <h1 className="text-xl md:text-3xl font-bold text-gray-800 tracking-tight">
+          Live Online Yoga Classes &amp; Holistic Wellness Community
+        </h1>
+        <p className="text-gray-600 mt-1 max-w-2xl mx-auto text-xs md:text-sm">
+          Interactive yoga sessions led by AYUSH-certified teachers across 6 flexible daily slots with complimentary nutritionist guidance.
+        </p>
+      </div>
       {/* offer */}
       {/* <div className="!bg-white h-18 z-9999 relative mt-4">
         <p className="text-red-600 animate-pulse font-semibold text-center mb-2">

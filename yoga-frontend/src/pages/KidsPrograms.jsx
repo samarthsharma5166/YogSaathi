@@ -15,6 +15,7 @@ import {
   Laptop
 } from "lucide-react";
 import heroImg from "../assets/kids_yoga_hero.png";
+import SEO from "../components/SEO";
 
 const KidsPrograms = () => {
   const teachSectionRef = useRef(null);
@@ -65,6 +66,12 @@ const KidsPrograms = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F5F8F2] via-white to-[#EEF5EB] overflow-x-hidden text-gray-800 pb-20">
+      <SEO
+        title="Online Yoga Classes for Kids - Focus, Posture & Fun | YogSaathi"
+        description="Engaging online yoga and mindfulness classes for kids. Improves concentration, flexibility, posture, and emotional balance with fun animal poses and breathing exercises."
+        canonical="/kidsPrograms"
+        keywords="kids yoga online, online yoga for kids, children yoga classes India, yoga mindfulness kids, YogSaathi kids yoga"
+      />
       {/* Background Decorative Soft Gradients */}
       <div className="absolute top-0 right-0 w-[45vw] h-[45vw] rounded-full bg-emerald-200/20 blur-[100px] -z-10 pointer-events-none" />
       <div className="absolute top-[45%] left-0 w-[35vw] h-[35vw] rounded-full bg-amber-100/30 blur-[90px] -z-10 pointer-events-none" />

@@ -1,13 +1,21 @@
 import React from 'react';
 import founderImg from '../assets/yogasite.jpg';
 // import forewordImg from '../assets/yogasite2.jpg';
-import "./CSS/About.css"
+import "./CSS/About.css";
+import SEO from "../components/SEO";
+
 const About = () => {
   return (
     <div className="about-container bg-gray-50 py-12 px-6 sm:px-12">
+      <SEO
+        title="About YogSaathi - Authentic Online Yoga with Certified Masters"
+        description="Learn about YogSaathi's mission to make authentic yoga accessible worldwide. Founded by Sanjay Kumar Mahesh (IIT Roorkee alumnus) with AYUSH-certified teachers."
+        canonical="/about"
+        keywords="about YogSaathi, yoga masters India, AYUSH certified yoga teachers, Sanjay Kumar Mahesh, online yoga community"
+      />
       <div className="max-w-6xl mx-auto container bg-white p-8 rounded-xl shadow-md">
-        <h1 className="text-2xl font-bold text-center text-[#2e7d32] mb-4">
-          About Us
+        <h1 className="text-2xl md:text-3xl font-bold text-center text-[#2e7d32] mb-4">
+          About YogSaathi - Authentic Online Yoga with Certified Masters
         </h1>
         <p className="text-center text-gray-600 text-lg mb-2 max-w-3xl mx-auto">
           Welcome to{" "}
