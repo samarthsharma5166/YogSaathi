@@ -100,7 +100,13 @@ const BlogPost = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
-                        dangerouslySetInnerHTML={{ __html: blog.content.replace(/\r\n/g, "<br/>") }}
+                        dangerouslySetInnerHTML={{
+                            __html: blog.content
+                                ? (/<[a-z][\s\S]*>/i.test(blog.content)
+                                    ? blog.content
+                                    : blog.content.replace(/\r\n|\n/g, "<br/>"))
+                                : ""
+                        }}
                     />
                 </div>
             </motion.div>
