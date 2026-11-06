@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Milestones configuration
-const MILESTONE_CONFIG = [
+export const MILESTONE_CONFIG = [
   {
     tier: "bronze",
     days: 50,
