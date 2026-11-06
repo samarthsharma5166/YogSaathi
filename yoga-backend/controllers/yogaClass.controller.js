@@ -1,6 +1,6 @@
 import { prisma } from "../db/db.js";
 import { yoga_certificate } from "../utils/messages.js";
-import { MILESTONE_CONFIG } from "./certificate.controller.js";
+import { MILESTONE_CONFIG, getISTDayRange, getISTDateString } from "./certificate.controller.js";
 
 // 📌 Create a new yoga class
 export const createYogaClass = async (req, res) => {
@@ -145,41 +145,21 @@ export const checkAndSendAttendanceCertificate = async (user, yogaClass) => {
             ],
         });
 
-        // 2. Deduplicate by calendar date (YYYY-MM-DD in UTC), exactly matching certificate.controller.js
+        // 2. Deduplicate attendance by IST calendar day (Asia/Kolkata), exactly matching certificate.controller.js
         const dateMap = new Map();
         for (const record of attendanceRecords) {
             const dateVal = record.yogaClass?.date || record.attendedAt || record.createdAt;
             if (!dateVal) continue;
             const d = new Date(dateVal);
-            const dateStr = d.toISOString().split("T")[0];
+            const dateStr = getISTDateString(d);
             if (!dateMap.has(dateStr)) {
                 dateMap.set(dateStr, d);
             }
         }
 
-        const attendedDates = Array.from(dateMap.values()).sort(
-            (a, b) => a.getTime() - b.getTime()
-        );
-        const totalAttendance = attendedDates.length;
+        const totalAttendance = dateMap.size;
 
-        // 3. Check if user already had another attended class on this same date earlier today
-        const currentClassDateStr = new Date(yogaClass.date).toISOString().split("T")[0];
-        const recordsOnThisDate = attendanceRecords.filter(r => {
-            const dVal = r.yogaClass?.date || r.attendedAt || r.createdAt;
-            return dVal && new Date(dVal).toISOString().split("T")[0] === currentClassDateStr;
-        });
-
-        // If recordsOnThisDate.length > 1, the user had already attended a class earlier today,
-        // so the unique day milestone was already reached earlier. Prevent duplicate triggers!
-        if (recordsOnThisDate.length > 1) {
-            return {
-                sent: false,
-                reason: "Already attended another class today; total attendance days was already reached.",
-                totalAttendance,
-            };
-        }
-
-        // 4. Match milestone using MILESTONE_CONFIG (Bronze: 50, Silver: 100, Gold: 200, Platinum: 300, Diamond: 500)
+        // 3. Match milestone using MILESTONE_CONFIG (Bronze: 50, Silver: 100, Gold: 200, Platinum: 300, Diamond: 500)
         const matchedMilestone = MILESTONE_CONFIG.find(m => m.days === totalAttendance);
         if (!matchedMilestone) {
             return {
@@ -335,42 +315,74 @@ export const getClassLink = async (req, res) => {
         const joinWindowEnd = new Date(classStart.getTime() + 25 * 60 * 1000);
 
         if (nowUTC >= joinWindowStart && nowUTC <= joinWindowEnd) {
-            let isNewAttendanceForThisClass = true;
+            let isFirstAttendanceToday = false;
             try {
-                const existingAttendance = await prisma.attendance.findUnique({
-                    where: {
-                        userId_yogaClassId: {
-                            userId: user.id,
-                            yogaClassId: yogaClass.id,
-                        },
-                    },
-                });
-                isNewAttendanceForThisClass = !existingAttendance || !existingAttendance.attended;
+                const { startOfDay, endOfDay } = getISTDayRange(yogaClass.date);
 
-                await prisma.attendance.upsert({
+                // 🔹 Rule: User must have ONLY 1 attendance in a day out of any of the 7 daily classes
+                // Check if user has ALREADY attended ANY class today in IST (check both yogaClass.date and attendedAt)
+                const existingAttendanceToday = await prisma.attendance.findFirst({
                     where: {
-                        userId_yogaClassId: {
-                            userId: user.id,
-                            yogaClassId: yogaClass.id,
-                        },
-                    },
-                    update: {
-                        attended: true,
-                        attendedAt: nowUTC,
-                    },
-                    create: {
                         userId: user.id,
-                        subscriptionId: activeSub.id,
-                        yogaClassId: yogaClass.id,
                         attended: true,
-                        attendedAt: nowUTC,
+                        OR: [
+                            {
+                                yogaClass: {
+                                    date: {
+                                        gte: startOfDay,
+                                        lte: endOfDay,
+                                    },
+                                },
+                            },
+                            {
+                                attendedAt: {
+                                    gte: startOfDay,
+                                    lte: endOfDay,
+                                },
+                            },
+                        ],
                     },
                 });
+
+                if (!existingAttendanceToday) {
+                    // No attendance marked yet today across any slot. This is their 1 daily attendance!
+                    isFirstAttendanceToday = true;
+
+                    await prisma.attendance.upsert({
+                        where: {
+                            userId_yogaClassId: {
+                                userId: user.id,
+                                yogaClassId: yogaClass.id,
+                            },
+                        },
+                        update: {
+                            attended: true,
+                            attendedAt: nowUTC,
+                        },
+                        create: {
+                            userId: user.id,
+                            subscriptionId: activeSub?.id || user.subscription?.[0]?.id || "",
+                            yogaClassId: yogaClass.id,
+                            attended: true,
+                            attendedAt: nowUTC,
+                        },
+                    });
+                } else if (existingAttendanceToday.yogaClassId === yogaClass.id) {
+                    // Rejoining / refreshing the exact same class: update timestamp safely
+                    await prisma.attendance.update({
+                        where: { id: existingAttendanceToday.id },
+                        data: { attendedAt: nowUTC },
+                    }).catch(() => {});
+                } else {
+                    // User already attended another class today (e.g. joined 5:00 AM, now joining 6:30 PM).
+                    // They join freely with full access, but we do not record a duplicate 2nd attendance for today.
+                    console.log(`[getClassLink] User ${user.phoneNumber} already has attendance today from class ${existingAttendanceToday.yogaClassId}. Allowing join without duplicate attendance.`);
+                }
             } catch (attendanceErr) {
                 console.error("[getClassLink] Error recording attendance:", attendanceErr);
             }
 
-            if (isNewAttendanceForThisClass) {
+            if (isFirstAttendanceToday) {
                 // Safely evaluate certificate milestones in background without delaying class link response
                 checkAndSendAttendanceCertificate(user, yogaClass).catch(certErr => {
                     console.error("[getClassLink] Certificate trigger background error:", certErr);

@@ -61,17 +61,38 @@ export const MILESTONE_CONFIG = [
   },
 ];
 
-// Helper to format date nicely: e.g. "15 October 2024"
-function formatDateForCertificate(dateObj) {
+// Helper to format date in Asia/Kolkata (IST) YYYY-MM-DD
+export function getISTDateString(date = new Date()) {
+  if (!date) return "";
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date(date));
+}
+
+// Helper to get start and end timestamps of an IST calendar day
+export function getISTDayRange(date = new Date()) {
+  const istDateStr = getISTDateString(date);
+  const [year, month, day] = istDateStr.split("-").map(Number);
+  // Midnight 00:00:00 IST = UTC date minus 5h 30m
+  const startOfDay = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0) - (5.5 * 60 * 60 * 1000));
+  const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000 - 1);
+  return { istDateStr, startOfDay, endOfDay };
+}
+
+// Helper to format date nicely in Asia/Kolkata: e.g. "15 October 2024"
+export function formatDateForCertificate(dateObj) {
   if (!dateObj) return "";
   const d = new Date(dateObj);
   if (isNaN(d.getTime())) return "";
-  const day = d.getDate();
-  const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
-  return `${day} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  return new Intl.DateTimeFormat("en-IN", {
+    timeZone: "Asia/Kolkata",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(d);
 }
 
 // Helper to find a user by phone variants
@@ -159,14 +180,14 @@ async function getUserMilestoneDetails(user) {
     ],
   });
 
-  // Deduplicate by calendar date (YYYY-MM-DD in local/UTC)
+  // Deduplicate by IST calendar date (Asia/Kolkata)
   const dateMap = new Map();
   for (const record of attendanceRecords) {
     const dateVal =
       record.yogaClass?.date || record.attendedAt || record.createdAt;
     if (!dateVal) continue;
     const d = new Date(dateVal);
-    const dateStr = d.toISOString().split("T")[0];
+    const dateStr = getISTDateString(d);
     if (!dateMap.has(dateStr)) {
       dateMap.set(dateStr, d);
     }
