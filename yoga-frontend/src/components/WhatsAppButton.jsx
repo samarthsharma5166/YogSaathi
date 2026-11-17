@@ -9,19 +9,7 @@ const WhatsAppButton = () => {
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(defaultMessage)}`;
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] flex items-center group">
-      {/* Tooltip text badge */}
-      <div
-        className={`hidden sm:flex items-center mr-3 px-3.5 py-1.5 bg-white text-gray-800 text-xs font-semibold rounded-full shadow-lg border border-gray-100 transition-all duration-300 transform ${
-          isHovered
-            ? "opacity-100 translate-x-0 pointer-events-auto"
-            : "opacity-0 translate-x-2 pointer-events-none"
-        }`}
-      >
-        <span>Chat with us on WhatsApp</span>
-        <div className="w-2 h-2 bg-white transform rotate-45 absolute -right-1 border-t border-r border-gray-100" />
-      </div>
-
+    <div className="fixed bottom-6 left-6 z-[9999] flex items-center group">
       {/* WhatsApp Floating Button */}
       <a
         href={whatsappUrl}
@@ -39,6 +27,18 @@ const WhatsAppButton = () => {
         {/* WhatsApp Icon */}
         <FaWhatsapp className="w-8 h-8 text-white drop-shadow-sm" />
       </a>
+
+      {/* Tooltip text badge */}
+      <div
+        className={`hidden sm:flex items-center ml-3 px-3.5 py-1.5 bg-white text-gray-800 text-xs font-semibold rounded-full shadow-lg border border-gray-100 transition-all duration-300 transform ${
+          isHovered
+            ? "opacity-100 translate-x-0 pointer-events-auto"
+            : "opacity-0 -translate-x-2 pointer-events-none"
+        }`}
+      >
+        <div className="w-2 h-2 bg-white transform rotate-45 absolute -left-1 border-b border-l border-gray-100" />
+        <span>Chat with us on WhatsApp</span>
+      </div>
     </div>
   );
 };
