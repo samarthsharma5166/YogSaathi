@@ -1,8 +1,16 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { FaWhatsapp } from "react-icons/fa";
 
 const WhatsAppButton = () => {
+  const location = useLocation();
   const [isHovered, setIsHovered] = useState(false);
+
+  // Only show the floating WhatsApp button on the home screen ("/")
+  if (location.pathname !== "/") {
+    return null;
+  }
+
   const phoneNumber = "919971714091";
   const defaultMessage = "Hello YogSaathi, I would like to know more about your yoga classes and programs.";
   
